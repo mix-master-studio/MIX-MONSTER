@@ -52,19 +52,19 @@
     <script>
         // モンスターのデータ（名前とイラストURL）
         const monsterData = {
-            "スライム": { img: "https://blogspot.com" },
-            "ドラキー": { img: "https://blogspot.com" },
-            "ゴースト": { img: "https://blogspot.com" },
-            "おおきづち": { img: "https://blogspot.com" },
-            "ぐんたいアリ": { img: "https://blogspot.com" },
+            "スライム": { img: "https://microcms-assets.io" },
+            "ドラキー": { img: "https://microcms-assets.io" },
+            "ゴースト": { img: "https://microcms-assets.io" },
+            "おおきづち": { img: "https://microcms-assets.io" },
+            "ぐんたいアリ": { img: "https://microcms-assets.io" },
             
             // 配合で生まれるモンスター
-            "キングスライム": { img: "https://blogspot.com" },
-            "ドラゴスライム": { img: "https://blogspot.com" },
-            "キメラ": { img: "https://blogspot.com" },
-            "死神きぞく": { img: "https://blogspot.com" },
-            "ヨロコビムシ": { img: "https://blogspot.com" },
-            "謎のタマゴ（強力なモンスター）": { img: "https://blogspot.com" }
+            "キングスライム": { img: "https://microcms-assets.io" },
+            "ドラゴスライム": { img: "https://microcms-assets.io" },
+            "キメラ": { img: "https://microcms-assets.io" },
+            "死神きぞく": { img: "https://microcms-assets.io" },
+            "ヨロコビムシ": { img: "https://microcms-assets.io" },
+            "謎のタマゴ（強力なモンスター）": { img: "https://microcms-assets.io" }
         };
 
         // 野生モンスターの出現プール
@@ -115,8 +115,8 @@
                 return;
             }
 
-            const idx1 = parseInt(checkboxes[0].value);
-            const idx2 = parseInt(checkboxes[1].value);
+            const idx1 = parseInt(checkboxes[value]);
+            const idx2 = parseInt(checkboxes.value);
             
             const m1 = myParty[idx1];
             const m2 = myParty[idx2];
@@ -128,8 +128,8 @@
             alert(`🧬 配合開始！\n${m1} ✕ ${m2}\n\nおめでとう！\n${baby} が 生まれた！`);
 
             const targetIndices = [idx1, idx2].sort((a, b) => b - a);
-            myParty.splice(targetIndices[0], 1);
-            myParty.splice(targetIndices[1], 1);
+            myParty.splice(targetIndices, 1);
+            myParty.splice(targetIndices, 1);
 
             myParty.push(baby);
             updatePartyDisplay();
