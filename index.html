@@ -13,17 +13,24 @@
         .haigo-btn:active { background: #218838; }
         ul { list-style: none; padding: 0; }
         li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 5px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-        .select-checkbox { transform: scale(1.5); margin-right: 10px; }
+        .select-checkbox { transform: scale(1.5); margin-right: 15px; }
+        
+        /* イラスト用のスタイル */
+        .monster-img { width: 100px; height: 100px; object-fit: contain; margin: 10px auto; display: block; }
+        .list-img { width: 40px; height: 40px; object-fit: contain; margin-left: auto; }
+        .flex-container { display: flex; align-items: center; width: 100%; }
     </style>
 </head>
 <body>
 
-    <h1>👾 ミックスモンスター (配合版)</h1>
+    <h1>👾 ミックスモンスター (イラスト版)</h1>
 
     <!-- 敵出現エリア -->
     <div class="box">
         <h3>目の前に あらわれた！</h3>
         <h2 id="enemy-name">スライム</h2>
+        <!-- モンスターのイラストが表示される場所 -->
+        <img id="enemy-img" class="monster-img" src="" alt="モンスター">
         <button onclick="catchMonster()">💥 たたかって仲間にする！</button>
     </div>
 
@@ -43,14 +50,31 @@
     </div>
 
     <script>
-        // 野生モンスター
+        // モンスターのデータ（名前とイラストURL）
+        const monsterData = {
+            "スライム": { img: "https://blogspot.com" },
+            "ドラキー": { img: "https://blogspot.com" },
+            "ゴースト": { img: "https://blogspot.com" },
+            "おおきづち": { img: "https://blogspot.com" },
+            "ぐんたいアリ": { img: "https://blogspot.com" },
+            
+            // 配合で生まれるモンスター
+            "キングスライム": { img: "https://blogspot.com" },
+            "ドラゴスライム": { img: "https://blogspot.com" },
+            "キメラ": { img: "https://blogspot.com" },
+            "死神きぞく": { img: "https://blogspot.com" },
+            "ヨロコビムシ": { img: "https://blogspot.com" },
+            "謎のタマゴ（強力なモンスター）": { img: "https://blogspot.com" }
+        };
+
+        // 野生モンスターの出現プール
         const monsterPool = ["スライム", "ドラキー", "ゴースト", "おおきづち", "ぐんたいアリ"];
         let currentEnemy = "スライム";
         
         // 最初の仲間（テスト用）
         let myParty = ["スライム", "ドラキー"];
 
-        // 配合レシピ（組み合わせ：生まれるモンスター）
+        // 配合レシピ
         const recipe = {
             "スライム+スライム": "キングスライム",
             "スライム+ドラキー": "ドラゴスライム",
@@ -59,8 +83,15 @@
             "おおきづち+ぐんたいアリ": "ヨロコビムシ"
         };
 
-        // 起動時にリストを表示
+        // 起動時に初期表示
+        updateEnemyDisplay();
         updatePartyDisplay();
+
+        // 敵の表示を更新する関数
+        function updateEnemyDisplay() {
+            document.getElementById("enemy-name").innerText = currentEnemy;
+            document.getElementById("enemy-img").src = monsterData[currentEnemy].img;
+        }
 
         // 仲間にする処理
         function catchMonster() {
@@ -69,10 +100,10 @@
 
             alert(currentEnemy + " が 仲間になった！");
 
-            // 次の野生モンスター
+            // 次の野生モンスターをランダム決定
             const randomIndex = Math.floor(Math.random() * monsterPool.length);
             currentEnemy = monsterPool[randomIndex];
-            document.getElementById("enemy-name").innerText = currentEnemy;
+            updateEnemyDisplay();
         }
 
         // 配合する処理
@@ -84,29 +115,23 @@
                 return;
             }
 
-            // 選ばれたモンスターのインデックスを取得
             const idx1 = parseInt(checkboxes[0].value);
             const idx2 = parseInt(checkboxes[1].value);
             
             const m1 = myParty[idx1];
             const m2 = myParty[idx2];
 
-            // 配合パターンを検索 (A+B と B+A の両方に対応)
             let pattern1 = `${m1}+${m2}`;
             let pattern2 = `${m2}+${m1}`;
             let baby = recipe[pattern1] || recipe[pattern2] || "謎のタマゴ（強力なモンスター）";
 
             alert(`🧬 配合開始！\n${m1} ✕ ${m2}\n\nおめでとう！\n${baby} が 生まれた！`);
 
-            // 手持ちから親の2匹を削除（インデックスの大きい方から消す）
             const targetIndices = [idx1, idx2].sort((a, b) => b - a);
             myParty.splice(targetIndices[0], 1);
             myParty.splice(targetIndices[1], 1);
 
-            // 生まれた子供を手持ちに追加
             myParty.push(baby);
-
-            // 画面を更新
             updatePartyDisplay();
         }
 
@@ -122,11 +147,16 @@
             
             myParty.forEach((monster, index) => {
                 const li = document.createElement("li");
+                const monsterImgUrl = monsterData[monster] ? monsterData[monster].img : monsterData["謎のタマゴ（強力なモンスター）"].img;
+                
                 li.innerHTML = `
-                    <label style="display: flex; align-items: center; width: 100%;">
-                        <input type="checkbox" class="select-checkbox" value="${index}">
-                        <span style="margin-left: 10px;">${monster}</span>
-                    </label>
+                    <div class="flex-container">
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" class="select-checkbox" value="${index}">
+                            <span style="font-weight: bold; margin-left: 10px;">${monster}</span>
+                        </label>
+                        <img class="list-img" src="${monsterImgUrl}" alt="${monster}">
+                    </div>
                 `;
                 listElement.appendChild(li);
             });
@@ -134,4 +164,3 @@
     </script>
 </body>
 </html>
-
