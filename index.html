@@ -7,7 +7,7 @@
     <style>
         body { font-family: sans-serif; text-align: center; background: #eef; padding: 15px; margin: 0; }
         .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto 15px; }
-        button { font-size: 15px; padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; width: 85%; max-width: 300px; }
+        button { font-size: 15px; padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; width: 85%; max-width: 300px; font-weight: bold; }
         button:active { background: #0056b3; }
         .haigo-btn { background: #28a745; }
         .haigo-btn:active { background: #218838; }
@@ -15,22 +15,22 @@
         li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 5px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
         .select-checkbox { transform: scale(1.5); margin-right: 15px; }
         
-        /* イラスト用のスタイル */
-        .monster-img { width: 100px; height: 100px; object-fit: contain; margin: 10px auto; display: block; }
-        .list-img { width: 40px; height: 40px; object-fit: contain; margin-left: auto; }
+        /* 絵文字モンスター用のスタイル */
+        .monster-avatar { font-size: 70px; margin: 10px auto; display: block; line-height: 1; }
+        .list-avatar { font-size: 30px; margin-left: auto; }
         .flex-container { display: flex; align-items: center; width: 100%; }
     </style>
 </head>
 <body>
 
-    <h1>👾 ミックスモンスター (イラスト版)</h1>
+    <h1>👾 ミックスモンスター (決定版)</h1>
 
     <!-- 敵出現エリア -->
     <div class="box">
         <h3>目の前に あらわれた！</h3>
         <h2 id="enemy-name">スライム</h2>
-        <!-- モンスターのイラストが表示される場所 -->
-        <img id="enemy-img" class="monster-img" src="" alt="モンスター">
+        <!-- モンスターのドット絵風絵文字が表示される場所 -->
+        <div id="enemy-avatar" class="monster-avatar">💧</div>
         <button onclick="catchMonster()">💥 たたかって仲間にする！</button>
     </div>
 
@@ -50,21 +50,21 @@
     </div>
 
     <script>
-        // モンスターのデータ（名前とイラストURL）
+        // モンスターのデータ（名前と見た目の絵文字）
         const monsterData = {
-            "スライム": { img: "https://microcms-assets.io" },
-            "ドラキー": { img: "https://microcms-assets.io" },
-            "ゴースト": { img: "https://microcms-assets.io" },
-            "おおきづち": { img: "https://microcms-assets.io" },
-            "ぐんたいアリ": { img: "https://microcms-assets.io" },
+            "スライム": { avatar: "💧" },
+            "ドラキー": { avatar: "🦇" },
+            "ゴースト": { avatar: "👻" },
+            "おおきづち": { avatar: "🔨" },
+            "ぐんたいアリ": { avatar: "🐜" },
             
             // 配合で生まれるモンスター
-            "キングスライム": { img: "https://microcms-assets.io" },
-            "ドラゴスライム": { img: "https://microcms-assets.io" },
-            "キメラ": { img: "https://microcms-assets.io" },
-            "死神きぞく": { img: "https://microcms-assets.io" },
-            "ヨロコビムシ": { img: "https://microcms-assets.io" },
-            "謎のタマゴ（強力なモンスター）": { img: "https://microcms-assets.io" }
+            "キングスライム": { avatar: "👑" },
+            "ドラゴスライム": { avatar: "🐉" },
+            "キメラ": { avatar: "🦅" },
+            "死神きぞく": { avatar: "💀" },
+            "ヨロコビムシ": { avatar: "🪲" },
+            "謎のタマゴ": { avatar: "🥚" }
         };
 
         // 野生モンスターの出現プール
@@ -90,7 +90,7 @@
         // 敵の表示を更新する関数
         function updateEnemyDisplay() {
             document.getElementById("enemy-name").innerText = currentEnemy;
-            document.getElementById("enemy-img").src = monsterData[currentEnemy].img;
+            document.getElementById("enemy-avatar").innerText = monsterData[currentEnemy].avatar;
         }
 
         // 仲間にする処理
@@ -115,21 +115,25 @@
                 return;
             }
 
-            const idx1 = parseInt(checkboxes[value]);
-            const idx2 = parseInt(checkboxes.value);
+            // チェックされた2つの位置を取得
+            const indices = [];
+            checkboxes.forEach(cb => {
+                indices.push(parseInt(cb.value));
+            });
             
-            const m1 = myParty[idx1];
-            const m2 = myParty[idx2];
+            const m1 = myParty[indices[0]];
+            const m2 = myParty[indices[1]];
 
             let pattern1 = `${m1}+${m2}`;
             let pattern2 = `${m2}+${m1}`;
-            let baby = recipe[pattern1] || recipe[pattern2] || "謎のタマゴ（強力なモンスター）";
+            let baby = recipe[pattern1] || recipe[pattern2] || "謎のタマゴ";
 
             alert(`🧬 配合開始！\n${m1} ✕ ${m2}\n\nおめでとう！\n${baby} が 生まれた！`);
 
-            const targetIndices = [idx1, idx2].sort((a, b) => b - a);
-            myParty.splice(targetIndices, 1);
-            myParty.splice(targetIndices, 1);
+            // 大きいインデックスから順に削除（ズレ防止）
+            indices.sort((a, b) => b - a);
+            myParty.splice(indices[0], 1);
+            myParty.splice(indices[1], 1);
 
             myParty.push(baby);
             updatePartyDisplay();
@@ -147,7 +151,7 @@
             
             myParty.forEach((monster, index) => {
                 const li = document.createElement("li");
-                const monsterImgUrl = monsterData[monster] ? monsterData[monster].img : monsterData["謎のタマゴ（強力なモンスター）"].img;
+                const avatar = monsterData[monster] ? monsterData[monster].avatar : "🥚";
                 
                 li.innerHTML = `
                     <div class="flex-container">
@@ -155,7 +159,7 @@
                             <input type="checkbox" class="select-checkbox" value="${index}">
                             <span style="font-weight: bold; margin-left: 10px;">${monster}</span>
                         </label>
-                        <img class="list-img" src="${monsterImgUrl}" alt="${monster}">
+                        <span class="list-avatar">${avatar}</span>
                     </div>
                 `;
                 listElement.appendChild(li);
