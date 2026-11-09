@@ -71,7 +71,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(4,1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 4px;
         }
         .recipe {
@@ -84,258 +84,219 @@
             border: 1px solid #ddd;
             padding: 2px;
         }
+        .zukan-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <h1>👾 ミックスモンスター公式</h1>
-    
+    <h1>ミックスモンスター公式</h1>
+
+    <!-- 配合レシピ表 -->
     <div class="box">
-        <button onclick="let t=document.getElementById('rt');
-        t.style.display=t.style.display==='table'?'none':'table'">
+        <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 配合レシピ表の表示切替
         </button>
         <table id="rt" class="recipe">
             <tr>
-                <td>💧✕💧=👑ギガプニ</td>
-                <td>💧✕🦇=🐉プニウイング</td>
+                <td>プニシズク ＋ 💧 ＝ ギガ・プニ</td>
+                <td>プニシズク ＋ 🌲 ＝ プニウイング</td>
             </tr>
             <tr>
-                <td>🦇✕👻=🦅グリフォン</td>
-                <td>👻✕🔨=💀ボーンナイト</td>
+                <td>カゲコウモリ ＋ 🌪 ＝ グリフォン</td>
+                <td>カゲコウモリ ＋ 🌲 ＝ ホーンナイト</td>
             </tr>
             <tr>
-                <td>🔨✕🐜=🪲ハッピーB</td>
-                <td>🐜✕🥒=🦊ももんじゃ</td>
+                <td>うらめシート ＋ 🔥 ＝ ハッピーシート</td>
+                <td>うらめシート ＋ 🌲 ＝ ももんじゃ</td>
             </tr>
             <tr>
-                <td>👑✕💀=👿デーモンL</td>
-                <td>🧱✕🤖➔❄️フリーズE</td>
+                <td>ピコハンマー ＋ 🔥 ＝ デーモン</td>
+                <td>ピコハンマー ＋ 💧 ＝ フリーズエンペラー</td>
             </tr>
         </table>
     </div>
 
+    <!-- ステージ・進行 -->
     <div class="box">
-        <h3>🧭 ステージ <span id="stg">1</span></h3>
+        <h3>ステージ: <span id="stg">1</span></h3>
         <div id="gate">
-            <button style="background:#9c27b0;" onclick="enter()">
-                🧭 ダンジョンに入って敵と戦う！
+            <button style="background: #5c27b0;" onclick="enter()">
+                🏰 ダンジョンに入って敵と戦う！
             </button>
         </div>
+    </div>
+
+    <!-- バトル画面 -->
+    <div class="box">
         <div class="battle-field">
-            <div class="side" id="myS"></div>
-            <div class="side" id="eS"></div>
+            <div class="side" id="mySide"><b>【味方】</b></div>
+            <div class="side" id="eSide"><b>【敵】</b></div>
         </div>
-        <select id="sel" style="width:90%;margin:5px 0; font-weight:bold;"></select>
-        <button style="background:#dc3545;" onclick="atk()">
-            ⚔️ 最前の敵に突撃！
+        <select id="sel" style="width: 90%; margin: 5px 0; font-weight: bold;"></select>
+        <button style="background: #dc3545;" onclick="atk()">
+            ⚔️ 目の前の敵に攻撃！
         </button>
-        <button id="cat" style="background:#ffc107;color:#000;" 
-                onclick="scout()" disabled>
-            💥 スカウト！(確率5%・HP半分以下)
+        <button id="cat" style="background: #ffc107; color: #000;" onclick="scout()" disabled>
+            🌟 スカウト！(確率5%・HP半分以下)
         </button>
     </div>
 
+    <!-- モンスター配合 -->
     <div class="box">
-        <h3>🧬 モンスター配合 (20%)</h3>
-        <p style="font-size:10px;color:red;margin:0;">
+        <h2>🧬 モンスター配合 (20%)</h2>
+        <p style="font-size: 10px; color: red; margin: 0;">
             ※下で2匹選んでから押してね
         </p>
-        <button style="background:#28a745;" onclick="mix()">
+        <button style="background: #28a745;" onclick="mix()">
             🧬 配合実行！
         </button>
     </div>
-    
+
+    <!-- ボックス -->
     <div class="box">
         <h3>📦 ボックス</h3>
         <ul id="box"></ul>
     </div>
-    
+
+    <!-- 図鑑 -->
     <div class="box">
         <h3>📖 みつけた図鑑</h3>
         <div id="zk" class="grid"></div>
     </div>
 
-<script>
-const D={
-    "プニシズク":{a:"💧",hp:10,at:5,df:3,ex:1},
-    "カゲコウモリ":{a:"🦇",hp:12,at:6,df:4,ex:1},
-    "うらめシート":{a:"👻",hp:15,at:7,df:5,ex:1},
-    "ピコハンマー":{a:"🔨",hp:18,at:10,df:4,ex:1},
-    "ゾロゾロアント":{a:"🐜",hp:8,at:4,df:2,ex:1},
-    "カッパキュウリ":{a:"🥒",hp:11,at:5,df:4,ex:1},
-    "ギガ・プニ":{a:"👑",hp:30,at:15,df:12,ex:2},
-    "プニウイング":{a:"🐉",hp:25,at:18,df:10,ex:2},
-    "グリフォンモドキ":{a:"🦅",hp:24,at:16,df:8,ex:2},
-    "ボーンナイト":{a:"💀",hp:35,at:22,df:15,ex:3},
-    "ハッピービートル":{a:"🪲",hp:20,at:12,df:18,ex:2},
-    "ももんじゃ":{a:"🦊",hp:22,at:11,df:9,ex:2},
-    "ブロックウォール":{a:"🧱",hp:45,at:28,df:25,ex:3},
-    "マシントルーパー":{a:"🤖",hp:40,at:30,df:22,ex:3},
-    "デーモンロード":{a:"👿",hp:50,at:35,df:28,ex:4},
-    "フレアフェニックス":{a:"🔥",hp:60,at:40,df:25,ex:4},
-    "フリーズエンペラー":{a:"❄️",hp:80,at:50,df:45,ex:5},
-    "大魔王ゼロ":{a:"😈",hp:100,at:60,df:50,ex:6},
-    "カイザードラゴン":{a:"🐲",hp:150,at:85,df:70,ex:8}
-};
-const P=[
-    "プニシズク","カゲコウモリ","うらめシート",
-    "ピコハンマー","ゾロゾロアント","カッパキュウリ"
-];
-const R={
-    "プニシズク+プニシズク":"ギガ・プニ",
-    "プニシズク+カゲコウモリ":"プニウイング",
-    "カゲコウモリ+うらめシート":"グリフォンモドキ",
-    "うらめシート+ピコハンマー":"ボーンナイト",
-    "ピコハンマー+ゾロゾロアント":"ハッピービートル",
-    "ゾロゾロアント+カッパキュウリ":"ももんじゃ",
-    "ももんじゃ+ハッピービートル":"ブロックウォール",
-    "カッパキュウリ+ピコハンマー":"マシントルーパー",
-    "ギガ・プニ+ボーンナイト":"デーモンロード",
-    "グリフォンモドキ+プニウイング":"フレアフェニックス",
-    "ブロックウォール+マシントルーパー":"フリーズエンペラー",
-    "デーモンロード+フレアフェニックス":"大魔王ゼロ",
-    "大魔王ゼロ+フリーズエンペラー":"カイザードラゴン"
-};
-let eg=[],stg=1,zk=["プニシズク"];
-let p=[
-    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3},
-    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3},
-    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3}
-];
+    <script>
+        // モンスターデータ
+        const D = {
+            "プニシズク": { a: "💧", hp: 10, at: 5, df: 3, ex: 1 },
+            "カゲコウモリ": { a: "🌪", hp: 12, at: 6, df: 4, ex: 1 },
+            "うらめシート": { a: "👻", hp: 15, at: 7, df: 5, ex: 1 },
+            "ピコハンマー": { a: "🔨", hp: 18, at: 10, df: 4, ex: 1 },
+            "ソロゾロアント": { a: "🐜", hp: 8, at: 4, df: 2, ex: 1 },
+            "カッパキュウリ": { a: "🥒", hp: 11, at: 5, df: 4, ex: 1 },
+            "ギガ・プニ": { a: "💧", hp: 30, at: 15, df: 12, ex: 2 },
+            "プニウイング": { a: "🌲", hp: 25, at: 18, df: 10, ex: 2 },
+            "グリフォン": { a: "🌪", hp: 30, at: 20, df: 13, ex: 2 },
+            "ホーンナイト": { a: "🌲", hp: 35, at: 22, df: 15, ex: 2 },
+            "ハッピーシート": { a: "🔥", hp: 20, at: 12, df: 8, ex: 2 },
+            "ももんじゃ": { a: "🌲", hp: 22, at: 11, df: 9, ex: 2 },
+            "ブロックウォール": { a: "🧱", hp: 45, at: 15, df: 25, ex: 3 },
+            "マシントルーパー": { a: "🤖", hp: 40, at: 30, df: 22, ex: 3 },
+            "デーモンロード": { a: "😈", hp: 50, at: 35, df: 28, ex: 4 },
+            "フレアフェニックス": { a: "🔥", hp: 60, at: 40, df: 25, ex: 4 },
+            "フリーズエンペラー": { a: "❄️", hp: 80, at: 50, df: 45, ex: 5 },
+            "大魔王ゼロ": { a: "👺", hp: 100, at: 60, df: 50, ex: 6 },
+            "カイザードラゴン": { a: "🐲", hp: 150, at: 85, df: 70, ex: 8 }
+        };
 
-function enter(){
-    eg=[];
-    let c=stg>=6?Math.floor(Math.random()*3)+1:
-          (stg>=3?Math.floor(Math.random()*2)+1:1);
-    for(let i=0;i<c;i++){
-        let n=P[Math.floor(Math.random()*P.length)];
-        let b=D[n];
-        eg.push({
-            n:n,
-            m:b.hp+(stg-1)*2,
-            hp:b.hp+(stg-1)*2,
-            at:b.at+Math.floor((stg-1)*0.5),
-            df:b.df+Math.floor((stg-1)*0.5),
-            ex:b.ex
-        });
-        if(!zk.includes(n))zk.push(n);
-    }
-    document.getElementById("gate").style.display="none";
-    up();
-}
-function up(){
-    document.getElementById("stg").innerText=stg;
-    const mS=document.getElementById("mySide");
-    const eS=document.getElementById("eSide");
-    
-    mS.innerHTML="<b>[味方]</b>";
-    p.slice(0,3).forEach(m=>{
-        mS.innerHTML+=`<br>${D[m.n].a}<b>${m.n}</b>(L.${m.lv})`;
-        mS.innerHTML+=`<br>HP:${m.hp}/${m.m}`;
-        mS.innerHTML+=`<div class="hp-bg">`;
-        mS.innerHTML+=`<div class="hp" style="width:${(m.hp/m.m)*100}%;">`;
-        mS.innerHTML+=`</div></div>`;
-    });
-    
-    eS.innerHTML="<b>[敵]</b>";
-    if(eg.length===0){
-        eS.innerHTML+="<br>街にいます";
-        document.getElementById("gate").style.display="block";
-    }
-    eg.forEach(e=>{
-        eS.innerHTML+=`<br>${D[e.n].a}<b>${e.n}</b>`;
-        eS.innerHTML+=`<br>HP:${e.hp}/${e.m}`;
-        eS.innerHTML+=`<div class="hp-bg">`;
-        eS.innerHTML+=`<div class="hp" style="width:${(e.hp/e.m)*100}%;`;
-        eS.innerHTML+=`background:#dc3545;"></div></div>`;
-    });
-    
-    const sel=document.getElementById("sel");
-    sel.innerHTML="";
-    p.forEach((m,i)=>{
-        sel.innerHTML+=`<option value="${i}">${D[m.n].a}${m.n}(L.${m.lv})</option>`;
-    });
-    
-    document.getElementById("cat").disabled=eg.length===0||(eg[0].hp/eg[0].m)>0.5;
-    
-    const list=document.getElementById("box");
-    list.innerHTML="";
-    p.forEach((m,i)=>{
-        list.innerHTML+=`<li><input type="checkbox" class="cb" value="${i}"> `;
-        list.innerHTML+=`${D[m.n].a}<b>${m.n}</b> L.${m.lv} (HP:${m.hp}/${m.m})</li>`;
-    });
-    
-    const zkDiv=document.getElementById("zk");
-    zkDiv.innerHTML="";
-    Object.keys(D).forEach(k=>{
-        zkDiv.innerHTML+=`<div class="zukan-item">`;
-        zkDiv.innerHTML+=`${zk.includes(k)?D[k].a:"❓"}<br>`;
-        zkDiv.innerHTML+=`${zk.includes(k)?k:"？？？"}</div>`;
-    });
-}
-function atk(){
-    if(p.length===0||eg.length===0)return alert("ダンジョンに入ってください！");
-    const f=p[parseInt(document.getElementById("sel").value)];
-    const t=eg[0];
-    let d=Math.max(2,Math.floor(f.at-(t.df/2))+Math.floor(Math.random()*3));
-    t.hp=Math.max(0,t.hp-d);
-    alert(`${f.n}の攻撃！${t.n}に${d}ダメ！`);
-    if(t.hp===0){
-        alert(`${t.n}を倒した！`);
-        f.lv+=t.ex;
-        f.m+=3*t.ex;
-        f.hp=f.m;
-        f.at+=2*t.ex;
-        f.df+=t.ex;
-        eg.shift();
-    }else{
-        let ed=Math.max(1,Math.floor(t.at-(f.df/2))+Math.floor(Math.random()*2));
-        f.hp=Math.max(0,f.hp-ed);
-        alert(`敵の反撃！${f.n}は${ed}ダメ！`);
-        if(f.hp===0){
-            alert(`${f.n}が倒れた！復活します。`);
-            f.hp=f.m;
+        // 野生モンスターの出現プール
+        const P = ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ"];
+
+        // 配合レシピ
+        const R = {
+            "プニシズク+プニシズク": "ギガ・プニ",
+            "プニシズク+カゲコウモリ": "プニウイング",
+            "カゲコウモリ+うらめシート": "グリフォン",
+            "うらめシート+ピコハンマー": "ホーンナイト",
+            "ピコハンマー+ソロゾロアント": "ハッピーシート",
+            "ソロゾロアント+カッパキュウリ": "ももんじゃ",
+            "ももんじゃ+ハッピーシート": "ブロックウォール",
+            "カッパキュウリ+ピコハンマー": "マシントルーパー",
+            "ギガ・プニ+ホーンナイト": "デーモンロード",
+            "グリフォン+プニウイング": "フレアフェニックス",
+            "ブロックウォール+マシントルーパー": "フリーズエンペラー",
+            "デーモンロード+フレアフェニックス": "大魔王ゼロ",
+            "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
+        };
+
+        let eg = []; // 敵のグループ
+        let stg = 1; // 現在のステージ
+        let zk = ["プニシズク"]; // 見つけた図鑑リスト
+
+        // プレイヤーの手持ち（初期モンスター3匹）
+        let p = [
+            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3 },
+            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3 },
+            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3 }
+        ];
+
+        // 初期化表示
+        up();
+
+        // ダンジョン進入
+        function enter(){
+            eg = [];
+            let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
+            
+            for(let i = 0; i < c; i++){
+                let n = P[Math.floor(Math.random() * P.length)];
+                let b = D[n];
+                eg.push({
+                    n: n,
+                    m: b.hp + (stg - 1) * 2,
+                    hp: b.hp + (stg - 1) * 2,
+                    at: b.at + Math.floor((stg - 1) * 0.5),
+                    df: b.df + Math.floor((stg - 1) * 0.5),
+                    ex: b.ex
+                });
+                if(!zk.includes(n)) zk.push(n);
+            }
+            document.getElementById("gate").style.display = "none";
+            up();
         }
-    }
-    if(eg.length===0){
-        alert("敵を全滅させた！ステージアップ！");
-        stg++;
-    }
-    up();
-}
-function scout(){
-    if(eg.length===0)return;
-    const t=eg[0];
-    if(Math.random()<0.05){
-        const b=D[t.n];
-        p.push({n:t.n,lv:1,m:b.hp,hp:b.hp,at:b.at,df:b.df});
-        alert(`スカウト成功！${t.n}がボックスに入った！`);
-        eg.shift();
-        if(eg.length===0)stg++;
-    }else{
-        alert("失敗！(5%)");
-    }
-    up();
-}
-function mix(){
-    const cbs=document.querySelectorAll('.cb:checked');
-    if(cbs.length!==2)return alert("ボックスから2匹選んでください");
-    let idx=[];
-    cbs.forEach(cb=>{idx.push(parseInt(cb.value));});
-    idx.sort((a,b)=>b-a);
-    const m1=p[idx[0]];
-    const m2=p[idx[1]];
-    p.splice(idx[0],1);
-    p.splice(idx[1],1);
-    if(Math.random()<0.2){
-        let bName=R[`${m1.n}+${m2.n}`]||R[`${m2.n}+${m1.n}`]||"ギガ・プニ";
-        let b=D[bName];
-        p.push({
-            n:bName,
-            lv:1,
-            m:b.hp+Math.floor((m1.m+m2.m)/5),
-            hp:b.hp+Math.floor((m1.m+m2.m)/5),
-            at:b.at+Math.floor((m1.at+m2.at)/4),
-            df:b.df+Math.floor((m1.df+m2.df)/4)
-        });
+
+        // 画面の更新処理
+        function up(){
+            document.getElementById("stg").innerText = stg;
+            const mS = document.getElementById("mySide");
+            const eS = document.getElementById("eSide");
+
+            // 味方の表示（戦闘に出る先頭3匹）
+            mS.innerHTML = "<b>【味方】</b>";
+            p.slice(0, 3).forEach((m) => {
+                mS.innerHTML += "<br>" + D[m.n].a + "<b>" + m.n + "</b> (Lv." + m.lv + ")";
+                mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m;
+                mS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+            });
+
+            // 敵の表示
+            eS.innerHTML = "<b>【敵】</b>";
+            if(eg.length === 0){
+                eS.innerHTML += "<br>平和に満ちています";
+                document.getElementById("gate").style.display = "block";
+            } else {
+                eg.forEach((m) => {
+                    eS.innerHTML += "<br>" + D[m.n].a + "<b>" + m.n + "</b>";
+                    eS.innerHTML += "<br>HP: " + m.hp + "/" + m.m;
+                    eS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+                });
+            }
+
+            // セレクトボックス（攻撃する味方の選択）の更新
+            const sel = document.getElementById("sel");
+            sel.innerHTML = "";
+            p.forEach((n, i) => {
+                sel.innerHTML += '<option value="' + i + '">' + D[n.n].a + n.n + ' (Lv.' + n.lv + ')</option>';
+            });
+
+            // スカウトボタンの活性・非活性制御
+            document.getElementById("cat").disabled = (eg.length === 0 || (eg[0].hp / eg[0].m) > 0.5);
+
+            // ボックス（手持ち一覧と配合用チェックボックス）の表示更新 ★バグ修正箇所
+            const list = document.getElementById("box");
+            list.innerHTML = "";
+            p.forEach((n, i) => {
+                list.innerHTML += '<li><input type="checkbox" class="cb" value="' + i + '"> ' +
+                                   D[n.n].a + ' ' + n.n + '<br>Lv.' + n.lv + ' HP:' + n.hp + '/' + n.m + '</li>';
+            });
+
+            // 図鑑の更新
+            const zkDiv = document.getElementById("zk");
+            zkDiv.innerHTML = "";
+            Object.keys(D).forEach((k) => {
+                if(zk.includes(k)){
