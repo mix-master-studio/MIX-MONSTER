@@ -45,7 +45,11 @@
         <button id="cat" style="background:#ffc107;color:#000;" onclick="scout()" disabled>💥 スカウト！(確率5%)</button>
     </div>
 
-    <div class="box"><h3>🧬 モンスター配合 (20%)</h3><p style="font-size:10px;color:red;margin:0;">※下で2匹選んでから押してね</p><button style="background:#28a745;" onclick="mix()">🧬 配合実行！</button></div>
+    <div class="box">
+        <h3>🧬 モンスター配合 (20%)</h3>
+        <p style="font-size:10px;color:red;margin:0;">※下で2匹選んでから押してね</p>
+        <button style="background:#28a745;" onclick="mix()">🧬 配合実行！</button>
+    </div>
     <div class="box"><h3>📦 ボックス</h3><ul id="box"></ul></div>
     <div class="box"><h3>📖 みつけた図鑑</h3><div id="zk" class="grid"></div></div>
 
@@ -124,7 +128,7 @@ function mix(){
     const m1=p[idx[0]],m2=p[idx[1]];p.splice(idx[0],1);p.splice(idx[1],1);
     if(Math.random()<0.2){
         let bName=R[`${m1.n}+${m2.n}`]||R[`${m2.n}+${m1.n}`]||"ギガ・プニ",b=D[bName];
-        p.push({n:bName,lv:1,m:b.hp+Math.floor((m1.m+m2.m)/5),hp:b.hp+Math.floor((m1.m+m2.m)/5),at:b.at+Math.floor((m1.at+m2.at)/4),df:b.df+Math.floor((m1.df+m2.df)/4)});
+        p.push({n:bName,lv:1,m:b.hp+Math.floor((m1.m+m2.m)/5),hp:b.hp+Math.floor((m1.m+m2.m)/5),at:b.at+Math.floor((m1.at+m2.at)/4),df:b.df+Math.floor((m1.def+m2.def)/4)});
         alert(`配合大成功！➔「${bName}」誕生！`);if(!zk.includes(bName))zk.push(bName);
     }else{alert("配合失敗！消滅しました…");}up();
 }
