@@ -40,6 +40,11 @@
             width: 90%;
             font-weight: bold;
         }
+        button:disabled {
+            background: #ccc !important;
+            color: #666 !important;
+            cursor: not-allowed;
+        }
         .battle-field {
             display: flex;
             justify-content: space-between;
@@ -71,6 +76,9 @@
             height: 100%;
             width: 100%;
         }
+        .hp-dead {
+            background: #dc3545 !important;
+        }
         ul {
             list-style: none;
             padding: 0;
@@ -84,7 +92,10 @@
             border-radius: 4px;
             line-height: 1.4;
         }
-        /* ステータス表示用の文字装飾 */
+        li.locked {
+            background: #f1f1f1;
+            color: #888;
+        }
         .status-text {
             font-size: 10px;
             color: #555;
@@ -121,8 +132,6 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
-
-
     <!-- 配合レシピ表 -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -187,7 +196,7 @@
             </tr>
             <tr>
                 <td>ハデスロード ＋ オーディンナイト ＝ オメガゼロ</td>
-                <td>リヴァイアsanキング ＋ サラマンダーキング ＝ オメガゼロ</td>
+                <td>リヴァイアサンキング ＋ サラマンダーキング ＝ オメガゼロ</td>
             </tr>
             <tr>
                 <td>ウンディーネクイーン ＋ ノームマスター ＝ カイザードラゴン</td>
@@ -204,7 +213,7 @@
     <div class="box">
         <h3>ステージ: <span id="stg">1</span></h3>
         <div id="gate">
-            <button style="background: #5c27b0;" onclick="enter()">
+            <button style="background: #5c27b0;" id="btnEnter" onclick="enter()">
                 🏰 ダンジョンに入って敵と戦う！
             </button>
         </div>
@@ -217,7 +226,7 @@
             <div class="side" id="eSide"><b>【敵】</b></div>
         </div>
         <select id="sel" style="width: 90%; margin: 5px 0; font-weight: bold;"></select>
-        <button style="background: #dc3545;" onclick="atk()">
+        <button style="background: #dc3545;" id="btnAtk" onclick="atk()">
             ⚔️ 目の前の敵に攻撃！
         </button>
         <button style="background: #6c757d;" onclick="leaveDungeon()">
@@ -229,13 +238,12 @@
     <div class="box">
         <h2>🧬 モンスター配合 (20%)</h2>
         <p style="font-size: 10px; color: red; margin: 0;">
-            ※下で2匹選んでから押してね
+            ※下で2匹選んでから押してね。失敗時は消滅します！
         </p>
-        <button style="background: #28a745;" onclick="mix()">
+        <button style="background: #28a745;" id="btnMix" onclick="mix()">
             🧬 配合実行！
         </button>
     </div>
-
     <!-- ボックス -->
     <div class="box">
         <h3>📦 ボックス</h3>
@@ -249,7 +257,7 @@
     </div>
 
     <script>
-        // モンスターデータ（1〜38種類目まで。sp = 素早さを新設！）
+        // モンスターデータ（1〜38種類目まで）
         const D = {
             "プニシズク": { a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -379,13 +387,12 @@
                 return ["フリーズエンペラー", "クリスタルドラゴン", "サンザードラゴン", "ホーリーフェニックス", "クロノスタイム", "ゼウスゴッド", "ポセイドンキング", "ハデスロード", "オーディンナイト", "大魔王ゼロ", "カイザードラゴン"];
             }
         }
-
         let eg = new Array();
         let stg = 1;
         let zk = ["プニシズク"];
         let inDungeon = false;
 
-        // プレイヤーの手持ち（初期モンスター3匹に新ステータス「sp: 素早さ」を設定）
+        // プレイヤーの手持ち（初期モンスター3匹）
         let p = [
             { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6 },
             { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6 },
@@ -397,9 +404,13 @@
 
         // ダンジョン進入
         function enter(){
+            let aliveCount = 0;
+            p.forEach(m => { if(m.hp > 0) aliveCount++; });
+            if(aliveCount === 0) return alert("生存しているモンスターがいないため、ダンジョンに入れません！");
+
             inDungeon = true;
             generateEnemies();
-            document.getElementById("gate").style.display = "none";
+            document.getElementById("btnEnter").disabled = true;
             up();
         }
 
@@ -418,22 +429,23 @@
                     hp: b.hp + (stg - 1) * 3,
                     at: b.at + Math.floor((stg - 1) * 0.7),
                     df: b.df + Math.floor((stg - 1) * 0.7),
-                    sp: b.sp + Math.floor((stg - 1) * 0.5), // 敵の素早さもステージごとに成長
+                    sp: b.sp + Math.floor((stg - 1) * 0.5),
                     ex: b.ex || 1
                 });
                 if(!zk.includes(n)) zk.push(n);
             }
         }
 
+        // ダンジョン脱出
         function leaveDungeon() {
             inDungeon = false;
             eg = new Array();
-            document.getElementById("gate").style.display = "block";
+            document.getElementById("btnEnter").disabled = false;
             alert("🏃 ダンジョンから安全に脱出しました（拠点に戻りました）");
             up();
         }
 
-        // 画面の更新処理（ボックスに詳細ステータスを追加！）
+        // 画面の更新処理（ロックシステム内蔵）
         function up(){
             document.getElementById("stg").innerText = stg;
             const mS = document.getElementById("mySide");
@@ -452,17 +464,20 @@
                 bBox.classList.add("bg-castle");
             }
 
+            // 味方の表示
             mS.innerHTML = "<b>【味方】</b>";
             p.slice(0, 3).forEach((m) => {
-                mS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b> (Lv." + m.lv + ")";
+                let isDead = m.hp <= 0;
+                mS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b> (Lv." + m.lv + ")" + (isDead ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "");
                 mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
-                mS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+                mS.innerHTML += '<div class="hp-bg"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
             });
 
+            // 敵の表示
             eS.innerHTML = "<b>【敵】</b>";
             if(!inDungeon || eg.length === 0){
                 eS.innerHTML += "<br>平和に満ちています";
-                document.getElementById("gate").style.display = "block";
+                document.getElementById("btnEnter").disabled = false;
             } else {
                 eg.forEach((m) => {
                     eS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b>";
@@ -471,18 +486,32 @@
                 });
             }
 
+            // セレクトボックスの更新
             const sel = document.getElementById("sel");
             sel.innerHTML = "";
+            let addedCount = 0;
             p.forEach((n, i) => {
-                sel.innerHTML += '<option value="' + i + '">' + D[n.n].a + n.n + ' (Lv.' + n.lv + ')</option>';
+                if(n.hp > 0) {
+                    sel.innerHTML += '<option value="' + i + '">' + D[n.n].a + n.n + ' (Lv.' + n.lv + ')</option>';
+                    addedCount++;
+                }
             });
+            if(addedCount === 0 && p.length > 0) {
+                sel.innerHTML += '<option value="0">' + D[p[0].n].a + p[0].n + ' (Lv.' + p[0].lv + ') [不能]</option>';
+            }
 
-            // ★ボックスでの全ステータス詳細表示化
+            // 配合ボタンのロック
+            document.getElementById("btnMix").disabled = inDungeon;
+
+            // ボックス表示（ダンジョン内はチェックボックスをロック）
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
-                list.innerHTML += '<li><input type="checkbox" class="cb" value="' + i + '"> ' +
-                                   D[n.n].a + ' <b>' + n.n + '</b>' +
+                let disAttr = inDungeon ? "disabled" : "";
+                let liClass = inDungeon ? "class='locked'" : "";
+                let deadText = n.hp <= 0 ? " <span style='color:red;'>[戦闘不能]</span>" : "";
+                list.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' +
+                                   D[n.n].a + ' <b>' + n.n + '</b>' + deadText +
                                    '<span class="status-text">📊 レベル:' + n.lv + ' / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span></li>';
             });
 
@@ -496,45 +525,41 @@
                 }
             });
         }
-
-        // 攻撃および戦闘処理（★素早さ順の行動判定 ＆ 先頭3匹への同時経験値分配）
+        // 攻撃および戦闘処理（素早さ順行動・3匹同時経験値・復活制限システム）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
-            const f = p[parseInt(document.getElementById("sel").value)];
-            const t = eg[0];
+            
+            let targetIdx = parseInt(document.getElementById("sel").value);
+            const f = p[targetIdx];
+            const t = eg[0]; // 配列の先頭の敵
 
-            // 味方の攻撃処理をまとめた関数
+            if(f.hp <= 0) return alert("選ばれたモンスターは戦闘不能です！他のモンスターを選んでください。");
+
+            // 味方の攻撃処理
             function playerAttack() {
                 let d = Math.max(2, Math.floor(f.at - (t.df / 2) + Math.random() * 3));
                 t.hp = Math.max(0, t.hp - d);
                 alert(f.n + "の攻撃！" + t.n + "に " + d + " のダメージ！");
             }
 
-            // 敵の攻撃処理をまとめた関数
+            // 敵の攻撃処理
             function enemyAttack() {
                 let ed = Math.max(1, Math.floor(t.at - (f.df / 2) + Math.random() * 2));
                 f.hp = Math.max(0, f.hp - ed);
                 alert(t.n + "の反撃！" + f.n + "は " + ed + " のダメージ！");
                 if(f.hp === 0){
-                    alert(f.n + "が倒れた！復活します。");
-                    f.hp = f.m;
+                    alert("🔴" + f.n + "が倒れて戦闘不能になった！(次のステージまで復活しません)");
                 }
             }
 
             // ★素早さ判定システム（spが高い方が先に行動！）
             if (f.sp >= t.sp) {
-                // 味方が先制！
                 playerAttack();
-                if (t.hp > 0) {
-                    enemyAttack();
-                }
+                if (t.hp > 0) enemyAttack();
             } else {
-                // 敵が先制！
                 alert("⚠️" + t.n + "の方が素早い！先制攻撃された！");
                 enemyAttack();
-                if (f.hp > 0) {
-                    playerAttack();
-                }
+                if (f.hp > 0) playerAttack();
             }
 
             // 敵を倒したときの処理
@@ -547,35 +572,52 @@
                     alert("✨起き上がった！" + t.n + "が起き上がってボックスに仲間入りした！");
                 }
 
-                // ★戦闘に参加した「先頭の仲間3匹全員」に同時に経験値（レベル）を分配！
-                alert("⚔️戦闘に参加した先頭のモンスターたち全員に経験値が入った！");
+                // ★生存している前線先頭3匹にのみ経験値を同時に分配！
+                alert("⚔️戦闘を生き抜いた先頭のモンスターたちに経験値が入った！");
                 p.slice(0, 3).forEach((member) => {
-                    if (member.lv < 100) {
-                        member.lv += t.ex;
-                        if (member.lv > 100) member.lv = 100;
-                        member.m += 3 * t.ex;
-                        member.hp = member.m; // レベルアップで全回復
-                        member.at += 2 * t.ex;
-                        member.df += 1 * t.ex;
-                        member.sp += 1 * t.ex; // 素早さもレベルアップで成長！
-                    } else {
-                        member.hp = member.m;
+                    if (member.hp > 0) { // 生きている仲間のみ
+                        if (member.lv < 100) {
+                            member.lv += t.ex;
+                            if (member.lv > 100) member.lv = 100;
+                            member.m += 3 * t.ex;
+                            member.hp = member.m; // レベルアップで全回復
+                            member.at += 2 * t.ex;
+                            member.df += 1 * t.ex;
+                            member.sp += 1 * t.ex;
+                        } else {
+                            member.hp = member.m;
+                        }
                     }
                 });
 
                 eg.shift();
             }
 
+            // 味方の全滅チェック
+            let allDead = true;
+            p.forEach(m => { if(m.hp > 0) allDead = false; });
+            if(allDead) {
+                alert("💀全滅しました... 命からがら拠点へ強制送還されます。");
+                // 救済措置：拠点に戻るので全員HP1で奇跡的に一命を取り留める
+                p.forEach(m => { m.hp = 1; });
+                leaveDungeon();
+                return;
+            }
+
+            // ★部屋の敵を全滅させて次のステージ（奥の部屋）に進むときに、死亡していたモンスターも全員大復活！
             if(eg.length === 0){
-                alert("部屋の敵を全滅させた！さらに奥へ進みます...（ステージアップ！）");
+                alert("🎉部屋の敵を全滅させた！さらに奥の部屋へ進みます！\n(次のステージへ進んだことで、戦闘不能だった仲間が全員大復活しました！)");
                 stg++;
+                p.forEach(m => { m.hp = m.m; }); // 全員のHPを最大まで大復活
                 generateEnemies();
             }
             up();
         }
 
-        // 配合処理（新ステータス「素早さ」の引き継ぎ対応）
+        // 配合処理（★20%大成功 ➔ 80%完全ロスト消滅システム）
         function mix(){
+            if(inDungeon) return alert("ダンジョン内では配合できません！拠点に戻ってください。");
+
             const cbs = document.querySelectorAll('.cb:checked');
             if(cbs.length !== 2) return alert("ボックスから2匹選んでください");
 
@@ -586,26 +628,38 @@
             const m1 = p[idx[0]];
             const m2 = p[idx[1]];
 
+            // 配合に使う2匹を先にリスト（ボックス）から削除
             p.splice(idx[0], 1);
             p.splice(idx[1], 1);
 
-            let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
-            let b = D[bName];
+            // ★20%の確率判定
+            if (Math.random() < 0.20) {
+                let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
+                let b = D[bName];
+                let bonusMultiplier = 1 + ((b.ex || 1) * 0.2);
 
-            let bonusMultiplier = 1 + ((b.ex || 1) * 0.2);
+                p.push({
+                    n: bName,
+                    lv: 1,
+                    m: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
+                    hp: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
+                    at: b.at + Math.floor(((m1.at + m2.at) / 4) * bonusMultiplier),
+                    df: b.df + Math.floor(((m1.df + m2.df) / 4) * bonusMultiplier),
+                    sp: b.sp + Math.floor(((m1.sp + m2.sp) / 4) * bonusMultiplier)
+                });
 
-            p.push({
-                n: bName,
-                lv: 1,
-                m: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
-                hp: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
-                at: b.at + Math.floor(((m1.at + m2.at) / 4) * bonusMultiplier),
-                df: b.df + Math.floor(((m1.df + m2.df) / 4) * bonusMultiplier),
-                sp: b.sp + Math.floor(((m1.sp + m2.sp) / 4) * bonusMultiplier) // 素早さも引き継ぎ！
-            });
+                if(!zk.includes(bName)) zk.push(bName);
+                alert("✨🧬配合大成功(確率20%)！！！\n" + m1.n + " と " + m2.n + " が究極合体して " + bName + " が誕生した！");
+            } else {
+                // 80%の確率で大失敗（両方とも完全消滅）
+                alert("💥💥配合大失敗(確率80%)...\n融合実験の凄まじい衝撃により、失敗した " + m1.n + " と " + m2.n + " は両方とも跡形もなく消滅してしまった...");
+            }
 
-            if(!zk.includes(bName)) zk.push(bName);
-            alert("配合大成功！ " + m1.n + " と " + m2.n + " が合体して " + bName + " が生まれた！");
+            // 万が一手持ちが0匹になってしまった場合のゲームオーバー救済措置
+            if(p.length === 0) {
+                alert("ボックスが空っぽになってしまいました！\n見かねた博士が初期モンスターの「プニシズク」を1匹分けてくれました。");
+                p.push({ n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6 });
+            }
 
             up();
         }
