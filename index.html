@@ -42,7 +42,7 @@
         </div>
         <select id="sel" style="width:90%;margin:5px 0; font-weight:bold;"></select>
         <button style="background:#dc3545;" onclick="atk()">⚔️ 最前の敵に突撃！</button>
-        <button id="cat" style="background:#ffc107;color:#000;" onclick="scout()" disabled>💥 スカウト！(確率5%)</button>
+        <button id="cat" style="background:#ffc107;color:#000;" onclick="scout()" disabled>💥 スカウト！(確率5%・HP半分以下)</button>
     </div>
 
     <div class="box">
@@ -128,7 +128,7 @@ function mix(){
     const m1=p[idx[0]],m2=p[idx[1]];p.splice(idx[0],1);p.splice(idx[1],1);
     if(Math.random()<0.2){
         let bName=R[`${m1.n}+${m2.n}`]||R[`${m2.n}+${m1.n}`]||"ギガ・プニ",b=D[bName];
-        p.push({n:bName,lv:1,m:b.hp+Math.floor((m1.m+m2.m)/5),hp:b.hp+Math.floor((m1.m+m2.m)/5),at:b.at+Math.floor((m1.at+m2.at)/4),df:b.df+Math.floor((m1.def+m2.def)/4)});
+        p.push({n:bName,lv:1,m:b.hp+Math.floor((m1.m+m2.m)/5),hp:b.hp+Math.floor((m1.m+m2.m)/5),at:b.at+Math.floor((m1.at+m2.at)/4),df:b.df+Math.floor((m1.df+m2.df)/4)});
         alert(`配合大成功！➔「${bName}」誕生！`);if(!zk.includes(bName))zk.push(bName);
     }else{alert("配合失敗！消滅しました…");}up();
 }
