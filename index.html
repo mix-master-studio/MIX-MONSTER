@@ -3,151 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ミックスモンスター公式</title>
-    <meta name="description" content="話題のモンスター配合RPG。仲間を育てて最強を目指そう！">
-    <meta name="keywords" content="ミックスモンスター,モンスター配合,master-studio,ゲーム">
+    <title>ミックスモンスター</title>
     <style>
         body { font-family: sans-serif; text-align: center; background: #eef; padding: 15px; margin: 0; }
-        .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 460px; margin: 0 auto 15px; }
-        button { font-size: 14px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-weight: bold; width: 85%; }
+        .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 450px; margin: 0 auto 15px; }
+        button { font-size: 14px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-weight: bold; width: 85%; }
         .attack-btn { background: #dc3545; }
         .catch-btn { background: #ffc107; color: #212529; }
-        .catch-btn:disabled { background: #e2e3e5; color: #6c757d; }
         .haigo-btn { background: #28a745; }
-        .dungeon-btn { background: #9c27b0; font-size: 16px; padding: 12px; }
-        .battle-field { display: flex; justify-content: space-between; align-items: flex-start; background: #f8f9fa; border: 2px solid #ddd; border-radius: 8px; padding: 10px; margin: 10px 0; min-height: 80px; }
-        .battle-side { width: 48%; background: white; border-radius: 6px; padding: 6px; }
-        .unit-slot { border-bottom: 1px dashed #eee; padding: 4px 0; font-size: 12px; text-align: left; }
-        .monster-avatar { font-size: 24px; vertical-align: middle; margin-right: 5px; }
-        .hp-bar-bg { background: #eee; border-radius: 3px; height: 6px; width: 100%; overflow: hidden; border: 1px solid #ccc; margin-top: 2px; }
+        .dungeon-btn { background: #9c27b0; font-size: 16px; padding: 10px; }
+        .battle-field { display: flex; justify-content: space-between; background: #f8f9fa; border: 2px solid #ddd; border-radius: 8px; padding: 8px; margin: 10px 0; }
+        .battle-side { width: 48%; background: white; border-radius: 6px; padding: 4px; font-size: 12px; text-align: left; }
+        .hp-bar-bg { background: #eee; border-radius: 3px; height: 6px; width: 100%; overflow: hidden; border: 1px solid #ccc; }
         .hp-bar { background: #28a745; height: 100%; width: 100%; }
-        ul { list-style: none; padding: 0; }
-        li { background: #fff; margin: 6px 0; padding: 8px; border-radius: 5px; border: 1px solid #ddd; text-align: left; font-size: 12px; }
-        .zukan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 5px; }
-        .zukan-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 5px; padding: 4px; font-size: 9px; }
-        .recipe-table { width: 100%; font-size: 11px; border-collapse: collapse; margin-top: 10px; display: none; }
-        .recipe-table th, .recipe-table td { border: 1px solid #ddd; padding: 4px; text-align: center; }
+        ul { list-style: none; padding: 0; text-align: left; font-size: 12px; }
+        li { background: #fff; margin: 5px 0; padding: 6px; border-radius: 5px; border: 1px solid #ddd; }
+        .zukan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; font-size: 9px; }
+        .zukan-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 5px; padding: 4px; }
+        .recipe-table { width: 100%; font-size: 11px; border-collapse: collapse; display: none; }
+        .recipe-table td { border: 1px solid #ddd; padding: 3px; }
     </style>
 </head>
 <body>
 
     <h1>👾 ミックスモンスター公式</h1>
-    <p style="font-size:11px; color:#666;">無料モンスター配合育成RPGゲーム「ミックスモンスター」</p>
-
     <div class="box">
-        <button style="background:#6c757d;" onclick="toggleRecipe()">📜 配合レシピ表の表示切替</button>
-        <table id="recipe-table" class="recipe-table">
-            <tr><th>親の組み合わせ</th><th>生まれるモンスター</th></tr>
-            <tr><td>💧 ✕ 💧</td><td>👑 ギガ・プニ</td></tr>
-            <tr><td>💧 ✕ 🦇</td><td>🐉 プニウイング</td></tr>
-            <tr><td>🦇 ✕ 👻</td><td>🦅 グリフォンモドキ</td></tr>
-            <tr><td>👻 ✕ 🔨</td><td>💀 ボーンナイト</td></tr>
-            <tr><td>🔨 ✕ 🐜</td><td>🪲 ハッピービートル</td></tr>
-            <tr><td>🐜 ✕ 🥒</td><td>🦊 ももんじゃ</td></tr>
-            <tr><td>🕯️ ✕ 🐚</td><td>💣 ゴロゴロロック</td></tr>
-            <tr><td>✨ ✕ 👑</td><td>🔱 ダークフォーク</td></tr>
-            <tr><td>🦊 ✕ 🪲</td><td>🧱 ブロックウォール</td></tr>
-            <tr><td>🥒 ✕ 🔨</td><td>🤖 マシントルーパー</td></tr>
-            <tr><td>👑 ✕ 💀</td><td>👿 デーモンロード</td></tr>
-            <tr><td>🦅 ✕ 🐉</td><td>🔥 フレアフェニックス</td></tr>
-            <tr><td>🧱 ✕ 🤖</td><td>❄️ フリーズエンペラー</td></tr>
-            <tr><td>👿 ✕ 🔥</td><td>😈 大魔王ゼロ</td></tr>
-            <tr><td>😈 ✕ ❄️</td><td>🐲 カイザードラゴン</td></tr>
-            <tr><td>🐲 ✕ 🔱</td><td>⏳ マスターシャドウ</td></tr>
+        <button style="background:#6c757d;" onclick="document.getElementById('rt').style.display=document.getElementById('rt').style.display==='table'?'none':'table'">📜 配合レシピ表の表示切替</button>
+        <table id="rt" class="recipe-table">
+            <tr><td>💧✕💧➔👑ギガプニ</td><td>💧✕🦇➔🐉プニウイング</td></tr>
+            <tr><td>🦇✕👻➔🦅グリフォン</td><td>👻✕🔨➔💀ボーンナイト</td></tr>
+            <tr><td>🔨✕🐜➔🪲ハッピーB</td><td>🐜✕🥒➔🦊ももんじゃ</td></tr>
+            <tr><td>👑✕💀➔👿デーモンL</td><td>🧱✕🤖➔❄️フリーズE</td></tr>
+            <tr><td>👿✕🔥➔😈大魔王ゼロ</td><td>😈✕❄️➔🐲カイザーD</td></tr>
         </table>
     </div>
 
     <div class="box">
-        <h3 style="color:#ff5722; margin:0 0 10px 0;">🧭 ステージ <span id="stage-count">1</span></h3>
-        <div id="dungeon-gate"><button class="dungeon-btn" onclick="enterDungeon()">🧭 ダンジョンに入って敵と戦う！</button></div>
+        <h3>🧭 ステージ <span id="stg">1</span></h3>
+        <div id="gate"><button class="dungeon-btn" onclick="enterDungeon()">🧭 ダンジョンに入って敵と戦う！</button></div>
         <div class="battle-field">
-            <div class="battle-side" id="my-battle-side"></div>
-            <div class="battle-side" id="enemy-battle-side"></div>
+            <div class="battle-side" id="mySide"></div>
+            <div class="battle-side" id="eSide"></div>
         </div>
-        <select id="battle-select" style="font-size:14px; padding:6px; width:85%; margin-bottom:8px; font-weight:bold; border:2px solid #007bff;"></select>
-        <button class="attack-btn" onclick="attackEnemyGroup()">⚔️ 最前の敵に突撃！</button>
-        <button id="catch-button" class="catch-btn" onclick="catchEnemyGroup()" disabled>💥 スカウト！(確率5%)</button>
+        <select id="sel" style="font-size:14px; padding:4px; width:85%; margin-bottom:5px;"></select>
+        <button class="attack-btn" onclick="attack()">⚔️ 最前の敵に突撃！</button>
+        <button id="catBtn" class="catch-btn" onclick="catchM()" disabled>💥 スカウト！(確率5%)</button>
     </div>
 
     <div class="box">
-        <h3>🧬 モンスター配合 (成功率20%)</h3>
-        <p style="font-size:11px; font-weight:bold; color:#dc3545;">⚠️失敗すると2匹は【完全に消滅】します！</p>
-        <button class="haigo-btn" onclick="combineMonsters()">🧬 配合実行！</button>
+        <h3>🧬 モンスター配合 (20%)</h3>
+        <button class="haigo-btn" onclick="combine()">🧬 配合実行！</button>
     </div>
-
-    <div class="box">
-        <h3>📦 ボックス</h3>
-        <ul id="party-list"></ul>
-    </div>
-
-    <div class="box">
-        <h3>📖 みつけた図鑑</h3>
-        <div id="zukan-container" class="zukan-grid"></div>
-    </div>
+    <div class="box"><h3>📦 ボックス</h3><ul id="pList"></ul></div>
+    <div class="box"><h3>📖 図鑑</h3><div id="zk" class="zukan-grid"></div></div>
 
     <script>
-        const baseData = {
-            "プニシズク": { avatar: "💧", maxHp: 10, atk: 5, def: 3, exp: 1 },
-            "カゲコウモリ": { avatar: "🦇", maxHp: 12, atk: 6, def: 4, exp: 1 },
-            "うらめシート": { avatar: "👻", maxHp: 15, atk: 7, def: 5, exp: 1 },
-            "ピコハンマー": { avatar: "🔨", maxHp: 18, atk: 10, def: 4, exp: 1 },
-            "ゾロゾロアント": { avatar: "🐜", maxHp: 8, atk: 4, def: 2, exp: 1 },
-            "カッパキュウリ": { avatar: "🥒", maxHp: 11, atk: 5, def: 4, exp: 1 },
-            "ピカピカキャンドル": { avatar: "🕯️", maxHp: 14, atk: 7, def: 3, exp: 1 },
-            "ヤドカリプニ": { avatar: "🐚", maxHp: 16, atk: 5, def: 9, exp: 1 },
-            "ゴロゴロロック": { avatar: "💣", maxHp: 25, atk: 12, def: 12, exp: 2 },
-            "シュッとメタル": { avatar: "✨", maxHp: 4, atk: 6, def: 40, exp: 6 },
-            "ももんじゃ": { avatar: "🦊", maxHp: 22, atk: 11, def: 9, exp: 2 },
-            "ギガ・プニ": { avatar: "👑", maxHp: 30, atk: 15, def: 12, exp: 2 },
-            "プニウイング": { avatar: "🐉", maxHp: 25, atk: 18, def: 10, exp: 2 },
-            "グリフォンモドキ": { avatar: "🦅", maxHp: 24, atk: 16, def: 8, exp: 2 },
-            "ボーンナイト": { avatar: "💀", maxHp: 35, atk: 22, def: 15, exp: 3 },
-            "ハッピービートル": { avatar: "🪲", maxHp: 20, atk: 12, def: 18, exp: 2 },
-            "ブロックウォール": { avatar: "🧱", maxHp: 45, atk: 28, def: 25, exp: 3 },
-            "マシントルーパー": { avatar: "🤖", maxHp: 40, atk: 30, def: 22, exp: 3 },
-            "ダークフォーク": { avatar: "🔱", maxHp: 48, atk: 33, def: 20, exp: 4 },
-            "デーモンロード": { avatar: "👿", maxHp: 50, atk: 35, def: 28, exp: 4 },
-            "フレアフェニックス": { avatar: "🔥", maxHp: 60, atk: 40, def: 25, exp: 4 },
-            "フリーズエンペラー": { avatar: "❄️", maxHp: 80, atk: 50, def: 45, exp: 5 },
-            "大魔王ゼロ": { avatar: "😈", maxHp: 100, atk: 60, def: 50, exp: 6 },
-            "カイザードラゴン": { avatar: "🐲", maxHp: 150, atk: 85, def: 70, exp: 8 },
-            "⏳ マスターシャドウ": { avatar: "⏳", maxHp: 200, atk: 110, def: 90, exp: 10 }
+        const data = {
+            "プニシズク": { a: "💧", hp: 10, atk: 5, def: 3, ex: 1 },
+            "カゲコウモリ": { a: "🦇", hp: 12, atk: 6, def: 4, ex: 1 },
+            "うらめシート": { a: "👻", hp: 15, atk: 7, def: 5, ex: 1 },
+            "ピコハンマー": { a: "🔨", hp: 18, atk: 10, def: 4, ex: 1 },
+            "ゾロゾロアント": { a: "🐜", hp: 8, atk: 4, def: 2, ex: 1 },
+            "カッパキュウリ": { a: "🥒", hp: 11, atk: 5, def: 4, ex: 1 },
+            "ギガ・プニ": { a: "👑", hp: 30, atk: 15, def: 12, ex: 2 },
+            "プニウイング": { a: "🐉", hp: 25, atk: 18, def: 10, ex: 2 },
+            "グリフォンモドキ": { a: "🦅", hp: 24, atk: 16, def: 8, ex: 2 },
+            "ボーンナイト": { a: "💀", hp: 35, atk: 22, def: 15, ex: 3 },
+            "ハッピービートル": { a: "🪲", hp: 20, atk: 12, def: 18, ex: 2 },
+            "ももんじゃ": { a: "🦊", hp: 22, atk: 11, def: 9, ex: 2 },
+            "ブロックウォール": { a: "🧱", hp: 45, atk: 28, def: 25, ex: 3 },
+            "マシントルーパー": { a: "🤖", hp: 40, atk: 30, def: 22, ex: 3 },
+            "デーモンロード": { a: "👿", hp: 50, atk: 35, def: 28, ex: 4 },
+            "フレアフェニックス": { a: "🔥", hp: 60, atk: 40, def: 25, ex: 4 },
+            "フリーズエンペラー": { a: "❄️", hp: 80, atk: 50, def: 45, ex: 5 },
+            "大魔王ゼロ": { a: "😈", hp: 100, atk: 60, def: 50, ex: 6 },
+            "カイザードラゴン": { a: "🐲", hp: 150, atk: 85, def: 70, ex: 8 }
         };
-        const pool = ["プニシズク","カゲコウモリ","うらめシート","ピコハンマー","ゾロゾロアント","カッパキュウリ","ピカピカキャンドル","ヤドカリプニ","シュッとメタル"];
+        const pool = ["プニシズク","カゲコウモリ","うらめシート","ピコハンマー","ゾロゾロアント","カッパキュウリ"];
         const recipe = {
-            "プニシズク+プニシズク": "ギガ・プニ", "プニシズク+カゲコウモリ": "プニウイング", "カゲコウモリ+うらめシート": "グリフォンモドキ", "うらめシート+ピコハンマー": "ボーンナイト", "ピコハンマー+ゾロゾロアント": "ハッピービートル", "ゾロゾロアント+カッパキュウリ": "ももんじゃ", "ピカピカキャンドル+ヤドカリプニ": "ゴロゴロロック", "シュッとメタル+ギガ・プニ": "ダークフォーク", "ももんじゃ+ハッピービートル": "ブロックウォール", "カッパキュウリ+ピコハンマー": "マシントルーパー", "ギガ・プニ+ボーンナイト": "デーモンロード", "グリフォンモドキ+プニウイング": "フレアフェニックス", "ブロックウォール+マシントルーパー": "フリーズエンペラー", "デーモンロード+フレアフェニックス": "大魔王ゼロ", "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン", "カイザードラゴン+ダークフォーク": "⏳ マスターシャドウ"
+            "プニシズク+プニシズク": "ギガ・プニ", "プニシズク+カゲコウモリ": "プニウイング", "カゲコウモリ+うらめシート": "グリフォンモドキ", "うらめシート+ピコハンマー": "ボーンナイト", "ピコハンマー+ゾロゾロアント": "ハッピービートル", "ゾロゾロアント+カッパキュウリ": "ももんじゃ", "ももんじゃ+ハッピービートル": "ブロックウォール", "カッパキュウリ+ピコハンマー": "マシントルーパー", "ギガ・プニ+ボーンナイト": "デーモンロード", "グリフォンモドキ+プニウイング": "フレアフェニックス", "ブロックウォール+マシントルーパー": "フリーズエンペラー", "デーモンロード+フレアフェニックス": "大魔王ゼロ", "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
         };
-        let enemyGroup = [], currentStage = 1;
-        let myParty = [
-            { name: "プニシズク", lv: 1, maxHp: 10, hp: 10, atk: 5, def: 3 },
-            { name: "プニシズク", lv: 1, maxHp: 10, hp: 10, atk: 5, def: 3 },
-            { name: "プニシズク", lv: 1, maxHp: 10, hp: 10, atk: 5, def: 3 }
+        let eg = [], stg = 1;
+        let party = [
+            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 },
+            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 },
+            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 }
         ];
-        let discoveredMonsters = ["プニシズク"];
+        let zkList = ["プニシズク"];
 
-        function toggleRecipe() {
-            const t = document.getElementById("recipe-table");
-            t.style.display = t.style.display === "table" ? "none" : "table";
-        }
         function enterDungeon() {
-            enemyGroup = [];
-            let count = currentStage >= 6 ? Math.floor(Math.random()*3)+1 : (currentStage >= 3 ? Math.floor(Math.random()*2)+1 : 1);
+            eg = [];
+            let count = stg >= 6 ? Math.floor(Math.random()*3)+1 : (stg >= 3 ? Math.floor(Math.random()*2)+1 : 1);
             for (let i = 0; i < count; i++) {
                 let name = pool[Math.floor(Math.random() * pool.length)];
-                let b = baseData[name];
-                enemyGroup.push({ name: name, maxHp: b.maxHp+(currentStage-1)*2, hp: b.maxHp+(currentStage-1)*2, atk: b.atk+Math.floor((currentStage-1)*0.5), def: b.def+Math.floor((currentStage-1)*0.5), exp: b.exp });
-                if (!discoveredMonsters.includes(name)) discoveredMonsters.push(name);
+                let b = data[name];
+                eg.push({ n: name, mHp: b.hp+(stg-1)*2, hp: b.hp+(stg-1)*2, atk: b.atk+Math.floor((stg-1)*0.5), def: b.def+Math.floor((stg-1)*0.5), ex: b.ex });
+                if (!zkList.includes(name)) zkList.push(name);
             }
-            document.getElementById("dungeon-gate").style.display = "none";
-            updateBattleDisplay();
+            document.getElementById("gate").style.display = "none";
+            upBtl();
         }
-        function updateBattleDisplay() {
-            document.getElementById("stage-count").innerText = currentStage;
-            const mySide = document.getElementById("my-battle-side"), eSide = document.getElementById("enemy-battle-side");
-            mySide.innerHTML = `<b>[味方パーティ]</b>`;
-            myParty.slice(0,3).forEach(m => {
-                mySide.innerHTML += `<div class="unit-slot"><span class="monster-avatar">${baseData[m.name]?.avatar}</span><b>${m.name}</b>(L.${m.lv})<br>HP:${m.hp}/${m.maxHp}<div class="hp-bar-bg"><div class="hp-bar" style="width:${(m.hp/m.maxHp)*100}%;"></div></div></div>`;
-            });
-            eSide.innerHTML = `<b>[野生の敵群]</b>`;
-            if(enemyGroup.length === 0) { eSide.innerHTML += "<br>ダンジョン外"; document.getElementById("dungeon-gate").style.display = "block"; }
-            enemyGroup.forEach(e => {
+        function upBtl() {
+            document.getElementById("stg").innerText = stg;
+            const mS = document.getElementById("mySide"), eS = document.getElementById("eSide");
+            mS.innerHTML = `<b>[味方]</b>`;
+            party.slice(0,3).forEach(m => { mS.innerHTML += `<br>${data[m.n].a}<b>${m.n}</b>(L.${m.lv})<br>HP:${m.hp}/${m.mHp}<div class="hp-bar-bg"><div class="hp-bar" style="width:${(m.hp/m.mHp)*100}%;"></div></div>`; });
+            eS.innerHTML = `<b>[野生の敵]</b>`;
+            if(eg.length === 0) { eS.innerHTML += "<br>街にいます"; document.getElementById("gate").style.display = "block"; }
+            eg.forEach(e => { eS.innerHTML += `<br>${data[e.n].a}<b>${e.n}</b><br>HP:${e.hp}/${e.mHp}<div class="hp-bar-bg"><div class="hp-bar" style="width:${(e.hp/e.mHp)*100}%;background:#dc3545;"></div></div>`; });
+            const sel = document.getElementById("sel"); sel.innerHTML = "";
+            party.forEach((m, i) => { sel.innerHTML += `<option value="${i}">${data[m.n].a} ${m.n}(L.${m.lv})</option>`; });
+            document.getElementById("catBtn").disabled = eg.length === 0 || (eg[0].hp / eg[0].mHp) > 0.5;
+        }
+        function attack() {
+            if (party.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
+            const f = party[parseInt(document.getElementById("sel").value)], t = eg[0];
+            let dmg = Math.max(2, Math.floor(f.atk - (t.def / 2)) + Math.floor(Math.random() * 3));
+            t.hp = Math.max(0, t.hp - dmg);
+            alert(`${f.n}の攻撃！ ${t.n}に ${dmg} ダメージ！`);
+            if (t.hp === 0) {
+                alert(`${t.n}を倒した！`);
+                f.lv += t.ex; f.mHp += 3*t.ex; f.hp = f.mHp; f.atk += 2*t.ex; f.def += t.ex;
+                eg.shift();
+            } else {
+                let eDmg = Math.max(1, Math.floor(t.atk - (f.def / 2)) + Math.floor(Math.random() * 2));
+                f.hp = Math.max(0, f.hp - eDmg);
+                alert(`野生の ${t.n} の反撃！ ${f.n}は ${eDmg} ダメージ！`);
+                if(f.hp === 0) { alert(`${f.n}が倒れた！復活します。`); f.hp = f.mHp; }
+            }
+            if (eg.length === 0) { alert("敵を全滅させた！ステージアップ！"); stg++; }
+            upBtl(); upPty();
+        }
+        function catchM() {
+            if (eg.length === 0) return;
+            if (Math.random() < 0.05) {
+                const b = data[eg[0].n];
+                party.push({ n: eg[0].n, lv: 1, mHp: b.hp, hp: b.hp, atk: b.atk, def: b.def });
+                alert(`✨スカウト成功！\n${eg[0].n} が加わった！`);
+                eg.shift(); if(eg.length === 0) stg++;
+            } else { alert(`💨 失敗！(確率5%)`); }
+            upBtl(); upPty();
+        }
+        function combine() {
+            const cbs = document.querySelectorAll('.cb:checked');
+            if (cbs.length !== 2) return alert("ボックスから2匹選んでください！");
+            let idx = []; cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
+            idx.sort((a, b) => b - a); const m1 = party[idx[0]], m2 = party[idx[1]];
+            party.splice(idx[0], 1); party.splice(idx[1], 1);
+            if (Math.random() < 0.20) {
+                let baby = recipe[`${m1.n}+${m2.n}`] || recipe[`${m2.n}+${m1.n}`] || "ギガ・プニ";
+                const b = data[baby];
+                party.push({ n: baby, lv: 1, mHp: b.hp+Math.floor((m1.mHp+m2.mHp)/5), hp: b.hp+Math.floor((m1.mHp+m2.mHp)/5), atk: b.atk+Math.floor((m1.atk+m2.atk)/4), def: b.def+Math.floor((m1.def+m2.def)/4) });
+                alert(`🧬 配合大成功！➔ 「${baby}」誕生！`);
+                if(!zkList.includes(baby)) zkList.push(baby);
+            } else { alert(`💥 配合失敗！消滅しました…`); }
+            upBtl(); upPty(); upZk();
+        }
+        function upPty() {
