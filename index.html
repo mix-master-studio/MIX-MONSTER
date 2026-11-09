@@ -214,7 +214,7 @@
             "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
         };
 
-        let eg = []; // 敵のグループ
+        let eg =; // 敵のグループ
         let stg = 1; // 現在のステージ
         let zk = ["プニシズク"]; // 見つけた図鑑リスト
 
@@ -230,7 +230,7 @@
 
         // ダンジョン進入
         function enter(){
-            eg = [];
+            eg =;
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
             
             for(let i = 0; i < c; i++){
@@ -286,7 +286,7 @@
 
             // スカウトボタンの活性・非活性制御
             if (eg.length > 0) {
-                document.getElementById("cat").disabled = ((eg[0].hp / eg[0].m) > 0.5);
+                document.getElementById("cat").disabled = ((eg.hp / eg.m) > 0.5);
             } else {
                 document.getElementById("cat").disabled = true;
             }
@@ -302,19 +302,101 @@
             // 図鑑の更新
             const zkDiv = document.getElementById("zk");
             zkDiv.innerHTML = "";
-m: b.hp + Math.floor((m1.m + m2.m) / 5),
-hp: b.hp + Math.floor((m1.m + m2.m) / 5),
-at: b.at + Math.floor((m1.at + m2.at) / 4),
-df: b.df + Math.floor((m1.df + m2.df) / 4)
-});
-if(!zk.includes(bName)) zk.push(bName);
-alert("配合大成功！ " + m1.n + " と " + m2.n + " が合体して " + bName + " が生まれた！");
-up();
-}
+            Object.keys(D).forEach((k) => {
+                if(zk.includes(k)){
+                    zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>' + k + '</div>';
+                } else {
+                    zkDiv.innerHTML += '<div class="zukan-item">❓<br>？？？</div>';
+                }
+            });
+        }
 
+        // 攻撃処理
+        function atk(){
+            if(p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
+            const f = p[parseInt(document.getElementById("sel").value)];
+            const t = eg[0];
 
+            // 味方の攻撃
+            let d = Math.max(2, Math.floor(f.at - (t.df / 2) + Math.random() * 3));
+            t.hp = Math.max(0, t.hp - d);
+            alert(f.n + "の攻撃！" + t.n + "に " + d + " のダメージ！");
 
-<FollowUp>
-コードを新しく貼り付けたら、GitHub Pagesのデプロイ（反映）を1〜2分待って、**ブラウザのシークレットタブ**などで新しく動くか試してみてください！
-無事に**「ボックス内のチェックボックス」や「バトル・配合機能」がすべて動くようになったか**教えてくださいね。
-</FollowUp>
+            if(t.hp === 0){
+                alert(t.n + "を倒した！");
+                f.lv += t.ex;
+                f.m += 3 * t.ex;
+                f.hp = f.m;
+                f.at += 2 * t.ex;
+                f.df += 1 * t.ex;
+                eg.shift();
+            } else {
+                // 敵の反撃
+                let ed = Math.max(1, Math.floor(t.at - (f.df / 2) + Math.random() * 2));
+                f.hp = Math.max(0, f.hp - ed);
+                alert("敵の反撃！" + f.n + "は " + ed + " のダメージ！");
+                if(f.hp === 0){
+                    alert(f.n + "が倒れた！復活します。");
+                    f.hp = f.m;
+                }
+            }
+
+            if(eg.length === 0){
+                alert("敵を全滅させた！ステージアップ！");
+                stg++;
+            }
+            up();
+        }
+
+        // スカウト処理
+        function scout(){
+            if(eg.length === 0) return;
+            const t = eg[0];
+            if(Math.random() < 0.05){ // 確率5%
+                const b = D[t.n];
+                p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df });
+                alert("スカウト成功！" + t.n + "がボックスに入った！");
+                eg.shift();
+                if(eg.length === 0) stg++;
+            } else {
+                alert("スカウト失敗！");
+            }
+            up();
+        }
+
+        // 配合処理
+        function mix(){
+            const cbs = document.querySelectorAll('.cb:checked');
+            if(cbs.length !== 2) return alert("ボックスから2匹選んでください");
+
+            let idx = [];
+            cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
+            idx.sort((a, b) => b - a); // 大きいインデックスから削除するためにソート
+
+            const m1 = p[idx[0]];
+            const m2 = p[idx[1]];
+
+            p.splice(idx[0], 1);
+            p.splice(idx[1], 1);
+
+            // 配合の判定
+            let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
+            let b = D[bName];
+
+            p.push({
+                n: bName,
+                lv: 1,
+                m: b.hp + Math.floor((m1.m + m2.m) / 5),
+                hp: b.hp + Math.floor((m1.m + m2.m) / 5),
+                at: b.at + Math.floor((m1.at + m2.at) / 4),
+                df: b.df + Math.floor((m1.df + m2.df) / 4)
+            });
+
+            if(!zk.includes(bName)) zk.push(bName);
+            alert("配合大成功！ " + m1.n + " と " + m2.n + " が合体して " + bName + " が生まれた！");
+
+            up();
+        }
+    </script>
+</body>
+</html>
