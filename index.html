@@ -3,160 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ミックスモンスター</title>
+    <title>ミックスモンスター公式</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background: #eef; padding: 15px; margin: 0; }
-        .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 450px; margin: 0 auto 15px; }
-        button { font-size: 14px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-weight: bold; width: 85%; }
-        .attack-btn { background: #dc3545; }
-        .catch-btn { background: #ffc107; color: #212529; }
-        .haigo-btn { background: #28a745; }
-        .dungeon-btn { background: #9c27b0; font-size: 16px; padding: 10px; }
-        .battle-field { display: flex; justify-content: space-between; background: #f8f9fa; border: 2px solid #ddd; border-radius: 8px; padding: 8px; margin: 10px 0; }
-        .battle-side { width: 48%; background: white; border-radius: 6px; padding: 4px; font-size: 12px; text-align: left; }
-        .hp-bar-bg { background: #eee; border-radius: 3px; height: 6px; width: 100%; overflow: hidden; border: 1px solid #ccc; }
-        .hp-bar { background: #28a745; height: 100%; width: 100%; }
-        ul { list-style: none; padding: 0; text-align: left; font-size: 12px; }
-        li { background: #fff; margin: 5px 0; padding: 6px; border-radius: 5px; border: 1px solid #ddd; }
-        .zukan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; font-size: 9px; }
-        .zukan-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 5px; padding: 4px; }
-        .recipe-table { width: 100%; font-size: 11px; border-collapse: collapse; display: none; }
-        .recipe-table td { border: 1px solid #ddd; padding: 3px; }
+        body{font-family:sans-serif;text-align:center;background:#eef;margin:0;padding:10px;}
+        .box{background:#fff;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);max-width:400px;margin:0 auto 10px;font-size:12px;}
+        button{font-size:12px;padding:6px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;margin:2px;width:90%;font-weight:bold;}
+        .battle-field{display:flex;justify-content:space-between;background:#f8f9fa;padding:5px;border-radius:5px;}
+        .side{width:48%;background:#fff;padding:4px;text-align:left;}
+        .hp-bg{background:#eee;height:6px;border-radius:3px;overflow:hidden;}
+        .hp{background:#28a745;height:100%;width:100%;}
+        ul{list-style:none;padding:0;text-align:left;}
+        li{background:#fff;margin:3px 0;padding:5px;border:1px solid #ddd;border-radius:4px;}
+        .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+        .recipe{width:100%;font-size:10px;border-collapse:collapse;display:none;}
+        .recipe td{border:1px solid #ddd;padding:2px;}
     </style>
 </head>
 <body>
 
     <h1>👾 ミックスモンスター公式</h1>
+    
     <div class="box">
-        <button style="background:#6c757d;" onclick="document.getElementById('rt').style.display=document.getElementById('rt').style.display==='table'?'none':'table'">📜 配合レシピ表の表示切替</button>
-        <table id="rt" class="recipe-table">
-            <tr><td>💧✕💧➔👑ギガプニ</td><td>💧✕🦇➔🐉プニウイング</td></tr>
-            <tr><td>🦇✕👻➔🦅グリフォン</td><td>👻✕🔨➔💀ボーンナイト</td></tr>
-            <tr><td>🔨✕🐜➔🪲ハッピーB</td><td>🐜✕🥒➔🦊ももんじゃ</td></tr>
-            <tr><td>👑✕💀➔👿デーモンL</td><td>🧱✕🤖➔❄️フリーズE</td></tr>
-            <tr><td>👿✕🔥➔😈大魔王ゼロ</td><td>😈✕❄️➔🐲カイザーD</td></tr>
+        <button onclick="let t=document.getElementById('rt');t.style.display=t.style.display==='table'?'none':'table'">📜 配合レシピ表の表示切替</button>
+        <table id="rt" class="recipe">
+            <tr><td>💧✕💧=👑ギガプニ</td><td>💧✕🦇=🐉プニウイング</td></tr>
+            <tr><td>🦇✕👻=🦅グリフォン</td><td>👻✕🔨=💀ボーンナイト</td></tr>
+            <tr><td>🔨✕🐜=🪲ハッピーB</td><td>🐜✕🥒=🦊ももんじゃ</td></tr>
+            <tr><td>👑✕💀=👿デーモンL</td><td>🧱✕🤖➔❄️フリーズE</td></tr>
         </table>
     </div>
 
     <div class="box">
         <h3>🧭 ステージ <span id="stg">1</span></h3>
-        <div id="gate"><button class="dungeon-btn" onclick="enterDungeon()">🧭 ダンジョンに入って敵と戦う！</button></div>
+        <div id="gate"><button style="background:#9c27b0;" onclick="enter()">🧭 ダンジョンに入って敵と戦う！</button></div>
         <div class="battle-field">
-            <div class="battle-side" id="mySide"></div>
-            <div class="battle-side" id="eSide"></div>
+            <div class="side" id="myS"></div>
+            <div class="side" id="eS"></div>
         </div>
-        <select id="sel" style="font-size:14px; padding:4px; width:85%; margin-bottom:5px;"></select>
-        <button class="attack-btn" onclick="attack()">⚔️ 最前の敵に突撃！</button>
-        <button id="catBtn" class="catch-btn" onclick="catchM()" disabled>💥 スカウト！(確率5%)</button>
+        <select id="sel" style="width:90%;margin:5px 0; font-weight:bold;"></select>
+        <button style="background:#dc3545;" onclick="atk()">⚔️ 最前の敵に突撃！</button>
+        <button id="cat" style="background:#ffc107;color:#000;" onclick="scout()" disabled>💥 スカウト！(確率5%)</button>
     </div>
 
-    <div class="box">
-        <h3>🧬 モンスター配合 (20%)</h3>
-        <button class="haigo-btn" onclick="combine()">🧬 配合実行！</button>
-    </div>
-    <div class="box"><h3>📦 ボックス</h3><ul id="pList"></ul></div>
-    <div class="box"><h3>📖 図鑑</h3><div id="zk" class="zukan-grid"></div></div>
+    <div class="box"><h3>🧬 モンスター配合 (20%)</h3><p style="font-size:10px;color:red;margin:0;">※下で2匹選んでから押してね</p><button style="background:#28a745;" onclick="mix()">🧬 配合実行！</button></div>
+    <div class="box"><h3>📦 ボックス</h3><ul id="box"></ul></div>
+    <div class="box"><h3>📖 みつけた図鑑</h3><div id="zk" class="grid"></div></div>
 
-    <script>
-        const data = {
-            "プニシズク": { a: "💧", hp: 10, atk: 5, def: 3, ex: 1 },
-            "カゲコウモリ": { a: "🦇", hp: 12, atk: 6, def: 4, ex: 1 },
-            "うらめシート": { a: "👻", hp: 15, atk: 7, def: 5, ex: 1 },
-            "ピコハンマー": { a: "🔨", hp: 18, atk: 10, def: 4, ex: 1 },
-            "ゾロゾロアント": { a: "🐜", hp: 8, atk: 4, def: 2, ex: 1 },
-            "カッパキュウリ": { a: "🥒", hp: 11, atk: 5, def: 4, ex: 1 },
-            "ギガ・プニ": { a: "👑", hp: 30, atk: 15, def: 12, ex: 2 },
-            "プニウイング": { a: "🐉", hp: 25, atk: 18, def: 10, ex: 2 },
-            "グリフォンモドキ": { a: "🦅", hp: 24, atk: 16, def: 8, ex: 2 },
-            "ボーンナイト": { a: "💀", hp: 35, atk: 22, def: 15, ex: 3 },
-            "ハッピービートル": { a: "🪲", hp: 20, atk: 12, def: 18, ex: 2 },
-            "ももんじゃ": { a: "🦊", hp: 22, atk: 11, def: 9, ex: 2 },
-            "ブロックウォール": { a: "🧱", hp: 45, atk: 28, def: 25, ex: 3 },
-            "マシントルーパー": { a: "🤖", hp: 40, atk: 30, def: 22, ex: 3 },
-            "デーモンロード": { a: "👿", hp: 50, atk: 35, def: 28, ex: 4 },
-            "フレアフェニックス": { a: "🔥", hp: 60, atk: 40, def: 25, ex: 4 },
-            "フリーズエンペラー": { a: "❄️", hp: 80, atk: 50, def: 45, ex: 5 },
-            "大魔王ゼロ": { a: "😈", hp: 100, atk: 60, def: 50, ex: 6 },
-            "カイザードラゴン": { a: "🐲", hp: 150, atk: 85, def: 70, ex: 8 }
-        };
-        const pool = ["プニシズク","カゲコウモリ","うらめシート","ピコハンマー","ゾロゾロアント","カッパキュウリ"];
-        const recipe = {
-            "プニシズク+プニシズク": "ギガ・プニ", "プニシズク+カゲコウモリ": "プニウイング", "カゲコウモリ+うらめシート": "グリフォンモドキ", "うらめシート+ピコハンマー": "ボーンナイト", "ピコハンマー+ゾロゾロアント": "ハッピービートル", "ゾロゾロアント+カッパキュウリ": "ももんじゃ", "ももんじゃ+ハッピービートル": "ブロックウォール", "カッパキュウリ+ピコハンマー": "マシントルーパー", "ギガ・プニ+ボーンナイト": "デーモンロード", "グリフォンモドキ+プニウイング": "フレアフェニックス", "ブロックウォール+マシントルーパー": "フリーズエンペラー", "デーモンロード+フレアフェニックス": "大魔王ゼロ", "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
-        };
-        let eg = [], stg = 1;
-        let party = [
-            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 },
-            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 },
-            { n: "プニシズク", lv: 1, mHp: 10, hp: 10, atk: 5, def: 3 }
-        ];
-        let zkList = ["プニシズク"];
+<script>
+const D={
+    "プニシズク":{a:"💧",hp:10,at:5,df:3,ex:1},"カゲコウモリ":{a:"🦇",hp:12,at:6,df:4,ex:1},"うらめシート":{a:"👻",hp:15,at:7,df:5,ex:1},
+    "ピコハンマー":{a:"🔨",hp:18,at:10,df:4,ex:1},"ゾロゾロアント":{a:"🐜",hp:8,at:4,df:2,ex:1},"カッパキュウリ":{a:"🥒",hp:11,at:5,df:4,ex:1},
+    "ギガ・プニ":{a:"👑",hp:30,at:15,df:12,ex:2},"プニウイング":{a:"🐉",hp:25,at:18,df:10,ex:2},"グリフォンモドキ":{a:"🦅",hp:24,at:16,df:8,ex:2},
+    "ボーンナイト":{a:"💀",hp:35,at:22,df:15,ex:3},"ハッピービートル":{a:"🪲",hp:20,at:12,df:18,ex:2},"ももんじゃ":{a:"🦊",hp:22,at:11,df:9,ex:2},
+    "ブロックウォール":{a:"🧱",hp:45,at:28,df:25,ex:3},"マシントルーパー":{a:"🤖",hp:40,at:30,df:22,ex:3},"デーモンロード":{a:"👿",hp:50,at:35,df:28,ex:4},
+    "フレアフェニックス":{a:"🔥",hp:60,at:40,df:25,ex:4},"フリーズエンペラー":{a:"❄️",hp:80,at:50,df:45,ex:5},"大魔王ゼロ":{a:"😈",hp:100,at:60,df:50,ex:6},"カイザードラゴン":{a:"🐲",hp:150,at:85,df:70,ex:8}
+};
+const P=["プニシズク","カゲコウモリ","うらめシート","ピコハンマー","ゾロゾロアント","カッパキュウリ"];
+const R={
+    "プニシズク+プニシズク":"ギガ・プニ","プニシズク+カゲコウモリ":"プニウイング","カゲコウモリ+うらめシート":"グリフォンモドキ",
+    "うらめシート+ピコハンマー":"ボーンナイト","ピコハンマー+ゾロゾロアント":"ハッピービートル","ゾロゾロアント+カッパキュウリ":"ももんじゃ",
+    "ももんじゃ+ハッピービートル":"ブロックウォール","カッパキュウリ+ピコハンマー":"マシントルーパー","ギガ・プニ+ボーンナイト":"デーモンロード",
+    "グリフォンモドキ+プニウイング":"フレアフェニックス","ブロックウォール+マシントルーパー":"フリーズエンペラー","デーモンロード+フレアフェニックス":"大魔王ゼロ","大魔王ゼロ+フリーズエンペラー":"カイザードラゴン"
+};
+let eg=[],stg=1,zk=["プニシズク"];
+let p=[
+    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3},
+    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3},
+    {n:"プニシズク",lv:1,m:10,hp:10,at:5,df:3}
+];
 
-        function enterDungeon() {
-            eg = [];
-            let count = stg >= 6 ? Math.floor(Math.random()*3)+1 : (stg >= 3 ? Math.floor(Math.random()*2)+1 : 1);
-            for (let i = 0; i < count; i++) {
-                let name = pool[Math.floor(Math.random() * pool.length)];
-                let b = data[name];
-                eg.push({ n: name, mHp: b.hp+(stg-1)*2, hp: b.hp+(stg-1)*2, atk: b.atk+Math.floor((stg-1)*0.5), def: b.def+Math.floor((stg-1)*0.5), ex: b.ex });
-                if (!zkList.includes(name)) zkList.push(name);
-            }
-            document.getElementById("gate").style.display = "none";
-            upBtl();
-        }
-        function upBtl() {
-            document.getElementById("stg").innerText = stg;
-            const mS = document.getElementById("mySide"), eS = document.getElementById("eSide");
-            mS.innerHTML = `<b>[味方]</b>`;
-            party.slice(0,3).forEach(m => { mS.innerHTML += `<br>${data[m.n].a}<b>${m.n}</b>(L.${m.lv})<br>HP:${m.hp}/${m.mHp}<div class="hp-bar-bg"><div class="hp-bar" style="width:${(m.hp/m.mHp)*100}%;"></div></div>`; });
-            eS.innerHTML = `<b>[野生の敵]</b>`;
-            if(eg.length === 0) { eS.innerHTML += "<br>街にいます"; document.getElementById("gate").style.display = "block"; }
-            eg.forEach(e => { eS.innerHTML += `<br>${data[e.n].a}<b>${e.n}</b><br>HP:${e.hp}/${e.mHp}<div class="hp-bar-bg"><div class="hp-bar" style="width:${(e.hp/e.mHp)*100}%;background:#dc3545;"></div></div>`; });
-            const sel = document.getElementById("sel"); sel.innerHTML = "";
-            party.forEach((m, i) => { sel.innerHTML += `<option value="${i}">${data[m.n].a} ${m.n}(L.${m.lv})</option>`; });
-            document.getElementById("catBtn").disabled = eg.length === 0 || (eg[0].hp / eg[0].mHp) > 0.5;
-        }
-        function attack() {
-            if (party.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
-            const f = party[parseInt(document.getElementById("sel").value)], t = eg[0];
-            let dmg = Math.max(2, Math.floor(f.atk - (t.def / 2)) + Math.floor(Math.random() * 3));
-            t.hp = Math.max(0, t.hp - dmg);
-            alert(`${f.n}の攻撃！ ${t.n}に ${dmg} ダメージ！`);
-            if (t.hp === 0) {
-                alert(`${t.n}を倒した！`);
-                f.lv += t.ex; f.mHp += 3*t.ex; f.hp = f.mHp; f.atk += 2*t.ex; f.def += t.ex;
-                eg.shift();
-            } else {
-                let eDmg = Math.max(1, Math.floor(t.atk - (f.def / 2)) + Math.floor(Math.random() * 2));
-                f.hp = Math.max(0, f.hp - eDmg);
-                alert(`野生の ${t.n} の反撃！ ${f.n}は ${eDmg} ダメージ！`);
-                if(f.hp === 0) { alert(`${f.n}が倒れた！復活します。`); f.hp = f.mHp; }
-            }
-            if (eg.length === 0) { alert("敵を全滅させた！ステージアップ！"); stg++; }
-            upBtl(); upPty();
-        }
-        function catchM() {
-            if (eg.length === 0) return;
-            if (Math.random() < 0.05) {
-                const b = data[eg[0].n];
-                party.push({ n: eg[0].n, lv: 1, mHp: b.hp, hp: b.hp, atk: b.atk, def: b.def });
-                alert(`✨スカウト成功！\n${eg[0].n} が加わった！`);
-                eg.shift(); if(eg.length === 0) stg++;
-            } else { alert(`💨 失敗！(確率5%)`); }
-            upBtl(); upPty();
-        }
-        function combine() {
-            const cbs = document.querySelectorAll('.cb:checked');
-            if (cbs.length !== 2) return alert("ボックスから2匹選んでください！");
-            let idx = []; cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
-            idx.sort((a, b) => b - a); const m1 = party[idx[0]], m2 = party[idx[1]];
-            party.splice(idx[0], 1); party.splice(idx[1], 1);
-            if (Math.random() < 0.20) {
-                let baby = recipe[`${m1.n}+${m2.n}`] || recipe[`${m2.n}+${m1.n}`] || "ギガ・プニ";
-                const b = data[baby];
-                party.push({ n: baby, lv: 1, mHp: b.hp+Math.floor((m1.mHp+m2.mHp)/5), hp: b.hp+Math.floor((m1.mHp+m2.mHp)/5), atk: b.atk+Math.floor((m1.atk+m2.atk)/4), def: b.def+Math.floor((m1.def+m2.def)/4) });
-                alert(`🧬 配合大成功！➔ 「${baby}」誕生！`);
-                if(!zkList.includes(baby)) zkList.push(baby);
-            } else { alert(`💥 配合失敗！消滅しました…`); }
-            upBtl(); upPty(); upZk();
-        }
-        function upPty() {
+function enter(){
+    eg=[];let c=stg>=6?Math.floor(Math.random()*3)+1:(stg>=3?Math.floor(Math.random()*2)+1:1);
+    for(let i=0;i<c;i++){
+        let n=P[Math.floor(Math.random()*P.length)],b=D[n];
+        eg.push({n:n,m:b.hp+(stg-1)*2,hp:b.hp+(stg-1)*2,at:b.at+Math.floor((stg-1)*0.5),df:b.df+Math.floor((stg-1)*0.5),ex:b.ex});
+        if(!zk.includes(n))zk.push(n);
+    }
+    document.getElementById("gate").style.display="none";up();
+}
+function up(){
+    document.getElementById("stg").innerText=stg;
+    const mS=document.getElementById("mySide"),eS=document.getElementById("eSide");
+    mS.innerHTML="<b>[味方]</b>";
+    p.slice(0,3).forEach(m=>{mS.innerHTML+=`<br>${D[m.n].a}<b>${m.n}</b>(L.${m.lv})<br>HP:${m.hp}/${m.m}<div class="hp-bg"><div class="hp" style="width:${(m.hp/m.m)*100}%;"></div></div>`;});
+    eS.innerHTML="<b>[敵]</b>";
+    if(eg.length===0){eS.innerHTML+="<br>街にいます";document.getElementById("gate").style.display="block";}
+    eg.forEach(e=>{eS.innerHTML+=`<br>${D[e.n].a}<b>${e.n}</b><br>HP:${e.hp}/${e.m}<div class="hp-bg"><div class="hp" style="width:${(e.hp/e.m)*100}%;background:#dc3545;"></div></div>`;});
+    const sel=document.getElementById("sel");sel.innerHTML="";
+    p.forEach((m,i)=>{sel.innerHTML+=`<option value="${i}">${D[m.n].a}${m.n}(L.${m.lv})</option>`;});
+    document.getElementById("cat").disabled=eg.length===0||(eg[0].hp/eg[0].m)>0.5;
+    const list=document.getElementById("box");list.innerHTML="";
+    p.forEach((m,i)=>{list.innerHTML+=`<li><input type="checkbox" class="cb" value="${i}"> ${D[m.n].a}<b>${m.n}</b> L.${m.lv} (HP:${m.hp}/${m.m})</li>`;});
+    const zkDiv=document.getElementById("zk");zkDiv.innerHTML="";
+    Object.keys(D).forEach(k=>{zkDiv.innerHTML+=`<div class="zukan-item">${zk.includes(k)?D[k].a:"❓"}<br>${zk.includes(k)?k:"？？？"}</div>`;});
+}
+function atk(){
+    if(p.length===0||eg.length===0)return alert("ダンジョンに入ってください！");
+    const f=p[parseInt(document.getElementById("sel").value)],t=eg[0];
+    let d=Math.max(2,Math.floor(f.at-(t.df/2))+Math.floor(Math.random()*3));
+    t.hp=Math.max(0,t.hp-d);alert(`${f.n}の攻撃！${t.n}に${d}ダメ！`);
+    if(t.hp===0){
+        alert(`${t.n}を倒した！`);f.lv+=t.ex;f.m+=3*t.ex;f.hp=f.m;f.at+=2*t.ex;f.df+=t.ex;eg.shift();
+    }else{
+        let ed=Math.max(1,Math.floor(t.at-(f.df/2))+Math.floor(Math.random()*2));
+        f.hp=Math.max(0,f.hp-ed);alert(`敵の反撃！${f.n}は${ed}ダメ！`);
+        if(f.hp===0){alert(`${f.n}が倒れた！復活します。`);f.hp=f.m;}
+    }
+    if(eg.length===0){alert("敵を全滅させた！ステージアップ！");stg++;}up();
+}
+function scout(){
+    if(eg.length===0)return;const t=eg[0];
+    if(Math.random()<0.05){
+        const b=D[t.n];p.push({n:t.n,lv:1,m:b.hp,hp:b.hp,at:b.at,df:b.df});
+        alert(`スカウト成功！${t.n}がボックスに入った！`);eg.shift();if(eg.length===0)stg++;
+    }else{alert("失敗！(5%)");}up();
+}
+function mix(){
+    const cbs=document.querySelectorAll('.cb:checked');if(cbs.length!==2)return alert("ボックスから2匹選んでください");
+    let idx=[];cbs.forEach(cb=>{idx.push(parseInt(cb.value));});idx.sort((a,b)=>b-a);
+    const m1=p[idx[0]],m2=p[idx[1]];p.splice(idx[0],1);p.splice(idx[1],1);
+    if(Math.random()<0.2){
+        let bName=R[`${m1.n}+${m2.n}`]||R[`${m2.n}+${m1.n}`]||"ギガ・プニ",b=D[bName];
+        p.push({n:bName,lv:1,m:b.hp+Math.floor((m1.m+m2.m)/5),hp:b.hp+Math.floor((m1.m+m2.m)/5),at:b.at+Math.floor((m1.at+m2.at)/4),df:b.df+Math.floor((m1.df+m2.df)/4)});
+        alert(`配合大成功！➔「${bName}」誕生！`);if(!zk.includes(bName))zk.push(bName);
+    }else{alert("配合失敗！消滅しました…");}up();
+}
+up();
+</script>
+</body>
+</html>
