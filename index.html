@@ -16,39 +16,67 @@
         .haigo-btn { background: #28a745; }
         .haigo-btn:active { background: #218838; }
         ul { list-style: none; padding: 0; }
-        li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 5px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 5px; border: 1px solid #ddd; display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
         .select-checkbox { transform: scale(1.5); margin-right: 15px; }
         .monster-avatar { font-size: 70px; margin: 10px auto; display: block; line-height: 1; }
-        .list-avatar { font-size: 30px; margin-left: auto; }
+        .list-avatar { font-size: 35px; margin-left: auto; }
         .flex-container { display: flex; align-items: center; width: 100%; }
         .hp-bar-bg { background: #eee; border-radius: 5px; height: 12px; width: 80%; margin: 5px auto; overflow: hidden; border: 1px solid #ccc; }
         .hp-bar { background: #28a745; height: 100%; width: 100%; transition: width 0.2s; }
         .zukan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
         .zukan-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 5px; padding: 5px; font-size: 11px; }
-        .zukan-unknown { filter: brightness(0); opacity: 0.3; }
+        .recipe-table { width: 100%; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
+        .recipe-table th, .recipe-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+        .recipe-table th { background: #f2f2f2; }
+        .select-style { font-size: 16px; padding: 8px; border-radius: 5px; width: 85%; max-width: 300px; margin-bottom: 10px; font-weight: bold; border: 2px solid #007bff; }
+        .stage-title { font-size: 20px; font-weight: bold; color: #ff5722; text-shadow: 1px 1px 0 #fff; margin: 0; }
     </style>
 </head>
 <body>
 
-    <h1>👾 ミックスモンスター (超進化・配合確率版)</h1>
+    <h1>👾 ミックスモンスター (ステージ進行版)</h1>
+
+    <!-- 📜 配合表エリア -->
+    <div class="box">
+        <h3>📜 秘伝の配合レシピ表</h3>
+        <table class="recipe-table">
+            <tr><th>親の組み合わせ</th><th>生まれるモンスター</th></tr>
+            <tr><td>💧 ✕ 💧</td><td>👑 キングスライム</td></tr>
+            <tr><td>💧 ✕ 🦇</td><td>🐉 ドラゴスライム</td></tr>
+            <tr><td>🦇 ✕ 👻</td><td>🦅 キメラ</td></tr>
+            <tr><td>👻 ✕ 🔨</td><td>💀 死神きぞく</td></tr>
+            <tr><td>🔨 ✕ 🐜</td><td>🪲 ヨロコビムシ</td></tr>
+            <tr><td>👑 ✕ 💀</td><td>👿 ヘルバトラー</td></tr>
+            <tr><td>🦅 ✕ 🐉</td><td>🔥 不死鳥ホウオウ</td></tr>
+            <tr><td>👿 ✕ 🔥</td><td>😈 大魔王デスタムーア</td></tr>
+        </table>
+    </div>
 
     <!-- 敵出現・バトルエリア -->
     <div class="box">
+        <!-- 👇 ステージ表示エリア -->
+        <div class="stage-title">🧭 <span id="stage-count">ステージ 1</span></div>
+        
         <h3>目の前に あらわれた！</h3>
         <h2 id="enemy-name">スライム</h2>
         <div id="enemy-avatar" class="monster-avatar">💧</div>
-        <div id="enemy-hp-text" style="font-weight: bold; font-size: 14px;">HP: 10 / 10</div>
+        
+        <div id="enemy-hp-text" style="font-weight: bold; font-size: 18px; color: #dc3545; margin: 5px 0;">HP: 10 / 10</div>
         <div class="hp-bar-bg"><div id="enemy-hp-bar" class="hp-bar"></div></div>
+        <div id="enemy-status" style="font-size: 13px; color: #666; margin-bottom: 15px;"></div>
+        
+        <label for="battle-select" style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 5px;">⚔️ たたかう仲間を選ぶ:</label>
+        <select id="battle-select" class="select-style"></select>
         
         <button class="attack-btn" onclick="attackEnemy()">⚔️ こうげきしてHPをへらす！</button>
-        <button id="catch-button" class="catch-btn" onclick="catchMonster()" disabled>💥 弱らせて仲間にする！</button>
+        <button id="catch-button" class="catch-btn" onclick="catchMonster()" disabled>💥 弱らせて仲間にする！(確率5%)</button>
     </div>
 
     <!-- 配合エリア -->
     <div class="box">
-        <h3>🧬 モンスター配合 (成功率50%)</h3>
-        <p style="font-size: 13px; color: #666;">仲間を2匹チェックして勝負に出よう！</p>
-        <button class="haigo-btn" onclick="combineMonsters()">🧬 50%の確率に賭けて配合！</button>
+        <h3>🧬 モンスター配合 (成功率20%)</h3>
+        <p style="font-size: 13px; color: #666; font-weight: bold; color: #dc3545;">⚠️失敗すると親モンスターは【完全に消滅】します！</p>
+        <button class="haigo-btn" onclick="combineMonsters()">🧬 20%の確率に賭けて配合！</button>
     </div>
 
     <!-- 手持ちエリア -->
@@ -66,32 +94,35 @@
     </div>
 
     <script>
-        // モンスターのデータ
-        const monsterData = {
-            "スライム": { avatar: "💧", maxHp: 10 },
-            "ドラキー": { avatar: "🦇", maxHp: 12 },
-            "ゴースト": { avatar: "👻", maxHp: 15 },
-            "おおきづち": { avatar: "🔨", maxHp: 18 },
-            "ぐんたいアリ": { avatar: "🐜", maxHp: 8 },
-            "キングスライム": { avatar: "👑", maxHp: 30 },
-            "ドラゴスライム": { avatar: "🐉", maxHp: 25 },
-            "キメラ": { avatar: "🦅", maxHp: 24 },
-            "死神きぞく": { avatar: "💀", maxHp: 35 },
-            "ヨロコビムシ": { avatar: "🪲", maxHp: 20 },
-            "ヘルバトラー": { avatar: "👿", maxHp: 50 },
-            "不死鳥ホウオウ": { avatar: "🔥", maxHp: 60 },
-            "大魔王 デスタムーア": { avatar: "😈", maxHp: 100 },
-            "配合しっぱい": { avatar: "💩", maxHp: 1 }
+        const baseMonsterData = {
+            "スライム": { avatar: "💧", maxHp: 10, atk: 5, def: 3, spd: 6 },
+            "ドラキー": { avatar: "🦇", maxHp: 12, atk: 6, def: 4, spd: 8 },
+            "ゴースト": { avatar: "👻", maxHp: 15, atk: 7, def: 5, spd: 7 },
+            "おおきづち": { avatar: "🔨", maxHp: 18, atk: 10, def: 4, spd: 3 },
+            "ぐんたいアリ": { avatar: "🐜", maxHp: 8, atk: 4, def: 2, spd: 5 },
+            "キングスライム": { avatar: "👑", maxHp: 30, atk: 15, def: 12, spd: 10 },
+            "ドラゴスライム": { avatar: "🐉", maxHp: 25, atk: 18, def: 10, spd: 14 },
+            "キメラ": { avatar: "🦅", maxHp: 24, atk: 16, def: 8, spd: 15 },
+            "死神きぞく": { avatar: "💀", maxHp: 35, atk: 22, def: 15, spd: 18 },
+            "ヨロコビムシ": { avatar: "🪲", maxHp: 20, atk: 12, def: 18, spd: 8 },
+            "ヘルバトラー": { avatar: "👿", maxHp: 50, atk: 35, def: 28, spd: 22 },
+            "不死鳥ホウオウ": { avatar: "🔥", maxHp: 60, atk: 40, def: 25, spd: 35 },
+            "大魔王 デスタムーア": { avatar: "😈", maxHp: 100, atk: 60, def: 50, spd: 40 }
         };
 
         const monsterPool = ["スライム", "ドラキー", "ゴースト", "おおきづち", "ぐんたいアリ"];
         let currentEnemy = "スライム";
         let currentEnemyHp = 10;
         
-        let myParty = ["スライム", "ドラキー"];
+        // 👇 ステージ数を管理する変数
+        let currentStage = 1;
+        
+        let myParty = [
+            { name: "スライム", maxHp: 10, atk: 5, def: 3, spd: 6 },
+            { name: "ドラキー", maxHp: 12, atk: 6, def: 4, spd: 8 }
+        ];
         let discoveredMonsters = JSON.parse(localStorage.getItem('monsterZukan')) || ["スライム", "ドラキー"];
 
-        // 配合大成功レシピ
         const recipe = {
             "スライム+スライム": "キングスライム",
             "スライム+ドラキー": "ドラゴスライム",
@@ -103,147 +134,77 @@
             "ヘルバトラー+不死鳥ホウオウ": "大魔王 デスタムーア"
         };
 
-        // 初期表示
         updateEnemyDisplay();
         updatePartyDisplay();
         updateZukanDisplay();
 
-        // 敵の表示更新
+        // 敵の表示更新（ステージ補正を計算に入れる）
         function updateEnemyDisplay() {
-            const maxHp = monsterData[currentEnemy].maxHp;
-            document.getElementById("enemy-name").innerText = currentEnemy;
-            document.getElementById("enemy-avatar").innerText = monsterData[currentEnemy].avatar;
-            document.getElementById("enemy-hp-text").innerText = `HP: ${currentEnemyHp} / ${maxHp}`;
+            const base = baseMonsterData[currentEnemy];
             
-            const hpPercent = (currentEnemyHp / maxHp) * 100;
+            // 👇 ステージが進むほど敵のステータスが加算されていく仕組み
+            const stageBonusHp = (currentStage - 1) * 2;
+            const stageBonusAtk = Math.floor((currentStage - 1) * 0.5);
+            const stageBonusDef = Math.floor((currentStage - 1) * 0.5);
+
+            const calcMaxHp = base.maxHp + stageBonusHp;
+            const calcAtk = base.atk + stageBonusAtk;
+            const calcDef = base.def + stageBonusDef;
+
+            document.getElementById("stage-count").innerText = `ステージ ${currentStage}`;
+            document.getElementById("enemy-name").innerText = currentEnemy;
+            document.getElementById("enemy-avatar").innerText = base.avatar;
+            document.getElementById("enemy-hp-text").innerText = `HP: ${currentEnemyHp} / ${calcMaxHp}`;
+            document.getElementById("enemy-status").innerText = `⚔️攻撃:${calcAtk}  🛡️守備:${calcDef}  💨素早さ:${base.spd}`;
+            
+            const hpPercent = (currentEnemyHp / calcMaxHp) * 100;
             const bar = document.getElementById("enemy-hp-bar");
             bar.style.width = `${hpPercent}%`;
             
-            if (hpPercent <= 30) {
-                bar.style.backgroundColor = "#dc3545"; // 赤色
+            if (hpPercent <= 50) {
+                bar.style.backgroundColor = "#dc3545"; 
                 document.getElementById("catch-button").disabled = false;
             } else {
-                bar.style.backgroundColor = "#28a745"; // 緑色
+                bar.style.backgroundColor = "#28a745"; 
                 document.getElementById("catch-button").disabled = true;
             }
             
-            // 図鑑に登録
             discover(currentEnemy);
         }
 
-        // 攻撃する
         function attackEnemy() {
             if (currentEnemyHp <= 0) return;
+            if (myParty.length === 0) {
+                alert("たたかえる仲間がいません！");
+                return;
+            }
             
-            const damage = Math.floor(Math.random() * 3) + 2; // 2~4ダメージ
+            const selectElement = document.getElementById("battle-select");
+            const myIndex = parseInt(selectElement.value);
+            const myFighter = myParty[myIndex];
+            
+            // 敵の補正後しゅび力を計算
+            const stageBonusDef = Math.floor((currentStage - 1) * 0.5);
+            const enemyDef = baseMonsterData[currentEnemy].def + stageBonusDef;
+            
+            let damage = Math.floor(myFighter.atk - (enemyDef / 2)) + Math.floor(Math.random() * 3);
+            if (damage < 2) damage = 2;
+
             currentEnemyHp = Math.max(0, currentEnemyHp - damage);
-            
             updateEnemyDisplay();
             
+            alert(`${myFighter.name} の こうげき！\n${currentEnemy} に ${damage} の ダメージ！`);
+            
             if (currentEnemyHp === 0) {
-                alert("野生のモンスターは 力尽きて逃げてしまった！");
+                alert(`野生の ${currentEnemy} をたおした！\n次のステージへ進みます！`);
+                currentStage++; // 👇 ステージを進める
                 nextEnemy();
             }
         }
 
-        // 次の敵を出現させる
         function nextEnemy() {
             const randomIndex = Math.floor(Math.random() * monsterPool.length);
             currentEnemy = monsterPool[randomIndex];
-            currentEnemyHp = monsterData[currentEnemy].maxHp;
-            updateEnemyDisplay();
-        }
-
-        // 仲間にする処理
-        function catchMonster() {
-            myParty.push(currentEnemy);
-            discover(currentEnemy);
-            updatePartyDisplay();
-            alert(currentEnemy + " を仲間にした！");
-            nextEnemy();
-        }
-
-        // 50%確率の配合システム
-        function combineMonsters() {
-            const checkboxes = document.querySelectorAll('.select-checkbox:checked');
             
-            if (checkboxes.length !== 2) {
-                alert("必ず2匹のモンスターを選んでください！");
-                return;
-            }
-
-            const indices = [];
-            checkboxes.forEach(cb => { indices.push(parseInt(cb.value)); });
-            
-            const m1 = myParty[indices[0]];
-            const m2 = myParty[indices[1]];
-
-            // 50%の確率判定
-            const isSuccess = Math.random() < 0.5;
-
-            // 親モンスターを手持ちから削除
-            indices.sort((a, b) => b - a);
-            myParty.splice(indices[0], 1);
-            myParty.splice(indices[1], 1);
-
-            if (isSuccess) {
-                // 成功：組み合わせレシピを検索
-                let pattern1 = `${m1}+${m2}`;
-                let pattern2 = `${m2}+${m1}`;
-                let baby = recipe[pattern1] || recipe[pattern2] || "キングスライム"; // レシピがなければ王様が生まれる
-
-                alert(`🧬 配合成功！！ (確率50%に当選！)\n\n${m1} ✕ ${m2}\n➔ ${baby} が 生まれた！`);
-                myParty.push(baby);
-                discover(baby);
-            } else {
-                // 失敗：💩が生まれる
-                alert(`💥 配合しっぱい… (50%の確率でハズレてしまった！)\n\n親の2匹は消え去り、ドロドロのモンスターが生まれた…`);
-                myParty.push("配合しっぱい");
-                discover("配合しっぱい");
-            }
-
-            updatePartyDisplay();
-        }
-
-        // 仲間リスト更新
-        function updatePartyDisplay() {
-            const listElement = document.getElementById("party-list");
-            listElement.innerHTML = "";
-            
-            if (myParty.length === 0) {
-                listElement.innerHTML = "<li>（まだ誰もいません）</li>";
-                return;
-            }
-            
-            myParty.forEach((monster, index) => {
-                const li = document.createElement("li");
-                const avatar = monsterData[monster] ? monsterData[monster].avatar : "🥚";
-                
-                li.innerHTML = `
-                    <div class="flex-container">
-                        <label style="display: flex; align-items: center; cursor: pointer;">
-                            <input type="checkbox" class="select-checkbox" value="${index}">
-                            <span style="font-weight: bold; margin-left: 10px;">${monster}</span>
-                        </label>
-                        <span class="list-avatar">${avatar}</span>
-                    </div>
-                `;
-                listElement.appendChild(li);
-            });
-        }
-
-        // 新しいモンスターを発見したときの図鑑登録
-        function discover(name) {
-            if (!discoveredMonsters.includes(name)) {
-                discoveredMonsters.push(name);
-                localStorage.setItem('monsterZukan', JSON.stringify(discoveredMonsters));
-                updateZukanDisplay();
-            }
-        }
-
-        // 図鑑の表示更新
-        function updateZukanDisplay() {
-            const container = document.getElementById("zukan-container");
-            container.innerHTML = "";
-            
-            Object.keys(monsterData).forEach(key => {
+            // 次の敵の補正後HPをセット
+            const stageBonusHp = (currentStage - 1) * 2;
