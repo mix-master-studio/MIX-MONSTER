@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ミックスモンスター</title>
+    
+    <!-- 🔍 Google検索対策用の超重要キーワード設定 -->
+    <title>ミックスモンスター (大集団バトル版) - master-studio公式</title>
+    <meta name="description" content="話題のモンスター配合RPG「ミックスモンスター」の公式ページです。プニシズクたち仲間を育てて配合し、最強のモンスターを生み出そう！">
+    <meta name="keywords" content="ミックスモンスター,みっくすもんすたー,モンスター配合,master-studio,ゲーム,ブラウザゲーム">
+
     <style>
         body { font-family: sans-serif; text-align: center; background: #eef; padding: 15px; margin: 0; }
         .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 460px; margin: 0 auto 15px; }
@@ -33,7 +38,9 @@
 </head>
 <body>
 
-    <h1>👾 ミックスモンスター (大集団バトル版)</h1>
+    <!-- 🔍 検索用に見出しにもしっかり日本語を配置 -->
+    <h1>👾 ミックスモンスター公式 (大集団バトル版)</h1>
+    <p style="font-size:11px; color:#666;">ブラウザで遊べる無料モンスター配合育成RPGゲーム「ミックスモンスター」</p>
 
     <!-- 📜 配合レシピ表エリア -->
     <div class="box">
@@ -63,15 +70,12 @@
     <div class="box">
         <h3 style="color:#ff5722; margin:0 0 10px 0;">🧭 現在地: ステージ <span id="stage-count">1</span></h3>
         
-        <!-- 🚪 新機能：ダンジョンに入るボタン -->
         <div id="dungeon-gate" style="margin-bottom: 10px;">
             <button class="dungeon-btn" onclick="enterDungeon()">🧭 ダンジョンに入って敵と戦う！</button>
         </div>
 
         <div class="battle-field">
-            <!-- 左側：味方パーティ -->
             <div class="battle-side" id="my-battle-side"></div>
-            <!-- 右側：野生の敵群 -->
             <div class="battle-side" id="enemy-battle-side"></div>
         </div>
         
@@ -81,20 +85,17 @@
         <button id="catch-button" class="catch-btn" onclick="catchEnemyGroup()" disabled>💥 最前の敵をスカウト！(確率5%・HP半分以下)</button>
     </div>
 
-    <!-- 🧬 配合エリア -->
     <div class="box">
         <h3>🧬 モンスター配合 (成功率20%)</h3>
         <p style="font-size:11px; font-weight:bold; color:#dc3545; margin:0 0 5px;">⚠️失敗すると選んだ2匹は【完全に消滅】します！</p>
         <button class="haigo-btn" onclick="combineMonsters()">🧬 20%の確率に賭けて配合！</button>
     </div>
 
-    <!-- 📦 ボックスエリア -->
     <div class="box">
         <h3>📦 ボックス (2匹選んで配合)</h3>
         <ul id="party-list"></ul>
     </div>
 
-    <!-- 📖 図鑑エリア -->
     <div class="box">
         <h3>📖 みつけた図鑑</h3>
         <div id="zukan-container" class="zukan-grid"></div>
@@ -141,7 +142,6 @@
         };
         let enemyGroup =;
         let currentStage = 1;
-        // 💧 最初の手持ちモンスターをプニシズク3体に修正して確定
         let myParty = [
             { name: "プニシズク", lv: 1, maxHp: 10, hp: 10, atk: 5, def: 3, spd: 6 },
             { name: "プニシズク", lv: 1, maxHp: 10, hp: 10, atk: 5, def: 3, spd: 6 },
@@ -160,6 +160,3 @@
                 let name = pool[Math.floor(Math.random() * pool.length)];
                 let base = baseData[name];
                 enemyGroup.push({ name: name, maxHp: base.maxHp+(currentStage-1)*2, hp: base.maxHp+(currentStage-1)*2, atk: base.atk+Math.floor((currentStage-1)*0.5), def: base.def+Math.floor((currentStage-1)*0.5), spd: base.spd, exp: base.exp });
-                if (!discoveredMonsters.includes(name)) discoveredMonsters.push(name);
-            }
-            document.getElementById("dungeon-gate").style.display = "none";
