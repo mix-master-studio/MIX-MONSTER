@@ -46,6 +46,13 @@
             padding: 4px;
             text-align: left;
         }
+        /* 戦闘時のモンスター画像を大きくする設定 */
+        .battle-monster {
+            font-size: 32px;
+            display: block;
+            text-align: center;
+            margin: 5px 0;
+        }
         .hp-bg {
             background: #eee;
             height: 6px;
@@ -132,7 +139,7 @@
         </div>
     </div>
 
-    <!-- バトル画面 -->
+    <!-- バトル画面（スカウトボタンを削除しました） -->
     <div class="box">
         <div class="battle-field">
             <div class="side" id="mySide"><b>【味方】</b></div>
@@ -142,10 +149,8 @@
         <button style="background: #dc3545;" onclick="atk()">
             ⚔️ 目の前の敵に攻撃！
         </button>
-        <button id="cat" style="background: #ffc107; color: #000;" onclick="scout()" disabled>
-            🌟 スカウト！(確率5%・HP半分以下)
-        </button>
     </div>
+
     <!-- モンスター配合 -->
     <div class="box">
         <h2>🧬 モンスター配合 (20%)</h2>
@@ -258,7 +263,7 @@
             // 味方の表示（戦闘に出る先頭3匹）
             mS.innerHTML = "<b>【味方】</b>";
             p.slice(0, 3).forEach((m) => {
-                mS.innerHTML += "<br>" + D[m.n].a + "<b>" + m.n + "</b> (Lv." + m.lv + ")";
+                mS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b> (Lv." + m.lv + ")";
                 mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m;
                 mS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
             });
@@ -270,7 +275,7 @@
                 document.getElementById("gate").style.display = "block";
             } else {
                 eg.forEach((m) => {
-                    eS.innerHTML += "<br>" + D[m.n].a + "<b>" + m.n + "</b>";
+                    eS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b>";
                     eS.innerHTML += "<br>HP: " + m.hp + "/" + m.m;
                     eS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                 });
@@ -283,12 +288,6 @@
                 sel.innerHTML += '<option value="' + i + '">' + D[n.n].a + n.n + ' (Lv.' + n.lv + ')</option>';
             });
 
-            // スカウトボタンの活性・非活性制御
-            if (eg.length > 0) {
-                document.getElementById("cat").disabled = ((eg[0].hp / eg[0].m) > 0.5);
-            } else {
-                document.getElementById("cat").disabled = true;
-            }
             // ボックス（手持ち一覧と配合用チェックボックス）の表示更新
             const list = document.getElementById("box");
             list.innerHTML = "";
@@ -309,7 +308,7 @@
             });
         }
 
-        // 攻撃処理
+        // 攻撃処理（撃破時5%自動加入システム内蔵）
         function atk(){
             if(p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
             const f = p[parseInt(document.getElementById("sel").value)];
@@ -322,6 +321,14 @@
 
             if(t.hp === 0){
                 alert(t.n + "を倒した！");
+                
+                // ★5%の確率で自動的に起き上がって仲間になる処理
+                if(Math.random() < 0.05){
+                    const b = D[t.n];
+                    p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df });
+                    alert("✨起き上がった！" + t.n + "が起き上がってボックスに仲間入りした！");
+                }
+
                 f.lv += t.ex;
                 f.m += 3 * t.ex;
                 f.hp = f.m;
@@ -342,22 +349,6 @@
             if(eg.length === 0){
                 alert("敵を全滅させた！ステージアップ！");
                 stg++;
-            }
-            up();
-        }
-
-        // スカウト処理
-        function scout(){
-            if(eg.length === 0) return;
-            const t = eg[0];
-            if(Math.random() < 0.05){ // 確率5%
-                const b = D[t.n];
-                p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df });
-                alert("スカウト成功！" + t.n + "がボックスに入った！");
-                eg.shift();
-                if(eg.length === 0) stg++;
-            } else {
-                alert("スカウト失敗！");
             }
             up();
         }
