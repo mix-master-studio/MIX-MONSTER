@@ -46,7 +46,6 @@
             padding: 4px;
             text-align: left;
         }
-        /* 戦闘時のモンスター画像を大きくする設定 */
         .battle-monster {
             font-size: 32px;
             display: block;
@@ -104,27 +103,43 @@
 
     <h1>ミックスモンスター公式</h1>
 
-    <!-- 配合レシピ表 -->
+    <!-- 配合レシピ表（名前だけのシンプルなテキストに変更） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 配合レシピ表の表示切替
         </button>
         <table id="rt" class="recipe">
             <tr>
-                <td>プニシズク ＋ 💧 ＝ ギガ・プニ</td>
-                <td>プニシズク ＋ 🌲 ＝ プニウイング</td>
+                <td>プニシズク ＋ プニシズク ＝ ギガ・プニ</td>
+                <td>プニシズク ＋ カゲコウモリ ＝ プニウイング</td>
             </tr>
             <tr>
-                <td>カゲコウモリ ＋ 🌪 ＝ グリフォン</td>
-                <td>カゲコウモリ ＋ 🌲 ＝ ホーンナイト</td>
+                <td>カゲコウモリ ＋ うらめシート ＝ グリフォン</td>
+                <td>うらめシート ＋ ピコハンマー ＝ ホーンナイト</td>
             </tr>
             <tr>
-                <td>うらめシート ＋ 🔥 ＝ ハッピーシート</td>
-                <td>うらめシート ＋ 🌲 ＝ ももんじゃ</td>
+                <td>ピコハンマー ＋ ソロゾロアント ＝ ハッピーシート</td>
+                <td>ソロゾロアント ＋ カッパキュウリ ＝ ももんじゃ</td>
             </tr>
             <tr>
-                <td>ピコハンマー ＋ 🔥 ＝ デーモン</td>
-                <td>ピコハンマー ＋ 💧 ＝ フリーズエンペラー</td>
+                <td>アクアジェリー ＋ マンドラゴラ ＝ ギガ・プニ</td>
+                <td>マグマストーン ＋ サンダーバード ＝ フレアフェニックス</td>
+            </tr>
+            <tr>
+                <td>キラータイガー ＋ メタルスライム ＝ ブロックウォール</td>
+                <td>ももんじゃ ＋ ハッピーシート ＝ ブロックウォール</td>
+            </tr>
+            <tr>
+                <td>カッパキュウリ ＋ ピコハンマー ＝ マシントルーパー</td>
+                <td>ギガ・プニ ＋ ホーンナイト ＝ デーモンロード</td>
+            </tr>
+            <tr>
+                <td>グリフォン ＋ プニウイング ＝ フレアフェニックス</td>
+                <td>ブロックウォール ＋ マシントルーパー ＝ フリーズエンペラー</td>
+            </tr>
+            <tr>
+                <td>デーモンロード ＋ フレアフェニックス ＝ 大魔王ゼロ</td>
+                <td>大魔王ゼロ ＋ フリーズエンペラー ＝ カイザードラゴン</td>
             </tr>
         </table>
     </div>
@@ -139,7 +154,7 @@
         </div>
     </div>
 
-    <!-- バトル画面（スカウトボタンを削除しました） -->
+    <!-- バトル画面 -->
     <div class="box">
         <div class="battle-field">
             <div class="side" id="mySide"><b>【味方】</b></div>
@@ -148,6 +163,10 @@
         <select id="sel" style="width: 90%; margin: 5px 0; font-weight: bold;"></select>
         <button style="background: #dc3545;" onclick="atk()">
             ⚔️ 目の前の敵に攻撃！
+        </button>
+        <!-- いつでも外に出られる脱出ボタン -->
+        <button style="background: #6c757d;" onclick="leaveDungeon()">
+            🏃 ダンジョンから出る（拠点へ戻る）
         </button>
     </div>
 
@@ -175,52 +194,62 @@
     </div>
 
     <script>
-        // モンスターデータ
+        // モンスターデータ（画像バリエーションと新規モンスターを大量追加！）
         const D = {
             "プニシズク": { a: "💧", hp: 10, at: 5, df: 3, ex: 1 },
-            "カゲコウモリ": { a: "🌪", hp: 12, at: 6, df: 4, ex: 1 },
+            "カゲコウモリ": { a: "🦇", hp: 12, at: 6, df: 4, ex: 1 },
             "うらめシート": { a: "👻", hp: 15, at: 7, df: 5, ex: 1 },
             "ピコハンマー": { a: "🔨", hp: 18, at: 10, df: 4, ex: 1 },
             "ソロゾロアント": { a: "🐜", hp: 8, at: 4, df: 2, ex: 1 },
             "カッパキュウリ": { a: "🥒", hp: 11, at: 5, df: 4, ex: 1 },
-            "ギガ・プニ": { a: "💧", hp: 30, at: 15, df: 12, ex: 2 },
-            "プニウイング": { a: "🌲", hp: 25, at: 18, df: 10, ex: 2 },
-            "グリフォン": { a: "🌪", hp: 30, at: 20, df: 13, ex: 2 },
-            "ホーンナイト": { a: "🌲", hp: 35, at: 22, df: 15, ex: 2 },
+            "アクアジェリー": { a: "🪼", hp: 10, at: 4, df: 4, ex: 1 },
+            "マンドラゴラ": { a: "🌱", hp: 14, at: 5, df: 3, ex: 1 },
+            "マグマストーン": { a: "🌋", hp: 20, at: 8, df: 8, ex: 2 },
+            "サンダーバード": { a: "⚡", hp: 18, at: 12, df: 4, ex: 2 },
+            "キラータイガー": { a: "🐯", hp: 22, at: 14, df: 5, ex: 2 },
+            "メタルスライム": { a: "🪙", hp: 5, at: 3, df: 50, ex: 5 },
+            "ギガ・プニ": { a: "🔵", hp: 30, at: 15, df: 12, ex: 2 },
+            "プニウイング": { a: "🧚", hp: 25, at: 18, df: 10, ex: 2 },
+            "グリフォン": { a: "🦅", hp: 30, at: 20, df: 13, ex: 2 },
+            "ホーンナイト": { a: "⚔️", hp: 35, at: 22, df: 15, ex: 2 },
             "ハッピーシート": { a: "🔥", hp: 20, at: 12, df: 8, ex: 2 },
-            "ももんじゃ": { a: "🌲", hp: 22, at: 11, df: 9, ex: 2 },
+            "ももんじゃ": { a: "🧸", hp: 22, at: 11, df: 9, ex: 2 },
             "ブロックウォール": { a: "🧱", hp: 45, at: 15, df: 25, ex: 3 },
             "マシントルーパー": { a: "🤖", hp: 40, at: 30, df: 22, ex: 3 },
             "デーモンロード": { a: "😈", hp: 50, at: 35, df: 28, ex: 4 },
-            "フレアフェニックス": { a: "🔥", hp: 60, at: 40, df: 25, ex: 4 },
+            "フレアフェニックス": { a: "🐦‍🔥", hp: 60, at: 40, df: 25, ex: 4 },
             "フリーズエンペラー": { a: "❄️", hp: 80, at: 50, df: 45, ex: 5 },
             "大魔王ゼロ": { a: "👺", hp: 100, at: 60, df: 50, ex: 6 },
             "カイザードラゴン": { a: "🐲", hp: 150, at: 85, df: 70, ex: 8 }
         };
 
-        // 野生モンスターの出現プール
-        const P = ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ"];
+        // 野生モンスターの出現プール（新モンスターも出現するように！）
+        const P = ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "メタルスライム"];
 
         // 配合レシピ
         const R = {
             "プニシズク+プニシズク": "ギガ・プニ",
+            "アクアジェリー+マンドラゴラ": "ギガ・プニ",
             "プニシズク+カゲコウモリ": "プニウイング",
             "カゲコウモリ+うらめシート": "グリフォン",
             "うらめシート+ピコハンマー": "ホーンナイト",
             "ピコハンマー+ソロゾロアント": "ハッピーシート",
             "ソロゾロアント+カッパキュウリ": "ももんじゃ",
             "ももんじゃ+ハッピーシート": "ブロックウォール",
+            "キラータイガー+メタルスライム": "ブロックウォール",
             "カッパキュウリ+ピコハンマー": "マシントルーパー",
             "ギガ・プニ+ホーンナイト": "デーモンロード",
+            "マグマストーン+サンダーバード": "フレアフェニックス",
             "グリフォン+プニウイング": "フレアフェニックス",
             "ブロックウォール+マシントルーパー": "フリーズエンペラー",
             "デーモンロード+フレアフェニックス": "大魔王ゼロ",
             "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
         };
 
-        let eg = []; // 敵のグループ
+        let eg =; // 敵のグループ
         let stg = 1; // 現在のステージ
         let zk = ["プニシズク"]; // 見つけた図鑑リスト
+        let inDungeon = false; // ダンジョン滞在フラグ
 
         // プレイヤーの手持ち（初期モンスター3匹）
         let p = [
@@ -232,9 +261,17 @@
         // 初期化表示
         up();
 
-        // ダンジョン進入
+        // ダンジョン進入（および自動次の部屋生成）
         function enter(){
-            eg = [];
+            inDungeon = true;
+            generateEnemies();
+            document.getElementById("gate").style.display = "none";
+            up();
+        }
+
+        // 敵の自動生成処理
+        function generateEnemies() {
+            eg =;
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
             
             for(let i = 0; i < c; i++){
@@ -250,7 +287,15 @@
                 });
                 if(!zk.includes(n)) zk.push(n);
             }
-            document.getElementById("gate").style.display = "none";
+        }
+
+
+        // ダンジョンから脱出する処理
+        function leaveDungeon() {
+            inDungeon = false;
+            eg = [];
+            document.getElementById("gate").style.display = "block";
+            alert("🏃 ダンジョンから安全に脱出しました（拠点に戻りました）");
             up();
         }
 
@@ -260,7 +305,7 @@
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
 
-            // 味方の表示（戦闘に出る先頭3匹）
+            // 味方の表示
             mS.innerHTML = "<b>【味方】</b>";
             p.slice(0, 3).forEach((m) => {
                 mS.innerHTML += "<br><span class='battle-monster'>" + D[m.n].a + "</span><b>" + m.n + "</b> (Lv." + m.lv + ")";
@@ -270,7 +315,7 @@
 
             // 敵の表示
             eS.innerHTML = "<b>【敵】</b>";
-            if(eg.length === 0){
+            if(!inDungeon || eg.length === 0){
                 eS.innerHTML += "<br>平和に満ちています";
                 document.getElementById("gate").style.display = "block";
             } else {
@@ -281,14 +326,14 @@
                 });
             }
 
-            // セレクトボックス（攻撃する味方の選択）の更新
+            // セレクトボックスの更新
             const sel = document.getElementById("sel");
             sel.innerHTML = "";
             p.forEach((n, i) => {
                 sel.innerHTML += '<option value="' + i + '">' + D[n.n].a + n.n + ' (Lv.' + n.lv + ')</option>';
             });
 
-            // ボックス（手持ち一覧と配合用チェックボックス）の表示更新
+            // ボックスの表示更新
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
@@ -308,9 +353,9 @@
             });
         }
 
-        // 攻撃処理（撃破時5%自動加入システム内蔵）
+        // 攻撃処理（入りっぱなしエンドレスシステム化）
         function atk(){
-            if(p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
+            if(!inDungeon || p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
             const f = p[parseInt(document.getElementById("sel").value)];
             const t = eg[0];
 
@@ -322,7 +367,7 @@
             if(t.hp === 0){
                 alert(t.n + "を倒した！");
                 
-                // ★5%の確率で自動的に起き上がって仲間になる処理
+                // 5%の確率で自動的に起き上がって仲間になる
                 if(Math.random() < 0.05){
                     const b = D[t.n];
                     p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df });
@@ -346,9 +391,11 @@
                 }
             }
 
+            // ★全滅したら自動で次の部屋（エンドレス入りっぱなし仕様）
             if(eg.length === 0){
-                alert("敵を全滅させた！ステージアップ！");
+                alert("部屋の敵を全滅させた！さらに奥へ進みます...（ステージアップ！）");
                 stg++;
+                generateEnemies();
             }
             up();
         }
@@ -360,7 +407,7 @@
 
             let idx = [];
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
-            idx.sort((a, b) => b - a); // 大きいインデックスから削除するためにソート
+            idx.sort((a, b) => b - a);
 
             const m1 = p[idx[0]];
             const m2 = p[idx[1]];
@@ -368,7 +415,6 @@
             p.splice(idx[0], 1);
             p.splice(idx[1], 1);
 
-            // 配合の判定
             let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
             let b = D[bName];
 
