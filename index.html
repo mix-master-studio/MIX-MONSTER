@@ -20,7 +20,14 @@
             max-width: 400px;
             margin: 0 auto 10px;
             font-size: 12px;
+            transition: background 0.5s ease;
         }
+        /* --- 動的ステージ背景色 --- */
+        .bg-grass { background: #e2f0d9 !important; } /* 草原: 緑 */
+        .bg-ocean { background: #e2efda !important; background: #ddebf7 !important; } /* 海: 青 */
+        .bg-cave { background: #ededed !important; background: #fce4d6 !important; } /* 洞窟: 茶・土 */
+        .bg-castle { background: #fff2cc !important; background: #f2dcdb !important; background: #e1d5e7 !important; } /* 魔王城: 紫 */
+
         button {
             font-size: 12px;
             padding: 6px;
@@ -36,15 +43,16 @@
         .battle-field {
             display: flex;
             justify-content: space-between;
-            background: #f8f9fa;
+            background: rgba(255, 255, 255, 0.7);
             padding: 5px;
             border-radius: 5px;
         }
         .side {
             width: 48%;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.8);
             padding: 4px;
             text-align: left;
+            border-radius: 4px;
         }
         .battle-monster {
             font-size: 32px;
@@ -103,7 +111,7 @@
 
     <h1>ミックスモンスター公式</h1>
 
-    <!-- 配合レシピ表（75種類対応版） -->
+    <!-- 配合レシピ表 -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 配合レシピ表の表示切替
@@ -189,8 +197,9 @@
             </button>
         </div>
     </div>
-    <!-- バトル画面 -->
-    <div class="box">
+
+    <!-- バトル画面（id="battleBox" を追加し背景変化に対応） -->
+    <div class="box" id="battleBox">
         <div class="battle-field">
             <div class="side" id="mySide"><b>【味方】</b></div>
             <div class="side" id="eSide"><b>【敵】</b></div>
@@ -203,7 +212,6 @@
             🏃 ダンジョンから出る（拠点へ戻る）
         </button>
     </div>
-
     <!-- モンスター配合 -->
     <div class="box">
         <h2>🧬 モンスター配合 (20%)</h2>
@@ -307,9 +315,6 @@
             "オメガゼロ": { a: "🤖", hp: 250, at: 120, df: 100, ex: 10 }
         };
 
-        // 野生プール
-        const P = ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "チョコベア", "トゲサボテン", "ホシクズ", "コオリガニ", "コロテントウ", "パタバタフライ", "トマトプニ", "マメチビ", "ファイヤローズ", "サンダージン", "アイアンウォール", "ポイズンフロッグ", "スノーペンギン", "ゴールデンワン", "キラービー", "ロックタートル"];
-
         // 配合レシピデータ
         const R = {
             "プニシズク+プニシズク": "ギガ・プニ",
@@ -349,6 +354,20 @@
             "ルシファーエンペラー+ゼウスゴッド": "オメガゼロ"
         };
 
+        // ★進行度に応じて出現プールを変化させるシステム
+        function getEnemyPool(stage) {
+            if (stage <= 5) {
+                return ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "チョコベア", "トゲサボテン", "ホシクズ", "コオリガニ", "コロテントウ", "パタバタフライ", "トマトプニ", "マメチビ", "ファイヤローズ", "サンダージン", "アイアンウォール", "ポイズンフロッグ", "スノーペンギン", "ゴールデンワン", "キラービー", "ロックタートル"];
+            } else if (stage <= 15) {
+                return ["マグマストーン", "サンダーバード", "キラータイガー", "ダークベア", "クリスタル", "マッハタカ", "オバケカボチャ", "フレイムホース", "プラチナコア", "シャドウウルフ", "メカペンギン", "シャドウネコ", "アサシンシャーク", "ミノタウロス", "ギガ・プニ", "プニウイング", "グリフォン", "ホーンナイト", "ハッピーシート", "ももんじゃ"];
+            } else if (stage <= 30) {
+                return ["ブロックウォール", "マシントルーパー", "タイタンゴーレム", "メドゥーサアイ", "マジカルフクロウ", "テンタクルクラーケン", "デスサイズ", "デーモンロード", "フレアフェニックス", "キングウイング", "シャドードラゴン"];
+            } else {
+                return ["フリーズエンペラー", "クリスタルドラゴン", "サンザードラゴン", "ホーリーフェニックス", "クロノスタイム", "ゼウスゴッド", "ポセイドンキング", "ハデスロード", "オーディンナイト", "大魔王ゼロ", "カイザードラゴン"];
+            }
+        }
+
+
         let eg = new Array();
         let stg = 1;
         let zk = ["プニシズク"];
@@ -372,18 +391,22 @@
             up();
         }
 
+        // 強敵出現プール切り替えシステム内蔵の敵生成
         function generateEnemies() {
             eg = new Array();
+            let pool = getEnemyPool(stg); // ステージに応じた出現プールを取得
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
+            
             for(let i = 0; i < c; i++){
-                let n = P[Math.floor(Math.random() * P.length)];
+                let n = pool[Math.floor(Math.random() * pool.length)];
                 let b = D[n];
+                // ステージが進むほど敵のステータスがさらに強く成長
                 eg.push({
                     n: n,
-                    m: b.hp + (stg - 1) * 2,
-                    hp: b.hp + (stg - 1) * 2,
-                    at: b.at + Math.floor((stg - 1) * 0.5),
-                    df: b.df + Math.floor((stg - 1) * 0.5),
+                    m: b.hp + (stg - 1) * 3,
+                    hp: b.hp + (stg - 1) * 3,
+                    at: b.at + Math.floor((stg - 1) * 0.7),
+                    df: b.df + Math.floor((stg - 1) * 0.7),
                     ex: b.ex
                 });
                 if(!zk.includes(n)) zk.push(n);
@@ -398,10 +421,24 @@
             up();
         }
 
+        // 画面の更新処理（背景動的切り替えシステム入り）
         function up(){
             document.getElementById("stg").innerText = stg;
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
+            const bBox = document.getElementById("battleBox");
+
+            // ★ステージ進行による戦闘画面の背景色切り替え
+            bBox.className = "box"; // クラス初期化
+            if (stg <= 5) {
+                bBox.classList.add("bg-grass"); // 1〜5部屋目: 草原
+            } else if (stg <= 15) {
+                bBox.classList.add("bg-ocean"); // 6〜15部屋目: 海
+            } else if (stg <= 30) {
+                bBox.classList.add("bg-cave");  // 16〜30部屋目: 洞窟
+            } else {
+                bBox.classList.add("bg-castle"); // 31部屋目以降: 魔王城
+            }
 
             mS.innerHTML = "<b>【味方】</b>";
             p.slice(0, 3).forEach((m) => {
@@ -446,11 +483,13 @@
             });
         }
 
+        // 攻撃および戦闘処理（レベル100上限システム内蔵）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) return alert("ダンジョンに入ってください！");
             const f = p[parseInt(document.getElementById("sel").value)];
-            const t = eg[0];
+            const t = eg;
 
+            // 味方の攻撃
             let d = Math.max(2, Math.floor(f.at - (t.df / 2) + Math.random() * 3));
             t.hp = Math.max(0, t.hp - d);
             alert(f.n + "の攻撃！" + t.n + "に " + d + " のダメージ！");
@@ -464,13 +503,21 @@
                     alert("✨起き上がった！" + t.n + "が起き上がってボックスに仲間入りした！");
                 }
 
-                f.lv += t.ex;
-                f.m += 3 * t.ex;
-                f.hp = f.m;
-                f.at += 2 * t.ex;
-                f.df += 1 * t.ex;
+                // レベル100上限チェック
+                if (f.lv < 100) {
+                    f.lv += t.ex;
+                    if (f.lv > 100) f.lv = 100; // 100を超えないようにストップ
+                    f.m += 3 * t.ex;
+                    f.hp = f.m;
+                    f.at += 2 * t.ex;
+                    f.df += 1 * t.ex;
+                } else {
+                    f.hp = f.m; // レベル100のときはHP全回復のみ
+                    alert(f.n + "はすでに最大レベル(Lv.100)です！");
+                }
                 eg.shift();
             } else {
+                // 敵の反撃
                 let ed = Math.max(1, Math.floor(t.at - (f.df / 2) + Math.random() * 2));
                 f.hp = Math.max(0, f.hp - ed);
                 alert("敵の反撃！" + f.n + "は " + ed + " のダメージ！");
@@ -488,6 +535,7 @@
             up();
         }
 
+        // 配合処理（高難易度・高レアほどステータスが超強化されるシステム）
         function mix(){
             const cbs = document.querySelectorAll('.cb:checked');
             if(cbs.length !== 2) return alert("ボックスから2匹選んでください");
@@ -496,22 +544,25 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
-            const m1 = p[idx[0]];
-            const m2 = p[idx[1]];
+            const m1 = p[idx];
+            const m2 = p[idx];
 
-            p.splice(idx[0], 1);
-            p.splice(idx[1], 1);
+            p.splice(idx, 1);
+            p.splice(idx, 1);
 
             let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
             let b = D[bName];
 
+            // ★配合難易度（モンスターの基本ランク ex）が高いほど、親から受け継ぐステータス倍率が跳ね上がる
+            let bonusMultiplier = 1 + (b.ex * 0.2); // ランク1なら1.2倍、ランク10なら3倍の親ステータス引き継ぎ！
+
             p.push({
                 n: bName,
                 lv: 1,
-                m: b.hp + Math.floor((m1.m + m2.m) / 5),
-                hp: b.hp + Math.floor((m1.m + m2.m) / 5),
-                at: b.at + Math.floor((m1.at + m2.at) / 4),
-                df: b.df + Math.floor((m1.df + m2.df) / 4)
+                m: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
+                hp: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
+                at: b.at + Math.floor(((m1.at + m2.at) / 4) * bonusMultiplier),
+                df: b.df + Math.floor(((m1.df + m2.df) / 4) * bonusMultiplier)
             });
 
             if(!zk.includes(bName)) zk.push(bName);
@@ -522,3 +573,4 @@
     </script>
 </body>
 </html>
+
