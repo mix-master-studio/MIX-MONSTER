@@ -25,9 +25,7 @@
         .hp-bar { background: #28a745; height: 100%; width: 100%; transition: width 0.2s; }
         .zukan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
         .zukan-item { background: #f8f9fa; border: 1px solid #eee; border-radius: 5px; padding: 5px; font-size: 11px; }
-        .recipe-table { width: 100%; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
-        .recipe-table th, .recipe-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
-        .recipe-table th { background: #f2f2f2; }
+        .status-text { font-size: 12px; color: #555; background: #f8f9fa; padding: 4px 8px; border-radius: 4px; margin-top: 5px; width: 90%; display: inline-block; }
         .select-style { font-size: 16px; padding: 8px; border-radius: 5px; width: 85%; max-width: 300px; margin-bottom: 10px; font-weight: bold; border: 2px solid #007bff; }
         .stage-title { font-size: 20px; font-weight: bold; color: #ff5722; text-shadow: 1px 1px 0 #fff; margin: 0; }
     </style>
@@ -36,25 +34,8 @@
 
     <h1>👾 ミックスモンスター (ステージ進行版)</h1>
 
-    <!-- 📜 配合表エリア -->
-    <div class="box">
-        <h3>📜 秘伝の配合レシピ表</h3>
-        <table class="recipe-table">
-            <tr><th>親の組み合わせ</th><th>生まれるモンスター</th></tr>
-            <tr><td>💧 ✕ 💧</td><td>👑 キングスライム</td></tr>
-            <tr><td>💧 ✕ 🦇</td><td>🐉 ドラゴスライム</td></tr>
-            <tr><td>🦇 ✕ 👻</td><td>🦅 キメラ</td></tr>
-            <tr><td>👻 ✕ 🔨</td><td>💀 死神きぞく</td></tr>
-            <tr><td>🔨 ✕ 🐜</td><td>🪲 ヨロコビムシ</td></tr>
-            <tr><td>👑 ✕ 💀</td><td>👿 ヘルバトラー</td></tr>
-            <tr><td>🦅 ✕ 🐉</td><td>🔥 不死鳥ホウオウ</td></tr>
-            <tr><td>👿 ✕ 🔥</td><td>😈 大魔王デスタムーア</td></tr>
-        </table>
-    </div>
-
     <!-- 敵出現・バトルエリア -->
     <div class="box">
-        <!-- 👇 ステージ表示エリア -->
         <div class="stage-title">🧭 <span id="stage-count">ステージ 1</span></div>
         
         <h3>目の前に あらわれた！</h3>
@@ -69,7 +50,7 @@
         <select id="battle-select" class="select-style"></select>
         
         <button class="attack-btn" onclick="attackEnemy()">⚔️ こうげきしてHPをへらす！</button>
-        <button id="catch-button" class="catch-btn" onclick="catchMonster()" disabled>💥 弱らせて仲間にする！(確率5%)</button>
+        <button id="catch-button" class="catch-btn" onclick="catchMonster()" disabled>💥 弱らせて100%仲間にする！</button>
     </div>
 
     <!-- 配合エリア -->
@@ -113,8 +94,6 @@
         const monsterPool = ["スライム", "ドラキー", "ゴースト", "おおきづち", "ぐんたいアリ"];
         let currentEnemy = "スライム";
         let currentEnemyHp = 10;
-        
-        // 👇 ステージ数を管理する変数
         let currentStage = 1;
         
         let myParty = [
@@ -138,11 +117,8 @@
         updatePartyDisplay();
         updateZukanDisplay();
 
-        // 敵の表示更新（ステージ補正を計算に入れる）
         function updateEnemyDisplay() {
             const base = baseMonsterData[currentEnemy];
-            
-            // 👇 ステージが進むほど敵のステータスが加算されていく仕組み
             const stageBonusHp = (currentStage - 1) * 2;
             const stageBonusAtk = Math.floor((currentStage - 1) * 0.5);
             const stageBonusDef = Math.floor((currentStage - 1) * 0.5);
@@ -182,8 +158,6 @@
             const selectElement = document.getElementById("battle-select");
             const myIndex = parseInt(selectElement.value);
             const myFighter = myParty[myIndex];
-            
-            // 敵の補正後しゅび力を計算
             const stageBonusDef = Math.floor((currentStage - 1) * 0.5);
             const enemyDef = baseMonsterData[currentEnemy].def + stageBonusDef;
             
@@ -197,7 +171,7 @@
             
             if (currentEnemyHp === 0) {
                 alert(`野生の ${currentEnemy} をたおした！\n次のステージへ進みます！`);
-                currentStage++; // 👇 ステージを進める
+                currentStage++;
                 nextEnemy();
             }
         }
@@ -205,6 +179,32 @@
         function nextEnemy() {
             const randomIndex = Math.floor(Math.random() * monsterPool.length);
             currentEnemy = monsterPool[randomIndex];
-            
-            // 次の敵の補正後HPをセット
             const stageBonusHp = (currentStage - 1) * 2;
+            currentEnemyHp = baseMonsterData[currentEnemy].maxHp + stageBonusHp;
+            updateEnemyDisplay();
+        }
+
+        function createCaughtMonster(name) {
+            const base = baseMonsterData[name];
+            const rand = () => Math.floor(Math.random() * 3) - 1;
+            return {
+                name: name,
+                maxHp: base.maxHp + rand(),
+                atk: base.atk + rand(),
+                def: base.def + rand(),
+                spd: base.spd + rand()
+            };
+        }
+
+        // 💥 ここで100%絶対に仲間になるように完全に書き換えました！
+        function catchMonster() {
+            const newMonster = createCaughtMonster(currentEnemy);
+            myParty.push(newMonster);
+            discover(currentEnemy);
+            updatePartyDisplay();
+            alert(`💥 成功！\n\n${currentEnemy} が確実に仲間になった！\n次のステージへ進みます！`);
+            currentStage++;
+            nextEnemy();
+        }
+
+        function combineMonsters() {
