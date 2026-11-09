@@ -242,12 +242,12 @@
             "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
         };
 
-        let eg = []; // 敵のグループ
+        let eg = new Array(); // 敵のグループ（絶対に消えない安全な書き方）
         let stg = 1; // 現在のステージ
         let zk = ["プニシズク"]; // 見つけた図鑑リスト
         let inDungeon = false; // ダンジョン滞在フラグ
 
-        // プレイヤーの手持ち（プニシズク3体を正常に修復！）
+        // プレイヤーの手持ち（初期モンスター3匹）
         let p = [
             { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3 },
             { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3 },
@@ -266,7 +266,7 @@
         }
 
         function generateEnemies() {
-            eg = [];
+            eg = new Array(); // 安全な書き方に統一
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
             for(let i = 0; i < c; i++){
                 let n = P[Math.floor(Math.random() * P.length)];
@@ -284,7 +284,7 @@
         }
         function leaveDungeon() {
             inDungeon = false;
-            eg = [];
+            eg = new Array();
             document.getElementById("gate").style.display = "block";
             alert("🏃 ダンジョンから安全に脱出しました（拠点に戻りました）");
             up();
@@ -384,7 +384,7 @@
             const cbs = document.querySelectorAll('.cb:checked');
             if(cbs.length !== 2) return alert("ボックスから2匹選んでください");
 
-            let idx = [];
+            let idx = new Array();
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
