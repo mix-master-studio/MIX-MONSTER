@@ -285,9 +285,13 @@
             });
 
             // スカウトボタンの活性・非活性制御
-            document.getElementById("cat").disabled = (eg.length === 0 || (eg[0].hp / eg[0].m) > 0.5);
+            if (eg.length > 0) {
+                document.getElementById("cat").disabled = ((eg[0].hp / eg[0].m) > 0.5);
+            } else {
+                document.getElementById("cat").disabled = true;
+            }
 
-            // ボックス（手持ち一覧と配合用チェックボックス）の表示更新 ★バグ修正箇所
+            // ボックス（手持ち一覧と配合用チェックボックス）の表示更新
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
@@ -298,5 +302,19 @@
             // 図鑑の更新
             const zkDiv = document.getElementById("zk");
             zkDiv.innerHTML = "";
-            Object.keys(D).forEach((k) => {
-                if(zk.includes(k)){
+m: b.hp + Math.floor((m1.m + m2.m) / 5),
+hp: b.hp + Math.floor((m1.m + m2.m) / 5),
+at: b.at + Math.floor((m1.at + m2.at) / 4),
+df: b.df + Math.floor((m1.df + m2.df) / 4)
+});
+if(!zk.includes(bName)) zk.push(bName);
+alert("配合大成功！ " + m1.n + " と " + m2.n + " が合体して " + bName + " が生まれた！");
+up();
+}
+
+
+
+<FollowUp>
+コードを新しく貼り付けたら、GitHub Pagesのデプロイ（反映）を1〜2分待って、**ブラウザのシークレットタブ**などで新しく動くか試してみてください！
+無事に**「ボックス内のチェックボックス」や「バトル・配合機能」がすべて動くようになったか**教えてくださいね。
+</FollowUp>
