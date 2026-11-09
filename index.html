@@ -146,7 +146,6 @@
             🌟 スカウト！(確率5%・HP半分以下)
         </button>
     </div>
-
     <!-- モンスター配合 -->
     <div class="box">
         <h2>🧬 モンスター配合 (20%)</h2>
@@ -214,7 +213,7 @@
             "大魔王ゼロ+フリーズエンペラー": "カイザードラゴン"
         };
 
-        let eg =; // 敵のグループ
+        let eg = []; // 敵のグループ
         let stg = 1; // 現在のステージ
         let zk = ["プニシズク"]; // 見つけた図鑑リスト
 
@@ -230,7 +229,7 @@
 
         // ダンジョン進入
         function enter(){
-            eg =;
+            eg = [];
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
             
             for(let i = 0; i < c; i++){
@@ -286,11 +285,10 @@
 
             // スカウトボタンの活性・非活性制御
             if (eg.length > 0) {
-                document.getElementById("cat").disabled = ((eg.hp / eg.m) > 0.5);
+                document.getElementById("cat").disabled = ((eg[0].hp / eg[0].m) > 0.5);
             } else {
                 document.getElementById("cat").disabled = true;
             }
-
             // ボックス（手持ち一覧と配合用チェックボックス）の表示更新
             const list = document.getElementById("box");
             list.innerHTML = "";
