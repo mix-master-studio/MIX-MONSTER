@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミックスモンスター</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #eef; padding: 15px; margin: 0; }
+        .box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto 15px; }
+        button { font-size: 15px; padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; width: 85%; max-width: 300px; }
+        button:active { background: #0056b3; }
+        .haigo-btn { background: #28a745; }
+        .haigo-btn:active { background: #218838; }
+        ul { list-style: none; padding: 0; }
+        li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 5px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .select-checkbox { transform: scale(1.5); margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>👾 ミックスモンスター (配合版)</h1>
+
+    <!-- 敵出現エリア -->
+    <div class="box">
+        <h3>目の前に あらわれた！</h3>
+        <h2 id="enemy-name">スライム</h2>
+        <button onclick="catchMonster()">💥 たたかって仲間にする！</button>
+    </div>
+
+    <!-- 配合エリア -->
+    <div class="box">
+        <h3>🧬 モンスター配合</h3>
+        <p style="font-size: 13px; color: #666;">仲間を2匹チェックしてボタンを押そう！</p>
+        <button class="haigo-btn" onclick="combineMonsters()">🧬 選んだ2匹を配合する！</button>
+    </div>
+
+    <!-- 手持ちエリア -->
+    <div class="box">
+        <h3>手持ちの仲間モンスター</h3>
+        <ul id="party-list">
+            <li>（まだ誰もいません）</li>
+        </ul>
+    </div>
+
+    <script>
+        // 野生モンスター
+        const monsterPool = ["スライム", "ドラキー", "ゴースト", "おおきづち", "ぐんたいアリ"];
+        let currentEnemy = "スライム";
+        
+        // 最初の仲間（テスト用）
+        let myParty = ["スライム", "ドラキー"];
+
+        // 配合レシピ（組み合わせ：生まれるモンスター）
+        const recipe = {
+            "スライム+スライム": "キングスライム",
+            "スライム+ドラキー": "ドラゴスライム",
+            "ドラキー+ゴースト": "キメラ",
+            "ゴースト+おおきづち": "死神きぞく",
+            "おおきづち+ぐんたいアリ": "ヨロコビムシ"
+        };
+
+        // 起動時にリストを表示
+        updatePartyDisplay();
+
+        // 仲間にする処理
+        function catchMonster() {
+            myParty.push(currentEnemy);
+            updatePartyDisplay();
+
+            alert(currentEnemy + " が 仲間になった！");
+
+            // 次の野生モンスター
+            const randomIndex = Math.floor(Math.random() * monsterPool.length);
+            currentEnemy = monsterPool[randomIndex];
+            document.getElementById("enemy-name").innerText = currentEnemy;
+        }
+
+        // 配合する処理
+        function combineMonsters() {
+            const checkboxes = document.querySelectorAll('.select-checkbox:checked');
+            
+            if (checkboxes.length !== 2) {
+                alert("必ず2匹のモンスターを選んでください！");
+                return;
+            }
+
+            // 選ばれたモンスターのインデックスを取得
+            const idx1 = parseInt(checkboxes[0].value);
+            const idx2 = parseInt(checkboxes[1].value);
+            
+            const m1 = myParty[idx1];
+            const m2 = myParty[idx2];
+
+            // 配合パターンを検索 (A+B と B+A の両方に対応)
+            let pattern1 = `${m1}+${m2}`;
+            let pattern2 = `${m2}+${m1}`;
+            let baby = recipe[pattern1] || recipe[pattern2] || "謎のタマゴ（強力なモンスター）";
+
+            alert(`🧬 配合開始！\n${m1} ✕ ${m2}\n\nおめでとう！\n${baby} が 生まれた！`);
+
+            // 手持ちから親の2匹を削除（インデックスの大きい方から消す）
+            const targetIndices = [idx1, idx2].sort((a, b) => b - a);
+            myParty.splice(targetIndices[0], 1);
+            myParty.splice(targetIndices[1], 1);
+
+            // 生まれた子供を手持ちに追加
+            myParty.push(baby);
+
+            // 画面を更新
+            updatePartyDisplay();
+        }
+
+        // 仲間リストの表示を更新
+        function updatePartyDisplay() {
+            const listElement = document.getElementById("party-list");
+            listElement.innerHTML = "";
+            
+            if (myParty.length === 0) {
+                listElement.innerHTML = "<li>（まだ誰もいません）</li>";
+                return;
+            }
+            
+            myParty.forEach((monster, index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <label style="display: flex; align-items: center; width: 100%;">
+                        <input type="checkbox" class="select-checkbox" value="${index}">
+                        <span style="margin-left: 10px;">${monster}</span>
+                    </label>
+                `;
+                listElement.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
 
