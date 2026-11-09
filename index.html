@@ -196,7 +196,6 @@
             };
         }
 
-        // 💥 ここで100%絶対に仲間になるように完全に書き換えました！
         function catchMonster() {
             const newMonster = createCaughtMonster(currentEnemy);
             myParty.push(newMonster);
@@ -208,3 +207,5 @@
         }
 
         function combineMonsters() {
+            const checkboxes = document.querySelectorAll('.select-checkbox:checked');
+            
