@@ -35,7 +35,7 @@
             overflow: hidden;
         }
 
-        /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
+        /* --- 戦闘画面の景色イラスト背景システム --- */
         .bg-grass {
             background: 
                 linear-gradient(to bottom, rgba(74, 222, 128, 0.4) 70%, #22c55e 100%),
@@ -201,7 +201,8 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
-    <!-- 配合レシピ表（No.1周辺から神級まで完全に繋がる緻密ツリー） -->
+
+    <!-- 配合レシピ表（新モンスター29種を追加し、No.100まで美しく繋がる超巨大ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 新・完全配合レシピツリーの表示
@@ -267,16 +268,35 @@
                 <td>👺No.66 大魔王ゼロ ＋ 🐲No.67 カイザードラゴン ＝ 🦏No.68 ギャラルホーン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
                 <td>👿No.69 ルシファーエンペラー ＋ ⚡No.60 ゼウスゴッド ＝ 🤖No.71 オメガゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
             </tr>
+            <!-- ⚡ ここから図鑑No.72以降の新究極配合ツリー ⚡ -->
+            <tr>
+                <td>🤖No.71 オメガゼロ ＋ 🦏No.68 ギャラルホーン ＝ 💀No.75 ハデス・ネクロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+                <td>🦖No.70 ゴッドバハムート ＋ 🐲No.67 カイザードラゴン ＝ ☀️No.80 アポロンロード <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+            </tr>
+            <tr>
+                <td>💀No.75 ハデス・ネクロ ＋ ☀️No.80 アポロンロード ＝ 🔮No.85 ギャラクシア <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+                <td>🔮No.85 ギャラクシア ＋ 👿No.69 ルシファーエンペラー ＝ 🪐No.90 クロノ・オメガ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+            </tr>
+            <tr>
+                <td>🪐No.90 クロノ・オメガ ＋ 👑No.54 キングウイング ＝ 🌟No.95 スターゲイザー <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+                <td>🌟No.95 スターゲイザー ＋ 🔮No.85 ギャラクシア ＝ 👑No.100 ジ・エンドゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+            </tr>
         </table>
     </div>
 
-    <!-- ステージ進行 ＆ ステージ自由選択UI -->
+    <!-- ステージ進行 ＆ ステージ自由選択UI (1〜1000) -->
     <div class="box">
-        <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span></h3>
+        <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span> / 1000</h3>
         <p style="font-size: 10px; color: #64748b; margin: 0 0 5px;">最高到達ステージ: <span id="maxStg">1</span></p>
         <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;">
             <button class="btn-small" style="background:#475569;" id="btnPrevStg" onclick="changeStage(-1)">◀ 前の階に戻る</button>
             <button class="btn-small" style="background:#475569;" id="btnNextStg" onclick="changeStage(1)">次の階に進む ▶</button>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 5px; margin-bottom: 8px;">
+            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(-10)">-10階</button>
+            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(10)">+10階</button>
+            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(-100)">-100階</button>
+            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(100)">+100階</button>
         </div>
         <div id="gate">
             <button style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);" id="btnEnter" onclick="enter()">
@@ -327,7 +347,7 @@
     </div>
 
     <script>
-        // モンスターデータ（No.1〜No.38：図鑑No順に完全ソート！）
+        // モンスターデータ（No.1〜No.50までを前編に格納）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -344,7 +364,7 @@
             "コロテントウ": { no: 13, a: "🐞", hp: 9, at: 4, df: 5, sp: 7, ex: 1 },
             "パタバタフライ": { no: 14, a: "🦋", hp: 10, at: 6, df: 3, sp: 11, ex: 1 },
             "トマトプニ": { no: 15, a: "🍅", hp: 12, at: 4, df: 4, sp: 5, ex: 1 },
-            "マメチビ": { no: 16, a: "🫛", hp: 8, at: 5, df: 3, sp: 8, ex: 1 },
+            "マメチビ": { no: 16, a: "𫫚", hp: 8, at: 5, df: 3, sp: 8, ex: 1 },
             "ファイヤローズ": { no: 17, a: "🌹", hp: 14, at: 7, df: 4, sp: 6, ex: 1 },
             "サンダージン": { no: 18, a: "🧞", hp: 15, at: 8, df: 3, sp: 12, ex: 1 },
             "アイアンウォール": { no: 19, a: "🛡️", hp: 20, at: 4, df: 10, sp: 2, ex: 1 },
@@ -399,58 +419,58 @@
             "ギャラルホーン": { no: 68, a: "🦏", hp: 160, at: 90, df: 75, sp: 30, ex: 8 },
             "ルシファーエンペラー": { no: 69, a: "👿", hp: 180, at: 95, df: 80, sp: 45, ex: 9 },
             "ゴッドバハムート": { no: 70, a: "🦖", hp: 200, at: 100, df: 85, sp: 50, ex: 9 },
-            "オメガゼロ": { no: 71, a: "🤖", hp: 250, at: 120, df: 100, sp: 60, ex: 10 }
+            "オメガゼロ": { no: 71, a: "🤖", hp: 250, at: 120, df: 100, sp: 60, ex: 10 },
+            // ⭐ 新規追加モンスター29種類（No.72〜No.100）⭐
+            "ガイアビースト": { no: 72, a: "🦁", hp: 135, at: 85, df: 62, sp: 28, ex: 7 },
+            "ヴァルキリーライト": { no: 73, a: "⚔️", hp: 120, at: 92, df: 58, sp: 42, ex: 7 },
+            "プロメテウス": { no: 74, a: "🔥", hp: 145, at: 88, df: 60, sp: 26, ex: 7 },
+            "ハデス・ネクロ": { no: 75, a: "💀", hp: 160, at: 95, df: 70, sp: 32, ex: 8 },
+            "アシュラナイト": { no: 76, a: "👹", hp: 150, at: 105, df: 68, sp: 38, ex: 8 },
+            "ブリザードキマイラ": { no: 77, a: "🦁", hp: 155, at: 98, df: 72, sp: 34, ex: 8 },
+            "ゴールドスライム": { no: 78, a: "🪙", hp: 30, at: 20, df: 150, sp: 50, ex: 10 },
+            "ケルベロスファイヤ": { no: 79, a: "🐕", hp: 140, at: 110, df: 65, sp: 44, ex: 8 },
+            "アポロンロード": { no: 80, a: "☀️", hp: 180, at: 115, df: 78, sp: 40, ex: 8 },
+            "アルテミスクイーン": { no: 81, a: "🌙", hp: 165, at: 120, df: 70, sp: 48, ex: 8 },
+            "インフィニティコア": { no: 82, a: "🔮", hp: 170, at: 100, df: 95, sp: 35, ex: 8 },
+            "アークエンジェル": { no: 83, a: "👼", hp: 190, at: 112, df: 82, sp: 45, ex: 9 },
+            "タイタンオメガ": { no: 84, a: "🗿", hp: 220, at: 105, df: 110, sp: 20, ex: 9 },
+            "ギャラクシア": { no: 85, a: "🔮", hp: 210, at: 125, df: 88, sp: 52, ex: 9 },
+            "クリムゾンフレア": { no: 86, a: "🐦‍🔥", hp: 200, at: 135, df: 80, sp: 55, ex: 9 },
+            "エターナルセイバー": { no: 87, a: "⚔️", hp: 195, at: 140, df: 85, sp: 58, ex: 9 },
+            "ディアブロロード": { no: 88, a: "😈", hp: 230, at: 130, df: 98, sp: 46, ex: 9 },
+            "ダークマター": { no: 89, a: "⚫", hp: 240, at: 128, df: 105, sp: 40, ex: 9 },
+            "クロノ・オメガ": { no: 90, a: "🪐", hp: 260, at: 145, df: 110, sp: 62, ex: 10 },
+            "ルナ・エクリプス": { no: 91, a: "🌑", hp: 250, at: 150, df: 105, sp: 65, ex: 10 },
+            "ソル・ブレジオン": { no: 92, a: "☀️", hp: 270, at: 155, df: 115, sp: 60, ex: 10 },
+            "ポセイドンオメガ": { no: 93, a: "🔱", hp: 290, at: 148, df: 125, sp: 55, ex: 10 },
+            "ゼウスエターナル": { no: 94, a: "⚡", hp: 280, at: 165, df: 120, sp: 70, ex: 10 },
+            "スターゲイザー": { no: 95, a: "🌟", hp: 300, at: 170, df: 130, sp: 75, ex: 11 },
+            "ボイドシュレッダー": { no: 96, a: "🌌", hp: 310, at: 180, df: 125, sp: 78, ex: 11 },
+            "ノヴァドラゴン": { no: 97, a: "🐲", hp: 330, at: 190, df: 140, sp: 82, ex: 11 },
+            "ジェネシスクイーン": { no: 98, a: "🧜", hp: 350, at: 185, df: 150, sp: 80, ex: 12 },
+            "カオスルーラー": { no: 99, a: "👁️", hp: 380, at: 200, df: 160, sp: 85, ex: 12 },
+            "ジ・エンドゼロ": { no: 100, a: "👑", hp: 450, at: 240, df: 200, sp: 100, ex: 15 }
         };
 
-        // 配合レシピデータ
-        const R = {
-            "プニシズク+プニシズク": "ギガ・プニ",
-            "アクアジェリー+マンドラゴラ": "ギガ・プニ",
-            "プニシズク+カゲコウモリ": "プニウイング",
-            "カゲコウモリ+うらめシート": "グリフォン",
-            "うらめシート+ピコハンマー": "ホーンナイト",
-            "ピコハンマー+ソロゾロアント": "ハッピーシート",
-            "ソロゾロアント+カッパキュウリ": "ももんじゃ",
-            "チョコベア+トゲサボテン": "ダークベア",
-            "ホシクズ+コオリガニ": "クリスタル",
-            "コロテントウ+パタバタフライ": "マッハタカ",
-            "トマトプニ+マメチビ": "オバケカボチャ",
-            "ファイヤローズ+サンダージン": "フレイムホース",
-            "アイアンウォール+プラチナコア": "タイタンゴーレム",
-            "ポイズンフロッグ+シャドウウルフ": "メドゥーサアイ",
-            "スノーペンギン+メカペンギン": "フリーズエンペラー",
-            "ゴールデンワン+シャドウネコ": "マジカルフクロウ",
-            "キラービー+アサシンシャーク": "テンタクルクラーケン",
-            "ロックタートル+ミノタウロス": "デスサイズ",
-            "ももんじゃ+ハッピーシート": "ブロックウォール",
-            "キラータイガー+メタルスライム": "ブロックウォール",
-            "カッパキュウリ+ピコハンマー": "マシントルーパー",
-            "ギガ・プニ+ホーンナイト": "デーモンロード",
-            "マグマストーン+サンダーバード": "フレアフェニックス",
-            "グリフォン+プニウイング": "フレアフェニックス",
-            "ブロックウォール+マシントルーパー": "フリーズエンペラー",
-            "キングウイング+シャドードラゴン": "大魔王ゼロ",
-            "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン",
-            "ホーリーフェニックス+クロノスタイム": "ルシファーエンペラー",
-            "ゼウスゴッド+ポセイドンキング": "ゴッドバハムート",
-            "ハデスロード+オーディンナイト": "オメガゼロ",
-            "リヴァイアサンキング+サラマンダーキング": "オメガゼロ",
-            "大魔王ゼロ+カイザードラゴン": "ギャラルホーン",
-            "ルシファーエンペラー+ゼウスゴッド": "オメガゼロ",
-            "デーモンロード+フレアフェニックス": "大魔王ゼロ"
-        };
-
-        // ステージの進行度別出現制限システム（ステージ10以下はNo.10までに制限！）
+        // ★ステージ1000対応：数字に完全に比例して野生モンスターのNo.がスライド出現する計算アルゴリズム
         function getEnemyPool(stage) {
+            let keys = Object.keys(D);
+            // ステージ10以下はNo.10までのモンスターに固定
             if (stage <= 10) {
-                return ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "チョコベア", "トゲサボテン"];
-            } else if (stage <= 20) {
-                return ["ホシクズ", "コオリガニ", "コロテントウ", "パタバタフライ", "トマトプニ", "マメチビ", "ファイヤローズ", "サンダージン", "アイアンウォール", "ポイズンフロッグ", "スノーペンギン", "ゴールデンワン", "キラービー", "ロックタートル", "ギガ・プニ", "プニウイング", "グリフォン", "ホーンナイト", "ハッピーシート", "ももんじゃ", "ダークベア", "クリスタル", "マッハタカ", "オバケカボチャ", "フレイムホース", "プラチナコア", "シャドウウルフ", "メカペンギン", "シャドウネコ", "アサシンシャーク", "ミノタウロス", "キラータイガー", "メタルスライム"];
-            } else if (stage <= 35) {
-                return ["ブロックウォール", "マシントルーパー", "タイタンゴーレ关", "メドゥーサアイ", "マジカルフクロウ", "テンタクルクラーケン", "デスサイズ", "フリーズエンペラー", "デーモンロード", "フレアフェニックス", "キングウイング", "シャドードラゴン"];
-            } else {
-                return ["クリスタルドラゴン", "サンザードラゴン", "ホーリーフェニックス", "クロノスタイム", "ゼウスゴッド", "ポセイドンキング", "ハデスロード", "オーディンナイト", "リヴァイアサンキング", "サラマンダーキング", "大魔王ゼロ", "カイザードラゴン"];
+                return keys.filter(k => D[k].no <= 10);
             }
+            
+            // ステージ11〜1000の間で、出現するNoの下限と上限を線形計算
+            let minNo = 1 + Math.floor((stage - 11) * (90 / 990)); 
+            let maxNo = 10 + Math.floor((stage - 11) * (90 / 990));
+            
+            if (maxNo > 100) maxNo = 100;
+            if (minNo > 90) minNo = 90;
+
+            let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
+            // 万が一プールが空になった場合の安全ガード
+            if (pool.length === 0) pool = ["ジ・エンドゼロ"];
+            return pool;
         }
         let eg = new Array();
         let stg = 1;
@@ -458,7 +478,7 @@
         let zk = ["プニシズク"];
         let inDungeon = false;
 
-        // ★最初から持っているプニシズク3体をすべて最初から【レベル10（完全強化）】でスタート！
+        // 最初から持っているプニシズク3体をすべて最初から【レベル10（完全強化）】でスタート！
         let p = [
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
@@ -468,11 +488,12 @@
         // 初期化表示
         up();
 
-        // ステージ選択処理
+        // ステージ選択処理（最大1000ステージ対応）
         function changeStage(val) {
             if (inDungeon) return alert("ダンジョン内ではステージを変更できません！");
             let nextVal = stg + val;
             if (nextVal < 1) return;
+            if (nextVal > 1000) return alert("最高ステージは1000階です！");
             if (nextVal > maxStg) return alert("未到達のステージには進めません！");
             stg = nextVal;
             up();
@@ -493,7 +514,7 @@
             up();
         }
 
-        // 敵の自動生成
+        // 敵の自動生成（ステージ比例ステータス成長ロジック強化版）
         function generateEnemies() {
             eg = new Array();
             let pool = getEnemyPool(stg);
@@ -502,14 +523,16 @@
             for(let i = 0; i < c; i++){
                 let n = pool[Math.floor(Math.random() * pool.length)];
                 let b = D[n];
+                // ステージ数に応じて敵のHP、攻撃、防御、素早さ、経験値がスライドして超強化！
+                let stageBonus = stg - 1;
                 eg.push({
                     n: n,
-                    m: b.hp + (stg - 1) * 3,
-                    hp: b.hp + (stg - 1) * 3,
-                    at: b.at + Math.floor((stg - 1) * 0.7),
-                    df: b.df + Math.floor((stg - 1) * 0.7),
-                    sp: b.sp + Math.floor((stg - 1) * 0.5),
-                    ex: b.ex || 1
+                    m: b.hp + Math.floor(stageBonus * 4.5),
+                    hp: b.hp + Math.floor(stageBonus * 4.5),
+                    at: b.at + Math.floor(stageBonus * 1.5),
+                    df: b.df + Math.floor(stageBonus * 1.2),
+                    sp: b.sp + Math.floor(stageBonus * 1.0),
+                    ex: (b.ex || 1) + Math.floor(stageBonus * 0.5)
                 });
                 if(!zk.includes(n)) zk.push(n);
             }
@@ -540,7 +563,7 @@
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
                 
                 if (currentPartyCount >= 3) {
-                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！";
+                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！他のモンスターを「戻す」で外してください。";
                     return alert("戦闘メンバーは3体までです！");
                 }
                 
@@ -564,14 +587,14 @@
             const eS = document.getElementById("eSide");
             const bBox = document.getElementById("battleBox");
 
-            // 背景切り替え
+            // 景色背景切り替え
             bBox.className = "box";
-            if (stg <= 5) { bBox.classList.add("bg-grass"); } 
-            else if (stg <= 15) { bBox.classList.add("bg-ocean"); } 
-            else if (stg <= 30) { bBox.classList.add("bg-cave"); } 
+            if (stg <= 250) { bBox.classList.add("bg-grass"); } 
+            else if (stg <= 500) { bBox.classList.add("bg-ocean"); } 
+            else if (stg <= 750) { bBox.classList.add("bg-cave"); } 
             else { bBox.classList.add("bg-castle"); }
 
-            // 味方戦闘画面の連動表示
+            // 味方戦闘画面の連動表示（リアルタイム同期バグ対策完了）
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
             p.forEach((m) => {
@@ -656,7 +679,7 @@
                 }
             });
         }
-        // 攻撃および戦闘処理（★味方の全滅チェックを最優先に修正し、ステージクリアバグを完全解決！）
+        // 攻撃および戦闘処理（全滅判定バグ完全修正版 ＆ レア度別加入確率システム）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) {
                 document.getElementById("battleLog").innerText = "⚠️ ダンジョンに入ってください！";
@@ -674,7 +697,7 @@
             }
 
             const f = p[firstAliveIdx];
-            const t = eg[0]; // 配列の先頭の敵
+            const t = eg; // 配列の先頭の敵
             const logBox = document.getElementById("battleLog");
 
             const mySideEl = document.getElementById("mySide");
@@ -682,7 +705,7 @@
 
             let turnLog = "";
 
-            // 味方の攻撃
+            // 味方の攻撃（移動 ➔ 敵点滅）
             function playerAttack() {
                 mySideEl.style.transform = "translateX(20px)";
                 setTimeout(() => { mySideEl.style.transform = "none"; }, 200);
@@ -697,7 +720,7 @@
                 turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ No." + D[t.n].no + " " + t.n + "に " + d + " ダメージ！ ";
             }
 
-            // 敵の攻撃
+            // 敵の攻撃（移動 ➔ 味方点滅）
             function enemyAttack() {
                 eSideEl.style.transform = "translateX(-20px)";
                 setTimeout(() => { eSideEl.style.transform = "none"; }, 200);
@@ -709,7 +732,7 @@
 
                 let ed = Math.max(1, Math.floor(t.at - (f.df / 2) + Math.random() * 2));
                 f.hp = Math.max(0, f.hp - ed);
-                turnLog += "💥No." + D[t.n].no + " " + t.n + "の反撃！ No." + D[f.n].no + " " + f.n + "に " + ed + " ダメージ！ ";
+                turnLog += "💥No." + D[t.n].no + " " + t.n + "の反撃！ No." + D[f.n].no + " " + f.n + "は " + ed + " ダメージ！ ";
                 if(f.hp === 0){
                     turnLog += "🔴No." + D[f.n].no + " " + f.n + "が戦闘不能！ ";
                 }
@@ -729,7 +752,7 @@
                 }
             }
 
-            // アニメーション完了後の同期処理（★バグ修正：全滅判定を最優先へ！）
+            // アニメーション完了後の同期処理（バグ修正：全滅チェックを最優先）
             setTimeout(() => {
                 // 【最優先】味方戦闘メンバーの全滅チェック
                 let partyDead = true;
@@ -745,7 +768,7 @@
                     document.getElementById("btnNextStg").disabled = false;
                     logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
                     up();
-                    return; // 全滅時はここで完全に処理を終了（下のステージクリア処理を絶対に通さない！）
+                    return; // 全滅時はここで完全に処理を終了
                 }
 
                 // 敵を倒したときの処理（味方が生き残っている場合のみ実行）
@@ -755,10 +778,16 @@
                     let targetNo = D[t.n].no;
                     let joinChance = 0;
 
-                    if (targetNo <= 10) { joinChance = 0.10; } 
-                    else if (targetNo <= 20) { joinChance = 0.05; } 
-                    else if (targetNo <= 50) { joinChance = 0.01; } 
-                    else { joinChance = 0.00; }
+                    // ★図鑑番号のレア度に応じた仲間加入確率分岐システム
+                    if (targetNo <= 10) {
+                        joinChance = 0.10; // No.1〜No.10は「10%」で超仲間になりやすい！
+                    } else if (targetNo <= 20) {
+                        joinChance = 0.05; // No.11〜No.20は「5%」
+                    } else if (targetNo <= 50) {
+                        joinChance = 0.01; // No.21〜No.50はレア枠「1%」！
+                    } else {
+                        joinChance = 0.00; // No.51以降は「0%」（絶対に野生加入しない）
+                    }
 
                     if(Math.random() < joinChance) {
                         const b = D[t.n];
@@ -797,6 +826,7 @@
                 if(eg.length === 0){
                     turnLog += "🎉部屋の敵を全滅させた！奥へ進む！戦闘不能だった仲間も大復活した！";
                     stg++;
+                    if (stg > 1000) stg = 1000;
                     if (stg > maxStg) { maxStg = stg; }
                     p.forEach(m => { if(m.inParty) m.hp = m.m; }); // 参加メンバーを次のステージ進出で全回復
                     generateEnemies();
@@ -818,11 +848,11 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
-            const m1 = p[idx[0]];
-            const m2 = p[idx[1]];
+            const m1 = p[idx];
+            const m2 = p[idx];
 
-            p.splice(idx[0], 1);
-            p.splice(idx[1], 1);
+            p.splice(idx, 1);
+            p.splice(idx, 1);
 
             // 20%の確率判定
             if (Math.random() < 0.20) {
