@@ -38,22 +38,61 @@
             position: relative;
             overflow: hidden;
         }
-/* --- 🎨 10エリア環境景色イラスト背景スタイル --- */
-        .bg-grass {
-            background: linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 70%, rgba(22, 163, 74, 0.3) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.4) 0%, rgba(255, 255, 255, 0.9) 70%) !important;
-            border: 2px solid #16a34a;
+
+/* --- 🎨 新・10エリア絵文字超拡大背景システム --- */
+        .battle-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 12px;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            background: #f1f5f9; /* ベース背景 */
+            border: 2px solid #cbd5e1;
+            z-index: 1;
         }
-        .bg-ocean {
-            background: radial-gradient(circle at 50% 130%, rgba(56, 189, 248, 0.3) 0%, transparent 70%), linear-gradient(to bottom, #e0f2fe 0%, #ffffff 100%) !important;
-            border: 2px solid #0284c7;
+
+        /* 背景に巨大な絵文字を配置するための共通設定 */
+        .battle-field::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 240px; /* 赤線全体に広がる超拡大サイズ */
+            opacity: 0.25;    /* 後ろで程よく主張する透明度 */
+            z-index: -1;
+            pointer-events: none;
+            white-space: nowrap;
         }
-        .bg-cave {
-            background: radial-gradient(circle at 20% 30%, rgba(251, 146, 60, 0.15) 0%, transparent 20%), radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.15) 0%, transparent 20%), linear-gradient(135deg, #f5ebe6 0%, #ffffff 100%) !important;
-            border: 2px solid #78350f;
-        }
-        .bg-castle {
-            background: linear-gradient(to top, rgba(239, 68, 68, 0.15) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.2) 0%, #ffffff 100%) !important;
-            border: 2px solid #6b21a8;
+
+        /* 10種類の環境に応じた絵文字と枠線の定義 */
+        .bg-grass { border-color: #16a34a !important; } .bg-grass::before { content: "🏕"; }
+        .bg-jungle { border-color: #15803d !important; } .bg-jungle::before { content: "🏞️"; }
+        .bg-ocean { border-color: #0284c7 !important; } .bg-ocean::before { content: "🏝️"; }
+        .bg-desert { border-color: #b45309 !important; } .bg-desert::before { content: "🏜️"; }
+        .bg-poison { border-color: #701a75 !important; } .bg-poison::before { content: "🟪"; }
+        .bg-mine { border-color: #4d7c0f !important; } .bg-mine::before { content: "🏔️"; }
+        .bg-shrine { border-color: #6d28d9 !important; } .bg-shrine::before { content: "🏛️"; }
+        .bg-volcano { border-color: #be123c !important; } .bg-volcano::before { content: "🌋"; }
+        .bg-ice { border-color: #0369a1 !important; } .bg-ice::before { content: "🌌"; }
+        .bg-castle { border-color: #1e1b4b !important; } .bg-castle::before { content: "🌃"; }
+
+
+        /* ⭕ 青線で囲まれた部分：少し半透明にして後ろの絵文字を透かす */
+        .side {
+            width: 49%;
+            background: rgba(255, 255, 255, 0.65) !important; /* 0.65に下げて透明化 */
+            backdrop-filter: blur(6px); /* すりガラス効果で文字をクッキリ見せる */
+            -webkit-backdrop-filter: blur(6px);
+            padding: 10px;
+            text-align: left;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+            transition: transform 0.2s ease-out;
+            position: relative;
+            color: #334155;
+            z-index: 2;
         }
 
         button {
@@ -94,28 +133,6 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 2px 8px rgba(16,185,129,0.2);
         }
-        .battle-field {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(241, 245, 249, 0.6);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            padding: 10px;
-            border-radius: 12px;
-            gap: 10px;
-        }
-        .side {
-            width: 49%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px;
-            text-align: left;
-            border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(15,23,42,0.04);
-            transition: transform 0.2s ease-out, background-color 0.4s ease-in-out;
-            position: relative;
-            color: #334155;
-        }
-
         .atk-forward-my { transform: translateX(25px); }
         .atk-forward-e { transform: translateX(-25px); }
 
@@ -290,7 +307,7 @@
             </tr>
             <tr>
                 <td>🔥No.62 ハデスロード ＋ 🐎No.63 オーディンナイト ＝ 🤖No.71 オメガゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🧜No.64 リヴァイアサンキング ＋ 🦎No.65 サラマンダーキング ＝ 🤖No.71 オメガゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
+                <td>🧜No.64 リヴァイアsanキング ＋ 🦎No.65 サラマンダーキング ＝ 🤖No.71 オメガゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
             </tr>
             <tr>
                 <td>👺No.66 大魔王ゼロ ＋ 🐲No.67 カイザードラゴン ＝ 🦏No.68 ギャラルホーン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
@@ -310,7 +327,6 @@
             </tr>
         </table>
     </div>
-
     <!-- ② 戦闘画面の真上：現在のステージや最高ステージ、各種変更ボタンを表示 -->
     <div class="box">
         <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span></h3>
@@ -399,6 +415,7 @@
         </div>
     </div>
 
+
     <script>
         // モンスターデータ前編（No.1〜No.32）
         const D = {
@@ -434,7 +451,6 @@
             "ももんじゃ": { no: 30, a: "🧸", hp: 22, at: 11, df: 9, sp: 10, ex: 2 },
             "ダークベア": { no: 31, a: "🐻", hp: 25, at: 15, df: 10, sp: 7, ex: 2 },
             "クリスタル": { no: 32, a: "💎", hp: 20, at: 10, df: 15, sp: 8, ex: 2 },
-
             "マッハタカ": { no: 33, a: "🦅", hp: 22, at: 13, df: 8, sp: 16, ex: 2 },
             "オバケカボチャ": { no: 34, a: "🎃", hp: 26, at: 11, df: 11, sp: 6, ex: 2 },
             "フレイムホース": { no: 35, a: "🐴", hp: 24, at: 16, df: 9, sp: 13, ex: 2 },
@@ -458,7 +474,7 @@
             "フレアフェニックス": { no: 53, a: "🐦‍🔥", hp: 60, at: 40, df: 25, sp: 22, ex: 4 },
             "キングウイング": { no: 54, a: "👑", hp: 70, at: 45, df: 35, sp: 24, ex: 4 },
             "シャドードラゴン": { no: 55, a: "🐉", hp: 75, at: 48, df: 38, sp: 20, ex: 4 },
-            "クリスタルドラゴン": { no: 56, a: "💎", hp: 85, alt: 52, df: 42, sp: 19, ex: 5 },
+            "クリスタルドラゴン": { no: 56, a: "💎", hp: 85, at: 52, df: 42, sp: 19, ex: 5 },
             "サンザードラゴン": { no: 57, a: "⚡", hp: 80, at: 55, df: 40, sp: 25, ex: 5 },
             "ホーリーフェニックス": { no: 58, a: "😇", hp: 90, at: 58, df: 44, sp: 26, ex: 5 },
             "クロノスタイム": { no: 59, a: "⏳", hp: 85, at: 60, df: 46, sp: 28, ex: 5 },
@@ -515,7 +531,7 @@
             "ゴールデンワン+シャドウネコ": "マジカルフクロウ", "キラービー+アサシンシャーク": "テンタクルクラーケン", "ロックタートル+ミノタウロス": "デスサイズ",
             "ももんじゃ+ハッピーシート": "ブロックウォール", "キラータイガー+メタルスライム": "ブロックウォール", "カッパキュウリ+ピコハンマー": "マシントルーパー",
             "ギガ・プニ+ホーンナイト": "デーモンロード", "グリフォン+プニウイング": "フレアフェニックス", "ブロックウォール+マシントルーパー": "フリーズエンペラー",
-            "キングウイング+シャドードラゴン": "大魔王ゼロ", "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン", "ホーリーフェニックス+クロノスタイム": "ルシファーエンペラー",
+            "キングウイング+シャドードラゴン": "大魔王ゼロ", "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン", "ホーリーフェニックス+クロノタイム": "ルシファーエンペラー",
             "ゼウスゴッド+ポセイドンキング": "ゴッドバハムート", "ハデスロード+オーディンナイト": "オメガゼロ", "リヴァイアサンキング+サラマンダーキング": "オメガゼロ",
             "大魔王ゼロ+カイザードラゴン": "ギャラルホーン", "ルシファーエンペラー+ゼウスゴッド": "オメガゼロ", "デーモンロード+フレアフェニックス": "大魔王ゼロ",
             "オメガゼロ+ギャラルホーン": "ハデス・ネクロ", "ゴッドバハムート+カイザードラゴン": "アポロンロード", "ハデス・ネクロ+アポロンロード": "ギャラクシア",
@@ -557,7 +573,6 @@
             }
             up();
         }
-
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
             if (stage <= 10) return keys.filter(k => D[k].no <= 10);
@@ -588,7 +603,6 @@
             if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
             inDungeon = true;
             generateEnemies();
-            // ⭕ 重複エラー防止のため、存在するボタンをすべてロック
             const btn1 = document.getElementById("btnEnter");
             const btn2 = document.getElementById("btnEnterBtm");
             const btnP = document.getElementById("btnPrevStg");
@@ -665,27 +679,26 @@
             up();
         }
 
-
         function up() {
             if (!inDungeon) {
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
                 p.sort((a, b) => (b.inParty ? 1 : 0) - (a.inParty ? 1 : 0));
             }
             
-            // ⭕ 【新仕様】100階ごとのエリア環境名・絵文字・色スタイル計算
+            // ⭕ 【新仕様】100階ごとのエリア環境名・絵文字・新巨大背景クラスの計算
             let envName = "";
             let envEmoji = "";
             let envClass = "";
             
             if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
-            else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-grass"; }
+            else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-jungle"; }
             else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
-            else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-cave"; }
-            else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-castle"; }
-            else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-cave"; }
-            else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-castle"; }
-            else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-castle"; }
-            else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ocean"; }
+            else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-desert"; }
+            else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
+            else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
+            else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
+            else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
+            else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
             else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
 
             // UI要素へのデータ流し込み
@@ -696,10 +709,12 @@
 
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
-            const bBox = document.getElementById("battleBox");
-
-            if (bBox) bBox.className = "box " + envClass;
-
+            
+            // ⭕ 赤線で囲まれた battle-field（戦闘画面）に環境背景クラスをダイナミック適用
+            const bField = document.querySelector(".battle-field");
+            if (bField) {
+                bField.className = "battle-field " + envClass;
+            }
             // ⭕ 味方戦闘画面の描画（サイズ縮小 ＆ 三大ステータス非表示）
             if (mS) {
                 mS.innerHTML = "<b style='font-size:12px;'>【味方】</b>";
@@ -741,7 +756,6 @@
                     eS.innerHTML += enemyHTML;
                 }
             }
-
             const btnMix = document.getElementById("btnMix");
             if (btnMix) btnMix.disabled = inDungeon;
 
@@ -764,7 +778,7 @@
                 });
             }
 
-            // 配合選択用ボックスの描画
+            // 配合選択用ボックスの描画（ボックスの真下に配置連動）
             const mixList = document.getElementById("mixBoxList");
             if (mixList) {
                 mixList.innerHTML = "";
@@ -775,7 +789,6 @@
                     mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ')</li>';
                 });
             }
-
             // みつけた図鑑の描画
             const zkDiv = document.getElementById("zk");
             if (zkDiv) {
@@ -799,7 +812,7 @@
                 field.value = base64Str;
                 field.select();
                 navigator.clipboard.writeText(base64Str).then(() => {
-                    alert("🔑 引き継ぎコードを発行・コピーしました！");
+                    alert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！");
                 }).catch(() => {
                     alert("🔑 コードを発行しました。枠内からコピーしてください。");
                 });
@@ -826,7 +839,6 @@
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
         }
-
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) return;
 
@@ -860,7 +872,6 @@
                 currentEnemy.hp = Math.max(0, currentEnemy.hp - d);
                 turnLog += "⚔️No." + D[activeAlly.n].no + " " + activeAlly.n + "の攻撃！ " + d + " ダメージ！ ";
             }
-
             function enemyAttack() {
                 eSideEl.classList.add("atk-forward-e");
                 setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
@@ -885,14 +896,12 @@
             }
 
             setTimeout(() => {
-                if (!inDungeon) return; // ⭕ 脱出していたら以後の反撃処理を確実に中止
+                if (!inDungeon) return; // ⭕ 途中で脱出していたら以後の処理を確実に中止
                 if (enemyCanAttack) {
                     if (activeAlly.sp >= currentEnemy.sp) { enemyAttack(); } else { playerAttack(); }
                 }
-
-
                 setTimeout(() => {
-                    if (!inDungeon) return; // ⭕ 脱出していたら以後の生存判定を確実に中止
+                    if (!inDungeon) return; // ⭕ 脱出していたら以後の処理を確実に中止
                     let partyDead = true;
                     p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
 
@@ -946,7 +955,7 @@
                                 maxStg = Math.min(1000, maxStg + 1);
                                 turnLog += "🏰新しい階層が解放された！ ";
                             }
-                            // ⭕ 【新仕様】敵全滅時に自動で次の階へ進む処理
+                            // ⭕ 【新仕様】全滅時自動で次の階に進む処理
                             if (stg < 1000) {
                                 stg++;
                                 turnLog += "➡️自動で " + stg + " 階に進みます。";
@@ -970,7 +979,6 @@
                 }, 400);
             }, 300);
         }
-
         function mix() {
             if(inDungeon) return;
             
@@ -982,7 +990,7 @@
             const cbs = document.querySelectorAll(".cb:checked");
             if(cbs.length !== 2) return alert("配合するにはモンスターを2匹チェックしてください！");
             
-            // cbs[0] と cbs[1] の配列インデックス指定により2匹を確実に個別取得
+            // cbs の配列からチェックされた2匹のインデックスを正確に取得
             let idx1 = parseInt(cbs[0].value);
             let idx2 = parseInt(cbs[1].value);
             
@@ -1024,7 +1032,3 @@
     </script>
 </body>
 </html>
-
-
-
-
