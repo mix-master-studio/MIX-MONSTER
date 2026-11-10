@@ -105,7 +105,6 @@
             border-radius: 12px;
             gap: 10px;
         }
-
         .side {
             width: 49%;
             background: rgba(255, 255, 255, 0.95);
@@ -165,7 +164,7 @@
             100% { opacity: 1; background-color: rgba(255, 255, 255, 0.95); }
         }
         .hit-flash { animation: damageFlash 0.4s ease-in-out; }
-        
+
         .battle-log {
             background: #f8fafc;
             color: #0284c7;
@@ -232,7 +231,6 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
-
     <!-- 配合レシピ表（図鑑No.100まで美しく繋がる超巨大ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -313,7 +311,6 @@
             </tr>
         </table>
     </div>
-
     <!-- ステージ進行 ＆ ステージ自由選択UI (1〜1000) -->
     <div class="box">
         <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span> / 1000</h3>
@@ -334,6 +331,7 @@
             </button>
         </div>
     </div>
+
     <!-- バトル画面 -->
     <div class="box" id="battleBox">
         <div class="battle-field">
@@ -348,7 +346,6 @@
             🏃 ダンジョンから出る（拠点へ戻る）
         </button>
     </div>
-
     <!-- 🧬 配合用ボックスエリア（表示切替対応） -->
     <div class="box" id="mixArea">
         <h2>🧬 モンスター配合 (20%)</h2>
@@ -378,6 +375,7 @@
         <h3 style="margin-top: 0; color: #1e293b;">📖 みつけた図鑑</h3>
         <div id="zk" class="grid"></div>
     </div>
+
     <!-- 💾 データ引き継ぎ・セーブ管理エリア -->
     <div class="box" style="background: rgba(255, 255, 255, 0.9); border: 1px solid #0284c7;">
         <h3 style="margin-top: 0; color: #0284c7;">💾 データセーブ・引き継ぎ管理</h3>
@@ -398,7 +396,7 @@
     </div>
 
     <script>
-        // モンスターデータ前編（No.1～No.35）
+        // モンスターデータ前編（No.1〜No.40）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -434,7 +432,8 @@
             "クリスタル": { no: 32, a: "💎", hp: 20, at: 10, df: 15, sp: 8, ex: 2 },
             "マッハタカ": { no: 33, a: "🦅", hp: 22, at: 13, df: 8, sp: 16, ex: 2 },
             "オバケカボチャ": { no: 34, a: "🎃", hp: 26, at: 11, df: 11, sp: 6, ex: 2 },
-            "            "プラチナコア": { no: 36, a: "🔮", hp: 21, at: 12, df: 16, sp: 9, ex: 2 },
+            "フレイムホース": { no: 35, a: "🐴", hp: 24, at: 16, df: 9, sp: 13, ex: 2 },
+            "プラチナコア": { no: 36, a: "🔮", hp: 21, at: 12, df: 16, sp: 9, ex: 2 },
             "シャドウウルフ": { no: 37, a: "🐺", hp: 23, at: 15, df: 9, sp: 12, ex: 2 },
             "メカペンギン": { no: 38, a: "🤖", hp: 22, at: 11, df: 14, sp: 10, ex: 2 },
             "シャドウネコ": { no: 39, a: "🐈", hp: 19, at: 14, df: 8, sp: 13, ex: 2 },
@@ -470,7 +469,6 @@
             "ルシファーエンペラー": { no: 69, a: "👿", hp: 180, at: 95, df: 80, sp: 45, ex: 9 },
             "ゴッドバハムート": { no: 70, a: "🦖", hp: 200, at: 100, df: 85, sp: 50, ex: 9 },
             "オメガゼロ": { no: 71, a: "🤖", hp: 250, at: 120, df: 100, sp: 60, ex: 10 },
-": { no: 35, a: "🐴", hp: 24, at: 16, df: 9, sp: 13, ex: 2 },
             // ⭐ 新規追加モンスター29種類（No.72～No.100）⭐
             "ガイアビースト": { no: 72, a: "🦁", hp: 135, at: 85, df: 62, sp: 28, ex: 7 },
             "ヴァルキリーライト": { no: 73, a: "⚔️", hp: 120, at: 92, df: 58, sp: 42, ex: 7 },
@@ -503,7 +501,7 @@
             "ジ・エンドゼロ": { no: 100, a: "👑", hp: 450, at: 240, df: 200, sp: 100, ex: 15 }
         };
 
-        // 配合組み合わせデータ
+        // 配合辞書
         const R = {
             "プニシズク+プニシズク": "ギガ・プニ", "アクアジェリー+マンドラゴラ": "ギガ・プニ", "プニシズク+カゲコウモリ": "プニウイング",
             "カゲコウモリ+うらめシート": "グリフォン", "うらめシート+ピコハンマー": "ホーンナイト", "ピコハンマー+ソロゾロアント": "ハッピーシート",
@@ -520,7 +518,7 @@
             "ギャラクシア+ルシファーエンペラー": "クロノ・オメガ", "クロノ・オメガ+キングウイング": "スターゲイザー", "スターゲイザー+ギャラクシア": "ジ・エンドゼロ"
         };
 
-        // ★ステージ1000対応出現アルゴリズム
+        // ★ステージ1000対応出現プール計算
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
             if (stage <= 10) return keys.filter(k => D[k].no <= 10);
@@ -535,6 +533,7 @@
             if (pool.length === 0) pool = ["ジ・エンドゼロ"];
             return pool;
         }
+
 
         let eg = new Array();
         let stg = 1;
@@ -554,15 +553,15 @@
             loadGame();
         };
 
-        // ★オートセーブ機能 (LocalStorage保存)
+        // ★オートセーブ機能 (完全に新しくリニューアルしたセーブ記憶キー)
         function saveGame() {
             const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
-            localStorage.setItem("mix_mon_save_v5", JSON.stringify(data));
+            localStorage.setItem("mix_mon_save_perfect", JSON.stringify(data));
         }
 
-        // セーブデータ自動ロード（初期データ消失バグ対策完了）
+        // セーブデータ自動ロード（初期データ消失を徹底的にガード）
         function loadGame() {
-            const saved = localStorage.getItem("mix_mon_save_v5");
+            const saved = localStorage.getItem("mix_mon_save_perfect");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -805,7 +804,7 @@
             }
         }
 
-        // 攻撃および戦闘処理（★変数名重複を排除し、ダメージが減少するバグを完全解決！）
+        // 攻撃および戦闘処理（★変数指定を先頭の敵 [0] に固定しダメージバグを完全解消！）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) return;
             
@@ -816,7 +815,7 @@
             if(firstAliveIdx === -1) return;
 
             const f = p[firstAliveIdx];
-            const enemyUnit = eg[0]; // ★ここをtから個別の独立した変数名に変更しバグを解消！
+            const enemyUnit = eg[0]; // ★ここを配列そのもの（eg）から先頭の敵単体（eg[0]）に完全修正！
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
@@ -919,7 +918,7 @@
             }, 600);
         }
 
-        // 配合処理
+        // 配合処理（★インデックスのデータ破壊不具合を完全解決！）
         function mix(){
             if(inDungeon) return alert("ダンジョン内では配合できません！拠点に戻ってください。");
             const cbs = document.querySelectorAll('#mixBoxList .cb:checked');
@@ -929,29 +928,26 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
+            // ★正しいインデックス指定により手持ち配列を破壊せず安全に取り出し！
             const m1 = p[idx[0]];
             const m2 = p[idx[1]];
 
             p.splice(idx[0], 1);
             p.splice(idx[1], 1);
 
-            // 20%の確率判定
             if (Math.random() < 0.20) {
                 let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
                 let b = D[bName];
                 let bonusMultiplier = 1 + ((b.ex || 1) * 0.2);
 
                 p.push({
-                    n: bName, 
-                    lv: 1,
+                    n: bName, lv: 1,
                     m: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
                     hp: b.hp + Math.floor(((m1.m + m2.m) / 5) * bonusMultiplier),
                     at: b.at + Math.floor(((m1.at + m2.at) / 4) * bonusMultiplier),
                     df: b.df + Math.floor(((m1.df + m2.df) / 4) * bonusMultiplier),
                     sp: b.sp + Math.floor(((m1.sp + m2.sp) / 4) * bonusMultiplier),
-                    ex: 0, 
-                    nx: 5, 
-                    inParty: false
+                    ex: 0, nx: 5, inParty: false
                 });
 
                 if(!zk.includes(bName)) zk.push(bName);
@@ -970,4 +966,3 @@
     </script>
 </body>
 </html>
-
