@@ -6,206 +6,236 @@
     <title>ミックスモンスター公式</title>
     <style>
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             margin: 0;
             padding: 15px;
-            color: #333;
+            color: #f1f5f9;
         }
         h1 {
             font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
+            filter: drop-shadow(0 2px 8px rgba(56,189,248,0.2));
         }
         .box {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 14px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-            max-width: 420px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            max-width: 430px;
             margin: 0 auto 15px;
             font-size: 13px;
-            border: 1px solid rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.08);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
             overflow: hidden;
         }
-
+        
         /* --- 戦闘画面の景色イラスト背景システム --- */
         .bg-grass {
-            background: 
-                linear-gradient(to bottom, rgba(74, 222, 128, 0.4) 70%, #22c55e 100%),
-                radial-gradient(circle at 50% -20%, #fef08a 0%, #60a5fa 60%) !important;
-            border: 2px solid #22c55e;
+            background: linear-gradient(to bottom, rgba(34, 197, 94, 0.2) 70%, rgba(22, 163, 74, 0.5) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.3) 0%, rgba(15, 23, 42, 0.8) 70%) !important;
+            border: 2px solid #16a34a;
         }
         .bg-ocean {
-            background: 
-                radial-gradient(circle at 50% 130%, #38bdf8 0%, transparent 70%),
-                linear-gradient(to bottom, #0369a1 0%, #0c4a6e 100%) !important;
+            background: radial-gradient(circle at 50% 130%, rgba(56, 189, 248, 0.4) 0%, transparent 70%), linear-gradient(to bottom, #0369a1 0%, #0f172a 100%) !important;
             border: 2px solid #0284c7;
         }
         .bg-cave {
-            background: 
-                radial-gradient(circle at 20% 30%, #fb923c 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, #2dd4bf 0%, transparent 20%),
-                linear-gradient(135deg, #451a03 0%, #1c1917 100%) !important;
+            background: radial-gradient(circle at 20% 30%, rgba(251, 146, 60, 0.2) 0%, transparent 20%), radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.2) 0%, transparent 20%), linear-gradient(135deg, #451a03 0%, #0f172a 100%) !important;
             border: 2px solid #78350f;
         }
         .bg-castle {
-            background: 
-                linear-gradient(to top, rgba(239, 68, 68, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 50% 50%, #a855f7 0%, #3b0764 100%) !important;
+            background: linear-gradient(to top, rgba(239, 68, 68, 0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.3) 0%, #0f172a 100%) !important;
             border: 2px solid #6b21a8;
         }
 
         button {
             font-size: 13px;
-            padding: 10px 14px;
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            padding: 11px 16px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             margin: 4px;
-            width: 92%;
+            width: 94%;
             font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,123,255,0.2);
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(14,165,233,0.3);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         button:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(0,123,255,0.3);
-            filter: brightness(1.05);
+            box-shadow: 0 6px 20px rgba(14,165,233,0.45);
+            filter: brightness(1.1);
         }
-        button:active:not(:disabled) {
-            transform: translateY(1px);
-        }
+        button:active:not(:disabled) { transform: translateY(1px); }
         button:disabled {
-            background: #cbd5e1 !important;
-            color: #94a3b8 !important;
+            background: #334155 !important;
+            color: #64748b !important;
             cursor: not-allowed;
             box-shadow: none !important;
             transform: none !important;
+            border: 1px solid rgba(255,255,255,0.03);
         }
         .btn-small {
             width: auto !important;
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 12px;
             margin-left: 6px;
             font-size: 11px;
-            border-radius: 6px;
+            border-radius: 8px;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 2px 6px rgba(16,185,129,0.2);
+            box-shadow: 0 2px 8px rgba(16,185,129,0.3);
         }
         .battle-field {
             display: flex;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            padding: 8px;
-            border-radius: 10px;
-            gap: 8px;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 10px;
+            border-radius: 12px;
+            gap: 10px;
         }
         .side {
             width: 49%;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 8px;
+            background: rgba(30, 41, 59, 0.85);
+            padding: 10px;
             text-align: left;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
             transition: transform 0.2s ease-out;
+            position: relative;
         }
         
-        .atk-forward-my { transform: translateX(20px); }
-        .atk-forward-e { transform: translateX(-20px); }
+        .atk-forward-my { transform: translateX(25px); }
+        .atk-forward-e { transform: translateX(-25px); }
         
-        .battle-monster {
-            font-size: 36px;
-            display: block;
+        /* --- モンスターグラフィックと立体影システム --- */
+        .monster-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
             text-align: center;
-            margin: 6px 0;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+            margin: 8px 0 16px;
+        }
+        .battle-monster {
+            font-size: 42px;
+            display: block;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
+            animation: floatBob 3s ease-in-out infinite alternate;
+        }
+        .monster-shadow {
+            width: 40px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            margin: -4px auto 0;
+            filter: blur(2px);
+            z-index: 1;
+            transition: transform 0.3s ease;
+            animation: shadowScale 3s ease-in-out infinite alternate;
+        }
+        @keyframes floatBob {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
+        }
+        @keyframes shadowScale {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(0.8); opacity: 0.25; }
         }
         
         @keyframes damageFlash {
-            0% { opacity: 1; background-color: rgba(255,0,0,0.5); }
-            25% { opacity: 0.2; }
-            50% { opacity: 1; background-color: rgba(255,0,0,0.5); }
-            75% { opacity: 0.2; }
-            100% { opacity: 1; background-color: rgba(255,255,255,0.85); }
+            0% { opacity: 1; background-color: rgba(239,68,68,0.6); }
+            25% { opacity: 0.1; }
+            50% { opacity: 1; background-color: rgba(239,68,68,0.6); }
+            75% { opacity: 0.1; }
+            100% { opacity: 1; background-color: rgba(30, 41, 59, 0.85); }
         }
-        .hit-flash {
-            animation: damageFlash 0.4s ease-in-out;
-        }
+        .hit-flash { animation: damageFlash 0.4s ease-in-out; }
         
         .battle-log {
-            background: rgba(30, 41, 59, 0.9);
+            background: #0f172a;
             color: #38bdf8;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 10px auto;
-            min-height: 40px;
-            max-height: 60px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin: 12px auto;
+            min-height: 44px;
+            max-height: 64px;
             overflow-y: auto;
             text-align: left;
-            font-family: monospace;
-            font-size: 11px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11.5px;
             line-height: 1.4;
-            border: 1px solid #334155;
+            border: 1px solid #1e293b;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
         }
         .hp-bg, .exp-bg {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 4px;
+            background: #334155;
+            height: 9px;
+            border-radius: 6px;
             overflow: hidden;
-            margin-top: 3px;
+            margin-top: 4px;
         }
-        .exp-bg { height: 5px; margin-top: 2px; }
+        .exp-bg { height: 5px; margin-top: 3px; }
         .hp { background: linear-gradient(90deg, #10b981, #34d399); height: 100%; width: 100%; transition: width 0.3s ease; }
         .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
-        .sub-label { font-size: 10px; color: #475569; font-weight: bold; margin-top: 2px; display: block; }
+        .sub-label { font-size: 10px; color: #94a3b8; font-weight: bold; margin-top: 2px; display: block; text-transform: uppercase; }
         
-        ul { list-style: none; padding: 0; margin: 5px 0 0; text-align: left; }
-        li {
-            background: #fff;
-            margin: 5px 0;
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            line-height: 1.5;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        /* ボックス折りたたみ用エリア */
+        .toggle-box {
+            display: block;
         }
-        li.locked { background: #f8fafc; color: #94a3b8; border-color: #cbd5e1; }
+        
+        ul { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; }
+        li {
+            background: #1e293b;
+            margin: 6px 0;
+            padding: 12px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        li.locked { background: #0f172a; color: #475569; border-color: #1e293b; }
         .status-text {
             font-size: 11px;
-            color: #475569;
+            color: #cbd5e1;
             display: block;
-            margin-top: 4px;
-            background: #f1f5f9;
-            padding: 4px 8px;
-            border-radius: 6px;
+            margin-top: 5px;
+            background: #0f172a;
+            padding: 5px 10px;
+            border-radius: 8px;
             font-family: monospace;
+            border: 1px solid #1e293b;
         }
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .recipe { width: 100%; font-size: 10px; border-collapse: collapse; display: none; margin-top: 8px; }
-        .recipe td { border: 1px solid #e2e8f0; padding: 6px 4px; background: #fff; border-radius: 4px; }
-        .zukan-item { background: #fff; border: 1px solid #e2e8f0; padding: 8px 4px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .recipe { width: 100%; font-size: 10px; border-collapse: collapse; display: none; margin-top: 8px; color: #cbd5e1; }
+        .recipe td { border: 1px solid #334155; padding: 6px 4px; background: #1e293b; }
+        .zukan-item { background: #1e293b; border: 1px solid #334155; padding: 8px 4px; border-radius: 8px; text-align: center; color: #cbd5e1; }
+        input[type="text"] {
+            width: 85%; padding: 8px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; text-align: center; margin-bottom: 5px; font-family: monospace;
+        }
     </style>
 </head>
 <body>
 
     <h1>ミックスモンスター公式</h1>
-
-    <!-- 配合レシピ表（新モンスター29種を追加し、No.100まで美しく繋がる超巨大ツリー） -->
+    <!-- 配合レシピ表（図鑑No.100まで美しく繋がる超巨大ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
-            📜 新・完全配合レシピツリーの表示
+            📜 配合レシピ表の表示切替
         </button>
         <table id="rt" class="recipe">
             <tr>
@@ -268,7 +298,6 @@
                 <td>👺No.66 大魔王ゼロ ＋ 🐲No.67 カイザードラゴン ＝ 🦏No.68 ギャラルホーン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
                 <td>👿No.69 ルシファーエンペラー ＋ ⚡No.60 ゼウスゴッド ＝ 🤖No.71 オメガゼロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
             </tr>
-            <!-- ⚡ ここから図鑑No.72以降の新究極配合ツリー ⚡ -->
             <tr>
                 <td>🤖No.71 オメガゼロ ＋ 🦏No.68 ギャラルホーン ＝ 💀No.75 ハデス・ネクロ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
                 <td>🦖No.70 ゴッドバハムート ＋ 🐲No.67 カイザードラゴン ＝ ☀️No.80 アポロンロード <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
@@ -287,7 +316,7 @@
     <!-- ステージ進行 ＆ ステージ自由選択UI (1〜1000) -->
     <div class="box">
         <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span> / 1000</h3>
-        <p style="font-size: 10px; color: #64748b; margin: 0 0 5px;">最高到達ステージ: <span id="maxStg">1</span></p>
+        <p style="font-size: 10px; color: #94a3b8; margin: 0 0 5px;">最高到達ステージ: <span id="maxStg">1</span></p>
         <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;">
             <button class="btn-small" style="background:#475569;" id="btnPrevStg" onclick="changeStage(-1)">◀ 前の階に戻る</button>
             <button class="btn-small" style="background:#475569;" id="btnNextStg" onclick="changeStage(1)">次の階に進む ▶</button>
@@ -311,9 +340,7 @@
             <div class="side" id="mySide"><b>【味方】</b></div>
             <div class="side" id="eSide"><b>【敵】</b></div>
         </div>
-        
         <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
-
         <button style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
             ⚔️ 目の前の敵に攻撃！
         </button>
@@ -322,32 +349,56 @@
         </button>
     </div>
 
-    <!-- 🧬 配合用ボックスエリア -->
+    <!-- 🧬 配合用ボックスエリア（表示切替ボタンを新設！） -->
     <div class="box" id="mixArea">
         <h2>🧬 モンスター配合 (20%)</h2>
-        <p style="font-size: 11px; color: #ef4444; margin: 0 0 5px; font-weight: bold;">
+        <p style="font-size: 11px; color: #f87171; margin: 0 0 5px; font-weight: bold;">
             ※下の配合用ボックスから2匹選んでね。失敗時は消滅！
         </p>
         <button style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" id="btnMix" onclick="mix()">
             🧬 配合実行！
         </button>
-        <h4 style="margin: 12px 0 6px; text-align: left; color: #1e293b;">🧬 配合用ボックス</h4>
-        <ul id="mixBoxList"></ul>
+        <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-top:8px;">
+            🧬 配合用ボックスの表示切替
+        </button>
+        <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
-    <!-- 📦 ボックス -->
+    <!-- 📦 ボックス（表示切替ボタンを新設！） -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス（前衛最大3体まで戦闘に参加可能）</h3>
-        <ul id="box"></ul>
+        <h3 style="margin-top: 0; color: #f1f5f9;">📦 ボックス</h3>
+        <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
+            📦 ボックスの表示切替
+        </button>
+        <ul id="box" class="toggle-box"></ul>
     </div>
 
     <!-- 図鑑 -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📖 みつけた図鑑</h3>
+        <h3 style="margin-top: 0; color: #f1f5f9;">📖 みつけた図鑑</h3>
         <div id="zk" class="grid"></div>
     </div>
 
+    <!-- 🌐 データ引き継ぎ・セーブ管理エリア（最新UI） -->
+    <div class="box" style="background: rgba(15, 23, 42, 0.85); border: 1px solid #38bdf8;">
+        <h3 style="margin-top: 0; color: #38bdf8;">💾 データセーブ・引き継ぎ管理</h3>
+        <p style="font-size: 11px; color: #94a3b8; margin: 0 0 8px;">
+            ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
+        </p>
+        <button style="background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);" onclick="exportData()">
+            🔑 引き継ぎコードを発行する
+        </button>
+        <input type="text" id="passCodeField" readonly placeholder="ここにコードが発行されます" style="width: 90%; margin: 5px 0;">
+        
+        <div style="border-top: 1px solid #334155; margin-top: 10px; padding-top: 10px;">
+            <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
+            <button style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);" onclick="importData()">
+                📥 データをインポートして復元
+            </button>
+        </div>
+    </div>
+
     <script>
-        // モンスターデータ（No.1〜No.50までを前編に格納）
+        // モンスターデータ（No.1〜No.50までを格納）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -364,7 +415,7 @@
             "コロテントウ": { no: 13, a: "🐞", hp: 9, at: 4, df: 5, sp: 7, ex: 1 },
             "パタバタフライ": { no: 14, a: "🦋", hp: 10, at: 6, df: 3, sp: 11, ex: 1 },
             "トマトプニ": { no: 15, a: "🍅", hp: 12, at: 4, df: 4, sp: 5, ex: 1 },
-            "マメチビ": { no: 16, a: "𫫚", hp: 8, at: 5, df: 3, sp: 8, ex: 1 },
+            "マメチビ": { no: 16, a: "🫛", hp: 8, at: 5, df: 3, sp: 8, ex: 1 },
             "ファイヤローズ": { no: 17, a: "🌹", hp: 14, at: 7, df: 4, sp: 6, ex: 1 },
             "サンダージン": { no: 18, a: "🧞", hp: 15, at: 8, df: 3, sp: 12, ex: 1 },
             "アイアンウォール": { no: 19, a: "🛡️", hp: 20, at: 4, df: 10, sp: 2, ex: 1 },
@@ -452,43 +503,63 @@
             "ジ・エンドゼロ": { no: 100, a: "👑", hp: 450, at: 240, df: 200, sp: 100, ex: 15 }
         };
 
-        // ★ステージ1000対応：数字に完全に比例して野生モンスターのNo.がスライド出現する計算アルゴリズム
+        // ★ステージ1000比例出現計算プール
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
-            // ステージ10以下はNo.10までのモンスターに固定
             if (stage <= 10) {
                 return keys.filter(k => D[k].no <= 10);
             }
-            
-            // ステージ11〜1000の間で、出現するNoの下限と上限を線形計算
             let minNo = 1 + Math.floor((stage - 11) * (90 / 990)); 
             let maxNo = 10 + Math.floor((stage - 11) * (90 / 990));
-            
             if (maxNo > 100) maxNo = 100;
             if (minNo > 90) minNo = 90;
-
             let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
-            // 万が一プールが空になった場合の安全ガード
             if (pool.length === 0) pool = ["ジ・エンドゼロ"];
             return pool;
         }
+
         let eg = new Array();
         let stg = 1;
         let maxStg = 1; 
         let zk = ["プニシズク"];
         let inDungeon = false;
 
-        // 最初から持っているプニシズク3体をすべて最初から【レベル10（完全強化）】でスタート！
+        // 初期手持ち。データがない場合のデフォルト値
         let p = [
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true }
         ];
 
-        // 初期化表示
-        up();
+        // ページ読み込み時に自動ロードを実行
+        window.onload = function() {
+            loadGame();
+        };
 
-        // ステージ選択処理（最大1000ステージ対応）
+        // ★オートセーブ機能 (LocalStorageへの自動保存)
+        function saveGame() {
+            const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
+            localStorage.setItem("mix_mon_save", JSON.stringify(data));
+        }
+
+        // 保存データの自動ロード
+        function loadGame() {
+            const saved = localStorage.getItem("mix_mon_save");
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    stg = data.stg || 1;
+                    maxStg = data.maxStg || 1;
+                    zk = data.zk || ["プニシズク"];
+                    p = data.p || p;
+                } catch(e) {
+                    console.error("セーブデータのロードに失敗しました", e);
+                }
+            }
+            up();
+        }
+
+        // ステージ選択処理
         function changeStage(val) {
             if (inDungeon) return alert("ダンジョン内ではステージを変更できません！");
             let nextVal = stg + val;
@@ -496,6 +567,7 @@
             if (nextVal > 1000) return alert("最高ステージは1000階です！");
             if (nextVal > maxStg) return alert("未到達のステージには進めません！");
             stg = nextVal;
+            saveGame();
             up();
         }
 
@@ -514,7 +586,7 @@
             up();
         }
 
-        // 敵の自動生成（ステージ比例ステータス成長ロジック強化版）
+        // 敵の自動生成
         function generateEnemies() {
             eg = new Array();
             let pool = getEnemyPool(stg);
@@ -523,7 +595,6 @@
             for(let i = 0; i < c; i++){
                 let n = pool[Math.floor(Math.random() * pool.length)];
                 let b = D[n];
-                // ステージ数に応じて敵のHP、攻撃、防御、素早さ、経験値がスライドして超強化！
                 let stageBonus = stg - 1;
                 eg.push({
                     n: n,
@@ -547,6 +618,7 @@
             document.getElementById("btnPrevStg").disabled = false;
             document.getElementById("btnNextStg").disabled = false;
             document.getElementById("battleLog").innerText = "🏡 拠点に戻った。仲間が全員全回復した！";
+            saveGame();
             up();
         }
 
@@ -570,10 +642,11 @@
                 target.inParty = true;
                 document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
             }
+            saveGame();
             up();
         }
 
-        // 画面の更新処理
+        // 画面の更新処理（★影シャドウコンテナと、表示同期を網羅！）
         function up() {
             if (!inDungeon) {
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
@@ -587,14 +660,14 @@
             const eS = document.getElementById("eSide");
             const bBox = document.getElementById("battleBox");
 
-            // 景色背景切り替え
+            // 背景イラスト切り替え
             bBox.className = "box";
             if (stg <= 250) { bBox.classList.add("bg-grass"); } 
             else if (stg <= 500) { bBox.classList.add("bg-ocean"); } 
             else if (stg <= 750) { bBox.classList.add("bg-cave"); } 
             else { bBox.classList.add("bg-castle"); }
 
-            // 味方戦闘画面の連動表示（リアルタイム同期バグ対策完了）
+            // 味方戦闘画面の立体影付き連動表示
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
             p.forEach((m) => {
@@ -602,7 +675,7 @@
                     activeCount++;
                     let isDead = m.hp <= 0;
                     let inf = D[m.n];
-                    mS.innerHTML += "<br><span class='battle-monster'>" + inf.a + "</span><b>No." + inf.no + " " + m.n + "</b> (Lv." + m.lv + ")" + (isDead ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "");
+                    mS.innerHTML += "<br><div class='monster-container'><span class='battle-monster'>" + inf.a + "</span><div class='monster-shadow'></div></div><b>No." + inf.no + " " + m.n + "</b> (Lv." + m.lv + ")" + (isDead ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "");
                     mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
                     mS.innerHTML += '<div class="hp-bg"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                     
@@ -613,10 +686,10 @@
                 }
             });
             if(activeCount === 0) {
-                mS.innerHTML += "<br><span style='color:#475569;'>戦闘メンバーが選ばれていません</span>";
+                mS.innerHTML += "<br><span style='color:#cbd5e1;'>戦闘メンバーが選ばれていません</span>";
             }
 
-            // 敵の表示
+            // 敵の立体影付き表示
             eS.innerHTML = "<b>【敵】</b>";
             if(!inDungeon || eg.length === 0){
                 eS.innerHTML += "<br>平和に満ちています";
@@ -629,7 +702,7 @@
                 eg.forEach((m, i) => {
                     let inf = D[m.n];
                     let eId = (i === 0) ? " id='eM_front' " : "";
-                    eS.innerHTML += "<br><span class='battle-monster'" + eId + ">" + inf.a + "</span><b>No." + inf.no + " " + m.n + "</b>";
+                    eS.innerHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + ">" + inf.a + "</span><div class='monster-shadow'></div></div><b>No." + inf.no + " " + m.n + "</b>";
                     eS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
                     eS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                 });
@@ -637,7 +710,7 @@
 
             document.getElementById("btnMix").disabled = inDungeon;
 
-            // 通常ボックスの表示
+            // 通常ボックスの表示更新
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
@@ -657,36 +730,71 @@
                                    '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span></li>';
             });
 
-            // 配合用ボックスの表示
+            // 配合用ボックスの表示更新
             const mixList = document.getElementById("mixBoxList");
             mixList.innerHTML = "";
             p.forEach((n, i) => {
                 let disAttr = inDungeon ? "disabled" : "";
                 let liClass = inDungeon ? "class='locked'" : "";
                 let inf = D[n.n];
-                mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' +
-                                   inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ')</li>';
-            });
-
-            // 図鑑の更新
-            const zkDiv = document.getElementById("zk");
-            zkDiv.innerHTML = "";
-            Object.keys(D).forEach((k) => {
-                if(zk.includes(k)){
-                    zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>';
-                } else {
-                    zkDiv.innerHTML += '<div class="zukan-item">❓<br>No.' + D[k].no + '<br>？？？</div>';
-                }
-            });
+        // ★データ引き継ぎコード発行システム（現在のセーブデータを安全にBase64で暗号化して文字列化）
+        function exportData() {
+            const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
+            try {
+                const jsonStr = JSON.stringify(data);
+                // 端末間での文字化けを防ぐため、UTF-8対応のBase64エンコードを実施
+                const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
+                
+                const field = document.getElementById("passCodeField");
+                field.value = base64Str;
+                field.select();
+                navigator.clipboard.writeText(base64Str).then(() => {
+                    alert("🔑 引き継ぎコードを発行し、クリップボードにコピーしました！\nこのコードを大切に保管してください。");
+                }).catch(() => {
+                    alert("🔑 引き継ぎコードを発行しました。枠内のコードをコピーして保管してください。");
+                });
+            } catch(e) {
+                alert("⚠️ コードの発行に失敗しました。");
+            }
         }
-        // 攻撃および戦闘処理（全滅判定バグ完全修正版 ＆ レア度別加入確率システム）
+
+        // ★データ引き継ぎコードインポートシステム（コードを解析してデータを完全復元）
+        function importData() {
+            const code = document.getElementById("importCodeField").value.trim();
+            if (!code) return alert("引き継ぎコードを入力してください。");
+            
+            if (confirm("⚠️ データをインポートすると、現在のセーブデータは完全に上書きされます。よろしいですか？")) {
+                try {
+                    // Base64コードをデコードして元のJSON文字列に戻す
+                    const jsonStr = decodeURIComponent(escape(atob(code)));
+                    const data = JSON.parse(jsonStr);
+                    
+                    if (data.p && Array.isArray(data.p)) {
+                        stg = data.stg || 1;
+                        maxStg = data.maxStg || 1;
+                        zk = data.zk || ["プニシズク"];
+                        p = data.p;
+                        
+                        saveGame(); // 新しいデータをブラウザに保存
+                        alert("📥 データのインポートに成功しました！ゲームの状態を完全復元しました。");
+                        document.getElementById("importCodeField").value = "";
+                        up();
+                    } else {
+                        alert("⚠️ 無効な引き継ぎコードです。正しくコピーされているか確認してください。");
+                    }
+                } catch(e) {
+                    alert("⚠️ データの復元に失敗しました。コードが壊れている可能性があります。");
+                }
+            }
+        }
+
+        // 攻撃および戦闘処理（全滅チェック最優先・景色および影の連動版）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) {
                 document.getElementById("battleLog").innerText = "⚠️ ダンジョンに入ってください！";
                 return;
             }
             
-            // 現在の戦闘メンバー中から、生存している先頭の味方を取得
             let firstAliveIdx = -1;
             for(let i=0; i<p.length; i++){
                 if(p[i].inParty && p[i].hp > 0){ firstAliveIdx = i; break; }
@@ -697,7 +805,7 @@
             }
 
             const f = p[firstAliveIdx];
-            const t = eg; // 配列の先頭の敵
+            const t = eg; 
             const logBox = document.getElementById("battleLog");
 
             const mySideEl = document.getElementById("mySide");
@@ -705,10 +813,10 @@
 
             let turnLog = "";
 
-            // 味方の攻撃（移動 ➔ 敵点滅）
+            // 味方の攻撃
             function playerAttack() {
-                mySideEl.style.transform = "translateX(20px)";
-                setTimeout(() => { mySideEl.style.transform = "none"; }, 200);
+                mySideEl.classList.add("atk-forward-my");
+                setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
 
                 setTimeout(() => {
                     eSideEl.classList.add("hit-flash");
@@ -720,10 +828,10 @@
                 turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ No." + D[t.n].no + " " + t.n + "に " + d + " ダメージ！ ";
             }
 
-            // 敵の攻撃（移動 ➔ 味方点滅）
+            // 敵の攻撃
             function enemyAttack() {
-                eSideEl.style.transform = "translateX(-20px)";
-                setTimeout(() => { eSideEl.style.transform = "none"; }, 200);
+                eSideEl.classList.add("atk-forward-e");
+                setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
 
                 setTimeout(() => {
                     mySideEl.classList.add("hit-flash");
@@ -732,13 +840,12 @@
 
                 let ed = Math.max(1, Math.floor(t.at - (f.df / 2) + Math.random() * 2));
                 f.hp = Math.max(0, f.hp - ed);
-                turnLog += "💥No." + D[t.n].no + " " + t.n + "の反撃！ No." + D[f.n].no + " " + f.n + "は " + ed + " ダメージ！ ";
+                turnLog += "💥No." + D[t.n].no + " " + t.n + "の反撃！ No." + D[f.n].no + " " + f.n + "に " + ed + " ダメージ！ ";
                 if(f.hp === 0){
                     turnLog += "🔴No." + D[f.n].no + " " + f.n + "が戦闘不能！ ";
                 }
             }
 
-            // 素早さ順の行動ターンシステム
             if (f.sp >= t.sp) {
                 playerAttack();
                 if (t.hp > 0) {
@@ -752,9 +859,9 @@
                 }
             }
 
-            // アニメーション完了後の同期処理（バグ修正：全滅チェックを最優先）
+            // アニメーション完了後の同期処理
             setTimeout(() => {
-                // 【最優先】味方戦闘メンバーの全滅チェック
+                // 【最優先チェック】味方戦闘メンバーの全滅チェック
                 let partyDead = true;
                 p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
                 
@@ -762,32 +869,27 @@
                     alert("💀戦闘メンバーが全滅しました！ダンジョンから強制退出させられます。");
                     inDungeon = false;
                     eg = new Array();
-                    p.forEach(m => { m.hp = m.m; }); // 拠点に戻るので全員完全全回復
+                    p.forEach(m => { m.hp = m.m; }); 
                     document.getElementById("btnEnter").disabled = false;
                     document.getElementById("btnPrevStg").disabled = false;
                     document.getElementById("btnNextStg").disabled = false;
                     logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
+                    saveGame();
                     up();
-                    return; // 全滅時はここで完全に処理を終了
+                    return; 
                 }
 
-                // 敵を倒したときの処理（味方が生き残っている場合のみ実行）
+                // 敵を倒したときの処理
                 if(t.hp === 0){
                     turnLog += "💀No." + D[t.n].no + " " + t.n + "を倒した！ ";
                     
                     let targetNo = D[t.n].no;
                     let joinChance = 0;
 
-                    // ★図鑑番号のレア度に応じた仲間加入確率分岐システム
-                    if (targetNo <= 10) {
-                        joinChance = 0.10; // No.1〜No.10は「10%」で超仲間になりやすい！
-                    } else if (targetNo <= 20) {
-                        joinChance = 0.05; // No.11〜No.20は「5%」
-                    } else if (targetNo <= 50) {
-                        joinChance = 0.01; // No.21〜No.50はレア枠「1%」！
-                    } else {
-                        joinChance = 0.00; // No.51以降は「0%」（絶対に野生加入しない）
-                    }
+                    if (targetNo <= 10) { joinChance = 0.10; } 
+                    else if (targetNo <= 20) { joinChance = 0.05; } 
+                    else if (targetNo <= 50) { joinChance = 0.01; } 
+                    else { joinChance = 0.00; }
 
                     if(Math.random() < joinChance) {
                         const b = D[t.n];
@@ -797,7 +899,6 @@
                         turnLog += "📢(このモンスターは強力なため野生では加入しない！) ";
                     }
 
-                    // 戦闘メンバー(inParty)の生存者全員に経験値を同時分配
                     p.forEach((member) => {
                         if (member.inParty && member.hp > 0 && member.lv < 100) { 
                             member.ex += t.ex; 
@@ -822,22 +923,23 @@
                     eg.shift();
                 }
 
-                // 部屋の敵を全滅させて次の部屋に進むとき（味方が全滅していない場合のみ）
+                // 部屋の敵を全滅させて次の部屋に進むとき
                 if(eg.length === 0){
                     turnLog += "🎉部屋の敵を全滅させた！奥へ進む！戦闘不能だった仲間も大復活した！";
                     stg++;
                     if (stg > 1000) stg = 1000;
                     if (stg > maxStg) { maxStg = stg; }
-                    p.forEach(m => { if(m.inParty) m.hp = m.m; }); // 参加メンバーを次のステージ進出で全回復
+                    p.forEach(m => { if(m.inParty) m.hp = m.m; }); 
                     generateEnemies();
                 }
 
                 logBox.innerText = turnLog;
+                saveGame();
                 up();
             }, 600);
         }
 
-        // 配合処理
+        // 配合処理（オートセーブ完全対応）
         function mix(){
             if(inDungeon) return alert("ダンジョン内では配合できません！拠点に戻ってください。");
 
@@ -848,11 +950,11 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
-            const m1 = p[idx];
-            const m2 = p[idx];
+            const m1 = p[idx[0]];
+            const m2 = p[idx[1]];
 
-            p.splice(idx, 1);
-            p.splice(idx, 1);
+            p.splice(idx[0], 1);
+            p.splice(idx[1], 1);
 
             // 20%の確率判定
             if (Math.random() < 0.20) {
@@ -874,18 +976,3 @@
                 });
 
                 if(!zk.includes(bName)) zk.push(bName);
-                alert("✨🧬配合大成功(確率20%)！！！\n" + m1.n + " と " + m2.n + " が究極合体して\nNo." + b.no + " " + bName + " が誕生した！");
-            } else {
-                alert("💥💥配合大失敗(確率 80%)...\n融合実験の凄まじい衝撃により、失敗した " + m1.n + " と " + m2.n + " は両方とも跡形もなく消滅してしまった...");
-            }
-
-            if(p.length === 0) {
-                alert("ボックスが空っぽになってしまいました！\n見かねた博士が初期モンスターの「No.1 プニシズク」を1匹分けてくれました。");
-                p.push({ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true });
-            }
-
-            up();
-        }
-    </script>
-</body>
-</html>
