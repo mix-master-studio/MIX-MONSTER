@@ -39,6 +39,7 @@
             overflow: hidden;
         }
 
+
         /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
         .bg-grass {
             background: linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 70%, rgba(22, 163, 74, 0.3) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.4) 0%, rgba(255, 255, 255, 0.9) 70%) !important;
@@ -95,7 +96,6 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 2px 8px rgba(16,185,129,0.2);
         }
-
         .battle-field {
             display: flex;
             justify-content: space-between;
@@ -165,6 +165,7 @@
             100% { opacity: 1; background-color: rgba(255, 255, 255, 0.95); }
         }
         .hit-flash { animation: damageFlash 0.4s ease-in-out; }
+
 
         .battle-log {
             background: #f8fafc;
@@ -263,7 +264,7 @@
                 <td>🌹No.17 ファイヤローズ ＋ 🧞No.18 サンダージン ＝ 🐴No.35 フレイムホース</td>
             </tr>
             <tr>
-                <td>🛡️No.19 アイアンウォール ＋ 🔮No.36 プラチナコア ＝ 🗿No.46 タイタンゴーレム</td>
+                <td>🛡️No.19 アイアンウォール ＋ 🔮No.36 Walton ＝ 🗿No.46 タイタンゴーレム</td>
                 <td>🐸No.20 ポイズンフロッグ ＋ 🐺No.37 シャドウウルフ ＝ 👁️No.47 メドゥーサアイ</td>
             </tr>
             <tr>
@@ -464,7 +465,7 @@
             "オーディンナイト": { no: 63, a: "🐎", hp: 105, at: 72, df: 54, sp: 32, ex: 6 },
             "リヴァイアサンキング": { no: 64, a: "🌊", hp: 130, at: 75, df: 58, sp: 24, ex: 7 },
             "サラマンダーキング": { no: 65, a: "🦎", hp: 125, at: 80, df: 56, sp: 26, ex: 7 },
-            "大魔王ゼロ": { no: 66, a: "👺", hp: 100, Math: 60, df: 50, sp: 35, ex: 6 },
+            "大魔王ゼロ": { no: 66, a: "👺", hp: 100, at: 60, df: 50, sp: 35, ex: 6 },
             "カイザードラゴン": { no: 67, a: "🐲", hp: 150, at: 85, df: 70, sp: 40, ex: 8 },
             "ギャラルホーン": { no: 68, a: "🦏", hp: 160, at: 90, df: 75, sp: 30, ex: 8 },
             "ルシファーエンペラー": { no: 69, a: "👿", hp: 180, at: 95, df: 80, sp: 45, ex: 9 },
@@ -530,6 +531,7 @@
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true }
         ];
+
 
         window.onload = function() { loadGame(); };
 
@@ -686,7 +688,7 @@
                 eg.forEach((m, i) => {
                     let inf = D[m.n];
                     let eId = (i === 0) ? " id='eM_front' " : "";
-                    eS.innerHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + ">" + inf.a + "</span><div class='monster-shadow'></div></div><b>No." + inf.no + " " + m.n + "</b>";
+                    eS.innerHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + ">" + inf.a + "</span><div class='monster-shadow'></div></div><b>No." + inf.no + " " + m.n + "</b> (Lv." + stg + ")";
                     eS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚔️" + m.at + " 🛡️" + m.df + " ⚡" + m.sp;
                     eS.innerHTML += '<div class="hp-bg"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                 });
@@ -782,8 +784,9 @@
                 return;
             }
 
-            const f = p[firstAliveIdx];
-            const enemyUnit = eg[0];
+            const activeAlly = p[firstAliveIdx];
+            const enemyGroup = eg;
+            const currentEnemy = enemyGroup;
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
@@ -795,9 +798,9 @@
                     eSideEl.classList.add("hit-flash");
                     setTimeout(() => { eSideEl.classList.remove("hit-flash"); }, 400);
                 }, 100);
-                let d = Math.max(2, Math.floor(f.at - (enemyUnit.df / 2) + Math.random() * 3));
-                enemyUnit.hp = Math.max(0, enemyUnit.hp - d);
-                turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ " + d + " ダメージ！ ";
+                let d = Math.max(2, Math.floor(activeAlly.at - (currentEnemy.at(0).df / 2) + Math.random() * 3));
+                currentEnemy.at(0).hp = Math.max(0, currentEnemy.at(0).hp - d);
+                turnLog += "⚔️No." + D[activeAlly.n].no + " " + activeAlly.n + "の攻撃！ " + d + " ダメージ！ ";
             }
 
             function enemyAttack() {
@@ -807,25 +810,25 @@
                     mySideEl.classList.add("hit-flash");
                     setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
                 }, 100);
-                let ed = Math.max(1, Math.floor(enemyUnit.at - (f.df / 2) + Math.random() * 2));
-                f.hp = Math.max(0, f.hp - ed);
-                turnLog += "💥" + enemyUnit.n + "の反撃！ " + ed + " ダメージ！ ";
-                if(f.hp === 0){ turnLog += "🔴" + f.n + "が戦闘不能！ "; }
+                let ed = Math.max(1, Math.floor(currentEnemy.at(0).at - (activeAlly.df / 2) + Math.random() * 2));
+                activeAlly.hp = Math.max(0, activeAlly.hp - ed);
+                turnLog += "💥" + currentEnemy.at(0).n + "の反撃！ " + ed + " ダメージ！ ";
+                if(activeAlly.hp === 0){ turnLog += "🔴" + activeAlly.n + "が戦闘不能！ "; }
             }
 
             let enemyCanAttack = false;
-            if (f.sp >= enemyUnit.sp) {
+            if (activeAlly.sp >= currentEnemy.at(0).sp) {
                 playerAttack();
-                if (enemyUnit.hp > 0) enemyCanAttack = true;
+                if (currentEnemy.at(0).hp > 0) enemyCanAttack = true;
             } else {
                 turnLog += "⚠️敵が先制！ ";
                 enemyAttack();
-                if (f.hp > 0) enemyCanAttack = true;
+                if (activeAlly.hp > 0) enemyCanAttack = true;
             }
 
             setTimeout(() => {
                 if (enemyCanAttack) {
-                    if (f.sp >= enemyUnit.sp) { enemyAttack(); } else { playerAttack(); }
+                    if (activeAlly.sp >= currentEnemy.at(0).sp) { enemyAttack(); } else { playerAttack(); }
                 }
 
                 setTimeout(() => {
@@ -844,20 +847,20 @@
                         return;
                     }
 
-                    if(enemyUnit.hp === 0){
-                        turnLog += "💀" + enemyUnit.n + "を倒した！ ";
-                        let targetNo = D[enemyUnit.n].no;
+                    if(currentEnemy.at(0).hp === 0){
+                        turnLog += "💀" + currentEnemy.at(0).n + "を倒した！ ";
+                        let targetNo = D[currentEnemy.at(0).n].no;
                         let joinChance = targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : (targetNo <= 50 ? 0.01 : 0.00));
 
                         if(Math.random() < joinChance) {
-                            const b = D[enemyUnit.n];
-                            p.push({ n: enemyUnit.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
-                            turnLog += "✨" + enemyUnit.n + "がボックスに加入した！ ";
+                            const b = D[currentEnemy.at(0).n];
+                            p.push({ n: currentEnemy.at(0).n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
+                            turnLog += "✨" + currentEnemy.at(0).n + "がボックスに加入した！ ";
                         } else if (targetNo >= 51) {
                             turnLog += "📢(このモンスターは野生加入不可！) ";
                         }
 
-                        let gainExp = enemyUnit.ex || 1;
+                        let gainExp = currentEnemy.at(0).ex || 1;
                         turnLog += "💎EXP " + gainExp + " 獲得！ ";
 
                         p.forEach((member) => {
@@ -877,10 +880,10 @@
                                 }
                             }
                         });
-                        eg.shift();
+                        enemyGroup.shift();
                     }
 
-                    if(eg.length === 0) {
+                    if(enemyGroup.length === 0) {
                         turnLog += "🎉ステージクリア！";
                         inDungeon = false;
                         if(stg === maxStg && maxStg < 1000) {
@@ -907,19 +910,19 @@
                 return alert("⚠️ 配合を行うには、モンスターを必ず「2匹」選択してください！");
             }
 
-            let idx = [];
-            cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
-            idx.sort((a, b) => b - a);
+            let selectIdx = new Array();
+            cbs.forEach(cb => { selectIdx.push(parseInt(cb.value)); });
+            selectIdx.sort((a, b) => b - a);
 
-            const m1 = p[idx[0]];
-            const m2 = p[idx[1]];
+            const m1 = p[selectIdx.at(0)];
+            const m2 = p[selectIdx.at(1)];
 
             if (!confirm(`🧬 配合を実行しますか？\n【${m1.n}】と【${m2.n}】を掛け合わせます。\n（成功率20%：失敗時は消滅）`)) {
                 return;
             }
 
-            p.splice(idx[0], 1);
-            p.splice(idx[1], 1);
+            p.splice(selectIdx.at(0), 1);
+            p.splice(selectIdx.at(1), 1);
 
             if (Math.random() < 0.20) {
                 let bName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n] || "ギガ・プニ";
