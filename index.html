@@ -31,12 +31,36 @@
             font-size: 13px;
             border: 1px solid rgba(255,255,255,0.7);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
         }
-        /* --- ステージ動的背景 --- */
-        .bg-grass { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%) !important; border: 1px solid #a5d6a7; }
-        .bg-ocean { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important; border: 1px solid #90caf9; }
-        .bg-cave { background: linear-gradient(135deg, #efebe9 0%, #d7ccc8 100%) !important; border: 1px solid #bcaaa4; }
-        .bg-castle { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%) !important; border: 1px solid #ce93d8; }
+
+        /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
+        .bg-grass {
+            background: 
+                linear-gradient(to bottom, rgba(74, 222, 128, 0.4) 70%, #22c55e 100%),
+                radial-gradient(circle at 50% -20%, #fef08a 0%, #60a5fa 60%) !important;
+            border: 2px solid #22c55e;
+        }
+        .bg-ocean {
+            background: 
+                radial-gradient(circle at 50% 130%, #38bdf8 0%, transparent 70%),
+                linear-gradient(to bottom, #0369a1 0%, #0c4a6e 100%) !important;
+            border: 2px solid #0284c7;
+        }
+        .bg-cave {
+            background: 
+                radial-gradient(circle at 20% 30%, #fb923c 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, #2dd4bf 0%, transparent 20%),
+                linear-gradient(135deg, #451a03 0%, #1c1917 100%) !important;
+            border: 2px solid #78350f;
+        }
+        .bg-castle {
+            background: 
+                linear-gradient(to top, rgba(239, 68, 68, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, #a855f7 0%, #3b0764 100%) !important;
+            border: 2px solid #6b21a8;
+        }
 
         button {
             font-size: 13px;
@@ -80,22 +104,23 @@
         .battle-field {
             display: flex;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             padding: 8px;
             border-radius: 10px;
             gap: 8px;
         }
         .side {
             width: 49%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             padding: 8px;
             text-align: left;
             border-radius: 8px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             transition: transform 0.2s ease-out;
         }
         
-        /* --- ⚔️ アニメーション演出クラス --- */
         .atk-forward-my { transform: translateX(20px); }
         .atk-forward-e { transform: translateX(-20px); }
         
@@ -104,23 +129,22 @@
             display: block;
             text-align: center;
             margin: 6px 0;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
         }
         
-        /* 被ダメージ時の点滅 */
         @keyframes damageFlash {
-            0% { opacity: 1; background-color: rgba(255,0,0,0.4); }
+            0% { opacity: 1; background-color: rgba(255,0,0,0.5); }
             25% { opacity: 0.2; }
-            50% { opacity: 1; background-color: rgba(255,0,0,0.4); }
+            50% { opacity: 1; background-color: rgba(255,0,0,0.5); }
             75% { opacity: 0.2; }
-            100% { opacity: 1; background-color: rgba(255,255,255,0.9); }
+            100% { opacity: 1; background-color: rgba(255,255,255,0.85); }
         }
         .hit-flash {
             animation: damageFlash 0.4s ease-in-out;
         }
         
         .battle-log {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.9);
             color: #38bdf8;
             padding: 8px 12px;
             border-radius: 8px;
@@ -145,7 +169,7 @@
         .hp { background: linear-gradient(90deg, #10b981, #34d399); height: 100%; width: 100%; transition: width 0.3s ease; }
         .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
-        .sub-label { font-size: 10px; color: #64748b; font-weight: bold; margin-top: 2px; display: block; }
+        .sub-label { font-size: 10px; color: #475569; font-weight: bold; margin-top: 2px; display: block; }
         
         ul { list-style: none; padding: 0; margin: 5px 0 0; text-align: left; }
         li {
@@ -177,7 +201,6 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
-
     <!-- 配合レシピ表（No.1周辺から神級まで完全に繋がる緻密ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -210,7 +233,7 @@
             </tr>
             <tr>
                 <td>🛡️No.19 アイアンウォール ＋ 🔮No.36 プラチナコア ＝ 🗿No.46 タイタンゴーレム</td>
-                <td>🐸No.20 ポイズンフロッグ ＋ 🐺No.37 シャドウウルフ ＝ 👁️No.47 Medoosaai</td>
+                <td>🐸No.20 ポイズンフロッグ ＋ 🐺No.37 シャドウウルフ ＝ 👁️No.47 メドゥーサアイ</td>
             </tr>
             <tr>
                 <td>🧸No.30 ももんじゃ ＋ 🔥No.29 ハッピーシート ＝ 🧱No.44 ブロックウォール</td>
@@ -417,14 +440,14 @@
             "デーモンロード+フレアフェニックス": "大魔王ゼロ"
         };
 
-        // ステージの数字が小さいほど、図鑑No.の低いモンスターが出現するシステム
+        // ステージの進行度別出現制限システム（ステージ10以下はNo.10までに制限！）
         function getEnemyPool(stage) {
             if (stage <= 10) {
                 return ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "チョコベア", "トゲサボテン"];
             } else if (stage <= 20) {
                 return ["ホシクズ", "コオリガニ", "コロテントウ", "パタバタフライ", "トマトプニ", "マメチビ", "ファイヤローズ", "サンダージン", "アイアンウォール", "ポイズンフロッグ", "スノーペンギン", "ゴールデンワン", "キラービー", "ロックタートル", "ギガ・プニ", "プニウイング", "グリフォン", "ホーンナイト", "ハッピーシート", "ももんじゃ", "ダークベア", "クリスタル", "マッハタカ", "オバケカボチャ", "フレイムホース", "プラチナコア", "シャドウウルフ", "メカペンギン", "シャドウネコ", "アサシンシャーク", "ミノタウロス", "キラータイガー", "メタルスライム"];
             } else if (stage <= 35) {
-                return ["ブロックウォール", "マシントルーパー", "タイタンゴーレム", "メドゥーサアイ", "マジカルフクロウ", "テンタクルクラーケン", "デスサイズ", "フリーズエンペラー", "デーモンロード", "フレアフェニックス", "キングウイング", "シャドードラゴン"];
+                return ["ブロックウォール", "マシントルーパー", "タイタンゴーレ关", "メドゥーサアイ", "マジカルフクロウ", "テンタクルクラーケン", "デスサイズ", "フリーズエンペラー", "デーモンロード", "フレアフェニックス", "キングウイング", "シャドードラゴン"];
             } else {
                 return ["クリスタルドラゴン", "サンザードラゴン", "ホーリーフェニックス", "クロノスタイム", "ゼウスゴッド", "ポセイドンキング", "ハデスロード", "オーディンナイト", "リヴァイアサンキング", "サラマンダーキング", "大魔王ゼロ", "カイザードラゴン"];
             }
@@ -436,7 +459,6 @@
         let inDungeon = false;
 
         // ★最初から持っているプニシズク3体をすべて最初から【レベル10（完全強化）】でスタート！
-        // inPartyフラグで戦闘メンバー(最大3体)を管理
         let p = [
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
@@ -505,22 +527,20 @@
             up();
         }
 
-        // ★「戦闘に出す」「戻す」を自由に切り替える3体制限パーティ編成システム
+        // 「戦闘に出す」「戻す」切り替えシステム
         function toggleParty(index) {
             if(inDungeon) return;
             const target = p[index];
             
             if (target.inParty) {
-                // すでに参加中なら外す（戻す）
                 target.inParty = false;
                 document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
             } else {
-                // 新しく戦闘に出す場合、現在の参加人数をカウント
                 let currentPartyCount = 0;
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
                 
                 if (currentPartyCount >= 3) {
-                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！他のモンスターを「戻す」で外してください。";
+                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！";
                     return alert("戦闘メンバーは3体までです！");
                 }
                 
@@ -532,8 +552,6 @@
 
         // 画面の更新処理
         function up() {
-            // ダンジョン外のとき、まず戦闘に参加していない(inParty:false)モンスターをNo順にソート
-            // その後、戦闘参加中(inParty:true)のモンスターがボックス内でも優先的に上に来るように並び替える
             if (!inDungeon) {
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
                 p.sort((a, b) => (b.inParty ? 1 : 0) - (a.inParty ? 1 : 0));
@@ -553,7 +571,7 @@
             else if (stg <= 30) { bBox.classList.add("bg-cave"); } 
             else { bBox.classList.add("bg-castle"); }
 
-            // ★味方戦闘画面のリアルタイム連動（inPartyがtrueの最大3体のみを表示！）
+            // 味方戦闘画面の連動表示
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
             p.forEach((m) => {
@@ -572,7 +590,7 @@
                 }
             });
             if(activeCount === 0) {
-                mS.innerHTML += "<br><span style='color:#64748b;'>戦闘メンバーが<br>選ばれていません</span>";
+                mS.innerHTML += "<br><span style='color:#475569;'>戦闘メンバーが選ばれていません</span>";
             }
 
             // 敵の表示
@@ -596,7 +614,7 @@
 
             document.getElementById("btnMix").disabled = inDungeon;
 
-            // ★通常ボックスの表示（inPartyフラグに連動して「戦闘に出す」「戻す」ボタンが完全自動切り替え）
+            // 通常ボックスの表示
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
@@ -604,7 +622,6 @@
                 let liClass = inDungeon ? "class='locked'" : "";
                 let deadText = n.hp <= 0 ? " <span style='color:red;'>[戦闘不能]</span>" : "";
                 
-                // ボタンの文字と色を状態によって切り替える
                 let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
                 let btnBg = n.inParty ? "background:linear-gradient(135deg, #64748b 0%, #475569 100%);" : "";
                 let actionBtn = inDungeon ? "" : '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>';
@@ -639,8 +656,7 @@
                 }
             });
         }
-
-        // 攻撃および戦闘処理（最新：戦闘不能時の完全ダンジョン強制退出ロジック内蔵）
+        // 攻撃および戦闘処理（★味方の全滅チェックを最優先に修正し、ステージクリアバグを完全解決！）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) {
                 document.getElementById("battleLog").innerText = "⚠️ ダンジョンに入ってください！";
@@ -713,8 +729,26 @@
                 }
             }
 
-            // アニメーション完了後の同期処理
+            // アニメーション完了後の同期処理（★バグ修正：全滅判定を最優先へ！）
             setTimeout(() => {
+                // 【最優先】味方戦闘メンバーの全滅チェック
+                let partyDead = true;
+                p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
+                
+                if(partyDead) {
+                    alert("💀戦闘メンバーが全滅しました！ダンジョンから強制退出させられます。");
+                    inDungeon = false;
+                    eg = new Array();
+                    p.forEach(m => { m.hp = m.m; }); // 拠点に戻るので全員完全全回復
+                    document.getElementById("btnEnter").disabled = false;
+                    document.getElementById("btnPrevStg").disabled = false;
+                    document.getElementById("btnNextStg").disabled = false;
+                    logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
+                    up();
+                    return; // 全滅時はここで完全に処理を終了（下のステージクリア処理を絶対に通さない！）
+                }
+
+                // 敵を倒したときの処理（味方が生き残っている場合のみ実行）
                 if(t.hp === 0){
                     turnLog += "💀No." + D[t.n].no + " " + t.n + "を倒した！ ";
                     
@@ -728,7 +762,6 @@
 
                     if(Math.random() < joinChance) {
                         const b = D[t.n];
-                        // 野生で加入した仲間は初期パーティ枠(inParty)はfalseでボックスへ入る
                         p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
                         turnLog += "✨起き上がった！No." + b.no + " " + t.n + "がボックスに加入した！ ";
                     } else if (targetNo >= 51) {
@@ -760,24 +793,7 @@
                     eg.shift();
                 }
 
-                // ★味方戦闘メンバーの全滅チェック ＆ ダンジョンからの強制退去システム
-                let partyDead = true;
-                p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
-                
-                if(partyDead) {
-                    alert("💀戦闘メンバーが全滅しました！ダンジョンから強制退出させられます。");
-                    inDungeon = false;
-                    eg = new Array();
-                    p.forEach(m => { m.hp = m.m; }); // 拠点に戻るので全員完全全回復
-                    document.getElementById("btnEnter").disabled = false;
-                    document.getElementById("btnPrevStg").disabled = false;
-                    document.getElementById("btnNextStg").disabled = false;
-                    logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
-                    up();
-                    return;
-                }
-
-                // 部屋の敵を全滅させて次の部屋に進むとき
+                // 部屋の敵を全滅させて次の部屋に進むとき（味方が全滅していない場合のみ）
                 if(eg.length === 0){
                     turnLog += "🎉部屋の敵を全滅させた！奥へ進む！戦闘不能だった仲間も大復活した！";
                     stg++;
@@ -814,7 +830,6 @@
                 let b = D[bName];
                 let bonusMultiplier = 1 + ((b.ex || 1) * 0.2);
 
-                // 新しく配合で生まれた子供は最初はパーティ不参加(inParty:false)
                 p.push({
                     n: bName,
                     lv: 1,
