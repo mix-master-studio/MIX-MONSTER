@@ -38,7 +38,8 @@
             position: relative;
             overflow: hidden;
         }
-/* --- 🎨 戦闘画面の景色イラスト背景システム --- */
+
+/* --- 🎨 新・10エリア対応景色イラスト背景システム --- */
         .bg-grass {
             background: linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 70%, rgba(22, 163, 74, 0.3) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.4) 0%, rgba(255, 255, 255, 0.9) 70%) !important;
             border: 2px solid #16a34a;
@@ -70,6 +71,8 @@
             box-shadow: 0 4px 14px rgba(14,165,233,0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+
         button:hover:not(:disabled) {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(14,165,233,0.35);
@@ -115,7 +118,8 @@
             position: relative;
             color: #334155;
         }
-        
+
+
         .atk-forward-my { transform: translateX(25px); }
         .atk-forward-e { transform: translateX(-25px); }
 
@@ -206,6 +210,7 @@
             color: #334155;
         }
         li.locked { background: #f8fafc; color: #94a3b8; border-color: #e2e8f0; }
+
         .status-text {
             font-size: 11px;
             color: #475569;
@@ -245,10 +250,10 @@
             </tr>
             <tr>
                 <td>👻No.3 うらめシート ＋ 🔨No.4 ピコハンマー ＝ ⚔️No.28 ホーンナイト</td>
-                <td>🔨No.4 ピコハンマー ＋ 🐜No.5 SolozoRoAnt ＝ 🔥No.29 ハッピーシート</td>
+                <td>🔨No.4 ピコハンマー ＋ 🐜No.5 ソロゾロアント ＝ 🔥No.29 ハッピーシート</td>
             </tr>
             <tr>
-                <td>🐜No.5 SolozoRoAnt ＋ 🥒No.6 カッパキュウリ ＝ 🧸No.30 ももんじゃ</td>
+                <td>🐜No.5 ソロゾロアント ＋ 🥒No.6 カッパキュウリ ＝ 🧸No.30 ももんじゃ</td>
                 <td>🧸No.9 チョコベア ＋ 🌵No.10 トゲサボテン ＝ 🐻No.31 ダークベア</td>
             </tr>
             <tr>
@@ -330,21 +335,6 @@
         </div>
     </div>
 
-    <!-- バトル画面 -->
-    <div class="box" id="battleBox">
-        <div class="battle-field">
-            <div class="side" id="mySide"><b>【味方】</b></div>
-            <div class="side" id="eSide"><b>【敵】</b></div>
-        </div>
-        <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
-        <button style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
-            ⚔️ 目の前の敵に攻撃！
-        </button>
-        <button style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="leaveDungeon()">
-            🏃 ダンジョンから出る（拠点へ戻る）
-        </button>
-    </div>
-
     <!-- 🧬 配合用ボックスエリア -->
     <div class="box" id="mixArea">
         <h2>🧬 モンスター配合</h2>
@@ -359,6 +349,25 @@
         </button>
         <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
+    <!-- バトル画面 -->
+    <div class="box" id="battleBox">
+        <div class="battle-field">
+            <div class="side" id="mySide"><b>【味方】</b></div>
+            <div class="side" id="eSide"><b>【敵】</b></div>
+        </div>
+        <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
+        <button style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
+            ⚔️ 目の前の敵に攻撃！
+        </button>
+        <!-- ⭕ ご要望の配置変更：ダンジョンから出るボタンの真上に設置 -->
+        <button style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);" id="btnEnterBtm" onclick="enter()">
+            🏰 ダンジョンに入って敵と戦う！
+        </button>
+        <button style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="leaveDungeon()">
+            🏃 ダンジョンから出る（拠点へ戻る）
+        </button>
+    </div>
+
     <!-- 📦 ボックス（表示切替対応） -->
     <div class="box">
         <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス</h3>
@@ -368,10 +377,13 @@
         <ul id="box" class="toggle-box"></ul>
     </div>
 
-    <!-- 図鑑 -->
+    <!-- 📖 みつけた図鑑（表示切替対応にアップデート） -->
     <div class="box">
         <h3 style="margin-top: 0; color: #1e293b;">📖 みつけた図鑑</h3>
-        <div id="zk" class="grid"></div>
+        <button onclick="let t=document.getElementById('zk'); t.style.display==='none'?t.style.display='grid':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
+            📖 図鑑の表示切替
+        </button>
+        <div id="zk" class="grid" style="display: none;"></div>
     </div>
 
     <!-- 💾 データ引き継ぎ・セーブ管理エリア -->
@@ -392,6 +404,7 @@
             </button>
         </div>
     </div>
+
 
     <script>
         // モンスターデータ前編（No.1〜No.32）
@@ -508,18 +521,18 @@
             "ゴールデンワン+シャドウネコ": "マジカルフクロウ", "キラービー+アサシンシャーク": "テンタクルクラーケン", "ロックタートル+ミノタウロス": "デスサイズ",
             "ももんじゃ+ハッピーシート": "ブロックウォール", "キラータイガー+メタルスライム": "ブロックウォール", "カッパキュウリ+ピコハンマー": "マシントルーパー",
             "ギガ・プニ+ホーンナイト": "デーモンロード", "グリフォン+プニウイング": "フレアフェニックス", "ブロックウォール+マシントルーパー": "フリーズエンペラー",
-            "キングウイング+シャドードラゴン": "大魔王ゼロ", "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン", "ホーリーフェニックス+クロノタイム": "ルシファーエンペラー",
+            "キングウイング+シャドードラゴン": "大魔王ゼロ", "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン", "ホーリーフェニックス+クロノスタイム": "ルシファーエンペラー",
             "ゼウスゴッド+ポセイドンキング": "ゴッドバハムート", "ハデスロード+オーディンナイト": "オメガゼロ", "リヴァイアサンキング+サラマンダーキング": "オメガゼロ",
             "大魔王ゼロ+カイザードラゴン": "ギャラルホーン", "ルシファーエンペラー+ゼウスゴッド": "オメガゼロ", "デーモンロード+フレアフェニックス": "大魔王ゼロ",
             "オメガゼロ+ギャラルホーン": "ハデス・ネクロ", "ゴッドバハムート+カイザードラゴン": "アポロンロード", "ハデス・ネクロ+アポロンロード": "ギャラクシア",
             "ギャラクシア+ルシファーエンペラー": "クロノ・オメガ", "クロノ・オメガ+キングウイング": "スターゲイザー", "スターゲイザー+ギャラクシア": "ジ・エンドゼロ"
         };
-
         let eg = new Array();
         let stg = 1;
         let maxStg = 1; 
         let zk = ["プニシズク"];
         let inDungeon = false;
+        let autoAtkTimer = null; // ⭕ 自動戦闘のタイマーを管理する変数（脱出バグ修正用）
 
         // 手持ち初期データ
         let p = [
@@ -582,9 +595,10 @@
             inDungeon = true;
             generateEnemies();
             document.getElementById("btnEnter").disabled = true;
+            document.getElementById("btnEnterBtm").disabled = true; // ⭕ 上下両方のボタンをロック
             document.getElementById("btnPrevStg").disabled = true;
             document.getElementById("btnNextStg").disabled = true;
-            document.getElementById("battleLog").innerText = "⚔️ ステージ " + stg + " の探索を開始した！";
+            document.getElementById("battleLog").innerText = "⚔️ ダンジョンの探索を開始した！";
             up();
         }
         function generateEnemies() {
@@ -608,12 +622,23 @@
         }
 
         function leaveDungeon() {
+            // ⭕ 【バグ修正】自動攻撃のタイマーが動いていれば完全に消去してフリーズを防ぐ
+            if (autoAtkTimer) {
+                clearTimeout(autoAtkTimer);
+                autoAtkTimer = null;
+            }
             inDungeon = false;
             eg = new Array();
             p.forEach(m => { m.hp = m.m; });
+            
+            // 全ボタンのロックを完全に解除
             document.getElementById("btnEnter").disabled = false;
+            document.getElementById("btnEnterBtm").disabled = false;
             document.getElementById("btnPrevStg").disabled = false;
             document.getElementById("btnNextStg").disabled = false;
+            const btnAtk = document.getElementById("btnAtk");
+            if (btnAtk) btnAtk.disabled = false; // ⭕ 攻撃ボタンの無効化を確実に解除
+
             document.getElementById("battleLog").innerText = "🏡 拠点に戻った。仲間が全員全回復した！";
             saveGame();
             up();
@@ -641,17 +666,31 @@
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
                 p.sort((a, b) => (b.inParty ? 1 : 0) - (a.inParty ? 1 : 0));
             }
-            document.getElementById("stg").innerText = stg;
+            
+            // ⭕ 【新仕様】100階ごとのエリア環境名・絵文字・色スタイル計算
+            let envName = "";
+            let envEmoji = "";
+            let envClass = "";
+            
+            if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
+            else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-grass"; }
+            else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
+            else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-cave"; }
+            else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-castle"; }
+            else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-cave"; }
+            else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-castle"; }
+            else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-castle"; }
+            else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ocean"; }
+            else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
+
+            document.getElementById("stg").innerText = stg + "階 [" + envEmoji + envName + "]";
             document.getElementById("maxStg").innerText = maxStg;
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
             const bBox = document.getElementById("battleBox");
 
-            bBox.className = "box";
-            if (stg <= 250) { bBox.classList.add("bg-grass"); }
-            else if (stg <= 500) { bBox.classList.add("bg-ocean"); }
-            else if (stg <= 750) { bBox.classList.add("bg-cave"); }
-            else { bBox.classList.add("bg-castle"); }
+            bBox.className = "box " + envClass;
+
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
             p.forEach((m) => {
@@ -675,6 +714,7 @@
             if(!inDungeon || eg.length === 0){
                 eS.innerHTML += "<br>平和に満ちています";
                 document.getElementById("btnEnter").disabled = false;
+                document.getElementById("btnEnterBtm").disabled = false;
             } else {
                 let enemyHTML = "";
                 eg.forEach((m, i) => {
@@ -703,6 +743,7 @@
                 list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + partyTag + deadText + actionBtn +
                                    '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span></li>';
             });
+
             const mixList = document.getElementById("mixBoxList");
             mixList.innerHTML = "";
             p.forEach((n, i) => {
@@ -722,7 +763,6 @@
                 }
             });
         }
-
         function exportData() {
             const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
             try {
@@ -764,7 +804,7 @@
             if(!inDungeon || p.length === 0 || eg.length === 0) return;
 
             const btnAtk = document.getElementById("btnAtk");
-            if (btnAtk) btnAtk.disabled = true; // ⭕ 連打によるバグを防ぐため自動戦闘中はボタンを完全ロック
+            if (btnAtk) btnAtk.disabled = true; // 連打バグを防ぐため自動戦闘中はボタンを完全ロック
 
             let firstAliveIdx = -1;
             for(let i=0; i<p.length; i++){
@@ -776,11 +816,12 @@
             }
 
             const activeAlly = p[firstAliveIdx];
-            const currentEnemy = eg[0]; // ⭕ 配列の先頭からターゲットの敵1体を正確に参照して計算エラーを回避
+            const currentEnemy = eg[0]; // 配列の先頭からターゲットの敵1体を正確に参照して計算エラーを回避
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
             let turnLog = "";
+
             function playerAttack() {
                 mySideEl.classList.add("atk-forward-my");
                 setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
@@ -817,11 +858,13 @@
             }
 
             setTimeout(() => {
+                if (!inDungeon) return; // ⭕ 脱出していたら以後の処理を確実に中止
                 if (enemyCanAttack) {
                     if (activeAlly.sp >= currentEnemy.sp) { enemyAttack(); } else { playerAttack(); }
                 }
 
                 setTimeout(() => {
+                    if (!inDungeon) return; // ⭕ 脱出していたら以後の処理を確実に中止
                     let partyDead = true;
                     p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
 
@@ -836,6 +879,7 @@
                         up();
                         return;
                     }
+
                     if(currentEnemy.hp === 0){
                         turnLog += "💀" + currentEnemy.n + "を倒した！ ";
                         let targetNo = D[currentEnemy.n].no;
@@ -867,21 +911,20 @@
                             turnLog += "🆙" + activeAlly.n + "はレベル" + activeAlly.lv + "に上がった！ ";
                         }
 
-                        eg.shift(); // 倒した敵を配列から即座に削除
+                        eg.shift();
                         if(eg.length === 0) {
                             turnLog += "🎉ステージクリア！ ";
                             if(stg === maxStg) {
                                 maxStg = Math.min(1000, maxStg + 1);
                                 turnLog += "🏰新しい階層が解放された！ ";
                             }
-                            
-                            // ⭕ 【新仕様】自動で次のステージ（階層）に進軍する処理
+                            // ⭕ 【新仕様】全滅時自動で次の階に進む処理
                             if (stg < 1000) {
                                 stg++;
                                 turnLog += "➡️自動で " + stg + " 階に進みます。";
-                                generateEnemies(); // 新しい敵の群れを全自動生成
+                                generateEnemies();
                             } else {
-                                inDungeon = false; // 1000階クリア時は自動でダンジョンを脱出
+                                inDungeon = false;
                             }
                         }
                     }
@@ -890,11 +933,11 @@
                     saveGame();
                     up();
 
-                    // ⭕ 【新仕様】敵か味方が全滅するまで、自動で次の攻撃（atk関数）を連続実行
                     if (inDungeon && eg.length > 0) {
-                        setTimeout(() => { atk(); }, 600); // 0.6秒の間隔をあけて全自動ハクスラ戦闘をループ
+                        // ⭕ タイマーの参照を変数に保存（途中で出るボタンを押した時にクリアできるようにする）
+                        autoAtkTimer = setTimeout(() => { atk(); }, 600);
                     } else {
-                        if (btnAtk) btnAtk.disabled = false; // 戦闘が完全に終了した時のみボタンロックを解除
+                        if (btnAtk) btnAtk.disabled = false;
                     }
                 }, 400);
             }, 300);
@@ -903,7 +946,7 @@
         function mix() {
             if(inDungeon) return;
             
-            // ⭕ 【新仕様】手持ちモンスターの総数が4体未満（3体以下）なら配合を拒否
+            // ⭕ 【新仕様】手持ちモンスターの総数が4体未満（3体以下）なら配合を安全に拒否
             if(p.length < 4) {
                 return alert("❌ 手持ちモンスターが少なすぎます！ボックスに4体以上いないと配合できません。");
             }
@@ -911,6 +954,7 @@
             const cbs = document.querySelectorAll(".cb:checked");
             if(cbs.length !== 2) return alert("配合するにはモンスターを2匹チェックしてください！");
             
+            // cbs[0] と cbs[1] の配列インデックス指定により2匹を確実に個別取得
             let idx1 = parseInt(cbs[0].value);
             let idx2 = parseInt(cbs[1].value);
             
@@ -922,6 +966,7 @@
 
             if(!resultName) {
                 alert("😭その組み合わせでは新しいモンスターは生まれなかった（配合失敗）！選んだ2匹は消滅しました。");
+                // オブジェクトの直接比較によりインデックスのズレを完全に防止
                 p = p.filter(m => m !== m1 && m !== m2);
             } else {
                 const b = D[resultName];
