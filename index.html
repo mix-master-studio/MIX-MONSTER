@@ -92,12 +92,12 @@
             text-align: left;
             border-radius: 8px;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease-out; /* 攻撃時の前進用 */
+            transition: transform 0.2s ease-out;
         }
         
         /* --- ⚔️ アニメーション演出クラス --- */
-        .atk-forward-my { transform: translateX(20px); }  /* 味方の前進移動 */
-        .atk-forward-e { transform: translateX(-20px); } /* 敵の前進移動 */
+        .atk-forward-my { transform: translateX(20px); }
+        .atk-forward-e { transform: translateX(-20px); }
         
         .battle-monster {
             font-size: 36px;
@@ -107,7 +107,7 @@
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
         
-        /* 🔴 被ダメージ時の点滅（フラッシュ）アニメーション */
+        /* 被ダメージ時の点滅 */
         @keyframes damageFlash {
             0% { opacity: 1; background-color: rgba(255,0,0,0.4); }
             25% { opacity: 0.2; }
@@ -177,6 +177,7 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
+
     <!-- 配合レシピ表（No.1周辺から神級まで完全に繋がる緻密ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -209,7 +210,7 @@
             </tr>
             <tr>
                 <td>🛡️No.19 アイアンウォール ＋ 🔮No.36 プラチナコア ＝ 🗿No.46 タイタンゴーレム</td>
-                <td>🐸No.20 ポイズンフロッグ ＋ 🐺No.37 シャドウウルフ ＝ 👁️No.47 メドゥーサアイ</td>
+                <td>🐸No.20 ポイズンフロッグ ＋ 🐺No.37 シャドウウルフ ＝ 👁️No.47 Medoosaai</td>
             </tr>
             <tr>
                 <td>🧸No.30 ももんじゃ ＋ 🔥No.29 ハッピーシート ＝ 🧱No.44 ブロックウォール</td>
@@ -246,7 +247,7 @@
         </table>
     </div>
 
-    <!-- ステージ進行 ＆ ★一度クリアした階に戻れるステージ選択システム -->
+    <!-- ステージ進行 ＆ ステージ自由選択UI -->
     <div class="box">
         <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span></h3>
         <p style="font-size: 10px; color: #64748b; margin: 0 0 5px;">最高到達ステージ: <span id="maxStg">1</span></p>
@@ -290,10 +291,9 @@
         <h4 style="margin: 12px 0 6px; text-align: left; color: #1e293b;">🧬 配合用ボックス</h4>
         <ul id="mixBoxList"></ul>
     </div>
-
     <!-- 📦 ボックス -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス（前衛3匹が戦闘に参加）</h3>
+        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス（前衛最大3体まで戦闘に参加可能）</h3>
         <ul id="box"></ul>
     </div>
 
@@ -379,45 +379,79 @@
             "オメガゼロ": { no: 71, a: "🤖", hp: 250, at: 120, df: 100, sp: 60, ex: 10 }
         };
 
-        // ★ステージの進行度別出現制限システム（ステージ10以下はNo.10までに制限！）
+        // 配合レシピデータ
+        const R = {
+            "プニシズク+プニシズク": "ギガ・プニ",
+            "アクアジェリー+マンドラゴラ": "ギガ・プニ",
+            "プニシズク+カゲコウモリ": "プニウイング",
+            "カゲコウモリ+うらめシート": "グリフォン",
+            "うらめシート+ピコハンマー": "ホーンナイト",
+            "ピコハンマー+ソロゾロアント": "ハッピーシート",
+            "ソロゾロアント+カッパキュウリ": "ももんじゃ",
+            "チョコベア+トゲサボテン": "ダークベア",
+            "ホシクズ+コオリガニ": "クリスタル",
+            "コロテントウ+パタバタフライ": "マッハタカ",
+            "トマトプニ+マメチビ": "オバケカボチャ",
+            "ファイヤローズ+サンダージン": "フレイムホース",
+            "アイアンウォール+プラチナコア": "タイタンゴーレム",
+            "ポイズンフロッグ+シャドウウルフ": "メドゥーサアイ",
+            "スノーペンギン+メカペンギン": "フリーズエンペラー",
+            "ゴールデンワン+シャドウネコ": "マジカルフクロウ",
+            "キラービー+アサシンシャーク": "テンタクルクラーケン",
+            "ロックタートル+ミノタウロス": "デスサイズ",
+            "ももんじゃ+ハッピーシート": "ブロックウォール",
+            "キラータイガー+メタルスライム": "ブロックウォール",
+            "カッパキュウリ+ピコハンマー": "マシントルーパー",
+            "ギガ・プニ+ホーンナイト": "デーモンロード",
+            "マグマストーン+サンダーバード": "フレアフェニックス",
+            "グリフォン+プニウイング": "フレアフェニックス",
+            "ブロックウォール+マシントルーパー": "フリーズエンペラー",
+            "キングウイング+シャドードラゴン": "大魔王ゼロ",
+            "クリスタルドラゴン+サンザードラゴン": "カイザードラゴン",
+            "ホーリーフェニックス+クロノスタイム": "ルシファーエンペラー",
+            "ゼウスゴッド+ポセイドンキング": "ゴッドバハムート",
+            "ハデスロード+オーディンナイト": "オメガゼロ",
+            "リヴァイアサンキング+サラマンダーキング": "オメガゼロ",
+            "大魔王ゼロ+カイザードラゴン": "ギャラルホーン",
+            "ルシファーエンペラー+ゼウスゴッド": "オメガゼロ",
+            "デーモンロード+フレアフェニックス": "大魔王ゼロ"
+        };
+
+        // ステージの数字が小さいほど、図鑑No.の低いモンスターが出現するシステム
         function getEnemyPool(stage) {
             if (stage <= 10) {
-                // ステージ1〜10: 必ず図鑑No.10までの初期モンスターしか出ない！
                 return ["プニシズク", "カゲコウモリ", "うらめシート", "ピコハンマー", "ソロゾロアント", "カッパキュウリ", "アクアジェリー", "マンドラゴラ", "チョコベア", "トゲサボテン"];
             } else if (stage <= 20) {
-                // ステージ11〜20: 図鑑No.11〜No.43（中堅キャラ）
                 return ["ホシクズ", "コオリガニ", "コロテントウ", "パタバタフライ", "トマトプニ", "マメチビ", "ファイヤローズ", "サンダージン", "アイアンウォール", "ポイズンフロッグ", "スノーペンギン", "ゴールデンワン", "キラービー", "ロックタートル", "ギガ・プニ", "プニウイング", "グリフォン", "ホーンナイト", "ハッピーシート", "ももんじゃ", "ダークベア", "クリスタル", "マッハタカ", "オバケカボチャ", "フレイムホース", "プラチナコア", "シャドウウルフ", "メカペンギン", "シャドウネコ", "アサシンシャーク", "ミノタウロス", "キラータイガー", "メタルスライム"];
             } else if (stage <= 35) {
-                // ステージ21〜35: 図鑑No.44〜No.55（上級強敵）
                 return ["ブロックウォール", "マシントルーパー", "タイタンゴーレム", "メドゥーサアイ", "マジカルフクロウ", "テンタクルクラーケン", "デスサイズ", "フリーズエンペラー", "デーモンロード", "フレアフェニックス", "キングウイング", "シャドードラゴン"];
             } else {
-                // ステージ36以降: 最深部の神級モンスターたち
                 return ["クリスタルドラゴン", "サンザードラゴン", "ホーリーフェニックス", "クロノスタイム", "ゼウスゴッド", "ポセイドンキング", "ハデスロード", "オーディンナイト", "リヴァイアサンキング", "サラマンダーキング", "大魔王ゼロ", "カイザードラゴン"];
             }
         }
-
         let eg = new Array();
         let stg = 1;
-        let maxStg = 1; // プレイヤーの最高到達ステージ
+        let maxStg = 1; 
         let zk = ["プニシズク"];
         let inDungeon = false;
 
-        // プレイヤーの手持ち（初期モンスター3匹）
+        // ★最初から持っているプニシズク3体をすべて最初から【レベル10（完全強化）】でスタート！
+        // inPartyフラグで戦闘メンバー(最大3体)を管理
         let p = [
-            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6, ex: 0, nx: 5 },
-            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6, ex: 0, nx: 5 },
-            { n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6, ex: 0, nx: 5 }
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true }
         ];
 
         // 初期化表示
         up();
 
-        // ★一度クリアした階層を自由に行き来できるステージ選択処理
+        // ステージ選択処理
         function changeStage(val) {
             if (inDungeon) return alert("ダンジョン内ではステージを変更できません！");
             let nextVal = stg + val;
             if (nextVal < 1) return;
-            if (nextVal > maxStg) return alert("未到達のステージには進めません！奥へ進むには戦闘で敵を全滅させてください。");
+            if (nextVal > maxStg) return alert("未到達のステージには進めません！");
             stg = nextVal;
             up();
         }
@@ -425,8 +459,8 @@
         // ダンジョン進入
         function enter(){
             let aliveCount = 0;
-            p.forEach(m => { if(m.hp > 0) aliveCount++; });
-            if(aliveCount === 0) return alert("生存しているモンスターがいないため、ダンジョンに入れません！");
+            p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
+            if(aliveCount === 0) return alert("戦闘メンバー（戦闘に出すにチェックした生存モンスター）が1匹もいないため、ダンジョンに入れません！");
 
             inDungeon = true;
             generateEnemies();
@@ -463,7 +497,7 @@
         function leaveDungeon() {
             inDungeon = false;
             eg = new Array();
-            p.forEach(m => { m.hp = m.m; }); // 全モンスター全回復
+            p.forEach(m => { m.hp = m.m; }); 
             document.getElementById("btnEnter").disabled = false;
             document.getElementById("btnPrevStg").disabled = false;
             document.getElementById("btnNextStg").disabled = false;
@@ -471,23 +505,38 @@
             up();
         }
 
-        // 戦闘メンバーの先頭変更処理
-        function setFront(index) {
+        // ★「戦闘に出す」「戻す」を自由に切り替える3体制限パーティ編成システム
+        function toggleParty(index) {
             if(inDungeon) return;
-            if(index === 0) return alert("そのモンスターはすでに戦闘メンバーの先頭です！");
-            
             const target = p[index];
-            p.splice(index, 1);
-            p.unshift(target);
             
-            alert("🎒 " + target.n + " を戦闘メンバーの先頭に編成しました！");
+            if (target.inParty) {
+                // すでに参加中なら外す（戻す）
+                target.inParty = false;
+                document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
+            } else {
+                // 新しく戦闘に出す場合、現在の参加人数をカウント
+                let currentPartyCount = 0;
+                p.forEach(m => { if(m.inParty) currentPartyCount++; });
+                
+                if (currentPartyCount >= 3) {
+                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！他のモンスターを「戻す」で外してください。";
+                    return alert("戦闘メンバーは3体までです！");
+                }
+                
+                target.inParty = true;
+                document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
+            }
             up();
         }
 
         // 画面の更新処理
-        function up(){
+        function up() {
+            // ダンジョン外のとき、まず戦闘に参加していない(inParty:false)モンスターをNo順にソート
+            // その後、戦闘参加中(inParty:true)のモンスターがボックス内でも優先的に上に来るように並び替える
             if (!inDungeon) {
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
+                p.sort((a, b) => (b.inParty ? 1 : 0) - (a.inParty ? 1 : 0));
             }
 
             document.getElementById("stg").innerText = stg;
@@ -504,20 +553,27 @@
             else if (stg <= 30) { bBox.classList.add("bg-cave"); } 
             else { bBox.classList.add("bg-castle"); }
 
-            // 味方の表示
+            // ★味方戦闘画面のリアルタイム連動（inPartyがtrueの最大3体のみを表示！）
             mS.innerHTML = "<b>【味方】</b>";
-            p.slice(0, 3).forEach((m) => {
-                let isDead = m.hp <= 0;
-                let inf = D[m.n];
-                mS.innerHTML += "<br><span class='battle-monster' id='myM_" + inf.no + "'>" + inf.a + "</span><b>No." + inf.no + " " + m.n + "</b> (Lv." + m.lv + ")" + (isDead ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "");
-                mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
-                mS.innerHTML += '<div class="hp-bg"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
-                
-                let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
-                let nextText = m.lv >= 100 ? "MAX" : "NEXT: " + (m.nx - m.ex);
-                mS.innerHTML += '<div class="exp-bg"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
-                mS.innerHTML += '<span class="sub-label">' + nextText + '</span>';
+            let activeCount = 0;
+            p.forEach((m) => {
+                if (m.inParty && activeCount < 3) {
+                    activeCount++;
+                    let isDead = m.hp <= 0;
+                    let inf = D[m.n];
+                    mS.innerHTML += "<br><span class='battle-monster'>" + inf.a + "</span><b>No." + inf.no + " " + m.n + "</b> (Lv." + m.lv + ")" + (isDead ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "");
+                    mS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
+                    mS.innerHTML += '<div class="hp-bg"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+                    
+                    let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
+                    let nextText = m.lv >= 100 ? "MAX" : "NEXT: " + (m.nx - m.ex);
+                    mS.innerHTML += '<div class="exp-bg"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
+                    mS.innerHTML += '<span class="sub-label">' + nextText + '</span>';
+                }
             });
+            if(activeCount === 0) {
+                mS.innerHTML += "<br><span style='color:#64748b;'>戦闘メンバーが<br>選ばれていません</span>";
+            }
 
             // 敵の表示
             eS.innerHTML = "<b>【敵】</b>";
@@ -531,7 +587,6 @@
             } else {
                 eg.forEach((m, i) => {
                     let inf = D[m.n];
-                    // 先頭の敵にだけアニメーション用の一意のIDを付与
                     let eId = (i === 0) ? " id='eM_front' " : "";
                     eS.innerHTML += "<br><span class='battle-monster'" + eId + ">" + inf.a + "</span><b>No." + inf.no + " " + m.n + "</b>";
                     eS.innerHTML += "<br>HP: " + m.hp + "/" + m.m + " | ⚡" + m.sp;
@@ -541,18 +596,24 @@
 
             document.getElementById("btnMix").disabled = inDungeon;
 
-            // 通常ボックスの表示
+            // ★通常ボックスの表示（inPartyフラグに連動して「戦闘に出す」「戻す」ボタンが完全自動切り替え）
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
                 let disAttr = inDungeon ? "disabled" : "";
                 let liClass = inDungeon ? "class='locked'" : "";
                 let deadText = n.hp <= 0 ? " <span style='color:red;'>[戦闘不能]</span>" : "";
-                let actionBtn = inDungeon ? "" : '<button class="btn-small" onclick="setFront(' + i + ')">⚔️ 戦闘に出す</button>';
+                
+                // ボタンの文字と色を状態によって切り替える
+                let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
+                let btnBg = n.inParty ? "background:linear-gradient(135deg, #64748b 0%, #475569 100%);" : "";
+                let actionBtn = inDungeon ? "" : '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>';
+                
                 let inf = D[n.n];
                 let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
+                let partyTag = n.inParty ? " <span style='color:#10b981;font-weight:bold;'>[参加中]</span>" : "";
                 
-                list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + deadText + actionBtn +
+                list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + partyTag + deadText + actionBtn +
                                    '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span></li>';
             });
 
@@ -579,16 +640,17 @@
             });
         }
 
-        // 攻撃および戦闘処理（最新：攻撃時前進・被弾赤点滅フラッシュ・No別加入確率・ステージ制限）
+        // 攻撃および戦闘処理（最新：戦闘不能時の完全ダンジョン強制退出ロジック内蔵）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) {
                 document.getElementById("battleLog").innerText = "⚠️ ダンジョンに入ってください！";
                 return;
             }
             
+            // 現在の戦闘メンバー中から、生存している先頭の味方を取得
             let firstAliveIdx = -1;
             for(let i=0; i<p.length; i++){
-                if(p[i].hp > 0){ firstAliveIdx = i; break; }
+                if(p[i].inParty && p[i].hp > 0){ firstAliveIdx = i; break; }
             }
             if(firstAliveIdx === -1) {
                 document.getElementById("battleLog").innerText = "⚠️ 戦闘可能なモンスターがいません！";
@@ -599,19 +661,16 @@
             const t = eg[0]; // 配列の先頭の敵
             const logBox = document.getElementById("battleLog");
 
-            // HTML要素を取得（アニメーション演出用）
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
 
             let turnLog = "";
 
-            // 味方の攻撃（前進 ➔ 敵を赤点滅）
+            // 味方の攻撃
             function playerAttack() {
-                // 1. 味方の前衛が少し前にスライド
-                mySideEl.classList.add("atk-forward-my");
-                setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
+                mySideEl.style.transform = "translateX(20px)";
+                setTimeout(() => { mySideEl.style.transform = "none"; }, 200);
 
-                // 2. 敵のエリアが激しく赤色に点滅フラッシュ
                 setTimeout(() => {
                     eSideEl.classList.add("hit-flash");
                     setTimeout(() => { eSideEl.classList.remove("hit-flash"); }, 400);
@@ -622,13 +681,11 @@
                 turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ No." + D[t.n].no + " " + t.n + "に " + d + " ダメージ！ ";
             }
 
-            // 敵の攻撃（前進 ➔ 味方を赤点滅）
+            // 敵の攻撃
             function enemyAttack() {
-                // 1. 敵が前にスライド
-                eSideEl.classList.add("atk-forward-e");
-                setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
+                eSideEl.style.transform = "translateX(-20px)";
+                setTimeout(() => { eSideEl.style.transform = "none"; }, 200);
 
-                // 2. 味方のエリアが激しく赤色に点滅フラッシュ
                 setTimeout(() => {
                     mySideEl.classList.add("hit-flash");
                     setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
@@ -638,7 +695,7 @@
                 f.hp = Math.max(0, f.hp - ed);
                 turnLog += "💥No." + D[t.n].no + " " + t.n + "の反撃！ No." + D[f.n].no + " " + f.n + "に " + ed + " ダメージ！ ";
                 if(f.hp === 0){
-                    turnLog += "🔴No." + D[f.n].no + " " + f.n + "が倒れて戦闘不能になった！ ";
+                    turnLog += "🔴No." + D[f.n].no + " " + f.n + "が戦闘不能！ ";
                 }
             }
 
@@ -646,7 +703,7 @@
             if (f.sp >= t.sp) {
                 playerAttack();
                 if (t.hp > 0) {
-                    setTimeout(enemyAttack, 500); // 演出が被らないよう少しずらして実行
+                    setTimeout(enemyAttack, 500);
                 }
             } else {
                 turnLog += "⚠️敵が先制！ ";
@@ -656,7 +713,7 @@
                 }
             }
 
-            // メイン処理の終了とスカウト・レベル判定（アニメーション完了を待つため少し遅延）
+            // アニメーション完了後の同期処理
             setTimeout(() => {
                 if(t.hp === 0){
                     turnLog += "💀No." + D[t.n].no + " " + t.n + "を倒した！ ";
@@ -664,31 +721,25 @@
                     let targetNo = D[t.n].no;
                     let joinChance = 0;
 
-                    // ★図記番号のレア度に応じた仲間加入確率分岐システム
-                    if (targetNo <= 10) {
-                        joinChance = 0.10; // No.1〜No.10は「10%」で超仲間になりやすい！
-                    } else if (targetNo <= 20) {
-                        joinChance = 0.05; // No.11〜No.20は「5%」
-                    } else if (targetNo <= 50) {
-                        joinChance = 0.01; // No.21〜No.50はレア枠「1%」！
-                    } else {
-                        joinChance = 0.00; // No.51以降は「0%」（絶対に野生加入しない）
-                    }
+                    if (targetNo <= 10) { joinChance = 0.10; } 
+                    else if (targetNo <= 20) { joinChance = 0.05; } 
+                    else if (targetNo <= 50) { joinChance = 0.01; } 
+                    else { joinChance = 0.00; }
 
                     if(Math.random() < joinChance) {
                         const b = D[t.n];
-                        p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5 });
+                        // 野生で加入した仲間は初期パーティ枠(inParty)はfalseでボックスへ入る
+                        p.push({ n: t.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
                         turnLog += "✨起き上がった！No." + b.no + " " + t.n + "がボックスに加入した！ ";
                     } else if (targetNo >= 51) {
                         turnLog += "📢(このモンスターは強力なため野生では加入しない！) ";
                     }
 
-                    // 戦闘を生き抜いた先頭3匹にのみ経験値を同時に分配
-                    p.slice(0, 3).forEach((member) => {
-                        if (member.hp > 0 && member.lv < 100) { 
+                    // 戦闘メンバー(inParty)の生存者全員に経験値を同時分配
+                    p.forEach((member) => {
+                        if (member.inParty && member.hp > 0 && member.lv < 100) { 
                             member.ex += t.ex; 
                             
-                            // レベルが上がるほど必要経験値が跳ね上がる（現在のレベル×5）
                             while (member.ex >= member.nx && member.lv < 100) {
                                 member.ex -= member.nx; 
                                 member.lv++;
@@ -701,45 +752,43 @@
                                 member.sp += 1 * t.ex;
                                 turnLog += "🆙" + member.n + "がLv." + member.lv + "に上がった！ ";
                             }
-                        } else if (member.hp > 0 && member.lv >= 100) {
-                            member.hp = member.m; // カンスト時はHP全回復のみ
+                        } else if (member.inParty && member.hp > 0 && member.lv >= 100) {
+                            member.hp = member.m; 
                         }
                     });
 
                     eg.shift();
                 }
 
-                // 全滅チェック
-                let allDead = true;
-                p.forEach(m => { if(m.hp > 0) allDead = false; });
-                if(allDead) {
-                    alert("💀全滅しました... 命からがら拠点へ強制送還されます。");
+                // ★味方戦闘メンバーの全滅チェック ＆ ダンジョンからの強制退去システム
+                let partyDead = true;
+                p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
+                
+                if(partyDead) {
+                    alert("💀戦闘メンバーが全滅しました！ダンジョンから強制退出させられます。");
                     inDungeon = false;
                     eg = new Array();
-                    p.forEach(m => { m.hp = m.m; }); 
+                    p.forEach(m => { m.hp = m.m; }); // 拠点に戻るので全員完全全回復
                     document.getElementById("btnEnter").disabled = false;
                     document.getElementById("btnPrevStg").disabled = false;
                     document.getElementById("btnNextStg").disabled = false;
-                    logBox.innerText = "🏡 拠点へ強制送還されたが、仲間たちが全員全回復した！";
+                    logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
                     up();
                     return;
                 }
 
                 // 部屋の敵を全滅させて次の部屋に進むとき
                 if(eg.length === 0){
-                    turnLog += "🎉部屋の敵を全滅させた！奥へ進む！戦闘不能だった仲間も復活した！";
+                    turnLog += "🎉部屋の敵を全滅させた！奥へ進む！戦闘不能だった仲間も大復活した！";
                     stg++;
-                    // もし最高ステージを更新したら、ステージ切り替え上限もアップデート
-                    if (stg > maxStg) {
-                        maxStg = stg;
-                    }
-                    p.forEach(m => { m.hp = m.m; }); 
+                    if (stg > maxStg) { maxStg = stg; }
+                    p.forEach(m => { if(m.inParty) m.hp = m.m; }); // 参加メンバーを次のステージ進出で全回復
                     generateEnemies();
                 }
 
                 logBox.innerText = turnLog;
                 up();
-            }, 600); // アニメーション全体の完了を待って同期
+            }, 600);
         }
 
         // 配合処理
@@ -753,11 +802,11 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
-            const m1 = p[idx];
-            const m2 = p[idx];
+            const m1 = p[idx[0]];
+            const m2 = p[idx[1]];
 
-            p.splice(idx, 1);
-            p.splice(idx, 1);
+            p.splice(idx[0], 1);
+            p.splice(idx[1], 1);
 
             // 20%の確率判定
             if (Math.random() < 0.20) {
@@ -765,6 +814,7 @@
                 let b = D[bName];
                 let bonusMultiplier = 1 + ((b.ex || 1) * 0.2);
 
+                // 新しく配合で生まれた子供は最初はパーティ不参加(inParty:false)
                 p.push({
                     n: bName,
                     lv: 1,
@@ -774,18 +824,19 @@
                     df: b.df + Math.floor(((m1.df + m2.df) / 4) * bonusMultiplier),
                     sp: b.sp + Math.floor(((m1.sp + m2.sp) / 4) * bonusMultiplier),
                     ex: 0,
-                    nx: 5
+                    nx: 5,
+                    inParty: false
                 });
 
                 if(!zk.includes(bName)) zk.push(bName);
                 alert("✨🧬配合大成功(確率20%)！！！\n" + m1.n + " と " + m2.n + " が究極合体して\nNo." + b.no + " " + bName + " が誕生した！");
             } else {
-                alert("💥💥配合大失敗(確率80%)...\n融合実験の凄まじい衝撃により、失敗した " + m1.n + " と " + m2.n + " は両方とも跡形もなく消滅してしまった...");
+                alert("💥💥配合大失敗(確率 80%)...\n融合実験の凄まじい衝撃により、失敗した " + m1.n + " と " + m2.n + " は両方とも跡形もなく消滅してしまった...");
             }
 
             if(p.length === 0) {
                 alert("ボックスが空っぽになってしまいました！\n見かねた博士が初期モンスターの「No.1 プニシズク」を1匹分けてくれました。");
-                p.push({ n: "プニシズク", lv: 1, m: 10, hp: 10, at: 5, df: 3, sp: 6, ex: 0, nx: 5 });
+                p.push({ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true });
             }
 
             up();
@@ -793,5 +844,3 @@
     </script>
 </body>
 </html>
-
-
