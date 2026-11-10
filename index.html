@@ -39,7 +39,7 @@
             overflow: hidden;
         }
         
-        /* --- 戦闘画面の景色イラスト背景システム --- */
+        /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
         .bg-grass {
             background: linear-gradient(to bottom, rgba(34, 197, 94, 0.2) 70%, rgba(22, 163, 74, 0.5) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.3) 0%, rgba(15, 23, 42, 0.8) 70%) !important;
             border: 2px solid #16a34a;
@@ -118,8 +118,7 @@
         
         .atk-forward-my { transform: translateX(25px); }
         .atk-forward-e { transform: translateX(-25px); }
-        
-        /* --- モンスターグラフィックと立体影システム --- */
+        /* --- 👾 モンスター立体影（リアルシャドウ）システム --- */
         .monster-container {
             position: relative;
             display: inline-block;
@@ -193,10 +192,7 @@
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
         .sub-label { font-size: 10px; color: #94a3b8; font-weight: bold; margin-top: 2px; display: block; text-transform: uppercase; }
         
-        /* ボックス折りたたみ用エリア */
-        .toggle-box {
-            display: block;
-        }
+        .toggle-box { display: block; }
         
         ul { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; }
         li {
@@ -232,6 +228,7 @@
 <body>
 
     <h1>ミックスモンスター公式</h1>
+
     <!-- 配合レシピ表（図鑑No.100まで美しく繋がる超巨大ツリー） -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -348,8 +345,7 @@
             🏃 ダンジョンから出る（拠点へ戻る）
         </button>
     </div>
-
-    <!-- 🧬 配合用ボックスエリア（表示切替ボタンを新設！） -->
+    <!-- 🧬 配合用ボックスエリア（表示切替対応） -->
     <div class="box" id="mixArea">
         <h2>🧬 モンスター配合 (20%)</h2>
         <p style="font-size: 11px; color: #f87171; margin: 0 0 5px; font-weight: bold;">
@@ -363,7 +359,8 @@
         </button>
         <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
-    <!-- 📦 ボックス（表示切替ボタンを新設！） -->
+
+    <!-- 📦 ボックス（表示切替対応） -->
     <div class="box">
         <h3 style="margin-top: 0; color: #f1f5f9;">📦 ボックス</h3>
         <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
@@ -378,7 +375,7 @@
         <div id="zk" class="grid"></div>
     </div>
 
-    <!-- 🌐 データ引き継ぎ・セーブ管理エリア（最新UI） -->
+    <!-- 💾 データ引き継ぎ・セーブ管理エリア -->
     <div class="box" style="background: rgba(15, 23, 42, 0.85); border: 1px solid #38bdf8;">
         <h3 style="margin-top: 0; color: #38bdf8;">💾 データセーブ・引き継ぎ管理</h3>
         <p style="font-size: 11px; color: #94a3b8; margin: 0 0 8px;">
@@ -398,7 +395,7 @@
     </div>
 
     <script>
-        // モンスターデータ（No.1〜No.50までを格納）
+        // モンスターデータ第1弾（No.1〜No.25）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -503,16 +500,17 @@
             "ジ・エンドゼロ": { no: 100, a: "👑", hp: 450, at: 240, df: 200, sp: 100, ex: 15 }
         };
 
-        // ★ステージ1000比例出現計算プール
+        // ★ステージ1000対応出現アルゴリズム
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
-            if (stage <= 10) {
-                return keys.filter(k => D[k].no <= 10);
-            }
+            if (stage <= 10) return keys.filter(k => D[k].no <= 10);
+            
             let minNo = 1 + Math.floor((stage - 11) * (90 / 990)); 
             let maxNo = 10 + Math.floor((stage - 11) * (90 / 990));
+            
             if (maxNo > 100) maxNo = 100;
             if (minNo > 90) minNo = 90;
+
             let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
             if (pool.length === 0) pool = ["ジ・エンドゼロ"];
             return pool;
@@ -524,36 +522,38 @@
         let zk = ["プニシズク"];
         let inDungeon = false;
 
-        // 初期手持ち。データがない場合のデフォルト値
+        // 手持ち初期データ（最初からレベル10完全強化状態でスタート）
         let p = [
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true },
             { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true }
         ];
 
-        // ページ読み込み時に自動ロードを実行
+        // 起動時に自動ロード
         window.onload = function() {
             loadGame();
         };
 
-        // ★オートセーブ機能 (LocalStorageへの自動保存)
+        // ★オートセーブ機能 (LocalStorage保存)
         function saveGame() {
             const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
-            localStorage.setItem("mix_mon_save", JSON.stringify(data));
+            localStorage.setItem("mix_mon_save_v4", JSON.stringify(data));
         }
 
-        // 保存データの自動ロード
+        // セーブデータ自動ロード（初期データ消失バグ対策完了）
         function loadGame() {
-            const saved = localStorage.getItem("mix_mon_save");
+            const saved = localStorage.getItem("mix_mon_save_v4");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
-                    stg = data.stg || 1;
-                    maxStg = data.maxStg || 1;
-                    zk = data.zk || ["プニシズク"];
-                    p = data.p || p;
+                    if(data.p && data.p.length > 0) {
+                        stg = data.stg || 1;
+                        maxStg = data.maxStg || 1;
+                        zk = data.zk || ["プニシズク"];
+                        p = data.p;
+                    }
                 } catch(e) {
-                    console.error("セーブデータのロードに失敗しました", e);
+                    console.error("ロード失敗", e);
                 }
             }
             up();
@@ -575,7 +575,7 @@
         function enter(){
             let aliveCount = 0;
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
-            if(aliveCount === 0) return alert("戦闘メンバー（戦闘に出すにチェックした生存モンスター）が1匹もいないため、ダンジョンに入れません！");
+            if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
 
             inDungeon = true;
             generateEnemies();
@@ -586,7 +586,7 @@
             up();
         }
 
-        // 敵の自動生成
+        // 敵の自動生成（ステージ比例成長）
         function generateEnemies() {
             eg = new Array();
             let pool = getEnemyPool(stg);
@@ -622,23 +622,19 @@
             up();
         }
 
-        // 「戦闘に出す」「戻す」切り替えシステム
+        // パーティ3体制限編成処理
         function toggleParty(index) {
             if(inDungeon) return;
             const target = p[index];
-            
             if (target.inParty) {
                 target.inParty = false;
                 document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
             } else {
                 let currentPartyCount = 0;
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
-                
                 if (currentPartyCount >= 3) {
-                    document.getElementById("battleLog").innerText = "⚠️ 戦闘メンバーは最大3体までです！他のモンスターを「戻す」で外してください。";
                     return alert("戦闘メンバーは3体までです！");
                 }
-                
                 target.inParty = true;
                 document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
             }
@@ -646,7 +642,7 @@
             up();
         }
 
-        // 画面の更新処理（★影シャドウコンテナと、表示同期を網羅！）
+        // 画面の表示同期 ＆ リアルシャドウ（立体影）描画
         function up() {
             if (!inDungeon) {
                 p.sort((a, b) => D[a.n].no - D[b.n].no);
@@ -660,14 +656,14 @@
             const eS = document.getElementById("eSide");
             const bBox = document.getElementById("battleBox");
 
-            // 背景イラスト切り替え
+            // 景色背景の切り替え
             bBox.className = "box";
             if (stg <= 250) { bBox.classList.add("bg-grass"); } 
             else if (stg <= 500) { bBox.classList.add("bg-ocean"); } 
             else if (stg <= 750) { bBox.classList.add("bg-cave"); } 
             else { bBox.classList.add("bg-castle"); }
 
-            // 味方戦闘画面の立体影付き連動表示
+            // 味方の立体影描画
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
             p.forEach((m) => {
@@ -685,19 +681,13 @@
                     mS.innerHTML += '<span class="sub-label">' + nextText + '</span>';
                 }
             });
-            if(activeCount === 0) {
-                mS.innerHTML += "<br><span style='color:#cbd5e1;'>戦闘メンバーが選ばれていません</span>";
-            }
+            if(activeCount === 0) mS.innerHTML += "<br><span style='color:#cbd5e1;'>メンバー未選択</span>";
 
-            // 敵の立体影付き表示
+            // 敵の立体影描画
             eS.innerHTML = "<b>【敵】</b>";
             if(!inDungeon || eg.length === 0){
                 eS.innerHTML += "<br>平和に満ちています";
                 document.getElementById("btnEnter").disabled = false;
-                if(!inDungeon) {
-                    document.getElementById("btnPrevStg").disabled = false;
-                    document.getElementById("btnNextStg").disabled = false;
-                }
             } else {
                 eg.forEach((m, i) => {
                     let inf = D[m.n];
@@ -710,18 +700,16 @@
 
             document.getElementById("btnMix").disabled = inDungeon;
 
-            // 通常ボックスの表示更新
+            // 通常ボックス更新
             const list = document.getElementById("box");
             list.innerHTML = "";
             p.forEach((n, i) => {
                 let disAttr = inDungeon ? "disabled" : "";
                 let liClass = inDungeon ? "class='locked'" : "";
                 let deadText = n.hp <= 0 ? " <span style='color:red;'>[戦闘不能]</span>" : "";
-                
                 let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
                 let btnBg = n.inParty ? "background:linear-gradient(135deg, #64748b 0%, #475569 100%);" : "";
                 let actionBtn = inDungeon ? "" : '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>';
-                
                 let inf = D[n.n];
                 let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
                 let partyTag = n.inParty ? " <span style='color:#10b981;font-weight:bold;'>[参加中]</span>" : "";
@@ -730,21 +718,33 @@
                                    '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span></li>';
             });
 
-            // 配合用ボックスの表示更新
+            // 配合用ボックス更新
             const mixList = document.getElementById("mixBoxList");
             mixList.innerHTML = "";
             p.forEach((n, i) => {
                 let disAttr = inDungeon ? "disabled" : "";
                 let liClass = inDungeon ? "class='locked'" : "";
                 let inf = D[n.n];
-        // ★データ引き継ぎコード発行システム（現在のセーブデータを安全にBase64で暗号化して文字列化）
+                mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ')</li>';
+            });
+
+            // みつけた図鑑更新
+            const zkDiv = document.getElementById("zk");
+            zkDiv.innerHTML = "";
+            Object.keys(D).forEach((k) => {
+                if(zk.includes(k)){
+                    zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>';
+                } else {
+                    zkDiv.innerHTML += '<div class="zukan-item">❓<br>No.' + D[k].no + '<br>？？？</div>';
+                }
+            });
+        }
+        // ★データ引き継ぎコード発行システム（Base64による暗号化・コピー）
         function exportData() {
             const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
             try {
                 const jsonStr = JSON.stringify(data);
-                // 端末間での文字化けを防ぐため、UTF-8対応のBase64エンコードを実施
                 const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
-                
                 const field = document.getElementById("passCodeField");
                 field.value = base64Str;
                 field.select();
@@ -758,14 +758,13 @@
             }
         }
 
-        // ★データ引き継ぎコードインポートシステム（コードを解析してデータを完全復元）
+        // ★データ引き継ぎコードインポートシステム（復元）
         function importData() {
             const code = document.getElementById("importCodeField").value.trim();
             if (!code) return alert("引き継ぎコードを入力してください。");
             
             if (confirm("⚠️ データをインポートすると、現在のセーブデータは完全に上書きされます。よろしいですか？")) {
                 try {
-                    // Base64コードをデコードして元のJSON文字列に戻す
                     const jsonStr = decodeURIComponent(escape(atob(code)));
                     const data = JSON.parse(jsonStr);
                     
@@ -775,7 +774,7 @@
                         zk = data.zk || ["プニシズク"];
                         p = data.p;
                         
-                        saveGame(); // 新しいデータをブラウザに保存
+                        saveGame(); 
                         alert("📥 データのインポートに成功しました！ゲームの状態を完全復元しました。");
                         document.getElementById("importCodeField").value = "";
                         up();
@@ -788,7 +787,7 @@
             }
         }
 
-        // 攻撃および戦闘処理（全滅チェック最優先・景色および影の連動版）
+        // 攻撃および戦闘処理（全滅判定最優先・ステージクリアバグ完全解決版）
         function atk(){
             if(!inDungeon || p.length === 0 || eg.length === 0) {
                 document.getElementById("battleLog").innerText = "⚠️ ダンジョンに入ってください！";
@@ -813,10 +812,9 @@
 
             let turnLog = "";
 
-            // 味方の攻撃
             function playerAttack() {
-                mySideEl.classList.add("atk-forward-my");
-                setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
+                mySideEl.style.transform = "translateX(25px)";
+                setTimeout(() => { mySideEl.style.transform = "none"; }, 200);
 
                 setTimeout(() => {
                     eSideEl.classList.add("hit-flash");
@@ -828,10 +826,10 @@
                 turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ No." + D[t.n].no + " " + t.n + "に " + d + " ダメージ！ ";
             }
 
-            // 敵の攻撃
+            // 敵の反撃処理
             function enemyAttack() {
-                eSideEl.classList.add("atk-forward-e");
-                setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
+                eSideEl.style.transform = "translateX(-25px)";
+                setTimeout(() => { eSideEl.style.transform = "none"; }, 200);
 
                 setTimeout(() => {
                     mySideEl.classList.add("hit-flash");
@@ -861,7 +859,7 @@
 
             // アニメーション完了後の同期処理
             setTimeout(() => {
-                // 【最優先チェック】味方戦闘メンバーの全滅チェック
+                // 【最優先】味方戦闘メンバーの全滅チェック
                 let partyDead = true;
                 p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
                 
@@ -879,7 +877,7 @@
                     return; 
                 }
 
-                // 敵を倒したときの処理
+                // 敵を倒したときの処理（味方が生き残っている場合のみ実行）
                 if(t.hp === 0){
                     turnLog += "💀No." + D[t.n].no + " " + t.n + "を倒した！ ";
                     
@@ -939,7 +937,7 @@
             }, 600);
         }
 
-        // 配合処理（オートセーブ完全対応）
+        // 配合処理
         function mix(){
             if(inDungeon) return alert("ダンジョン内では配合できません！拠点に戻ってください。");
 
@@ -950,11 +948,11 @@
             cbs.forEach(cb => { idx.push(parseInt(cb.value)); });
             idx.sort((a, b) => b - a);
 
-            const m1 = p[idx[0]];
-            const m2 = p[idx[1]];
+            const m1 = p[idx];
+            const m2 = p[idx];
 
-            p.splice(idx[0], 1);
-            p.splice(idx[1], 1);
+            p.splice(idx, 1);
+            p.splice(idx, 1);
 
             // 20%の確率判定
             if (Math.random() < 0.20) {
@@ -976,3 +974,20 @@
                 });
 
                 if(!zk.includes(bName)) zk.push(bName);
+                alert("✨🧬配合大成功(確率20%)！！！\n" + m1.n + " と " + m2.n + " が究極合体して\nNo." + b.no + " " + bName + " が誕生した！");
+            } else {
+                alert("💥💥配合大失敗(確率 80%)...\n融合実験の凄まじい衝撃により、失敗した " + m1.n + " と " + m2.n + " は両方とも跡形もなく消滅してしまった...");
+            }
+
+            if(p.length === 0) {
+                alert("ボックスが空っぽになってしまいました！\n見かねた博士が初期モンスターの「No.1 プニシズク」を1匹分けてくれました。");
+                p.push({ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true });
+            }
+
+            saveGame();
+            up();
+        }
+    </script>
+</body>
+</html>
+
