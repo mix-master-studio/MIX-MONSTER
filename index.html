@@ -38,6 +38,7 @@
             position: relative;
             overflow: hidden;
         }
+
         /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
         .bg-grass {
             background: linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 70%, rgba(22, 163, 74, 0.3) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.4) 0%, rgba(255, 255, 255, 0.9) 70%) !important;
@@ -94,62 +95,77 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 2px 8px rgba(16,185,129,0.2);
         }
-        /* --- 🎨 新・戦闘画面の景色イラスト背景システム --- */
-        .bg-grass {
-            background: linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 70%, rgba(22, 163, 74, 0.3) 100%), radial-gradient(circle at 50% -20%, rgba(254, 240, 138, 0.4) 0%, rgba(255, 255, 255, 0.9) 70%) !important;
-            border: 2px solid #16a34a;
-        }
-        .bg-ocean {
-            background: radial-gradient(circle at 50% 130%, rgba(56, 189, 248, 0.3) 0%, transparent 70%), linear-gradient(to bottom, #e0f2fe 0%, #ffffff 100%) !important;
-            border: 2px solid #0284c7;
-        }
-        .bg-cave {
-            background: radial-gradient(circle at 20% 30%, rgba(251, 146, 60, 0.15) 0%, transparent 20%), radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.15) 0%, transparent 20%), linear-gradient(135deg, #f5ebe6 0%, #ffffff 100%) !important;
-            border: 2px solid #78350f;
-        }
-        .bg-castle {
-            background: linear-gradient(to top, rgba(239, 68, 68, 0.15) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.2) 0%, #ffffff 100%) !important;
-            border: 2px solid #6b21a8;
-        }
 
-        button {
-            font-size: 13px;
-            padding: 11px 16px;
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            color: #fff;
-            border: none;
+        .battle-field {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(241, 245, 249, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 10px;
             border-radius: 12px;
-            cursor: pointer;
-            margin: 4px;
-            width: 94%;
-            font-weight: bold;
-            box-shadow: 0 4px 14px rgba(14,165,233,0.25);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 10px;
         }
-        button:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(14,165,233,0.35);
-            filter: brightness(1.05);
+        .side {
+            width: 49%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px;
+            text-align: left;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+            transition: transform 0.2s ease-out;
+            position: relative;
+            color: #334155;
         }
-        button:active:not(:disabled) { transform: translateY(1px); }
-        button:disabled {
-            background: #e2e8f0 !important;
-            color: #94a3b8 !important;
-            cursor: not-allowed;
-            box-shadow: none !important;
-            transform: none !important;
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-        .btn-small {
-            width: auto !important;
+        
+        .atk-forward-my { transform: translateX(25px); }
+        .atk-forward-e { transform: translateX(-25px); }
+
+        /* --- 👾 モンスター立体影（リアルシャドウ）システム --- */
+        .monster-container {
+            position: relative;
             display: inline-block;
-            padding: 5px 12px;
-            margin-left: 6px;
-            font-size: 11px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+            width: 100%;
+            text-align: center;
+            margin: 8px 0 16px;
         }
+        .battle-monster {
+            font-size: 42px;
+            display: block;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+            animation: floatBob 3s ease-in-out infinite alternate;
+        }
+        .monster-shadow {
+            width: 40px;
+            height: 8px;
+            background: rgba(15, 23, 42, 0.25);
+            border-radius: 50%;
+            margin: -4px auto 0;
+            filter: blur(2px);
+            z-index: 1;
+            transition: transform 0.3s ease;
+            animation: shadowScale 3s ease-in-out infinite alternate;
+        }
+        @keyframes floatBob {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
+        }
+        @keyframes shadowScale {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(0.8); opacity: 0.15; }
+        }
+        
+        @keyframes damageFlash {
+            0% { opacity: 1; background-color: rgba(239,68,68,0.4); }
+            25% { opacity: 0.2; }
+            50% { opacity: 1; background-color: rgba(239,68,68,0.4); }
+            75% { opacity: 0.2; }
+            100% { opacity: 1; background-color: rgba(255, 255, 255, 0.95); }
+        }
+        .hit-flash { animation: damageFlash 0.4s ease-in-out; }
+
         .battle-log {
             background: #f8fafc;
             color: #0284c7;
@@ -296,7 +312,6 @@
             </tr>
         </table>
     </div>
-
     <!-- ステージ進行 ＆ ステージ自由選択UI (1〜1000) -->
     <div class="box">
         <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span> / 1000</h3>
@@ -449,7 +464,7 @@
             "オーディンナイト": { no: 63, a: "🐎", hp: 105, at: 72, df: 54, sp: 32, ex: 6 },
             "リヴァイアサンキング": { no: 64, a: "🌊", hp: 130, at: 75, df: 58, sp: 24, ex: 7 },
             "サラマンダーキング": { no: 65, a: "🦎", hp: 125, at: 80, df: 56, sp: 26, ex: 7 },
-            "大魔王ゼロ": { no: 66, a: "👺", hp: 100, at: 60, df: 50, sp: 35, ex: 6 },
+            "大魔王ゼロ": { no: 66, a: "👺", hp: 100, Math: 60, df: 50, sp: 35, ex: 6 },
             "カイザードラゴン": { no: 67, a: "🐲", hp: 150, at: 85, df: 70, sp: 40, ex: 8 },
             "ギャラルホーン": { no: 68, a: "🦏", hp: 160, at: 90, df: 75, sp: 30, ex: 8 },
             "ルシファーエンペラー": { no: 69, a: "👿", hp: 180, at: 95, df: 80, sp: 45, ex: 9 },
@@ -465,7 +480,6 @@
             "ケルベロスファイヤ": { no: 79, a: "🐕", hp: 140, at: 110, df: 65, sp: 44, ex: 8 },
             "アポロンロード": { no: 80, a: "☀️", hp: 180, at: 115, df: 78, sp: 40, ex: 8 },
             "アルテミスクイーン": { no: 81, a: "🌙", hp: 165, at: 120, df: 70, sp: 48, ex: 8 },
-
             "インフィニティコア": { no: 82, a: "🔮", hp: 170, at: 100, df: 95, sp: 35, ex: 8 },
             "アークエンジェル": { no: 83, a: "👼", hp: 190, at: 112, df: 82, sp: 45, ex: 9 },
             "タイタンオメガ": { no: 84, a: "🗿", hp: 220, at: 105, df: 110, sp: 20, ex: 9 },
@@ -576,6 +590,7 @@
             up();
         }
 
+
         function generateEnemies() {
             eg = new Array();
             let pool = getEnemyPool(stg);
@@ -642,6 +657,7 @@
             else if (stg <= 500) { bBox.classList.add("bg-ocean"); }
             else if (stg <= 750) { bBox.classList.add("bg-cave"); }
             else { bBox.classList.add("bg-castle"); }
+
 
             mS.innerHTML = "<b>【味方】</b>";
             let activeCount = 0;
@@ -779,8 +795,8 @@
                     eSideEl.classList.add("hit-flash");
                     setTimeout(() => { eSideEl.classList.remove("hit-flash"); }, 400);
                 }, 100);
-                let d = Math.max(2, Math.floor(f.at - (enemyUnit[0].df / 2) + Math.random() * 3));
-                enemyUnit[0].hp = Math.max(0, enemyUnit[0].hp - d);
+                let d = Math.max(2, Math.floor(f.at - (enemyUnit.df / 2) + Math.random() * 3));
+                enemyUnit.hp = Math.max(0, enemyUnit.hp - d);
                 turnLog += "⚔️No." + D[f.n].no + " " + f.n + "の攻撃！ " + d + " ダメージ！ ";
             }
 
@@ -791,16 +807,16 @@
                     mySideEl.classList.add("hit-flash");
                     setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
                 }, 100);
-                let ed = Math.max(1, Math.floor(enemyUnit[0].at - (f.df / 2) + Math.random() * 2));
+                let ed = Math.max(1, Math.floor(enemyUnit.at - (f.df / 2) + Math.random() * 2));
                 f.hp = Math.max(0, f.hp - ed);
-                turnLog += "💥" + enemyUnit[0].n + "の反撃！ " + ed + " ダメージ！ ";
+                turnLog += "💥" + enemyUnit.n + "の反撃！ " + ed + " ダメージ！ ";
                 if(f.hp === 0){ turnLog += "🔴" + f.n + "が戦闘不能！ "; }
             }
 
             let enemyCanAttack = false;
-            if (f.sp >= enemyUnit[0].sp) {
+            if (f.sp >= enemyUnit.sp) {
                 playerAttack();
-                if (enemyUnit[0].hp > 0) enemyCanAttack = true;
+                if (enemyUnit.hp > 0) enemyCanAttack = true;
             } else {
                 turnLog += "⚠️敵が先制！ ";
                 enemyAttack();
@@ -809,7 +825,7 @@
 
             setTimeout(() => {
                 if (enemyCanAttack) {
-                    if (f.sp >= enemyUnit[0].sp) { enemyAttack(); } else { playerAttack(); }
+                    if (f.sp >= enemyUnit.sp) { enemyAttack(); } else { playerAttack(); }
                 }
 
                 setTimeout(() => {
@@ -828,20 +844,20 @@
                         return;
                     }
 
-                    if(enemyUnit[0].hp === 0){
-                        turnLog += "💀" + enemyUnit[0].n + "を倒した！ ";
-                        let targetNo = D[enemyUnit[0].n].no;
+                    if(enemyUnit.hp === 0){
+                        turnLog += "💀" + enemyUnit.n + "を倒した！ ";
+                        let targetNo = D[enemyUnit.n].no;
                         let joinChance = targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : (targetNo <= 50 ? 0.01 : 0.00));
 
                         if(Math.random() < joinChance) {
-                            const b = D[enemyUnit[0].n];
-                            p.push({ n: enemyUnit[0].n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
-                            turnLog += "✨" + enemyUnit[0].n + "がボックスに加入した！ ";
+                            const b = D[enemyUnit.n];
+                            p.push({ n: enemyUnit.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false });
+                            turnLog += "✨" + enemyUnit.n + "がボックスに加入した！ ";
                         } else if (targetNo >= 51) {
                             turnLog += "📢(このモンスターは野生加入不可！) ";
                         }
 
-                        let gainExp = enemyUnit[0].ex || 1;
+                        let gainExp = enemyUnit.ex || 1;
                         turnLog += "💎EXP " + gainExp + " 獲得！ ";
 
                         p.forEach((member) => {
@@ -933,7 +949,7 @@
 
             let partyCount = 0;
             p.forEach(m => { if(m.inParty) partyCount++; });
-            if(partyCount === 0 && p.length > 0) { p[0].inParty = true; }
+            if(partyCount === 0 && p.length > 0) { p.inParty = true; }
 
             saveGame();
             up();
