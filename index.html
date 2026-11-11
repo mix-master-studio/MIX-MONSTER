@@ -38,6 +38,46 @@
             position: relative;
             overflow: hidden;
         }
+        /* --- ランキングテーブル用スタイル --- */
+        .rank-panel {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        .rank-scroll {
+            max-height: 260px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #ffffff;
+            margin-top: 8px;
+        }
+        .rank-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+        }
+        .rank-table th {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 8px;
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .rank-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .rank-me {
+            background: #fef08a !important;
+            font-weight: 900;
+            color: #854d0e;
+        }
         /* --- 🎨 新・10エリア絵文字超拡大背景システム --- */
         .battle-field {
             display: flex;
@@ -52,7 +92,6 @@
             border-top: none;
             z-index: 1;
         }
-
         .battle-header-bar {
             background: rgba(255, 255, 255, 0.92);
             border: 2px solid #cbd5e1;
@@ -64,8 +103,6 @@
             align-items: center;
             gap: 4px;
         }
-
-        /* 野生加入・ステージ500/1000クリアの画面通知バナー */
         .notice-banner {
             display: none;
             background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
@@ -83,7 +120,6 @@
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-
         .battle-field::before {
             position: absolute;
             top: 50%;
@@ -196,10 +232,19 @@
             transition: transform 0.1s;
         }
         .skill-badge:active { transform: scale(0.95); }
+        .status-badge {
+            display: inline-block;
+            font-size: 9.5px;
+            background: #fef08a;
+            border: 1px solid #fde047;
+            border-radius: 4px;
+            padding: 1px 4px;
+            margin-left: 2px;
+            font-weight: bold;
+        }
+
         .atk-forward-my { transform: translateX(25px); }
         .atk-forward-e { transform: translateX(-25px); }
-
-        /* --- 👾 モンスター立体影（リアルシャドウ）システム --- */
         .monster-container {
             position: relative;
             display: inline-block;
@@ -234,7 +279,6 @@
             0% { transform: scale(1); opacity: 0.3; }
             100% { transform: scale(0.8); opacity: 0.15; }
         }
-        
         @keyframes damageFlash {
             0% { opacity: 1; background-color: rgba(239,68,68,0.4); }
             25% { opacity: 0.2; }
@@ -249,8 +293,8 @@
             padding: 8px 12px;
             border-radius: 10px;
             margin: 10px auto 6px;
-            min-height: 40px;
-            max-height: 60px;
+            min-height: 44px;
+            max-height: 76px;
             overflow-y: auto;
             text-align: left;
             font-family: 'Courier New', Courier, monospace;
@@ -271,9 +315,7 @@
         .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
         .sub-label { font-size: 10px; color: #64748b; font-weight: bold; margin-top: 2px; display: block; text-transform: uppercase; }
-        
         .toggle-box { display: block; }
-        
         ul { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; }
         li {
             background: #ffffff;
@@ -309,7 +351,39 @@
 <body>
 
     <h1>みっくすえもじ</h1>
+    <!-- 🏆 ランキング・プレイヤー名設定（配合表の上に配置） -->
+    <div class="box" style="border: 1px solid #f59e0b; background: rgba(255, 251, 235, 0.9);">
+        <div style="font-size: 12px; font-weight: bold; color: #b45309; margin-bottom: 4px;">
+            👤 プレイヤー名: <span id="dispPlayerName" style="color: #0284c7; font-size: 14px;">NO NAME</span>
+            <span style="font-size: 11px; color: #64748b;">(現在 <span id="dispMyRank">-</span> 位)</span>
+        </div>
+        <button onclick="toggleRanking()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+            🏆 ランキング確認（1位〜100位）
+        </button>
 
+        <div id="rankingPanel" class="rank-panel">
+            <div style="font-size: 11px; font-weight: bold; color: #475569; margin-bottom: 4px;">✏️ プレイヤー名の登録・変更（未入力時は NO NAME）</div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <input type="text" id="playerNameInput" maxlength="12" placeholder="名前を入力（最大12文字）" style="margin-bottom: 0; width: 70%; font-family: sans-serif;">
+                <button class="btn-small" style="margin: 0; padding: 8px 12px; width: 28% !important;" onclick="savePlayerName()">保存</button>
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 8px; font-weight: bold;">
+                🏅 最高クリアステージランキング（1位〜100位）
+            </div>
+            <div class="rank-scroll">
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 18%;">順位</th>
+                            <th style="width: 54%;">プレイヤー名</th>
+                            <th style="width: 28%;">最高クリア</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <!-- ① 配合表 -->
     <div class="box">
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
@@ -395,7 +469,7 @@
         <div class="battle-header-bar" id="battleHeaderBar">
             <div style="font-size: 13px; font-weight: 900; color: #1e293b;">
                 ステージ: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
-                <span style="font-size: 10px; font-weight: normal; color: #64748b;">(最高: <span id="maxStg">1</span>階)</span>
+                <span style="font-size: 10px; font-weight: normal; color: #64748b;">(最高クリア: <span id="dispClearStg">0</span>階 / 最高到達: <span id="maxStg">1</span>階)</span>
             </div>
             <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px;">
                 <button class="btn-tiny" onclick="changeStage(-100)">-100</button>
@@ -412,9 +486,7 @@
             <div class="side" id="eSide"><b>【敵】</b></div>
         </div>
 
-        <!-- ⭕ 野生加入・ステージ500/1000クリア通知バナー -->
         <div class="notice-banner" id="noticeBanner"></div>
-
         <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
 
         <div class="btn-battle-group">
@@ -431,7 +503,7 @@
     </div>
     <!-- ③ ボックス -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス</h3>
+        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
         <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
             📦 ボックスの表示切替
         </button>
@@ -583,7 +655,6 @@
             "カオスヒドラ": { no: 99, a: "🐉", hp: 410, at: 210, df: 165, sp: 88, ex: 15 },
             "ドラゴンエンペラー": { no: 100, a: "👑", hp: 480, at: 245, df: 200, sp: 100, ex: 18 }
         };
-
         // 配合辞書
         const R = {
             "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "フェアリー",
@@ -599,28 +670,31 @@
             "カオスエイリアン+バッファローキング": "スカルリッチ", "リヴァイアサン+ギガブラキオ": "フェンリルウルフ", "スカルリッチ+フェンリルウルフ": "ギャラクシードラゴン",
             "ギャラクシードラゴン+アークデーモン": "クロノスドラゴン", "クロノスドラゴン+ホーリーユニコーン": "ゴッドフェニックス", "ゴッドフェニックス+ギャラクシードラゴン": "ドラゴンエンペラー"
         };
-        // --- ✨ モンスタースキル定義（全7種） ---
-        const SKILLS = {
-            quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
-            power:  { name: "🔥パワーチャージ", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のステージへ進むと上昇効果は消える。" },
-            guard:  { name: "🛡️アイアンガード", desc: "攻撃後に50%の確率で防御力（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
-            double: { name: "⚔️ダブルアタック", desc: "攻撃後に100%の確率でもう一度追加攻撃を行う。" },
-            heal:   { name: "💚リジェネヒール", desc: "攻撃後に50%の確率で自分の最大HPの10%を回復する。" },
-            godspd: { name: "🌪️ゴッドスピード", desc: "攻撃後に50%の確率で素早さ（大）上昇（+50%）。次のステージへ進むと上昇効果は消える。" },
-            death:  { name: "💀デスエンド", desc: "攻撃後に25%の確率で目の前の敵のHPを0にする一撃必殺。" }
-        };
+        // --- ✨ 新・全10種ランダムスキル定義（No.1〜No.100がランダムで1つ習得） ---
+        const SKILLS = [
+            { id: 1, name: "🛡️イージスバリア", desc: "攻撃後に10%の確率で、相手の攻撃を一度だけ無効化するバリアを張る。" },
+            { id: 2, name: "💚リジェネレーション", desc: "攻撃後に10%の確率で、自分の最大HPの5%を回復する。" },
+            { id: 3, name: "🔥パワーチャージ", desc: "攻撃後に10%の確率で、次のターンの自分の攻撃を1回だけ1.5倍にする（その次のターンからは元に戻る）。" },
+            { id: 4, name: "☠️ポイズンタッチ", desc: "攻撃後に10%の確率で、相手を毒状態にする。毒状態のモンスターは攻撃後に最大HPの10%のダメージを受ける。" },
+            { id: 5, name: "✨ポイズンガード", desc: "毒状態にならない（毒無効）。" },
+            { id: 6, name: "⚡パラライズショック", desc: "攻撃後に10%の確率で、相手を麻痺状態にする。麻痺状態のモンスターは次のターンだけ攻撃を出せず、その次のターンからは動けるようになる。" },
+            { id: 7, name: "🔋パラライズガード", desc: "麻痺状態にならない（麻痺無効）。" },
+            { id: 8, name: "🔰ハーフシールド", desc: "攻撃後に10%の確率で、次に自分が受けるダメージを半分（切り上げ）にする。" },
+            { id: 9, name: "🌟オールブースト", desc: "攻撃後に50%の確率で、攻撃・防御・素早さが（小）上昇（+10%）する。次のステージに進むと元に戻る。" },
+            { id: 10, name: "☣️カオスヴェノム", desc: "攻撃後に20%の確率で、相手を毒状態と麻痺状態の両方にする。" }
+        ];
 
-        // 図鑑No.に応じた習得スキル一覧を返す
-        function getMonsterSkills(no) {
-            let list = [];
-            if (no >= 1 && no <= 50) list.push(SKILLS.quick);
-            if (no >= 30 && no <= 50) list.push(SKILLS.power);
-            if (no >= 30 && no <= 50) list.push(SKILLS.guard);
-            if (no >= 51 && no <= 100) list.push(SKILLS.double);
-            if (no >= 70 && no <= 100) list.push(SKILLS.heal);
-            if (no >= 90 && no <= 100) list.push(SKILLS.godspd);
-            if (no >= 95 && no <= 100) list.push(SKILLS.death);
-            return list;
+        // ランダムでスキルID（1〜10）を1つ返す
+        function getRandomSkillId() {
+            return Math.floor(Math.random() * SKILLS.length) + 1;
+        }
+
+        // スキルIDからスキルオブジェクトを取得（未設定データはランダム割り当て）
+        function getSkillObj(mon) {
+            if (!mon.skillId || mon.skillId < 1 || mon.skillId > SKILLS.length) {
+                mon.skillId = getRandomSkillId();
+            }
+            return SKILLS[mon.skillId - 1];
         }
 
         // ボックスでスキル名を押した時の効果詳細表示
@@ -629,30 +703,37 @@
         }
         let eg = new Array();
         let stg = 1;
-        let maxStg = 1; 
+        let maxStg = 1;
+        let maxClearStg = 0;
+        let playerName = "";
         let zk = ["プニシズク"];
         let inDungeon = false;
         let autoAtkTimer = null;
 
-        // 手持ち初期データ（No.1プニシズク）
-        let p = [
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, buffAt: 0, buffDf: 0, buffSp: 0 },
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, buffAt: 0, buffDf: 0, buffSp: 0 },
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, buffAt: 0, buffDf: 0, buffSp: 0 }
-        ];
+        // 戦闘中のバフ・状態異常を初期化＆リセット
+        function initBattleState(mon) {
+            mon.buffAt = 0;
+            mon.buffDf = 0;
+            mon.buffSp = 0;
+            mon.nullifyOnce = false;   // スキル1: 攻撃1回無効バリア
+            mon.nextAtk15 = false;     // スキル3: 次ターン攻撃1.5倍
+            mon.isPoisoned = false;    // スキル4/10: 毒状態
+            mon.isParalyzed = false;   // スキル6/10: 麻痺状態（次ターン行動不能）
+            mon.halfDmgOnce = false;   // スキル8: 次受けるダメージ半減
+        }
 
-        // 次のステージへ進んだ時や帰還時にスキル上昇効果をリセット
+        // 手持ち初期データ（No.1プニシズク：ランダムスキル1個所持）
+        let p = [
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() }
+        ];
+        p.forEach(m => initBattleState(m));
+
+        // 次のステージへ進んだ時や帰還時にスキル上昇効果・状態異常をリセット
         function resetStageBuffs() {
-            p.forEach(m => {
-                m.buffAt = 0;
-                m.buffDf = 0;
-                m.buffSp = 0;
-            });
-            eg.forEach(e => {
-                e.buffAt = 0;
-                e.buffDf = 0;
-                e.buffSp = 0;
-            });
+            p.forEach(m => initBattleState(m));
+            eg.forEach(e => initBattleState(e));
         }
 
         // 野生加入やステージ500/1000クリアの画面通知を表示
@@ -666,28 +747,143 @@
                 banner.style.display = "none";
             }, duration);
         }
+        // --- 🏆 ランキング（1位〜100位）＆ プレイヤー名管理 ---
+        const RIVAL_NAMES = [
+            "ドラゴンマスター", "えもじ職人", "スライムハンター", "配合の達人", "ダンジョン攻略王",
+            "ケンタ", "ユウキ", "ハルト", "サクラ", "アオイ", "レン", "ミナト", "ヒナタ", "ユイ", "リク",
+            "カイト", "ソラ", "コウキ", "メイ", "リョウ", "タクミ", "アヤカ", "シュン", "ナナミ", "ダイキ",
+            "NO NAME", "まおう討伐隊", "プニシズク推し", "伝説の配合師", "エンペラー目指す人",
+            "エモジスト", "夜更かしゲーマー", "初心者冒険者", "モンスター博士", "図鑑コンプ勢",
+            "NO NAME", "最強の盾", "一撃必殺", "毒と麻痺の使い手", "無課金プレイヤー",
+            "カズヤ", "ミサキ", "トモヤ", "エリカ", "マコト", "ユカリ", "シンジ", "チヒロ", "ケンジ", "マナミ",
+            "タケシ", "レイナ", "ユウト", "モモカ", "ショウタ", "アカリ", "リュウジ", "ココロ", "ワタル", "スズカ",
+            "NO NAME", "フェニックス", "クロノス", "ギャラクシー", "アークデーモン",
+            "リヴァイアサン", "ベヒーモス", "ユニコーン", "セラフィム", "フェンリル",
+            "ハヤト", "ノゾミ", "ツバサ", "カエデ", "イブキ", "ミユ", "カンタ", "リオ", "ヤマト", "ホノカ",
+            "セイヤ", "アンナ", "タイガ", "サラ", "コウタ", "マイ", "ジン", "ルナ", "レオ", "エマ",
+            "NO NAME", "駆け出しテイマー", "えもじ大好き", "1000階チャレンジャー", "週末プレイヤー",
+            "みっくす初心者", "配合マニア", "ダンジョン探索隊", "ひまつぶし勢"
+        ];
 
+        // 99人のライバルデータ（1位〜99位相当）を固定シードで生成
+        function getRivalList() {
+            let list = [];
+            for (let i = 0; i < 99; i++) {
+                // 1位(1000階)から100位付近(5階)まで階段状に分布させる
+                let ratio = (99 - i) / 99;
+                let score = Math.max(1, Math.floor(Math.pow(ratio, 1.45) * 995) + (i % 5));
+                if (i === 0) score = 1000;
+                list.push({
+                    name: RIVAL_NAMES[i] || "NO NAME",
+                    score: score,
+                    isMe: false
+                });
+            }
+            return list;
+        }
+        function getDisplayPlayerName() {
+            const trimmed = (playerName || "").trim();
+            return trimmed.length > 0 ? trimmed : "NO NAME";
+        }
+
+        function savePlayerName() {
+            const input = document.getElementById("playerNameInput");
+            if (!input) return;
+            playerName = input.value.trim();
+            saveGame();
+            updateRankingUI();
+            alert("👤 プレイヤー名を「" + getDisplayPlayerName() + "」に保存しました！");
+        }
+
+        function toggleRanking() {
+            const panel = document.getElementById("rankingPanel");
+            if (!panel) return;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+                updateRankingUI();
+            }
+        }
+
+        function updateRankingUI() {
+            const dispName = document.getElementById("dispPlayerName");
+            const dispRank = document.getElementById("dispMyRank");
+            const nameInput = document.getElementById("playerNameInput");
+            const tbody = document.getElementById("rankingBody");
+
+            const myName = getDisplayPlayerName();
+            if (dispName) dispName.innerText = myName;
+            if (nameInput && document.activeElement !== nameInput) {
+                nameInput.value = playerName || "";
+            }
+
+            let allPlayers = getRivalList();
+            allPlayers.push({
+                name: myName,
+                score: maxClearStg,
+                isMe: true
+            });
+
+            // 最高クリアステージ降順（同点なら自分を優先表示）
+            allPlayers.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return (b.isMe ? 1 : 0) - (a.isMe ? 1 : 0);
+            });
+
+            let myRankIndex = allPlayers.findIndex(item => item.isMe);
+            if (dispRank) {
+                dispRank.innerText = (myRankIndex >= 0) ? (myRankIndex + 1) : "-";
+            }
+
+            if (tbody) {
+                tbody.innerHTML = "";
+                const top100 = allPlayers.slice(0, 100);
+                top100.forEach((entry, idx) => {
+                    let rankNum = idx + 1;
+                    let medal = rankNum === 1 ? "🥇1位" : (rankNum === 2 ? "🥈2位" : (rankNum === 3 ? "🥉3位" : rankNum + "位"));
+                    let trClass = entry.isMe ? " class='rank-me'" : "";
+                    let nameLabel = entry.isMe ? "★ " + entry.name + " (あなた)" : entry.name;
+                    tbody.innerHTML += "<tr" + trClass + "><td>" + medal + "</td><td>" + nameLabel + "</td><td>" + entry.score + "階</td></tr>";
+                });
+            }
+        }
         window.onload = function() { loadGame(); };
 
         function saveGame() {
-            const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
-            localStorage.setItem("mix_emoji_save_v4", JSON.stringify(data));
+            const data = {
+                stg: stg,
+                maxStg: maxStg,
+                maxClearStg: maxClearStg,
+                playerName: playerName,
+                zk: zk,
+                p: p
+            };
+            localStorage.setItem("mix_emoji_save_v5", JSON.stringify(data));
         }
 
         function loadGame() {
-            const saved = localStorage.getItem("mix_emoji_save_v4");
+            // 新バージョン(v5)または旧バージョン(v4)からデータ読み込み
+            const saved = localStorage.getItem("mix_emoji_save_v5") || localStorage.getItem("mix_emoji_save_v4");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
                     if(data.p && data.p.length > 0) {
                         stg = data.stg || 1;
                         maxStg = data.maxStg || 1;
+                        maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
+                        playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
                         p = data.p;
-                        resetStageBuffs();
+                        // スキル未設定の既存モンスターにランダムで1つ付与
+                        p.forEach(m => {
+                            getSkillObj(m);
+                            initBattleState(m);
+                        });
                     }
                 } catch(e) { console.error("ロード失敗", e); }
             }
+            updateRankingUI();
             up();
         }
         function getEnemyPool(stage) {
@@ -742,7 +938,7 @@
                 let stageBonus = stg - 1;
                 let baseEx = (b.ex || 1) * 3;
                 let levelBonusEx = Math.floor(stageBonus * 2.5);
-                eg.push({
+                let enemyMon = {
                     n: n,
                     m: b.hp + Math.floor(stageBonus * 4.5),
                     hp: b.hp + Math.floor(stageBonus * 4.5),
@@ -750,10 +946,10 @@
                     df: b.df + Math.floor(stageBonus * 1.2),
                     sp: b.sp + Math.floor(stageBonus * 1.0),
                     ex: baseEx + levelBonusEx,
-                    buffAt: 0,
-                    buffDf: 0,
-                    buffSp: 0
-                });
+                    skillId: getRandomSkillId()
+                };
+                initBattleState(enemyMon);
+                eg.push(enemyMon);
             }
         }
 
@@ -785,7 +981,6 @@
             saveGame();
             up();
         }
-
         function toggleParty(index) {
             if(inDungeon) return;
             const target = p[index];
@@ -801,6 +996,18 @@
             }
             saveGame();
             up();
+        }
+
+        // 戦闘中のバフ・状態異常アイコンをまとめて生成
+        function buildStateIcons(mon) {
+            let icons = "";
+            if ((mon.buffAt || 0) > 0 || (mon.buffDf || 0) > 0 || (mon.buffSp || 0) > 0) icons += "⬆️";
+            if (mon.nullifyOnce) icons += "🛡️無効";
+            if (mon.nextAtk15) icons += "🔥1.5倍";
+            if (mon.halfDmgOnce) icons += "🔰半減";
+            if (mon.isPoisoned) icons += "☠️毒";
+            if (mon.isParalyzed) icons += "⚡麻痺";
+            return icons ? " <span class='status-badge'>" + icons + "</span>" : "";
         }
         function up() {
             if (!inDungeon) {
@@ -826,22 +1033,23 @@
 
             const stgEl = document.getElementById("stg");
             const maxStgEl = document.getElementById("maxStg");
+            const clearStgEl = document.getElementById("dispClearStg");
             if (stgEl) stgEl.innerText = stg + "階 [" + envEmoji + envName + "]";
             if (maxStgEl) maxStgEl.innerText = maxStg;
+            if (clearStgEl) clearStgEl.innerText = maxClearStg;
+
+            // パーティ参加中カウント表示（バグ修正：0体状態防止）
+            let partyNow = p.filter(m => m.inParty).length;
+            const badgeEl = document.getElementById("partyCountBadge");
+            if (badgeEl) badgeEl.innerText = "(戦闘中: " + partyNow + "/3体)";
 
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
-            
-            // 戦闘画面と一体化ヘッダーバーに環境フレーム色を同時適用
             const bField = document.querySelector(".battle-field");
             const bHeader = document.getElementById("battleHeaderBar");
-            if (bField) {
-                bField.className = "battle-field " + envClass;
-            }
-            if (bHeader) {
-                bHeader.className = "battle-header-bar " + envClass;
-            }
-            // 味方戦闘画面の描画（スキルによるステータス上昇アイコンをHPの右横に表示）
+            if (bField) bField.className = "battle-field " + envClass;
+            if (bHeader) bHeader.className = "battle-header-bar " + envClass;
+            // 味方戦闘画面の描画
             if (mS) {
                 mS.innerHTML = "<b style='font-size:12px;'>【味方】</b>";
                 let activeCount = 0;
@@ -850,14 +1058,10 @@
                         activeCount++;
                         let isDead = m.hp <= 0;
                         let inf = D[m.n];
-                        let buffIcons = "";
-                        if ((m.buffAt || 0) > 0) buffIcons += "⬆️⚔️";
-                        if ((m.buffDf || 0) > 0) buffIcons += "⬆️🛡️";
-                        if ((m.buffSp || 0) > 0) buffIcons += "⬆️⚡";
-                        let buffHtml = buffIcons ? " <span style='font-size:10px; background:#fef08a; border-radius:4px; padding:1px 3px;'>" + buffIcons + "</span>" : "";
+                        let stateHtml = buildStateIcons(m);
 
                         mS.innerHTML += "<br><div class='monster-container'><span class='battle-monster' style='font-size:36px;'>" + inf.a + "</span><div class='monster-shadow' style='width:30px;'></div></div><b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + m.lv + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : "");
-                        mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + buffHtml;
+                        mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml;
                         mS.innerHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                         
                         let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
@@ -869,7 +1073,7 @@
                 if(activeCount === 0) mS.innerHTML += "<br><span style='color:#cbd5e1;font-size:11px;'>メンバー未選択</span>";
             }
 
-            // 敵戦闘画面の描画（敵もスキル発動時にHP右横にステータス上昇アイコンを表示）
+            // 敵戦闘画面の描画
             if (eS) {
                 eS.innerHTML = "<b style='font-size:12px;'>【敵】</b>";
                 if(!inDungeon || eg.length === 0){
@@ -881,14 +1085,10 @@
                     eg.forEach((m, i) => {
                         let inf = D[m.n];
                         let eId = (i === 0) ? " id='eM_front' " : "";
-                        let eBuffIcons = "";
-                        if ((m.buffAt || 0) > 0) eBuffIcons += "⬆️⚔️";
-                        if ((m.buffDf || 0) > 0) eBuffIcons += "⬆️🛡️";
-                        if ((m.buffSp || 0) > 0) eBuffIcons += "⬆️⚡";
-                        let eBuffHtml = eBuffIcons ? " <span style='font-size:10px; background:#fef08a; border-radius:4px; padding:1px 3px;'>" + eBuffIcons + "</span>" : "";
+                        let eStateHtml = buildStateIcons(m);
 
                         enemyHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + " style='font-size:36px;'>" + inf.a + "</span><div class='monster-shadow' style='width:30px;'></div></div><b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + stg + ")</span>";
-                        enemyHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eBuffHtml;
+                        enemyHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml;
                         enemyHTML += '<div class="hp-bg" style="height:7px;"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                     });
                     eS.innerHTML += enemyHTML;
@@ -897,7 +1097,7 @@
             const btnMix = document.getElementById("btnMix");
             if (btnMix) btnMix.disabled = inDungeon;
 
-            // 拠点ボックスの描画（覚えているスキルボタンを表示＆タップで効果確認）
+            // 拠点ボックスの描画（覚えているランダムスキル1つを表示＆タップで効果確認）
             const list = document.getElementById("box");
             if (list) {
                 list.innerHTML = "";
@@ -911,22 +1111,16 @@
                     let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
                     let partyTag = n.inParty ? " <span style='color:#10b981;font-weight:bold;'>[参加中]</span>" : "";
 
-                    // 習得スキル一覧の生成
-                    let mSkills = getMonsterSkills(inf.no);
-                    let skillHtml = "<div style='margin-top:4px;'><span style='font-size:10px; color:#64748b; font-weight:bold;'>✨スキル(タップで詳細): </span>";
-                    if (mSkills.length === 0) {
-                        skillHtml += "<span style='font-size:10px; color:#94a3b8;'>なし</span>";
-                    } else {
-                        mSkills.forEach(sk => {
-                            skillHtml += '<span class="skill-badge" onclick="showSkillInfo(\'' + sk.name + '\', \'' + sk.desc + '\')">' + sk.name + '</span>';
-                        });
-                    }
-                    skillHtml += "</div>";
+                    // 習得スキル1つの生成
+                    let sk = getSkillObj(n);
+                    let skillHtml = "<div style='margin-top:4px;'><span style='font-size:10px; color:#64748b; font-weight:bold;'>✨スキル(タップで詳細): </span>" +
+                                    '<span class="skill-badge" onclick="showSkillInfo(\'' + sk.name + '\', \'' + sk.desc + '\')">' + sk.name + '</span></div>';
                     
                     list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + partyTag + deadText + actionBtn +
                                        '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span>' + skillHtml + '</li>';
                 });
             }
+
             // 配合選択用ボックスの描画
             const mixList = document.getElementById("mixBoxList");
             if (mixList) {
@@ -935,7 +1129,8 @@
                     let disAttr = inDungeon ? "disabled" : "";
                     let liClass = inDungeon ? "class='locked'" : "";
                     let inf = D[n.n];
-                    mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ')</li>';
+                    let sk = getSkillObj(n);
+                    mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ') <span style="font-size:10px;color:#0369a1;">[' + sk.name + ']</span></li>';
                 });
             }
 
@@ -953,7 +1148,14 @@
             }
         }
         function exportData() {
-            const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
+            const data = {
+                stg: stg,
+                maxStg: maxStg,
+                maxClearStg: maxClearStg,
+                playerName: playerName,
+                zk: zk,
+                p: p
+            };
             try {
                 const jsonStr = JSON.stringify(data);
                 const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
@@ -978,75 +1180,100 @@
                     if (data.p && Array.isArray(data.p)) {
                         stg = data.stg || 1;
                         maxStg = data.maxStg || 1;
+                        maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
+                        playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
                         p = data.p;
-                        resetStageBuffs();
+                        p.forEach(m => {
+                            getSkillObj(m);
+                            initBattleState(m);
+                        });
                         saveGame();
                         alert("📥 データの復元に成功しました！");
                         document.getElementById("importCodeField").value = "";
+                        updateRankingUI();
                         up();
                     } else { alert("⚠️ 無効なコードです。"); }
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
         }
-        // --- ✨ 攻撃後に自動発動するスキル判定エンジン ---
+        // --- ✨ 新・全10種ランダムスキル発動判定エンジン ---
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
-            const no = D[attacker.n].no;
+            const sk = getSkillObj(attacker);
+            const defSk = getSkillObj(defender);
             let skillLogs = "";
 
-            // 1. No.1〜No.50: 25%確率で素早さ（小）上昇
-            if (no >= 1 && no <= 50 && Math.random() < 0.25) {
-                let inc = Math.max(1, Math.floor(attacker.sp * 0.15));
-                attacker.buffSp = (attacker.buffSp || 0) + inc;
-                skillLogs += "⚡" + attacker.n + "のクイックステップ！素早さUP！ ";
+            // 1. 10%で相手の攻撃を一度だけ無効
+            if (sk.id === 1 && Math.random() < 0.10) {
+                attacker.nullifyOnce = true;
+                skillLogs += "🛡️" + attacker.n + "のイージスバリア！次の攻撃を1回無効化！ ";
             }
 
-            // 2. No.30〜No.50: 25%確率で攻撃（中）上昇
-            if (no >= 30 && no <= 50 && Math.random() < 0.25) {
-                let inc = Math.max(2, Math.floor(attacker.at * 0.30));
-                attacker.buffAt = (attacker.buffAt || 0) + inc;
-                skillLogs += "🔥" + attacker.n + "のパワーチャージ！攻撃UP！ ";
+            // 2. 10%でHPを5%回復
+            if (sk.id === 2 && Math.random() < 0.10) {
+                let healVal = Math.max(1, Math.floor(attacker.m * 0.05));
+                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
+                skillLogs += "💚" + attacker.n + "のリジェネレーション！HPが " + healVal + " 回復！ ";
             }
 
-            // 3. No.30〜No.50: 50%確率で防御（小）上昇
-            if (no >= 30 && no <= 50 && Math.random() < 0.50) {
-                let inc = Math.max(1, Math.floor(attacker.df * 0.15));
-                attacker.buffDf = (attacker.buffDf || 0) + inc;
-                skillLogs += "🛡️" + attacker.n + "のアイアンガード！防御UP！ ";
+            // 3. 10%で次のターンの自分の攻撃を一回だけ1.5倍にする（その次のターンからは元に戻る）
+            if (sk.id === 3 && Math.random() < 0.10) {
+                attacker.nextAtk15 = true;
+                skillLogs += "🔥" + attacker.n + "のパワーチャージ！次の攻撃が1.5倍になる！ ";
             }
 
-            // 4. No.51〜No.100: もう一度追加攻撃（ダブルアタック）
-            if (no >= 51 && no <= 100 && defender.hp > 0) {
-                let atkVal = attacker.at + (attacker.buffAt || 0);
-                let defVal = defender.df + (defender.buffDf || 0);
-                let extraDmg = Math.max(2, Math.floor(atkVal - (defVal / 2) + Math.random() * 3));
-                defender.hp = Math.max(0, defender.hp - extraDmg);
-                skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ ";
-                if (!isPlayerAttack && defender.hp === 0) {
-                    skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            // 4. 10%で相手を毒状態にする（スキル5「毒状態にならない」を持つ相手には無効）
+            if (sk.id === 4 && defender.hp > 0 && Math.random() < 0.10) {
+                if (defSk.id === 5) {
+                    skillLogs += "✨" + defender.n + "はポイズンガードで毒を防いだ！ ";
+                } else {
+                    defender.isPoisoned = true;
+                    skillLogs += "☠️" + attacker.n + "のポイズンタッチ！" + defender.n + "は毒状態になった！ ";
                 }
             }
-            // 5. No.70〜No.100: 50%の確率でHPが10%回復
-            if (no >= 70 && no <= 100 && Math.random() < 0.50) {
-                let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
-                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
-                skillLogs += "💚" + attacker.n + "のリジェネヒール！HPが " + healVal + " 回復！ ";
+
+            // 6. 10%で相手を麻痺状態にする（スキル7「麻痺状態にならない」を持つ相手には無効）
+            if (sk.id === 6 && defender.hp > 0 && Math.random() < 0.10) {
+                if (defSk.id === 7) {
+                    skillLogs += "🔋" + defender.n + "はパラライズガードで麻痺を防いだ！ ";
+                } else {
+                    defender.isParalyzed = true;
+                    skillLogs += "⚡" + attacker.n + "のパラライズショック！" + defender.n + "は麻痺状態になった！ ";
+                }
             }
 
-            // 6. No.90〜No.100: 50%確率で素早さ（大）上昇
-            if (no >= 90 && no <= 100 && Math.random() < 0.50) {
-                let inc = Math.max(3, Math.floor(attacker.sp * 0.50));
-                attacker.buffSp = (attacker.buffSp || 0) + inc;
-                skillLogs += "🌪️" + attacker.n + "のゴッドスピード！素早さ大幅UP！ ";
+            // 8. 10%で次に自分が受けるダメージを半分にする（切り上げ）
+            if (sk.id === 8 && Math.random() < 0.10) {
+                attacker.halfDmgOnce = true;
+                skillLogs += "🔰" + attacker.n + "のハーフシールド！次の被ダメージを半減！ ";
             }
 
-            // 7. No.95〜No.100: 25%確率で相手のHPを0にする一撃必殺
-            if (no >= 95 && no <= 100 && defender.hp > 0 && Math.random() < 0.25) {
-                defender.hp = 0;
-                skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
-                if (!isPlayerAttack) {
-                    skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            // 9. 50%で攻撃と防御と素早さが（小）上昇する（次のステージに進むと元に戻る）
+            if (sk.id === 9 && Math.random() < 0.50) {
+                let incAt = Math.max(1, Math.floor(attacker.at * 0.10));
+                let incDf = Math.max(1, Math.floor(attacker.df * 0.10));
+                let incSp = Math.max(1, Math.floor(attacker.sp * 0.10));
+                attacker.buffAt = (attacker.buffAt || 0) + incAt;
+                attacker.buffDf = (attacker.buffDf || 0) + incDf;
+                attacker.buffSp = (attacker.buffSp || 0) + incSp;
+                skillLogs += "🌟" + attacker.n + "のオールブースト！攻・防・素早さUP！ ";
+            }
+
+            // 10. 20%で相手を毒状態と麻痺にする（無効スキル持ちはそれぞれ防ぐ）
+            if (sk.id === 10 && defender.hp > 0 && Math.random() < 0.20) {
+                skillLogs += "☣️" + attacker.n + "のカオスヴェノム！ ";
+                if (defSk.id === 5) {
+                    skillLogs += "✨" + defender.n + "は毒を防いだ！ ";
+                } else {
+                    defender.isPoisoned = true;
+                    skillLogs += "☠️" + defender.n + "は毒になった！ ";
+                }
+                if (defSk.id === 7) {
+                    skillLogs += "🔋" + defender.n + "は麻痺を防いだ！ ";
+                } else {
+                    defender.isParalyzed = true;
+                    skillLogs += "⚡" + defender.n + "は麻痺した！ ";
                 }
             }
 
@@ -1074,54 +1301,102 @@
             const eSideEl = document.getElementById("eSide");
             let turnLog = "";
 
-            function playerAttack() {
-                mySideEl.classList.add("atk-forward-my");
-                setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
-                setTimeout(() => {
-                    eSideEl.classList.add("hit-flash");
-                    setTimeout(() => { eSideEl.classList.remove("hit-flash"); }, 400);
-                }, 100);
-                let allyAtk = activeAlly.at + (activeAlly.buffAt || 0);
-                let enemyDef = currentEnemy.df + (currentEnemy.buffDf || 0);
-                let d = Math.max(2, Math.floor(allyAtk - (enemyDef / 2) + Math.random() * 3));
-                currentEnemy.hp = Math.max(0, currentEnemy.hp - d);
-                turnLog += "⚔️No." + D[activeAlly.n].no + " " + activeAlly.n + "の攻撃！ " + d + " ダメージ！ ";
-                // 攻撃後にスキル自動発動
-                turnLog += triggerPostAttackSkills(activeAlly, currentEnemy, true);
+            function executeAttack(attacker, defender, isPlayerAttack) {
+                // 麻痺チェック（麻痺状態ならこのターンは攻撃できず、次のターンから動けるよう解除）
+                if (attacker.isParalyzed) {
+                    attacker.isParalyzed = false;
+                    turnLog += "⚡" + attacker.n + "は麻痺して動けない！（麻痺が解けた） ";
+                    return;
+                }
+
+                // アニメーション演出
+                if (isPlayerAttack) {
+                    mySideEl.classList.add("atk-forward-my");
+                    setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
+                    setTimeout(() => {
+                        eSideEl.classList.add("hit-flash");
+                        setTimeout(() => { eSideEl.classList.remove("hit-flash"); }, 400);
+                    }, 100);
+                } else {
+                    eSideEl.classList.add("atk-forward-e");
+                    setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
+                    setTimeout(() => {
+                        mySideEl.classList.add("hit-flash");
+                        setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
+                    }, 100);
+                }
+
+                // スキル1: 攻撃1回無効バリア判定
+                if (defender.nullifyOnce) {
+                    defender.nullifyOnce = false;
+                    turnLog += "🛡️" + defender.n + "はイージスバリアで" + attacker.n + "の攻撃を無効化した！ ";
+                } else {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = defender.df + (defender.buffDf || 0);
+                    let baseDmg = Math.max(isPlayerAttack ? 2 : 1, Math.floor(atkVal - (defVal / 2) + Math.random() * (isPlayerAttack ? 3 : 2)));
+
+                    // スキル3: 1回だけ攻撃1.5倍（使用後は元に戻る）
+                    if (attacker.nextAtk15) {
+                        baseDmg = Math.floor(baseDmg * 1.5);
+                        attacker.nextAtk15 = false;
+                        turnLog += "🔥パワーチャージ発動(1.5倍)！ ";
+                    }
+
+                    // スキル8: 次に受けるダメージを半分にする（切り上げ）
+                    if (defender.halfDmgOnce) {
+                        baseDmg = Math.ceil(baseDmg / 2);
+                        defender.halfDmgOnce = false;
+                        turnLog += "🔰ハーフシールドでダメージ半減！ ";
+                    }
+
+                    defender.hp = Math.max(0, defender.hp - baseDmg);
+                    if (isPlayerAttack) {
+                        turnLog += "⚔️No." + D[attacker.n].no + " " + attacker.n + "の攻撃！ " + baseDmg + " ダメージ！ ";
+                    } else {
+                        turnLog += "💥" + attacker.n + "の反撃！ " + baseDmg + " ダメージ！ ";
+                        if (defender.hp === 0) turnLog += "🔴" + defender.n + "が戦闘不能！ ";
+                    }
+                }
+
+                // 攻撃後のスキル自動発動
+                turnLog += triggerPostAttackSkills(attacker, defender, isPlayerAttack);
+
+                // 毒ダメージ判定（毒状態になったモンスターは攻撃後に最大HPの10%のダメージを受ける）
+                if (attacker.hp > 0 && attacker.isPoisoned) {
+                    let poisonDmg = Math.max(1, Math.floor(attacker.m * 0.10));
+                    attacker.hp = Math.max(0, attacker.hp - poisonDmg);
+                    turnLog += "☠️" + attacker.n + "は毒のダメージで " + poisonDmg + " 受けた！ ";
+                    if (!isPlayerAttack && attacker.hp === 0) {
+                        turnLog += "🔴" + attacker.n + "は毒で倒れた！ ";
+                    } else if (isPlayerAttack && attacker.hp === 0) {
+                        turnLog += "🔴" + attacker.n + "は毒で戦闘不能！ ";
+                    }
+                }
             }
+            function playerAttack() {
+                executeAttack(activeAlly, currentEnemy, true);
+            }
+
             function enemyAttack() {
-                eSideEl.classList.add("atk-forward-e");
-                setTimeout(() => { eSideEl.classList.remove("atk-forward-e"); }, 200);
-                setTimeout(() => {
-                    mySideEl.classList.add("hit-flash");
-                    setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
-                }, 100);
-                let enemyAtk = currentEnemy.at + (currentEnemy.buffAt || 0);
-                let allyDef = activeAlly.df + (activeAlly.buffDf || 0);
-                let ed = Math.max(1, Math.floor(enemyAtk - (allyDef / 2) + Math.random() * 2));
-                activeAlly.hp = Math.max(0, activeAlly.hp - ed);
-                turnLog += "💥" + currentEnemy.n + "の反撃！ " + ed + " ダメージ！ ";
-                if(activeAlly.hp === 0){ turnLog += "🔴" + activeAlly.n + "が戦闘不能！ "; }
-                // 敵の攻撃後にもスキル自動発動
-                turnLog += triggerPostAttackSkills(currentEnemy, activeAlly, false);
+                executeAttack(currentEnemy, activeAlly, false);
             }
 
             let allySp = activeAlly.sp + (activeAlly.buffSp || 0);
             let enemySp = currentEnemy.sp + (currentEnemy.buffSp || 0);
-            let enemyCanAttack = false;
+            let secondActorCanAct = false;
 
             if (allySp >= enemySp) {
                 playerAttack();
-                if (currentEnemy.hp > 0) enemyCanAttack = true;
+                if (currentEnemy.hp > 0 && activeAlly.hp > 0) secondActorCanAct = true;
             } else {
                 turnLog += "⚠️敵が先制！ ";
                 enemyAttack();
-                if (activeAlly.hp > 0) enemyCanAttack = true;
+                if (activeAlly.hp > 0 && currentEnemy.hp > 0) secondActorCanAct = true;
             }
 
             setTimeout(() => {
                 if (!inDungeon) return;
-                if (enemyCanAttack) {
+                if (secondActorCanAct) {
                     if (allySp >= enemySp) { enemyAttack(); } else { playerAttack(); }
                 }
 
@@ -1153,7 +1428,21 @@
 
                         if(Math.random() < joinChance) {
                             const b = D[currentEnemy.n];
-                            p.push({ n: currentEnemy.n, lv: 1, m: b.hp, hp: b.hp, at: b.at, df: b.df, sp: b.sp, ex: 0, nx: 5, inParty: false, buffAt: 0, buffDf: 0, buffSp: 0 });
+                            let newAlly = {
+                                n: currentEnemy.n,
+                                lv: 1,
+                                m: b.hp,
+                                hp: b.hp,
+                                at: b.at,
+                                df: b.df,
+                                sp: b.sp,
+                                ex: 0,
+                                nx: 5,
+                                inParty: false,
+                                skillId: getRandomSkillId()
+                            };
+                            initBattleState(newAlly);
+                            p.push(newAlly);
                             turnLog += "✨" + currentEnemy.n + "がボックスに加入した！ ";
                             showNotice("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！");
                             if(!zk.includes(currentEnemy.n)) zk.push(currentEnemy.n);
@@ -1183,10 +1472,17 @@
                                 }
                             }
                         });
+
                         eg.shift();
                         if(eg.length === 0) {
                             turnLog += "🎉ステージクリア！ ";
                             let clearedStg = stg;
+
+                            // 最高クリアステージ記録を更新＆ランキング反映
+                            if (clearedStg > maxClearStg) {
+                                maxClearStg = clearedStg;
+                                updateRankingUI();
+                            }
 
                             if (clearedStg === 500) {
                                 showNotice("🎊 ステージ500クリア！おめでとうございます！！ 🎊", 8000);
@@ -1202,7 +1498,6 @@
                             }
                             if (stg < 1000) {
                                 stg++;
-                                // 次のステージへ進むのでステータス上昇効果を消去
                                 resetStageBuffs();
                                 turnLog += "➡️自動で " + stg + " 階に進みます。";
                                 generateEnemies();
@@ -1241,8 +1536,9 @@
             let m1 = p[idx1];
             let m2 = p[idx2];
 
-            let key = [m1.n, m2.n].sort().join("+");
-            let resultName = R[key];
+            // バグ修正：A+B でも B+A でも両方検索できるように対応
+            let resultName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
+
             if(!resultName) {
                 alert("😭その組み合わせでは新しいモンスターは生まれなかった（配合失敗）！選んだ2匹は消滅しました。");
                 p = p.filter(m => m !== m1 && m !== m2);
@@ -1260,15 +1556,15 @@
                     ex: 0,
                     nx: baseLv * 5,
                     inParty: false,
-                    buffAt: 0,
-                    buffDf: 0,
-                    buffSp: 0
+                    skillId: getRandomSkillId()
                 };
+                initBattleState(newMon);
                 
                 p = p.filter(m => m !== m1 && m !== m2);
                 p.push(newMon);
                 if(!zk.includes(resultName)) zk.push(resultName);
-                alert("✨配合大成功！ 「" + resultName + "」が誕生してボックスに加わった！");
+                let sk = getSkillObj(newMon);
+                alert("✨配合大成功！ 「" + resultName + "」が誕生してボックスに加わった！\n習得スキル: " + sk.name);
             }
 
             saveGame();
