@@ -182,7 +182,6 @@
             background: #475569;
             box-shadow: none;
         }
-        /* ボックス内のタップ可能なスキル確認ボタン */
         .skill-badge {
             display: inline-block;
             background: #e0f2fe;
@@ -1069,7 +1068,7 @@
             }
 
             const activeAlly = p[firstAliveIdx];
-            const currentEnemy = eg;
+            const currentEnemy = eg[0];
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
