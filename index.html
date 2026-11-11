@@ -5,56 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>みっくすえもじ</title>
     <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 35%, #fefce8 100%);
+            background-attachment: fixed;
             margin: 0;
-            padding: 12px;
+            padding: 12px 10px 28px;
             color: #1e293b;
         }
-        h1 {
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #0284c7, #4f46e5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0 0 12px;
-            filter: drop-shadow(0 2px 4px rgba(2,132,199,0.1));
-        }
-        .box {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 14px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+        .title-header {
             max-width: 430px;
             margin: 0 auto 12px;
+            padding: 12px 14px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-radius: 20px;
+            border: 2px solid #bae6fd;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+        }
+        .title-sub {
+            font-size: 10px;
+            font-weight: 800;
+            color: #0284c7;
+            letter-spacing: 1.5px;
+            margin-bottom: 2px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(90deg, #0284c7 0%, #4f46e5 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            filter: drop-shadow(0 2px 3px rgba(2,132,199,0.12));
+        }
+        .box {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 14px;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+            max-width: 430px;
+            margin: 0 auto 14px;
             font-size: 13px;
-            border: 1px solid rgba(15,23,42,0.06);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1.5px solid #e2e8f0;
             position: relative;
             overflow: hidden;
         }
-        /* --- ランキングテーブル用スタイル --- */
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0369a1;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            border: 1px solid #7dd3fc;
+        }
+        /* --- 🏆 ランキングテーブル用スタイル（明るく華やかなゴールドUI） --- */
         .rank-panel {
             display: none;
             margin-top: 10px;
             text-align: left;
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
+            background: #fffbeb;
+            border: 1.5px solid #fde68a;
+            border-radius: 14px;
             padding: 10px;
         }
         .rank-scroll {
             max-height: 260px;
             overflow-y: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1.5px solid #fde68a;
+            border-radius: 10px;
             background: #ffffff;
             margin-top: 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
         }
         .rank-table {
             width: 100%;
@@ -62,64 +94,67 @@
             font-size: 11.5px;
         }
         .rank-table th {
-            background: #f1f5f9;
-            color: #475569;
-            padding: 6px 8px;
+            background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            padding: 7px 8px;
             position: sticky;
             top: 0;
-            border-bottom: 1px solid #cbd5e1;
+            border-bottom: 1.5px solid #f59e0b;
+            font-weight: 900;
         }
         .rank-table td {
-            padding: 6px 8px;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 7px 8px;
+            border-bottom: 1px solid #fef3c7;
         }
         .rank-me {
-            background: #fef08a !important;
+            background: linear-gradient(90deg, #fef08a 0%, #fde047 100%) !important;
             font-weight: 900;
-            color: #854d0e;
+            color: #78350f;
         }
         .my-rank-bar {
             margin-top: 8px;
             padding: 8px 10px;
-            background: #fef9c3;
-            border: 1px solid #fde047;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
+            border: 1.5px solid #facc15;
+            border-radius: 10px;
             font-size: 11.5px;
-            font-weight: bold;
+            font-weight: 800;
             color: #854d0e;
             text-align: center;
+            box-shadow: 0 2px 6px rgba(234, 179, 8, 0.15);
         }
-        /* --- 🎨 新・10エリア絵文字超拡大背景システム --- */
-        .battle-field {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-radius: 0 0 12px 12px;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-            background: #f1f5f9;
-            border: 2px solid #cbd5e1;
-            border-top: none;
-            z-index: 1;
-        }
+        /* --- 🎨 10エリア明るいパステル背景＆超拡大絵文字背景システム --- */
         .battle-header-bar {
-            background: rgba(255, 255, 255, 0.92);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
             border: 2px solid #cbd5e1;
-            border-bottom: 1px solid #e2e8f0;
-            border-radius: 12px 12px 0 0;
-            padding: 6px 8px;
+            border-bottom: 1.5px solid #e2e8f0;
+            border-radius: 16px 16px 0 0;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+        }
+        .battle-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 8px;
+            border-radius: 0 0 16px 16px;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-top: none;
+            z-index: 1;
+            min-height: 170px;
         }
         .notice-banner {
             display: none;
             background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
-            color: #854d0e;
+            color: #78350f;
             border: 2px solid #eab308;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 8px 10px;
             margin: 8px auto 4px;
             font-weight: 900;
@@ -136,32 +171,33 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 240px;
-            opacity: 0.25;
+            font-size: 230px;
+            opacity: 0.26;
             z-index: -1;
             pointer-events: none;
             white-space: nowrap;
         }
-        .bg-grass { border-color: #16a34a !important; } .bg-grass::before { content: "🏕"; }
-        .bg-jungle { border-color: #15803d !important; } .bg-jungle::before { content: "🏞️"; }
-        .bg-ocean { border-color: #0284c7 !important; } .bg-ocean::before { content: "🏝️"; }
-        .bg-desert { border-color: #b45309 !important; } .bg-desert::before { content: "🏜️"; }
-        .bg-poison { border-color: #701a75 !important; } .bg-poison::before { content: "🟪"; }
-        .bg-mine { border-color: #4d7c0f !important; } .bg-mine::before { content: "🏔️"; }
-        .bg-shrine { border-color: #6d28d9 !important; } .bg-shrine::before { content: "🏛️"; }
-        .bg-volcano { border-color: #be123c !important; } .bg-volcano::before { content: "🌋"; }
-        .bg-ice { border-color: #0369a1 !important; } .bg-ice::before { content: "🌌"; }
-        .bg-castle { border-color: #1e1b4b !important; } .bg-castle::before { content: "🌃"; }
+        .bg-grass { border-color: #22c55e !important; background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); } .bg-grass::before { content: "🏕"; }
+        .bg-jungle { border-color: #16a34a !important; background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%); } .bg-jungle::before { content: "🏞️"; }
+        .bg-ocean { border-color: #0ea5e9 !important; background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); } .bg-ocean::before { content: "🏝️"; }
+        .bg-desert { border-color: #f59e0b !important; background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); } .bg-desert::before { content: "🏜️"; }
+        .bg-poison { border-color: #a855f7 !important; background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%); } .bg-poison::before { content: "🟪"; }
+        .bg-mine { border-color: #84cc16 !important; background: linear-gradient(180deg, #f7fee7 0%, #ecfccb 100%); } .bg-mine::before { content: "🏔️"; }
+        .bg-shrine { border-color: #8b5cf6 !important; background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%); } .bg-shrine::before { content: "🏛️"; }
+        .bg-volcano { border-color: #f43f5e !important; background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%); } .bg-volcano::before { content: "🌋"; }
+        .bg-ice { border-color: #0284c7 !important; background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%); } .bg-ice::before { content: "🌌"; }
+        .bg-castle { border-color: #6366f1 !important; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); } .bg-castle::before { content: "🌃"; }
 
         .side {
             width: 49%;
-            background: rgba(255, 255, 255, 0.65) !important;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.82) !important;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 8px;
             text-align: left;
-            border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
             transition: transform 0.2s ease-out;
             position: relative;
             color: #334155;
@@ -170,76 +206,83 @@
         button {
             font-size: 13px;
             padding: 10px 14px;
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-bottom: 3px solid #0369a1;
+            border-radius: 14px;
             cursor: pointer;
             margin: 4px;
             width: 94%;
-            font-weight: bold;
-            box-shadow: 0 4px 14px rgba(14,165,233,0.25);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.22);
+            transition: all 0.15s ease;
         }
         .btn-battle-group {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 6px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .btn-compact {
             width: 47% !important;
-            padding: 8px 6px !important;
-            font-size: 11.5px !important;
+            padding: 9px 6px !important;
+            font-size: 12px !important;
             margin: 0 !important;
-            border-radius: 10px !important;
+            border-radius: 12px !important;
         }
         button:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(14,165,233,0.35);
             filter: brightness(1.05);
         }
-        button:active:not(:disabled) { transform: translateY(1px); }
+        button:active:not(:disabled) {
+            transform: translateY(2px);
+            border-bottom-width: 1px;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+        }
         button:disabled {
             background: #e2e8f0 !important;
+            border-bottom: 3px solid #cbd5e1 !important;
             color: #94a3b8 !important;
             cursor: not-allowed;
             box-shadow: none !important;
             transform: none !important;
-            border: 1px solid rgba(0,0,0,0.03);
         }
         .btn-small {
             width: auto !important;
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 10px;
             margin-left: 6px;
             font-size: 11px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+            border-radius: 9px;
+            background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+            border-bottom: 2px solid #047857;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.22);
         }
         .btn-tiny {
             width: auto !important;
             display: inline-block;
-            padding: 3px 7px;
+            padding: 4px 8px;
             margin: 0;
-            font-size: 10px;
-            border-radius: 6px;
-            background: #475569;
+            font-size: 10.5px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #64748b 0%, #475569 100%);
+            border-bottom: 2px solid #334155;
             box-shadow: none;
         }
         .skill-badge {
             display: inline-block;
-            background: #e0f2fe;
+            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
             color: #0369a1;
             border: 1px solid #7dd3fc;
-            border-radius: 6px;
-            padding: 2px 6px;
+            border-radius: 7px;
+            padding: 2px 7px;
             font-size: 10px;
-            font-weight: bold;
+            font-weight: 800;
             margin: 3px 3px 0 0;
             cursor: pointer;
+            box-shadow: 0 1px 2px rgba(2,132,199,0.08);
             transition: transform 0.1s;
         }
         .skill-badge:active { transform: scale(0.95); }
@@ -247,11 +290,12 @@
             display: inline-block;
             font-size: 9.5px;
             background: #fef08a;
-            border: 1px solid #fde047;
-            border-radius: 4px;
+            border: 1px solid #facc15;
+            border-radius: 5px;
             padding: 1px 4px;
             margin-left: 2px;
-            font-weight: bold;
+            font-weight: 900;
+            color: #854d0e;
         }
 
         .atk-forward-my { transform: translateX(25px); }
@@ -261,34 +305,33 @@
             display: inline-block;
             width: 100%;
             text-align: center;
-            margin: 6px 0 12px;
+            margin: 6px 0 10px;
         }
         .battle-monster {
             font-size: 38px;
             display: block;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
-            animation: floatBob 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 6px 8px rgba(15,23,42,0.18));
+            animation: floatBob 2.6s ease-in-out infinite alternate;
         }
         .monster-shadow {
             width: 36px;
             height: 7px;
-            background: rgba(15, 23, 42, 0.25);
+            background: rgba(15, 23, 42, 0.22);
             border-radius: 50%;
             margin: -4px auto 0;
             filter: blur(2px);
             z-index: 1;
-            transition: transform 0.3s ease;
-            animation: shadowScale 3s ease-in-out infinite alternate;
+            animation: shadowScale 2.6s ease-in-out infinite alternate;
         }
         @keyframes floatBob {
             0% { transform: translateY(0px); }
             100% { transform: translateY(-5px); }
         }
         @keyframes shadowScale {
-            0% { transform: scale(1); opacity: 0.3; }
-            100% { transform: scale(0.8); opacity: 0.15; }
+            0% { transform: scale(1); opacity: 0.28; }
+            100% { transform: scale(0.8); opacity: 0.14; }
         }
         @keyframes damageFlash {
             0% { opacity: 1; background-color: rgba(239,68,68,0.4); }
@@ -299,76 +342,106 @@
         }
         .hit-flash { animation: damageFlash 0.4s ease-in-out; }
         .battle-log {
-            background: #f8fafc;
-            color: #0284c7;
-            padding: 8px 12px;
-            border-radius: 10px;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #0369a1;
+            padding: 9px 12px;
+            border-radius: 12px;
             margin: 10px auto 6px;
-            min-height: 44px;
-            max-height: 76px;
+            min-height: 48px;
+            max-height: 78px;
             overflow-y: auto;
             text-align: left;
             font-family: 'Courier New', Courier, monospace;
             font-size: 11px;
-            line-height: 1.4;
-            border: 1px solid #e2e8f0;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            font-weight: bold;
+            line-height: 1.45;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04);
         }
         .hp-bg, .exp-bg {
             background: #e2e8f0;
             height: 9px;
-            border-radius: 6px;
+            border-radius: 999px;
             overflow: hidden;
             margin-top: 4px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
         }
         .exp-bg { height: 5px; margin-top: 3px; }
         .hp { background: linear-gradient(90deg, #10b981, #34d399); height: 100%; width: 100%; transition: width 0.3s ease; }
         .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
-        .sub-label { font-size: 10px; color: #64748b; font-weight: bold; margin-top: 2px; display: block; text-transform: uppercase; }
+        .sub-label { font-size: 9.5px; color: #64748b; font-weight: 800; margin-top: 2px; display: block; text-transform: uppercase; }
         .toggle-box { display: block; }
         ul { list-style: none; padding: 0; margin: 8px 0 0; text-align: left; }
         li {
-            background: #ffffff;
-            margin: 6px 0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            margin: 7px 0;
             padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
             line-height: 1.5;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03);
             color: #334155;
         }
         li.locked { background: #f8fafc; color: #94a3b8; border-color: #e2e8f0; }
         .status-text {
             font-size: 11px;
-            color: #475569;
+            color: #334155;
             display: block;
-            margin-top: 5px;
-            background: #f8fafc;
-            padding: 5px 10px;
-            border-radius: 8px;
+            margin-top: 6px;
+            background: #f1f5f9;
+            padding: 6px 10px;
+            border-radius: 9px;
             font-family: monospace;
             border: 1px solid #e2e8f0;
         }
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .recipe { width: 100%; font-size: 10px; border-collapse: collapse; display: none; margin-top: 8px; color: #475569; }
-        .recipe td { border: 1px solid #e2e8f0; padding: 6px 4px; background: #ffffff; }
-        .zukan-item { background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 4px; border-radius: 8px; text-align: center; color: #334155; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .recipe { width: 100%; font-size: 10.5px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
+        .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; }
+        .zukan-item {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1.5px solid #bae6fd;
+            padding: 8px 4px;
+            border-radius: 11px;
+            text-align: center;
+            color: #1e293b;
+            font-size: 10.5px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.06);
+        }
+        .zukan-unknown {
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            padding: 8px 4px;
+            border-radius: 11px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 10.5px;
+        }
         input[type="text"] {
-            width: 85%; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace;
+            width: 85%; padding: 9px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
     </style>
 </head>
 <body>
 
-    <h1>みっくすえもじ</h1>
+    <div class="title-header">
+        <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
+        <h1>👑 みっくすえもじ 👑</h1>
+        <div style="margin-top: 8px;">
+            <button id="btnSoundToggle" onclick="toggleSound()" style="width: auto; padding: 6px 14px; font-size: 11px; margin: 0; background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); border-bottom: 2px solid #0369a1;">
+                🔊 サウンド: ON（タップで切替）
+            </button>
+        </div>
+    </div>
     <!-- 🏆 ランキング・プレイヤー名設定（配合表の上に配置・100位以下でも自分の順位を表示） -->
-    <div class="box" style="border: 1px solid #f59e0b; background: rgba(255, 251, 235, 0.9);">
-        <div style="font-size: 12px; font-weight: bold; color: #b45309; margin-bottom: 4px;">
+    <div class="box" style="border: 1.5px solid #fcd34d; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
+        <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🏆 RANKING</span>
+        <div style="font-size: 12px; font-weight: 800; color: #b45309; margin-bottom: 6px;">
             👤 プレイヤー名: <span id="dispPlayerName" style="color: #0284c7; font-size: 14px;">NO NAME</span>
             <span style="font-size: 11px; color: #64748b;">(現在 <span id="dispMyRank">-</span> 位)</span>
         </div>
-        <button onclick="toggleRanking()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+        <button onclick="toggleRanking()" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 3px solid #b45309;">
             🏆 ランキング確認（1位〜100位）
         </button>
 
@@ -378,7 +451,7 @@
                 <input type="text" id="playerNameInput" maxlength="12" placeholder="名前を入力（最大12文字）" style="margin-bottom: 0; width: 70%; font-family: sans-serif;">
                 <button class="btn-small" style="margin: 0; padding: 8px 12px; width: 28% !important;" onclick="savePlayerName()">保存</button>
             </div>
-            <div style="font-size: 11px; color: #64748b; margin-top: 8px; font-weight: bold;">
+            <div style="font-size: 11px; color: #92400e; margin-top: 8px; font-weight: bold;">
                 🏅 最高クリアステージランキング（1位〜100位表示）
             </div>
             <div class="rank-scroll">
@@ -400,6 +473,7 @@
     </div>
     <!-- ① 配合表 -->
     <div class="box">
+        <span class="section-badge">📜 SYNTHESIS GUIDE</span><br>
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 配合レシピ表の表示切替
         </button>
@@ -479,13 +553,14 @@
         </table>
     </div>
     <!-- ② 戦闘画面（ステージ選択UI一体化 ＆ 通知バナー付き） -->
-    <div class="box" id="battleBox" style="padding-top: 10px;">
+    <div class="box" id="battleBox" style="padding-top: 12px;">
+        <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
         <div class="battle-header-bar" id="battleHeaderBar">
-            <div style="font-size: 13px; font-weight: 900; color: #1e293b;">
+            <div style="font-size: 13.5px; font-weight: 900; color: #1e293b;">
                 ステージ: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
-                <span style="font-size: 10px; font-weight: normal; color: #64748b;">(最高クリア: <span id="dispClearStg">0</span>階 / 最高到達: <span id="maxStg">1</span>階)</span>
+                <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
             </div>
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px;">
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 2px;">
                 <button class="btn-tiny" onclick="changeStage(-100)">-100</button>
                 <button class="btn-tiny" onclick="changeStage(-10)">-10</button>
                 <button class="btn-tiny" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
@@ -504,65 +579,78 @@
         <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
 
         <div class="btn-battle-group">
-            <button class="btn-compact" style="width: 96% !important; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
+            <button class="btn-compact" style="width: 96% !important; background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); border-bottom: 3px solid #991b1b;" id="btnAtk" onclick="atk()">
                 ⚔️ 目の前の敵に攻撃！
             </button>
-            <button class="btn-compact" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);" id="btnEnterBtm" onclick="enter()">
+            <button class="btn-compact" style="background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); border-bottom: 3px solid #3730a3;" id="btnEnterBtm" onclick="enter()">
                 🏰 ダンジョン突入
             </button>
-            <button class="btn-compact" style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="leaveDungeon()">
+            <button class="btn-compact" style="background: linear-gradient(180deg, #94a3b8 0%, #475569 100%); border-bottom: 3px solid #334155;" onclick="leaveDungeon()">
                 🏃 拠点へ戻る
             </button>
         </div>
     </div>
     <!-- ③ ボックス -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
-        <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
+        <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
+        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
+        <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
             📦 ボックスの表示切替
         </button>
         <ul id="box" class="toggle-box"></ul>
     </div>
 
-    <!-- ④ モンスター配合（ボックスの真下に配置） -->
-    <div class="box" id="mixArea">
-        <h2>🧬 モンスター配合</h2>
-        <p style="font-size: 11px; color: #f87171; margin: 0 0 5px; font-weight: bold;">
-            ※下の配合用ボックスから2匹選んでね。
+    <!-- ④ モンスター配合（ボックスの真下に配置・成功率25%＆失敗時消滅の注意書き付き） -->
+    <div class="box" id="mixArea" style="border: 1.5px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
+        <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
+        <h2 style="margin: 2px 0 4px; font-size: 17px; color: #065f46;">🧬 モンスター配合</h2>
+        <p style="font-size: 11px; color: #475569; margin: 0 0 6px; font-weight: bold;">
+            ※下の配合用ボックスから2匹選んでね。（レベルは2匹の合計になります）
         </p>
-        <button style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" id="btnMix" onclick="mix()">
-            🧬 配合実行！
+        <div style="background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; font-size: 11px; font-weight: 900; padding: 6px 8px; border-radius: 10px; margin-bottom: 6px;">
+            ⚠️ 配合成功率：25% ／ 失敗すると選んだ2匹は消滅します！
+        </div>
+        <button style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-bottom: 3px solid #047857;" id="btnMix" onclick="mix()">
+            🧬 配合実行！（成功率25%）
         </button>
-        <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-top:8px;">
+        <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-top:6px;">
             🧬 配合用ボックスの表示切替
         </button>
         <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
     <!-- ⑤ みつけた図鑑 -->
     <div class="box">
-        <h3 style="margin-top: 0; color: #1e293b;">📖 みつけた図鑑</h3>
-        <button onclick="let t=document.getElementById('zk'); t.style.display==='none'?t.style.display='grid':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
+        <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
+        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span></h3>
+        <button onclick="let t=document.getElementById('zk'); t.style.display==='none'?t.style.display='grid':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
             📖 図鑑の表示切替
         </button>
         <div id="zk" class="grid" style="display: none;"></div>
     </div>
 
-    <!-- ⑥ データ引き継ぎ・セーブ管理エリア -->
-    <div class="box" style="background: rgba(255, 255, 255, 0.9); border: 1px solid #0284c7;">
-        <h3 style="margin-top: 0; color: #0284c7;">💾 データセーブ・引き継ぎ管理</h3>
-        <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
-            ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
-        </p>
-        <button style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);" onclick="exportData()">
-            🔑 引き継ぎコードを発行する
+    <!-- ⑥ データ引き継ぎ・セーブ管理エリア（ボタンで表示/非表示切替） -->
+    <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1.5px solid #7dd3fc;">
+        <span class="section-badge">💾 SAVE & TRANSFER</span>
+        <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
+        <button onclick="let t=document.getElementById('transferArea'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1; margin-bottom: 6px;">
+            🔑 引き継ぎ機能の表示切替
         </button>
-        <input type="text" id="passCodeField" readonly placeholder="ここにコードが発行されます" style="width: 90%; margin: 5px 0;">
-        
-        <div style="border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 10px;">
-            <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
-            <button style="background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);" onclick="importData()">
-                📥 データをインポートして復元
+
+        <div id="transferArea" style="display: none; margin-top: 8px; padding-top: 8px; border-top: 1.5px dashed #bae6fd;">
+            <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
+                ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
+            </p>
+            <button style="background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%); border-bottom: 3px solid #312e81;" onclick="exportData()">
+                🔑 引き継ぎコードを発行する
             </button>
+            <input type="text" id="passCodeField" readonly placeholder="ここにコードが発行されます" style="width: 90%; margin: 5px 0;">
+            
+            <div style="border-top: 1.5px dashed #bae6fd; margin-top: 10px; padding-top: 10px;">
+                <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
+                <button style="background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); border-bottom: 3px solid #c2410c;" onclick="importData()">
+                    📥 データをインポートして復元
+                </button>
+            </div>
         </div>
     </div>
     <script>
@@ -744,34 +832,31 @@
         let zk = ["プニシズク"];
         let inDungeon = false;
         let autoAtkTimer = null;
+        let partyOrderCounter = 3;
 
-        // 戦闘中のバフ・状態異常を初期化＆リセット
         function initBattleState(mon) {
             mon.buffAt = 0;
             mon.buffDf = 0;
             mon.buffSp = 0;
-            mon.nullifyOnce = false;   // スキル1: 攻撃1回無効バリア
-            mon.nextAtk15 = false;     // スキル3: 次ターン攻撃1.5倍
-            mon.isPoisoned = false;    // スキル4/10: 毒状態
-            mon.isParalyzed = false;   // スキル6/10: 麻痺状態（次ターン行動不能）
-            mon.halfDmgOnce = false;   // スキル8: 次受けるダメージ半減
+            mon.nullifyOnce = false;
+            mon.nextAtk15 = false;
+            mon.isPoisoned = false;
+            mon.isParalyzed = false;
+            mon.halfDmgOnce = false;
         }
 
-        // 手持ち初期データ（No.1プニシズク：固有スキル＋ランダムスキル1個所持）
         let p = [
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() },
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() },
-            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, skillId: getRandomSkillId() }
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, skillId: getRandomSkillId() }
         ];
         p.forEach(m => initBattleState(m));
 
-        // 次のステージへ進んだ時や帰還時にスキル上昇効果・状態異常をリセット
         function resetStageBuffs() {
             p.forEach(m => initBattleState(m));
             eg.forEach(e => initBattleState(e));
         }
 
-        // 野生加入やステージ500/1000クリアの画面通知を表示
         function showNotice(msg, duration = 4500) {
             const banner = document.getElementById("noticeBanner");
             if (!banner) return;
@@ -781,6 +866,113 @@
             banner.hideTimer = setTimeout(() => {
                 banner.style.display = "none";
             }, duration);
+        }
+        // --- 🎵 ブラウザ標準 Web Audio API サウンドエンジン ---
+        let soundEnabled = true;
+        let audioCtx = null;
+        let bgmInterval = null;
+        let bgmStep = 0;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) audioCtx = new AudioContextClass();
+            }
+            if (audioCtx && audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleSound() {
+            initAudio();
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById("btnSoundToggle");
+            if (btn) {
+                btn.innerText = soundEnabled ? "🔊 サウンド: ON（タップで切替）" : "🔇 サウンド: OFF（タップで切替）";
+                btn.style.background = soundEnabled
+                    ? "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)"
+                    : "linear-gradient(180deg, #94a3b8 0%, #475569 100%)";
+                btn.style.borderBottom = soundEnabled ? "2px solid #0369a1" : "2px solid #334155";
+            }
+            if (soundEnabled) {
+                playTone(880, "sine", 0, 0.08, 0.12);
+                if (inDungeon) startDungeonBgm();
+            } else {
+                stopDungeonBgm();
+            }
+        }
+
+        function playTone(freq, type, delaySec, durationSec, vol = 0.12) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            const t = audioCtx.currentTime + delaySec;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, t);
+            gain.gain.setValueAtTime(vol, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + durationSec);
+        }
+
+        // 各種効果音（SE）
+        function seAttack() {
+            playTone(190, "sawtooth", 0, 0.07, 0.16);
+            playTone(95, "triangle", 0.03, 0.11, 0.20);
+        }
+        function seSkill() {
+            const notes =;
+            notes.forEach((f, i) => playTone(f, "sine", i * 0.05, 0.14, 0.13));
+        }
+        function seJoin() {
+            const notes =;
+            notes.forEach((f, i) => playTone(f, "triangle", i * 0.08, 0.22, 0.18));
+        }
+        function seLvUp() {
+            const notes =;
+            const times = [0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 6 ? 0.38 : 0.10, 0.11));
+        }
+        function seStageClear() {
+            const notes =;
+            notes.forEach((f, i) => playTone(f, "square", i * 0.09, i === 3 ? 0.30 : 0.09, 0.11));
+        }
+        function seMixSuccess() {
+            const notes =;
+            const times = [0, 0.09, 0.18, 0.27, 0.40, 0.54];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 5 ? 0.45 : 0.11, 0.12));
+        }
+        function seFail() {
+            playTone(180, "sawtooth", 0, 0.18, 0.16);
+            playTone(130, "sawtooth", 0.16, 0.30, 0.16);
+        }
+
+        // ダンジョンBGMループ
+        function startDungeonBgm() {
+            stopDungeonBgm();
+            if (!soundEnabled) return;
+            const melody =;
+            bgmStep = 0;
+            bgmInterval = setInterval(() => {
+                if (!soundEnabled || !inDungeon) {
+                    stopDungeonBgm();
+                    return;
+                }
+                const freq = melody[bgmStep % melody.length];
+                playTone(freq, "triangle", 0, 0.16, 0.06);
+                bgmStep++;
+            }, 260);
+        }
+
+        function stopDungeonBgm() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
         }
         // --- 🏆 ランキング（1位〜100位表示 ＋ 100位以下の自分の順位も常時表示） ---
         const RIVAL_NAMES = [
@@ -807,7 +999,6 @@
             "NO NAME", "新人テイマー", "これから本番", "えもじビギナー", "初ダンジョン"
         ];
 
-        // 150人のライバルデータを生成（最初は151位からスタートし、100位以内を目指せる設計）
         function getRivalList() {
             let list = [];
             const totalRivals = 150;
@@ -868,7 +1059,6 @@
                 isMe: true
             });
 
-            // 最高クリアステージ降順（同点なら自分を優先表示）
             allPlayers.sort((a, b) => {
                 if (b.score !== a.score) return b.score - a.score;
                 return (b.isMe ? 1 : 0) - (a.isMe ? 1 : 0);
@@ -909,12 +1099,11 @@
                 zk: zk,
                 p: p
             };
-            localStorage.setItem("mix_emoji_save_v6", JSON.stringify(data));
+            localStorage.setItem("mix_emoji_save_v7", JSON.stringify(data));
         }
 
         function loadGame() {
-            // 新バージョン(v6)または旧バージョン(v5, v4)からデータ読み込み
-            const saved = localStorage.getItem("mix_emoji_save_v6") || localStorage.getItem("mix_emoji_save_v5") || localStorage.getItem("mix_emoji_save_v4");
+            const saved = localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6") || localStorage.getItem("mix_emoji_save_v5");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -925,11 +1114,22 @@
                         playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
                         p = data.p;
-                        // スキル未設定の既存モンスターにランダムで1つ付与
+                        let maxOrd = 0;
                         p.forEach(m => {
                             getSkillObj(m);
                             initBattleState(m);
+                            if (m.inParty) {
+                                if (typeof m.partyOrder !== "number") {
+                                    maxOrd++;
+                                    m.partyOrder = maxOrd;
+                                } else if (m.partyOrder > maxOrd) {
+                                    maxOrd = m.partyOrder;
+                                }
+                            } else {
+                                m.partyOrder = 0;
+                            }
                         });
+                        partyOrderCounter = maxOrd;
                     }
                 } catch(e) { console.error("ロード失敗", e); }
             }
@@ -965,6 +1165,7 @@
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
             if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
             inDungeon = true;
+            startDungeonBgm();
             resetStageBuffs();
             generateEnemies();
             const btn1 = document.getElementById("btnEnter");
@@ -1009,6 +1210,7 @@
                 autoAtkTimer = null;
             }
             inDungeon = false;
+            stopDungeonBgm();
             eg = new Array();
             resetStageBuffs();
             p.forEach(m => { m.hp = m.m; });
@@ -1031,17 +1233,21 @@
             saveGame();
             up();
         }
+        // 「⚔️ 戦闘に出す」ボタンを押した順番（partyOrder）を記録して登録・解除
         function toggleParty(index) {
             if(inDungeon) return;
             const target = p[index];
             if (target.inParty) {
                 target.inParty = false;
+                target.partyOrder = 0;
                 document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
             } else {
                 let currentPartyCount = 0;
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
                 if (currentPartyCount >= 3) return alert("戦闘メンバーは3体までです！");
+                partyOrderCounter++;
                 target.inParty = true;
+                target.partyOrder = partyOrderCounter;
                 document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
             }
             saveGame();
@@ -1061,11 +1267,19 @@
         }
         function up() {
             if (!inDungeon) {
-                p.sort((a, b) => D[a.n].no - D[b.n].no);
-                p.sort((a, b) => (b.inParty ? 1 : 0) - (a.inParty ? 1 : 0));
+                // ボックス内の並び順：戦闘参加中は「戦闘に出すボタンを押した順(partyOrder)」、待機中は「図鑑No.順」
+                p.sort((a, b) => {
+                    if (a.inParty && b.inParty) {
+                        return (a.partyOrder || 0) - (b.partyOrder || 0);
+                    }
+                    if (a.inParty !== b.inParty) {
+                        return b.inParty ? 1 : -1;
+                    }
+                    return D[a.n].no - D[b.n].no;
+                });
             }
             
-            // 100階ごとのエリア環境名・絵文字・新巨大背景クラスの計算
+            // 100階ごとのエリア環境名・絵文字・明るいパステル背景クラスの計算
             let envName = "";
             let envEmoji = "";
             let envClass = "";
@@ -1099,35 +1313,33 @@
             const bHeader = document.getElementById("battleHeaderBar");
             if (bField) bField.className = "battle-field " + envClass;
             if (bHeader) bHeader.className = "battle-header-bar " + envClass;
-            // 味方戦闘画面の描画
+            // 味方戦闘画面の描画（「⚔️ 戦闘に出す」ボタンを押した順番通りに上から表示）
             if (mS) {
                 mS.innerHTML = "<b style='font-size:12px;'>【味方】</b>";
-                let activeCount = 0;
-                p.forEach((m) => {
-                    if (m.inParty && activeCount < 3) {
-                        activeCount++;
-                        let isDead = m.hp <= 0;
-                        let inf = D[m.n];
-                        let stateHtml = buildStateIcons(m);
+                let partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).slice(0, 3);
+                partyMembers.forEach((m, idx) => {
+                    let isDead = m.hp <= 0;
+                    let inf = D[m.n];
+                    let stateHtml = buildStateIcons(m);
+                    let orderTag = "<span style='font-size:9.5px; color:#0284c7; font-weight:900;'>[" + (idx + 1) + "番手]</span> ";
 
-                        mS.innerHTML += "<br><div class='monster-container'><span class='battle-monster' style='font-size:36px;'>" + inf.a + "</span><div class='monster-shadow' style='width:30px;'></div></div><b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + m.lv + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : "");
-                        mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml;
-                        mS.innerHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
-                        
-                        let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
-                        let nextText = m.lv >= 100 ? "MAX" : "NEXT: " + (m.nx - m.ex);
-                        mS.innerHTML += '<div class="exp-bg" style="height:4px; margin-top:2px;"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
-                        mS.innerHTML += '<span class="sub-label" style="font-size:8px; margin-top:1px;">' + nextText + '</span>';
-                    }
+                    mS.innerHTML += "<br><div class='monster-container'><span class='battle-monster' style='font-size:36px;'>" + inf.a + "</span><div class='monster-shadow' style='width:30px;'></div></div>" + orderTag + "<b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + m.lv + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : "");
+                    mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml;
+                    mS.innerHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+                    
+                    let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
+                    let nextText = m.lv >= 100 ? "MAX" : "NEXT: " + (m.nx - m.ex);
+                    mS.innerHTML += '<div class="exp-bg" style="height:4px; margin-top:2px;"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
+                    mS.innerHTML += '<span class="sub-label" style="font-size:8px; margin-top:1px;">' + nextText + '</span>';
                 });
-                if(activeCount === 0) mS.innerHTML += "<br><span style='color:#cbd5e1;font-size:11px;'>メンバー未選択</span>";
+                if(partyMembers.length === 0) mS.innerHTML += "<br><span style='color:#94a3b8;font-size:11px;'>メンバー未選択</span>";
             }
 
             // 敵戦闘画面の描画
             if (eS) {
                 eS.innerHTML = "<b style='font-size:12px;'>【敵】</b>";
                 if(!inDungeon || eg.length === 0){
-                    eS.innerHTML += "<br><span style='font-size:11px;'>平和に満ちています</span>";
+                    eS.innerHTML += "<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>";
                     const bEnterBtm = document.getElementById("btnEnterBtm");
                     if (bEnterBtm) bEnterBtm.disabled = false;
                 } else {
@@ -1155,11 +1367,11 @@
                     let liClass = inDungeon ? "class='locked'" : "";
                     let deadText = n.hp <= 0 ? " <span style='color:red;'>[戦闘不能]</span>" : "";
                     let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
-                    let btnBg = n.inParty ? "background:linear-gradient(135deg, #64748b 0%, #475569 100%);" : "";
+                    let btnBg = n.inParty ? "background:linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 2px solid #334155;" : "";
                     let actionBtn = inDungeon ? "" : '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>';
                     let inf = D[n.n];
                     let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
-                    let partyTag = n.inParty ? " <span style='color:#10b981;font-weight:bold;'>[参加中]</span>" : "";
+                    let partyTag = n.inParty ? " <span style='color:#059669;font-weight:bold;'>[参加中]</span>" : "";
 
                     // 固有スキル一覧の生成
                     let innateList = getInnateSkills(inf.no);
@@ -1176,7 +1388,7 @@
                     // ランダム習得スキル1つの生成
                     let rSk = getSkillObj(n);
                     skillHtml += "<div style='margin-top:3px;'><span style='font-size:10px; color:#d97706; font-weight:bold;'>🎲追加スキル: </span>" +
-                                 '<span class="skill-badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d;" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">' + rSk.name + '</span></div>';
+                                 '<span class="skill-badge" style="background:linear-gradient(180deg, #fefce8 0%, #fef3c7 100%); color:#b45309; border-color:#fcd34d;" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">' + rSk.name + '</span></div>';
                     
                     list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + partyTag + deadText + actionBtn +
                                        '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span>' + skillHtml + '</li>';
@@ -1197,6 +1409,9 @@
             }
 
             // みつけた図鑑の描画
+            const zukanBadge = document.getElementById("zukanCountBadge");
+            if (zukanBadge) zukanBadge.innerText = "(" + zk.length + "/100種)";
+
             const zkDiv = document.getElementById("zk");
             if (zkDiv) {
                 zkDiv.innerHTML = "";
@@ -1204,7 +1419,7 @@
                     if(zk.includes(k)){
                         zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>';
                     } else {
-                        zkDiv.innerHTML += '<div class="zukan-item">❓<br>No.' + D[k].no + '<br>？？？</div>';
+                        zkDiv.innerHTML += '<div class="zukan-unknown">❓<br>No.' + D[k].no + '<br>？？？</div>';
                     }
                 });
             }
@@ -1246,10 +1461,22 @@
                         playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
                         p = data.p;
+                        let maxOrd = 0;
                         p.forEach(m => {
                             getSkillObj(m);
                             initBattleState(m);
+                            if (m.inParty) {
+                                if (typeof m.partyOrder !== "number") {
+                                    maxOrd++;
+                                    m.partyOrder = maxOrd;
+                                } else if (m.partyOrder > maxOrd) {
+                                    maxOrd = m.partyOrder;
+                                }
+                            } else {
+                                m.partyOrder = 0;
+                            }
                         });
+                        partyOrderCounter = maxOrd;
                         saveGame();
                         alert("📥 データの復元に成功しました！");
                         document.getElementById("importCodeField").value = "";
@@ -1401,6 +1628,7 @@
                 }
             }
 
+            if (skillLogs !== "") seSkill();
             return skillLogs;
         }
         function atk(){
@@ -1409,16 +1637,14 @@
             const btnAtk = document.getElementById("btnAtk");
             if (btnAtk) btnAtk.disabled = true;
 
-            let firstAliveIdx = -1;
-            for(let i=0; i<p.length; i++){
-                if(p[i].inParty && p[i].hp > 0){ firstAliveIdx = i; break; }
-            }
-            if(firstAliveIdx === -1) {
+            // 「⚔️ 戦闘に出す」ボタンを押した順番（partyOrder）で生存している先頭メンバーを選ぶ
+            let aliveParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
+            if(aliveParty.length === 0) {
                 if (btnAtk) btnAtk.disabled = false;
                 return;
             }
 
-            const activeAlly = p[firstAliveIdx];
+            const activeAlly = aliveParty[0];
             const currentEnemy = eg[0];
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
@@ -1473,6 +1699,7 @@
                     }
 
                     defender.hp = Math.max(0, defender.hp - baseDmg);
+                    seAttack();
                     if (isPlayerAttack) {
                         turnLog += "⚔️No." + D[attacker.n].no + " " + attacker.n + "の攻撃！ " + baseDmg + " ダメージ！ ";
                     } else {
@@ -1532,6 +1759,8 @@
                         logBox.innerText = turnLog;
                         up();
                         setTimeout(() => {
+                            stopDungeonBgm();
+                            seFail();
                             alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
                             inDungeon = false;
                             eg = new Array();
@@ -1562,6 +1791,7 @@
                                 ex: 0,
                                 nx: 5,
                                 inParty: false,
+                                partyOrder: 0,
                                 skillId: getRandomSkillId()
                             };
                             initBattleState(newAlly);
@@ -1569,6 +1799,7 @@
                             turnLog += "✨" + currentEnemy.n + "がボックスに加入した！ ";
                             showNotice("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！");
                             if(!zk.includes(currentEnemy.n)) zk.push(currentEnemy.n);
+                            seJoin();
                         } else if (targetNo >= 51) {
                             turnLog += "📢(このモンスターは野生加入不可！) ";
                         }
@@ -1592,13 +1823,14 @@
                                     ally.sp += Math.max(1, Math.floor(b.sp * 0.1));
                                     ally.nx = Math.floor(ally.nx * 1.2);
                                     turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
+                                    seLvUp();
                                 }
                             }
                         });
-
                         eg.shift();
                         if(eg.length === 0) {
                             turnLog += "🎉ステージクリア！ ";
+                            seStageClear();
                             let clearedStg = stg;
 
                             // 最高クリアステージ記録を更新＆ランキング反映
@@ -1626,10 +1858,12 @@
                                 generateEnemies();
                             } else {
                                 inDungeon = false;
+                                stopDungeonBgm();
                                 resetStageBuffs();
                             }
                         }
                     }
+
                     logBox.innerText = turnLog;
                     saveGame();
                     up();
@@ -1642,7 +1876,6 @@
                 }, 400);
             }, 300);
         }
-
         function mix() {
             if(inDungeon) return;
             
@@ -1662,23 +1895,31 @@
             // A+B でも B+A でも両方検索できるように対応
             let resultName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
 
-            if(!resultName) {
-                alert("😭その組み合わせでは新しいモンスターは生まれなかった（配合失敗）！選んだ2匹は消滅しました。");
+            // レシピが存在しない、または25%の成功判定（Math.random() < 0.25）に外れた場合は失敗して消滅
+            if(!resultName || Math.random() >= 0.25) {
+                seFail();
+                if (!resultName) {
+                    alert("😭その組み合わせでは新しいモンスターは生まれなかった（配合失敗）！\n選んだ2匹は消滅しました。");
+                } else {
+                    alert("💥配合失敗！（成功率25%に外れました…）\n選んだ2匹は消滅しました。");
+                }
                 p = p.filter(m => m !== m1 && m !== m2);
             } else {
                 const b = D[resultName];
-                let baseLv = Math.max(1, Math.floor((m1.lv + m2.lv) / 4));
+                // 配合成功後のレベルは2匹の合計レベル（上限100）
+                let sumLv = Math.min(100, m1.lv + m2.lv);
                 let newMon = {
                     n: resultName,
-                    lv: baseLv,
-                    m: b.hp + (baseLv - 1) * 3,
-                    hp: b.hp + (baseLv - 1) * 3,
-                    at: b.at + (baseLv - 1) * 1,
-                    df: b.df + (baseLv - 1) * 1,
-                    sp: b.sp + (baseLv - 1) * 1,
+                    lv: sumLv,
+                    m: b.hp + (sumLv - 1) * 3,
+                    hp: b.hp + (sumLv - 1) * 3,
+                    at: b.at + (sumLv - 1) * 1,
+                    df: b.df + (sumLv - 1) * 1,
+                    sp: b.sp + (sumLv - 1) * 1,
                     ex: 0,
-                    nx: baseLv * 5,
+                    nx: sumLv * 5,
                     inParty: false,
+                    partyOrder: 0,
                     skillId: getRandomSkillId()
                 };
                 initBattleState(newMon);
@@ -1687,7 +1928,8 @@
                 p.push(newMon);
                 if(!zk.includes(resultName)) zk.push(resultName);
                 let sk = getSkillObj(newMon);
-                alert("✨配合大成功！ 「" + resultName + "」が誕生してボックスに加わった！\n追加スキル: " + sk.name);
+                seMixSuccess();
+                alert("✨配合大成功！（成功率25%突破！）\n「" + resultName + "」(Lv." + sumLv + ") が誕生してボックスに加わった！\n追加スキル: " + sk.name);
             }
 
             saveGame();
