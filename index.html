@@ -10,28 +10,28 @@
             text-align: center;
             background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
             margin: 0;
-            padding: 15px;
+            padding: 12px;
             color: #1e293b;
         }
         h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             letter-spacing: 1px;
             background: linear-gradient(45deg, #0284c7, #4f46e5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            margin: 0 0 12px;
             filter: drop-shadow(0 2px 4px rgba(2,132,199,0.1));
         }
         .box {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 16px;
+            padding: 14px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(15,23,42,0.08);
             max-width: 430px;
-            margin: 0 auto 15px;
+            margin: 0 auto 12px;
             font-size: 13px;
             border: 1px solid rgba(15,23,42,0.06);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -43,13 +43,27 @@
             display: flex;
             justify-content: space-between;
             padding: 10px;
-            border-radius: 12px;
+            border-radius: 0 0 12px 12px;
             gap: 10px;
             position: relative;
             overflow: hidden;
             background: #f1f5f9;
             border: 2px solid #cbd5e1;
+            border-top: none;
             z-index: 1;
+        }
+
+        /* 戦闘画面にピタッとくっつくステージ＆環境バー */
+        .battle-header-bar {
+            background: rgba(255, 255, 255, 0.92);
+            border: 2px solid #cbd5e1;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 12px 12px 0 0;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
         }
 
         .battle-field::before {
@@ -74,13 +88,12 @@
         .bg-volcano { border-color: #be123c !important; } .bg-volcano::before { content: "🌋"; }
         .bg-ice { border-color: #0369a1 !important; } .bg-ice::before { content: "🌌"; }
         .bg-castle { border-color: #1e1b4b !important; } .bg-castle::before { content: "🌃"; }
-        /* 青線で囲まれた部分：半透明にして後ろの絵文字を透かす */
         .side {
             width: 49%;
             background: rgba(255, 255, 255, 0.65) !important;
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            padding: 10px;
+            padding: 8px;
             text-align: left;
             border-radius: 10px;
             box-shadow: 0 4px 16px rgba(15,23,42,0.04);
@@ -92,7 +105,7 @@
 
         button {
             font-size: 13px;
-            padding: 11px 16px;
+            padding: 10px 14px;
             background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
             color: #fff;
             border: none;
@@ -103,6 +116,22 @@
             font-weight: bold;
             box-shadow: 0 4px 14px rgba(14,165,233,0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ⭕ 赤枠線部分のボタンを約半分のサイズにして美しく整列させるスタイル */
+        .btn-battle-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .btn-compact {
+            width: 47% !important;
+            padding: 8px 6px !important;
+            font-size: 11.5px !important;
+            margin: 0 !important;
+            border-radius: 10px !important;
         }
         button:hover:not(:disabled) {
             transform: translateY(-1px);
@@ -121,12 +150,22 @@
         .btn-small {
             width: auto !important;
             display: inline-block;
-            padding: 5px 12px;
+            padding: 4px 10px;
             margin-left: 6px;
             font-size: 11px;
             border-radius: 8px;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+        }
+        .btn-tiny {
+            width: auto !important;
+            display: inline-block;
+            padding: 3px 7px;
+            margin: 0;
+            font-size: 10px;
+            border-radius: 6px;
+            background: #475569;
+            box-shadow: none;
         }
         .atk-forward-my { transform: translateX(25px); }
         .atk-forward-e { transform: translateX(-25px); }
@@ -137,10 +176,10 @@
             display: inline-block;
             width: 100%;
             text-align: center;
-            margin: 8px 0 16px;
+            margin: 6px 0 12px;
         }
         .battle-monster {
-            font-size: 42px;
+            font-size: 38px;
             display: block;
             position: relative;
             z-index: 2;
@@ -148,8 +187,8 @@
             animation: floatBob 3s ease-in-out infinite alternate;
         }
         .monster-shadow {
-            width: 40px;
-            height: 8px;
+            width: 36px;
+            height: 7px;
             background: rgba(15, 23, 42, 0.25);
             border-radius: 50%;
             margin: -4px auto 0;
@@ -160,7 +199,7 @@
         }
         @keyframes floatBob {
             0% { transform: translateY(0px); }
-            100% { transform: translateY(-6px); }
+            100% { transform: translateY(-5px); }
         }
         @keyframes shadowScale {
             0% { transform: scale(1); opacity: 0.3; }
@@ -178,15 +217,15 @@
         .battle-log {
             background: #f8fafc;
             color: #0284c7;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 10px;
-            margin: 12px auto;
-            min-height: 44px;
-            max-height: 64px;
+            margin: 10px auto 6px;
+            min-height: 40px;
+            max-height: 60px;
             overflow-y: auto;
             text-align: left;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 11.5px;
+            font-size: 11px;
             line-height: 1.4;
             border: 1px solid #e2e8f0;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
@@ -250,7 +289,7 @@
         <table id="rt" class="recipe">
             <tr>
                 <td>💧No.1 プニシズク ＋ 💧No.1 プニシズク ＝ 🪼No.25 ギガジェリー</td>
-                <td>🐛No.7 キャタピラー ＋ 🐌No.8 スネイル ＝ 🪼No.25 ギガジェリー</td>
+                <td>🐛No.7 キャタピラー ＋ 🐌No.8 シェルスネイル ＝ 🪼No.25 ギガジェリー</td>
             </tr>
             <tr>
                 <td>💧No.1 プニシズク ＋ 🦇No.2 カゲコウモリ ＝ 🧚No.26 フェアリー</td>
@@ -261,7 +300,7 @@
                 <td>🐁No.4 チューマウス ＋ 🐜No.5 ソロゾロアント ＝ 🦊No.29 ファイアフォックス</td>
             </tr>
             <tr>
-                <td>🐜No.5 ソロゾロアント ＋ 🐸No.6 ポイズンフロッグ ＝ 🦝No.30 アライグマ</td>
+                <td>🐜No.5 ソロゾロアント ＋ 🐸No.6 ポイズンフロッグ ＝ 🦝No.30 マスクラクーン</td>
                 <td>🐥No.9 ピヨチビ ＋ 🐢No.10 ロックタートル ＝ 🐻No.31 ダークベア</td>
             </tr>
             <tr>
@@ -273,11 +312,11 @@
                 <td>🐇No.17 ウサピョン ＋ 🐿️No.18 チップモンク ＝ 🦌No.35 フォレストディア</td>
             </tr>
             <tr>
-                <td>🦔No.19 ハリネズミ ＋ 🦘No.36 カンガルー ＝ 🦏No.46 アイアンサイ</td>
+                <td>🦔No.19 ニードルホッグ ＋ 🦘No.36 バウンスルー ＝ 🦏No.46 アイアンサイ</td>
                 <td>🐍No.20 バイパー ＋ 🐺No.37 シャドウウルフ ＝ 🐊No.47 沼クロコダイル</td>
             </tr>
             <tr>
-                <td>🦝No.30 アライグマ ＋ 🦊No.29 ファイアフォックス ＝ 🦍No.44 シルバーゴリラ</td>
+                <td>🦝No.30 マスクラクーン ＋ 🦊No.29 ファイアフォックス ＝ 🦍No.44 シルバーゴリラ</td>
                 <td>🐯No.42 キラータイガー ＋ 🦭No.43 ホワイトシール ＝ 🦍No.44 シルバーゴリラ</td>
             </tr>
             <tr>
@@ -322,41 +361,43 @@
             </tr>
         </table>
     </div>
-    <!-- ② 戦闘画面の真上：現在のステージや最高ステージ、各種変更ボタンを表示 -->
-    <div class="box">
-        <h3 style="margin-top: 0;">現在の選択ステージ: <span id="stg">1</span></h3>
-        <p style="font-size: 10px; color: #64748b; margin: 0 0 5px;">最高到達ステージ: <span id="maxStg">1</span></p>
-        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;">
-            <button class="btn-small" style="background:#475569;" id="btnPrevStg" onclick="changeStage(-1)">◀ 前の階に戻る</button>
-            <button class="btn-small" style="background:#475569;" id="btnNextStg" onclick="changeStage(1)">次の階に進む ▶</button>
+    <!-- ② 戦闘画面（ステージ選択UIをコンパクト化して真上に一体化 ＆ 操作ボタンを半分サイズに美しく配置） -->
+    <div class="box" id="battleBox" style="padding-top: 10px;">
+        <div class="battle-header-bar" id="battleHeaderBar">
+            <div style="font-size: 13px; font-weight: 900; color: #1e293b;">
+                ステージ: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
+                <span style="font-size: 10px; font-weight: normal; color: #64748b;">(最高: <span id="maxStg">1</span>階)</span>
+            </div>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px;">
+                <button class="btn-tiny" onclick="changeStage(-100)">-100</button>
+                <button class="btn-tiny" onclick="changeStage(-10)">-10</button>
+                <button class="btn-tiny" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
+                <button class="btn-tiny" id="btnNextStg" onclick="changeStage(1)">次▶</button>
+                <button class="btn-tiny" onclick="changeStage(10)">+10</button>
+                <button class="btn-tiny" onclick="changeStage(100)">+100</button>
+            </div>
         </div>
-        <div style="display: flex; justify-content: center; gap: 5px; margin-bottom: 8px;">
-            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(-10)">-10階</button>
-            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(10)">+10階</button>
-            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(-100)">-100階</button>
-            <button class="btn-small" style="background:#1e293b; font-size:10px; padding:3px 6px;" onclick="changeStage(100)">+100階</button>
-        </div>
-    </div>
 
-    <!-- ③ 戦闘画面 -->
-    <div class="box" id="battleBox">
         <div class="battle-field">
             <div class="side" id="mySide"><b>【味方】</b></div>
             <div class="side" id="eSide"><b>【敵】</b></div>
         </div>
-        <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
-        <button style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
-            ⚔️ 目の前の敵に攻撃！
-        </button>
-        <button style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);" id="btnEnterBtm" onclick="enter()">
-            🏰 ダンジョンに入って敵と戦う！
-        </button>
-        <button style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="leaveDungeon()">
-            🏃 ダンジョンから出る（拠点へ戻る）
-        </button>
-    </div>
 
-    <!-- ④ ボックス -->
+        <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
+
+        <div class="btn-battle-group">
+            <button class="btn-compact" style="width: 96% !important; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);" id="btnAtk" onclick="atk()">
+                ⚔️ 目の前の敵に攻撃！
+            </button>
+            <button class="btn-compact" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);" id="btnEnterBtm" onclick="enter()">
+                🏰 ダンジョン突入
+            </button>
+            <button class="btn-compact" style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="leaveDungeon()">
+                🏃 拠点へ戻る
+            </button>
+        </div>
+    </div>
+    <!-- ③ ボックス -->
     <div class="box">
         <h3 style="margin-top: 0; color: #1e293b;">📦 ボックス</h3>
         <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
@@ -365,7 +406,7 @@
         <ul id="box" class="toggle-box"></ul>
     </div>
 
-    <!-- ⑤ モンスター配合（ボックスの真下に配置） -->
+    <!-- ④ モンスター配合（ボックスの真下に配置） -->
     <div class="box" id="mixArea">
         <h2>🧬 モンスター配合</h2>
         <p style="font-size: 11px; color: #f87171; margin: 0 0 5px; font-weight: bold;">
@@ -379,8 +420,7 @@
         </button>
         <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
-
-    <!-- ⑥ みつけた図鑑 -->
+    <!-- ⑤ みつけた図鑑 -->
     <div class="box">
         <h3 style="margin-top: 0; color: #1e293b;">📖 みつけた図鑑</h3>
         <button onclick="let t=document.getElementById('zk'); t.style.display==='none'?t.style.display='grid':t.style.display='none'" style="background:#475569; margin-bottom:8px;">
@@ -389,7 +429,7 @@
         <div id="zk" class="grid" style="display: none;"></div>
     </div>
 
-    <!-- ⑦ データ引き継ぎ・セーブ管理エリア -->
+    <!-- ⑥ データ引き継ぎ・セーブ管理エリア -->
     <div class="box" style="background: rgba(255, 255, 255, 0.9); border: 1px solid #0284c7;">
         <h3 style="margin-top: 0; color: #0284c7;">💾 データセーブ・引き継ぎ管理</h3>
         <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
@@ -407,9 +447,8 @@
             </button>
         </div>
     </div>
-
     <script>
-        // モンスターデータ前編（No.1〜No.32：すべて生き物・モンスターに一新）
+        // モンスターデータ前編（No.1〜No.32：すべてオリジナル＆モンスターらしい名称に刷新）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -418,7 +457,7 @@
             "ソロゾロアント": { no: 5, a: "🐜", hp: 8, at: 4, df: 2, sp: 7, ex: 1 },
             "ポイズンフロッグ": { no: 6, a: "🐸", hp: 13, at: 6, df: 4, sp: 7, ex: 1 },
             "キャタピラー": { no: 7, a: "🐛", hp: 11, at: 4, df: 4, sp: 5, ex: 1 },
-            "スネイル": { no: 8, a: "🐌", hp: 15, at: 4, df: 8, sp: 2, ex: 1 },
+            "シェルスネイル": { no: 8, a: "🐌", hp: 15, at: 4, df: 8, sp: 2, ex: 1 },
             "ピヨチビ": { no: 9, a: "🐥", hp: 12, at: 6, df: 4, sp: 8, ex: 1 },
             "ロックタートル": { no: 10, a: "🐢", hp: 18, at: 5, df: 8, sp: 3, ex: 1 },
             "リバーフィッシュ": { no: 11, a: "🐟", hp: 11, at: 5, df: 4, sp: 9, ex: 1 },
@@ -426,10 +465,10 @@
             "コロテントウ": { no: 13, a: "🐞", hp: 9, at: 4, df: 5, sp: 7, ex: 1 },
             "パタバタフライ": { no: 14, a: "🦋", hp: 10, at: 6, df: 3, sp: 11, ex: 1 },
             "キラービー": { no: 15, a: "🐝", hp: 11, at: 8, df: 2, sp: 13, ex: 1 },
-            "スパイダー": { no: 16, a: "🕷️", hp: 12, at: 7, df: 4, sp: 8, ex: 1 },
+            "ヴェノムスパイダー": { no: 16, a: "🕷️", hp: 12, at: 7, df: 4, sp: 8, ex: 1 },
             "ウサピョン": { no: 17, a: "🐇", hp: 14, at: 6, df: 4, sp: 11, ex: 1 },
             "チップモンク": { no: 18, a: "🐿️", hp: 13, at: 7, df: 4, sp: 10, ex: 1 },
-            "ハリネズミ": { no: 19, a: "🦔", hp: 17, at: 6, df: 9, sp: 4, ex: 1 },
+            "ニードルホッグ": { no: 19, a: "🦔", hp: 17, at: 6, df: 9, sp: 4, ex: 1 },
             "バイパー": { no: 20, a: "🐍", hp: 14, at: 8, df: 4, sp: 9, ex: 1 },
             "スノーペンギン": { no: 21, a: "🐧", hp: 14, at: 5, df: 5, sp: 6, ex: 1 },
             "ゴールデンワン": { no: 22, a: "🐕", hp: 15, at: 6, df: 5, sp: 8, ex: 1 },
@@ -440,15 +479,15 @@
             "ホークアイ": { no: 27, a: "🦅", hp: 28, at: 20, df: 11, sp: 17, ex: 2 },
             "ナイトオウル": { no: 28, a: "🦉", hp: 32, at: 19, df: 14, sp: 12, ex: 2 },
             "ファイアフォックス": { no: 29, a: "🦊", hp: 26, at: 18, df: 10, sp: 15, ex: 2 },
-            "アライグマ": { no: 30, a: "🦝", hp: 24, at: 14, df: 11, sp: 12, ex: 2 },
+            "マスクラクーン": { no: 30, a: "🦝", hp: 24, at: 14, df: 11, sp: 12, ex: 2 },
             "ダークベア": { no: 31, a: "🐻", hp: 34, at: 19, df: 13, sp: 8, ex: 2 },
             "ブルーイルカ": { no: 32, a: "🐬", hp: 28, at: 16, df: 12, sp: 16, ex: 2 },
             "ホワイトスワン": { no: 33, a: "🦢", hp: 26, at: 15, df: 11, sp: 16, ex: 2 },
             "デススコーピオン": { no: 34, a: "🦂", hp: 28, at: 21, df: 13, sp: 13, ex: 2 },
             "フォレストディア": { no: 35, a: "🦌", hp: 30, at: 17, df: 12, sp: 15, ex: 2 },
-            "カンガルー": { no: 36, a: "🦘", hp: 29, at: 19, df: 11, sp: 16, ex: 2 },
+            "バウンスルー": { no: 36, a: "🦘", hp: 29, at: 19, df: 11, sp: 16, ex: 2 },
             "シャドウウルフ": { no: 37, a: "🐺", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
-            "ホッキョクグマ": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 9, ex: 2 },
+            "フロストグリズリー": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 9, ex: 2 },
             "ブラックパンサー": { no: 39, a: "🐆", hp: 29, at: 22, df: 10, sp: 18, ex: 2 },
             "ボアキング": { no: 40, a: "🐗", hp: 35, at: 21, df: 14, sp: 11, ex: 2 },
             "ミノタウロス": { no: 41, a: "🐂", hp: 36, at: 23, df: 15, sp: 9, ex: 2 },
@@ -515,12 +554,12 @@
 
         // 配合辞書（新モンスター名に完全対応）
         const R = {
-            "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+スネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "フェアリー",
+            "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "フェアリー",
             "カゲコウモリ+うらめシート": "ホークアイ", "うらめシート+チューマウス": "ナイトオウル", "チューマウス+ソロゾロアント": "ファイアフォックス",
-            "ソロゾロアント+ポイズンフロッグ": "アライグマ", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
-            "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+スパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
-            "ハリネズミ+カンガルー": "アイアンサイ", "バイパー+シャドウウルフ": "沼クロコダイル",
-            "アライグマ+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "アサシンシャーク",
+            "ソロゾロアント+ポイズンフロッグ": "マスクラクーン", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
+            "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+ヴェノムスパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
+            "ニードルホッグ+バウンスルー": "アイアンサイ", "バイパー+シャドウウルフ": "沼クロコダイル",
+            "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "アサシンシャーク",
             "ギガジェリー+ナイトオウル": "ヴァンパイア", "ホークアイ+フェアリー": "プリズムピーコック", "シルバーゴリラ+アサシンシャーク": "エンペラーマンモス",
             "ホーリーユニコーン+シャドードラゴン": "アシュラオーガ", "エメラルドドラゴン+レックスティラノ": "ギガブラキオ", "セラフィムウイング+イービルアイ": "アークデーモン",
             "キングライオン+クラーケンロード": "リヴァイアサン", "ベヒーモス+ペガサスナイト": "カオスエイリアン", "マーメイドクイーン+サラマンダーキング": "カオスエイリアン",
@@ -546,11 +585,11 @@
 
         function saveGame() {
             const data = { stg: stg, maxStg: maxStg, zk: zk, p: p };
-            localStorage.setItem("mix_emoji_save_v2", JSON.stringify(data));
+            localStorage.setItem("mix_emoji_save_v3", JSON.stringify(data));
         }
 
         function loadGame() {
-            const saved = localStorage.getItem("mix_emoji_save_v2");
+            const saved = localStorage.getItem("mix_emoji_save_v3");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -613,7 +652,6 @@
                 let n = pool[Math.floor(Math.random() * pool.length)];
                 let b = D[n];
                 let stageBonus = stg - 1;
-                // ⭕ 【新仕様】基礎経験値を3倍にし、敵のレベル（階層）が高いほど獲得経験値が増加
                 let baseEx = (b.ex || 1) * 3;
                 let levelBonusEx = Math.floor(stageBonus * 2.5);
                 eg.push({
@@ -699,9 +737,14 @@
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
             
+            // 戦闘画面と一体化ヘッダーバーに環境フレーム色を同時適用
             const bField = document.querySelector(".battle-field");
+            const bHeader = document.getElementById("battleHeaderBar");
             if (bField) {
                 bField.className = "battle-field " + envClass;
+            }
+            if (bHeader) {
+                bHeader.className = "battle-header-bar " + envClass;
             }
             // 味方戦闘画面の描画（サイズ縮小 ＆ 三大ステータス非表示）
             if (mS) {
@@ -894,7 +937,6 @@
                     p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
 
                     if(partyDead) {
-                        // ⭕ 【新仕様】先に画面を描画し、HPバーが空（0）になってから全滅アラートを出す
                         logBox.innerText = turnLog;
                         up();
                         setTimeout(() => {
@@ -926,7 +968,6 @@
                         let gainExp = currentEnemy.ex || 3;
                         turnLog += "💎パーティ全員に EXP " + gainExp + " 獲得！ ";
 
-                        // ⭕ 【新仕様】戦闘に出している3体全員に経験値を分配しレベルアップ判定
                         let partyCount = 0;
                         p.forEach(ally => {
                             if (ally.inParty && partyCount < 3) {
@@ -946,7 +987,6 @@
                                 }
                             }
                         });
-
                         eg.shift();
                         if(eg.length === 0) {
                             turnLog += "🎉ステージクリア！ ";
@@ -963,6 +1003,7 @@
                             }
                         }
                     }
+
                     logBox.innerText = turnLog;
                     saveGame();
                     up();
@@ -993,7 +1034,6 @@
 
             let key = [m1.n, m2.n].sort().join("+");
             let resultName = R[key];
-
             if(!resultName) {
                 alert("😭その組み合わせでは新しいモンスターは生まれなかった（配合失敗）！選んだ2匹は消滅しました。");
                 p = p.filter(m => m !== m1 && m !== m2);
@@ -1018,7 +1058,6 @@
                 if(!zk.includes(resultName)) zk.push(resultName);
                 alert("✨配合大成功！ 「" + resultName + "」が誕生してボックスに加わった！");
             }
-
             saveGame();
             up();
         }
