@@ -550,7 +550,6 @@
             </button>
         </div>
 
-        <!-- 🏆 ランキング表示パネル -->
         <div id="rankingPanel" class="rank-panel">
             <div style="font-size: 12px; font-weight: 900; color: #92400e; margin-bottom: 6px; text-align: center;">
                 🏆 最高クリア階数ランキング（1〜100位表示）
@@ -581,7 +580,6 @@
             </div>
         </div>
     </div>
-    <!-- ダンジョンバトル画面 -->
     <div class="box" id="battleBox">
         <div class="battle-header-bar" id="battleHeaderBar">
             <div style="display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap;">
@@ -630,7 +628,6 @@
         </div>
     </div>
 
-    <!-- モンスターボックス -->
     <div class="box">
         <div class="section-badge">📦 PARTY & STORAGE</div>
         <div style="font-size: 13px; font-weight: 900; margin-bottom: 2px;">
@@ -641,7 +638,6 @@
         </div>
         <ul id="box"></ul>
     </div>
-    <!-- モンスター配合ラボ -->
     <div class="box" id="mixArea">
         <div class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">🧬 SYNTHESIS LAB</div>
         <div style="font-size: 13px; font-weight: 900; margin-bottom: 4px;">
@@ -656,7 +652,6 @@
         </button>
     </div>
 
-    <!-- 図鑑 -->
     <div class="box">
         <button style="background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-bottom: 3px solid #5b21b6;" onclick="t('zArea')">
             📖 みつけた図鑑 <span id="zukanCountBadge">(1/100種)</span><span id="bossZukanCountBadge"> / 👑ボス(0/20種)</span>
@@ -669,7 +664,6 @@
         </div>
     </div>
 
-    <!-- 配合レシピ表 -->
     <div class="box">
         <button style="background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%); border-bottom: 3px solid #9a3412;" onclick="t('rArea')">
             📜 配合レシピ表（全35種）
@@ -681,7 +675,6 @@
             <table class="recipe-table" id="rt"></table>
         </div>
     </div>
-    <!-- データ引き継ぎ -->
     <div class="box">
         <button style="background: linear-gradient(180deg, #94a3b8 0%, #475569 100%); border-bottom: 3px solid #334155;" onclick="t('saveArea')">
             💾 データ引き継ぎ（バックアップ）
@@ -706,7 +699,6 @@
             el.style.display = (el.style.display === 'block') ? 'none' : 'block';
         }
 
-        // 👾 通常モンスターデータ全100種（No.1 〜 No.100 / 絵文字重複完全ゼロ）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 20, at: 12, df: 6, sp: 8, ex: 1 },
             "キャタピラー": { no: 2, a: "🐛", hp: 23, at: 14, df: 8, sp: 9, ex: 1 },
@@ -840,44 +832,6 @@
         function getMonData(name) {
             return D[name] || BOSS_D[name] || HERO_DATA[name];
         }
-        // 🧬 配合レシピ35種（No.51〜No.100のモンスターのみ誕生）
-        const R = {
-            "プニシズク+キャタピラー": "ストライプゼブラ",
-            "カゲコウモリ+うらめシート": "アルパカマスター",
-            "チューマウス+ソロゾロアント": "デザートキャメル",
-            "ピヨチビ+シェルスネイル": "ツインパクトキャメル",
-            "リバーフィッシュ+コロテントウ": "エルクカイザー",
-            "ポイズンフロッグ+コオリガニ": "グランドバイソン",
-            "ウサピョン+パタバタフライ": "アイアンオックス",
-            "キラービー+チップモンク": "アースバッファロー",
-            "ニードルホッグ+ロックタートル": "ミルクカウ",
-            "ヴェノムスパイダー+バイパー": "ブレイブスタリオン",
-            "シャドウハウンド+ワイルドボア": "スピードホース",
-            "マッドモンキー+バウンスルー": "ダークピッグ",
-            "ホーンラム+ナイトオウル": "シルバーゴリラ",
-            "ファイアフォックス+マスクラクーン": "オランウータン",
-            "ダークベア+フォレストディア": "ウルフファング",
-            "ギガジェリー+シルフィードバード": "ロイヤルプードル",
-            "ホークアイ+ホワイトスワン": "ガイドドッグ",
-            "フラミンゴクイーン+プリズムピーコック": "ブラックパンサー",
-            "マウンテンゴート+ポイズンスカンク": "キラータイガー",
-            "シャドウバジャー+スロウロス": "クリムゾンタイガー",
-            "コアラファイター+バンブーパンダ": "キングレオ",
-            "ホワイトシール+ブルーイルカ": "サバンナレオパード",
-            "ディープオクトパス+アビススクイッド": "スカイジラフ",
-            "ハリセンボンバー+トロピカルフィッシュ": "エンペラーエレファント",
-            "デススコーピオン+ギガローチ": "アイアンマンモス",
-            "ストライプゼブラ+ブレイブスタリオン": "アーマーライノ",
-            "グランドバイソン+アイアンオックス": "ギガヒポポ",
-            "ウルフファング+キラータイガー": "ヌマクロコダイル",
-            "キングレオ+エンペラーエレファント": "メガタウロス",
-            "ヘラクレスビートル+カブトキング": "ヘラクレスビートル",
-            "ギガントシャーク+ディープホエール": "ティラノレックス",
-            "サンダーイーグル+ティラノレックス": "ユニコーンナイト",
-            "ブラキオサウルス+ユニコーンナイト": "ワイバーン",
-            "ワイバーン+ドラゴンエンペラー": "不死鳥フェニックス",
-            "不死鳥フェニックス+デーモンロード": "オメガエモジ神"
-        };
         // --- ✨ ① 元から覚えている固有スキル定義（通常15種 ＋ ボス専用20種） ---
         const INNATE_SKILLS = {
             quick:    { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
@@ -969,7 +923,7 @@
             if (!mon.skillId || mon.skillId < 1 || mon.skillId > RANDOM_SKILLS.length) {
                 mon.skillId = getRandomSkillId();
             }
-            return RANDOM_SKILLS.find(s => s.id === mon.skillId) || RANDOM_SKILLS[0];
+            return RANDOM_SKILLS.find(s => s.id === mon.skillId) || RANDOM_SKILLS.at(0);
         }
 
         function showSkillInfo(name, desc) {
@@ -990,7 +944,6 @@
             mon.isPoisoned = false;
             mon.isParalyzed = false;
         }
-
         let stg = 1;
         let maxStg = 1;
         let maxClearStg = 0;
@@ -1360,7 +1313,11 @@
                         zk = data.zk || ["プニシズク"];
                         p = data.p.filter(m => getMonData(m.n));
                         if (p.length === 0) {
-                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() }];
+                            p = [
+                                { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() },
+                                { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, skillId: getRandomSkillId() },
+                                { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, skillId: getRandomSkillId() }
+                            ];
                         }
                         let maxOrd = 0;
                         p.forEach(m => {
@@ -1385,7 +1342,9 @@
         function showRecipeHint(targetName) {
             for (const [pair, res] of Object.entries(R)) {
                 if (res === targetName) {
-                    const [m1, m2] = pair.split("+");
+                    const parts = pair.split("+");
+                    const m1 = parts.at(0);
+                    const m2 = parts.at(1);
                     const d1 = D[m1];
                     const d2 = D[m2];
                     const targetData = D[targetName];
@@ -1486,7 +1445,6 @@
             if (tPanel) tPanel.style.display = "none";
             return false;
         }
-
         function playTravelerJanken(playerHand) {
             if (!inDungeon || !isTravelerEvent) return;
             const hands = ["✊ グー", "✌️ チョキ", "🖐️ パー"];
@@ -1495,7 +1453,7 @@
 
             if (playerHand === travelerHand) {
                 seButtonTap();
-                logBox.innerText = "🧳 旅人「" + hands[travelerHand] + "！」 あなた「" + hands[playerHand] + "！」\n🤝 あいこだ！もう一回勝負じゃ！";
+                logBox.innerText = "🧳 旅人「" + hands.at(travelerHand) + "！」 あなた「" + hands.at(playerHand) + "！」\n🤝 あいこだ！もう一回勝負じゃ！";
                 return;
             }
 
@@ -1507,11 +1465,10 @@
             const tPanel = document.getElementById("travelerPanel");
             if (tPanel) tPanel.style.display = "none";
 
-            let resultMsg = "🧳 旅人「" + hands[travelerHand] + "！」 あなた「" + hands[playerHand] + "！」\n";
-
+            let resultMsg = "🧳 旅人「" + hands.at(travelerHand) + "！」 あなた「" + hands.at(playerHand) + "！」\n";
             if (isWin) {
                 const allKeys = Object.keys(D);
-                const giftName = allKeys[Math.floor(Math.random() * allKeys.length)];
+                const giftName = allKeys.at(Math.floor(Math.random() * allKeys.length));
                 const b = D[giftName];
                 let giftMon = {
                     n: giftName,
@@ -1556,7 +1513,6 @@
                 resultMsg += "😆 旅人の勝ち！修行をつけてもらい戦闘メンバー全員が1レベル上がった！";
                 alert("😆 ジャンケン敗北…！\n旅人「わしの勝ちじゃな！特別に仲間たちを鍛えてやろう！」\n\n🆙 レベルアップ: " + (lvUpNames.length > 0 ? lvUpNames.join("、") : "全員最大レベル"));
             }
-
             if (stg > maxClearStg) {
                 maxClearStg = stg;
                 updateRankingUI();
@@ -1569,21 +1525,14 @@
             updateBgmState(true);
 
             if (!checkTravelerEvent() && !checkHeroEvent()) {
+                resultMsg += "\n➡️ 旅人と別れ、次の " + stg + " 階へ進んだ！";
                 generateEnemies();
                 const btnA = document.getElementById("btnAtk");
                 if (btnA) btnA.disabled = false;
-                resultMsg += "\n➡️ 旅人と別れ、" + stg + " 階に進んだ！";
-            } else {
-                resultMsg = "";
             }
-
-            if (resultMsg) logBox.innerText = resultMsg;
+            logBox.innerText = resultMsg;
             saveGame();
             up();
-
-            if (inDungeon && !isTravelerEvent && !isHeroChoiceEvent && eg.length > 0) {
-                autoAtkTimer = setTimeout(() => { atk(); }, 800);
-            }
         }
         let isHeroChoiceEvent = false;
         let isHeroBattle = false;
@@ -1607,37 +1556,38 @@
             if (hPanel) hPanel.style.display = "none";
             return false;
         }
-
-        function chooseHeroBattle(willFight) {
+        function chooseHeroBattle(doFight) {
             if (!inDungeon || !isHeroChoiceEvent) return;
             isHeroChoiceEvent = false;
             const hPanel = document.getElementById("heroPanel");
             if (hPanel) hPanel.style.display = "none";
             const logBox = document.getElementById("battleLog");
+            const btnA = document.getElementById("btnAtk");
 
-            if (willFight) {
+            if (doFight) {
                 isHeroBattle = true;
-                const b = HERO_DATA["絵文字の勇者"];
-                let heroMon = {
+                const hData = HERO_DATA["絵文字の勇者"];
+                let heroEnemy = {
                     n: "絵文字の勇者",
                     lv: 50,
-                    m: b.hp,
-                    hp: b.hp,
-                    at: b.at,
-                    df: b.df,
-                    sp: b.sp,
-                    ex: b.ex,
+                    m: hData.hp,
+                    hp: hData.hp,
+                    at: hData.at,
+                    df: hData.df,
+                    sp: hData.sp,
+                    ex: hData.ex,
                     isHero: true,
-                    skillId: getRandomSkillId()
+                    skillId: 9
                 };
-                initBattleState(heroMon);
-                eg = [heroMon];
-                const btnA = document.getElementById("btnAtk");
+                initBattleState(heroEnemy);
+                eg = [heroEnemy];
                 if (btnA) btnA.disabled = false;
-                logBox.innerText = "⚔️ 絵文字の勇者 (Lv.50) との決闘が始まった！勝利すれば奇跡が起きる…！";
+                logBox.innerText = "⚔️ 絵文字の勇者 (Lv.50) に挑んだ！勝てば配合確率が【50%】にアップする！！";
+                saveGame();
                 up();
             } else {
                 isHeroBattle = false;
+                seButtonTap();
                 if (stg > maxClearStg) {
                     maxClearStg = stg;
                     updateRankingUI();
@@ -1648,29 +1598,27 @@
                 stg++;
                 resetStageBuffs();
                 updateBgmState(true);
-
-                let nextMsg = "🏃 絵文字の勇者から逃げ出し、次の " + stg + " 階へ進んだ！";
+                let escMsg = "🏃 絵文字の勇者から素早く逃げ出した！";
                 if (!checkTravelerEvent() && !checkHeroEvent()) {
+                    escMsg += "\n➡️ 次の " + stg + " 階へ進んだ！";
                     generateEnemies();
-                    const btnA = document.getElementById("btnAtk");
                     if (btnA) btnA.disabled = false;
-                } else {
-                    nextMsg = "";
                 }
-                if (nextMsg) logBox.innerText = nextMsg;
+                logBox.innerText = escMsg;
                 saveGame();
                 up();
             }
         }
-        function leaveDungeon(reasonText){
+        function leaveDungeon(customMsg){
+            if(!inDungeon) return;
             if (autoAtkTimer) { clearTimeout(autoAtkTimer); autoAtkTimer = null; }
             inDungeon = false;
             isTravelerEvent = false;
             isHeroChoiceEvent = false;
             isHeroBattle = false;
             const tPanel = document.getElementById("travelerPanel");
-            if (tPanel) tPanel.style.display = "none";
             const hPanel = document.getElementById("heroPanel");
+            if (tPanel) tPanel.style.display = "none";
             if (hPanel) hPanel.style.display = "none";
             eg = [];
             p.forEach(m => {
@@ -1678,314 +1626,344 @@
                 initBattleState(m);
             });
             updateBgmState(true);
+            document.getElementById("battleLog").innerText = customMsg || "🏡 拠点に戻った。モンスターたちのHPと状態が全回復した！";
             saveGame();
-            document.getElementById("battleLog").innerText = reasonText || "🏡 拠点に戻った！仲間のHP・状態異常が全回復した。";
             up();
         }
 
         function changeStage(delta) {
-            if(inDungeon) return alert("ダンジョン探索中は階数を変更できません！一度拠点に戻ってください。");
-            let nextStg = stg + delta;
-            if (nextStg < 1) nextStg = 1;
-            if (nextStg > maxStg) nextStg = maxStg;
-            stg = nextStg;
-            saveGame();
-            up();
-        }
-
-        function toggleParty(idx) {
-            if(inDungeon) return alert("ダンジョン探索中は戦闘メンバーを変更できません！");
-            let target = p.at(idx);
-            if (!target) return;
-            if (target.inParty) {
-                target.inParty = false;
-                target.partyOrder = 0;
-            } else {
-                let currentParty = p.filter(m => m.inParty);
-                if (currentParty.length >= 3) {
-                    return alert("⚠️ 戦闘メンバーは最大3体までです！他のモンスターを「外す」にしてから選んでください。");
-                }
-                partyOrderCounter++;
-                target.inParty = true;
-                target.partyOrder = partyOrderCounter;
-            }
-            saveGame();
-            up();
-        }
-        function deleteMon(idx) {
-            if(inDungeon) return alert("ダンジョン探索中はモンスターをお別れさせられません！");
-            if(p.length <= 1) return alert("❌ 最後の1体はお別れさせられません！");
-            let target = p.at(idx);
-            if (!target) return;
-            if(confirm("⚠️ 「" + target.n + " (Lv." + target.lv + ")」と本当にお別れしますか？\n（この操作は元に戻せません）")) {
-                p.splice(idx, 1);
+            if(inDungeon) return alert("ダンジョン探索中は階層を変更できません！一度拠点に戻ってください。");
+            let next = Math.max(1, Math.min(maxStg, stg + delta));
+            if (next !== stg) {
+                stg = next;
                 saveGame();
                 up();
             }
         }
-
-        function getAreaInfo(stage) {
-            if (isBossStage(stage)) {
-                const isSuper = (stage === 500 || stage === 1000);
-                return {
-                    name: isSuper ? "👑大ボス決戦領域" : "👑エリア守護ボス",
-                    cls: isSuper ? "bg-superboss" : "bg-boss"
-                };
+        function toggleParty(idx){
+            if(inDungeon) return alert("ダンジョン探索中はパーティを変更できません！一度拠点に戻ってください。");
+            let mon = p.at(idx);
+            if(!mon) return;
+            if(mon.inParty){
+                mon.inParty = false;
+                mon.partyOrder = 0;
+            } else {
+                let count = p.filter(m => m.inParty).length;
+                if(count >= 3) return alert("戦闘に出せるモンスターは最大3体までです！先に誰かを外してください。");
+                mon.inParty = true;
+                partyOrderCounter++;
+                mon.partyOrder = partyOrderCounter;
             }
-            if (stage <= 100) return { name: "🌿草原", cls: "bg-grass" };
-            if (stage <= 200) return { name: "🌳ジャングル", cls: "bg-jungle" };
-            if (stage <= 300) return { name: "🌊海", cls: "bg-ocean" };
-            if (stage <= 400) return { name: "🏜️砂漠", cls: "bg-desert" };
-            if (stage <= 500) return { name: "☣️毒地帯", cls: "bg-poison" };
-            if (stage <= 600) return { name: "⛏️鉱山", cls: "bg-mine" };
-            if (stage <= 700) return { name: "🏛️神殿", cls: "bg-shrine" };
-            if (stage <= 800) return { name: "🌋火山", cls: "bg-volcano" };
-            if (stage <= 900) return { name: "❄️氷の洞窟", cls: "bg-ice" };
-            return { name: "🏰城", cls: "bg-castle" };
+            saveGame();
+            up();
+        }
+
+        function deleteMon(idx){
+            if(inDungeon) return alert("ダンジョン探索中はお別れできません！一度拠点に戻ってください。");
+            let mon = p.at(idx);
+            if(!mon) return;
+            if(mon.inParty) return alert("戦闘メンバーに入っているモンスターとはお別れできません！先にパーティから外してください。");
+            if(p.length <= 1) return alert("最後の1体とはお別れできません！");
+            if(!confirm("本当に「" + mon.n + "」(Lv." + mon.lv + ") とお別れしますか？\n（お別れすると二度と戻りません）")) return;
+            p.splice(idx, 1);
+            saveGame();
+            up();
         }
         function buildStateIcons(mon) {
-            let html = "";
-            if (mon.isPoisoned) html += "<span class='status-badge' style='background:#f3e8ff;color:#7e22ce;border-color:#d8b4fe;'>☠️毒</span>";
-            if (mon.isParalyzed) html += "<span class='status-badge' style='background:#fef9c3;color:#a16207;border-color:#fde047;'>⚡麻痺</span>";
-            if (mon.nullifyOnce) html += "<span class='status-badge' style='background:#e0f2fe;color:#0369a1;border-color:#7dd3fc;'>🛡️無効</span>";
-            if (mon.halfDmgOnce) html += "<span class='status-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac;'>🔰半減</span>";
-            if (mon.nextAtk15) html += "<span class='status-badge' style='background:#fee2e2;color:#b91c1c;border-color:#fca5a5;'>🔥1.5倍</span>";
-            if (mon.buffAt > 0) html += "<span class='status-badge'>⚔️+" + mon.buffAt + "</span>";
-            if (mon.buffDf > 0) html += "<span class='status-badge'>🛡️+" + mon.buffDf + "</span>";
-            if (mon.buffDf < 0) html += "<span class='status-badge' style='color:#dc2626;'>🛡️" + mon.buffDf + "</span>";
-            if (mon.buffSp > 0) html += "<span class='status-badge'>⚡+" + mon.buffSp + "</span>";
-            if (mon.buffSp < 0) html += "<span class='status-badge' style='color:#dc2626;'>⚡" + mon.buffSp + "</span>";
-            return html;
+            let sHtml = "";
+            if (mon.nullifyOnce) sHtml += "<span class='status-badge'>🛡️無効</span>";
+            if (mon.nextAtk15) sHtml += "<span class='status-badge'>🔥1.5倍</span>";
+            if (mon.halfDmgOnce) sHtml += "<span class='status-badge'>🔰半減</span>";
+            if (mon.isPoisoned) sHtml += "<span class='status-badge' style='background:#f3e8ff;color:#6b21a8;border-color:#d8b4fe;'>☠️毒</span>";
+            if (mon.isParalyzed) sHtml += "<span class='status-badge' style='background:#fef9c3;color:#854d0e;border-color:#fde047;'>⚡麻痺</span>";
+            if ((mon.buffAt || 0) > 0) sHtml += "<span class='status-badge'>⚔️+" + mon.buffAt + "</span>";
+            if ((mon.buffDf || 0) > 0) sHtml += "<span class='status-badge'>🛡️+" + mon.buffDf + "</span>";
+            if ((mon.buffDf || 0) < 0) sHtml += "<span class='status-badge' style='background:#fee2e2;color:#b91c1c;'>🛡️" + mon.buffDf + "</span>";
+            if ((mon.buffSp || 0) > 0) sHtml += "<span class='status-badge'>⚡+" + mon.buffSp + "</span>";
+            if ((mon.buffSp || 0) < 0) sHtml += "<span class='status-badge' style='background:#fee2e2;color:#b91c1c;'>⚡" + mon.buffSp + "</span>";
+            return sHtml;
+        }
+        function getBiomeInfo(stage) {
+            if (isBossStage(stage)) {
+                if (stage === 500 || stage === 1000) return { name: "👑大ボス決戦", cls: "bg-superboss" };
+                return { name: "👑エリアボス", cls: "bg-boss" };
+            }
+            if (stage <= 100) return { name: "🌿草原", cls: "bg-grass" };
+            if (stage <= 200) return { name: "🌳密林", cls: "bg-jungle" };
+            if (stage <= 300) return { name: "🌊大海原", cls: "bg-ocean" };
+            if (stage <= 400) return { name: "🏜️砂漠", cls: "bg-desert" };
+            if (stage <= 500) return { name: "☣️毒の沼", cls: "bg-poison" };
+            if (stage <= 600) return { name: "⛏️鉱山", cls: "bg-mine" };
+            if (stage <= 700) return { name: "🏛️古代神殿", cls: "bg-shrine" };
+            if (stage <= 800) return { name: "🌋灼熱火山", cls: "bg-volcano" };
+            if (stage <= 900) return { name: "❄️極氷世界", cls: "bg-ice" };
+            return { name: "🏰魔王城", cls: "bg-castle" };
         }
         function up(){
-            const area = getAreaInfo(stg);
+            const biome = getBiomeInfo(stg);
             const isBossNow = isBossStage(stg);
             const stgEl = document.getElementById("stg");
             if (stgEl) {
-                stgEl.innerText = stg + "階 [" + area.name + "]";
-                stgEl.style.color = isBossNow ? "#dc2626" : "#0f172a";
+                stgEl.innerText = stg + "階 [" + biome.name + "]";
+                stgEl.style.color = isBossNow ? "#e11d48" : "#0f172a";
             }
             const maxStgEl = document.getElementById("maxStg");
             if (maxStgEl) maxStgEl.innerText = maxStg;
             const clearStgEl = document.getElementById("dispClearStg");
             if (clearStgEl) clearStgEl.innerText = maxClearStg;
 
-            const field = document.querySelector(".battle-field");
-            if (field) {
-                field.className = "battle-field " + area.cls;
+            const bf = document.querySelector(".battle-field");
+            if (bf) {
+                bf.className = "battle-field " + biome.cls;
             }
 
+            const btnEnterBtm = document.getElementById("btnEnterBtm");
             const btnAtk = document.getElementById("btnAtk");
             const btnLeave = document.getElementById("btnLeave");
             const btnPrev = document.getElementById("btnPrevStg");
             const btnPrev10 = document.getElementById("btnPrev10Stg");
             const btnNext = document.getElementById("btnNextStg");
             const btnNext10 = document.getElementById("btnNext10Stg");
-            const btnEnterBtm = document.getElementById("btnEnterBtm");
 
+            if (btnEnterBtm) btnEnterBtm.disabled = inDungeon;
             if (btnAtk) btnAtk.disabled = !inDungeon || isTravelerEvent || isHeroChoiceEvent;
             if (btnLeave) btnLeave.disabled = !inDungeon;
             if (btnPrev) btnPrev.disabled = inDungeon || stg <= 1;
             if (btnPrev10) btnPrev10.disabled = inDungeon || stg <= 1;
             if (btnNext) btnNext.disabled = inDungeon || stg >= maxStg;
             if (btnNext10) btnNext10.disabled = inDungeon || stg >= maxStg;
-            if (btnEnterBtm) btnEnterBtm.disabled = inDungeon;
-            const mS = document.getElementById("mySide");
-            const eS = document.getElementById("eSide");
             const activeParty = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
-
-            if (mS) {
-                mS.innerHTML = "<b style='font-size:12px;'>【味方 (" + activeParty.length + "/3体)】</b>";
-                if(activeParty.length === 0) {
-                    mS.innerHTML += "<br><span style='color:#dc2626;font-size:11px;font-weight:700;'>ボックスから最大3体選んでください</span>";
+            const aliveParty = activeParty.filter(m => m.hp > 0);
+            const mySideEl = document.getElementById("mySide");
+            if (mySideEl) {
+                let myHTML = "<div style='font-size:10px; font-weight:900; color:#0284c7; margin-bottom:2px;'>🛡️ 味方 (" + aliveParty.length + "/" + activeParty.length + ")</div>";
+                if (activeParty.length === 0) {
+                    myHTML += "<div style='color:#94a3b8; padding:18px 0; font-size:11px;'>ボックスから<br>戦闘メンバーを<br>選んでください</div>";
                 } else {
-                    activeParty.forEach((m, idx) => {
+                    let frontFound = false;
+                    activeParty.forEach((m) => {
+                        let inf = getMonData(m.n);
                         let isDead = m.hp <= 0;
-                        let inf = getMonData(m.n);
-                        let dispEmoji = isDead ? "⚰️" : inf.a;
-                        let aliveAttr = isDead ? "" : " data-alive='true'";
-                        let expPct = Math.min(100, Math.floor((m.ex / m.nx) * 100));
-                        let stateHtml = buildStateIcons(m);
-                        let orderTag = "<span style='background:#0284c7;color:#fff;font-size:9px;padding:1px 4px;border-radius:4px;margin-right:2px;'>" + (idx + 1) + "番手</span>";
+                        let isFront = (!isDead && !frontFound);
+                        if (isFront) frontFound = true;
 
-                        mS.innerHTML += "<br><div class='monster-container'" + aliveAttr + "><span class='battle-monster' style='font-size:36px;'>" + dispEmoji + "</span><div class='monster-shadow' style='width:30px;'></div></div>" + orderTag + "<b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + m.lv + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : "");
-                        mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml;
-                        mS.innerHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
-                        mS.innerHTML += '<div class="exp-bg"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
-                        mS.innerHTML += '<span class="sub-label">EXP: ' + m.ex + '/' + m.nx + '</span>';
-                    });
-                }
-            }
-            if (eS) {
-                eS.innerHTML = "<b style='font-size:12px;'>" + (isTravelerEvent ? "【🧳 謎の旅人】" : (isHeroChoiceEvent || isHeroBattle ? "【🤺 伝説の勇者】" : (isBossNow ? "【👑エリア守護ボス】" : "【敵】"))) + "</b>";
-                if (isTravelerEvent) {
-                    eS.innerHTML += "<br><div class='monster-container'><span class='battle-monster' style='font-size:44px;'>🧙‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:11px; color:#b45309;'>さすらいの旅人</b><br><span style='font-size:10.5px; color:#78350f;'>ジャンケン勝負受付中！</span>";
-                } else if (isHeroChoiceEvent) {
-                    eS.innerHTML += "<br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:11px; color:#1d4ed8;'>絵文字の勇者 (Lv.50)</b><br><span style='font-size:10.5px; color:#1e40af;'>戦うか逃げるか選択！</span>";
-                } else if(!inDungeon || eg.length === 0){
-                    eS.innerHTML += "<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>";
-                    const bEnterBtm = document.getElementById("btnEnterBtm");
-                    if (bEnterBtm) bEnterBtm.disabled = false;
-                } else {
-                    let enemyHTML = "";
-                    eg.forEach((m, i) => {
-                        let isEnemyDead = m.hp <= 0;
-                        let inf = getMonData(m.n);
-                        let dispEnemyEmoji = isEnemyDead ? "⚰️" : inf.a;
-                        let eId = (i === 0) ? " id='eM_front' " : "";
-                        let eStateHtml = buildStateIcons(m);
-                        let sizePx = (m.isBoss || m.isHero) ? "48px" : "36px";
-                        let dispLv = m.lv || stg;
+                        let hpPct = Math.max(0, Math.min(100, (m.hp / m.m) * 100));
+                        let expPct = (m.lv >= 100) ? 100 : Math.max(0, Math.min(100, (m.ex / m.nx) * 100));
+                        let expLabel = (m.lv >= 100) ? "EXP MAX" : ("EXP " + m.ex + "/" + m.nx);
+                        let stateIcons = isDead ? "" : buildStateIcons(m);
 
-                        enemyHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + " style='font-size:" + sizePx + ";'>" + dispEnemyEmoji + "</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:11px; color:" + (m.isHero ? "#1d4ed8" : (m.isBoss ? "#b91c1c" : "#1e293b")) + ";'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>";
-                        enemyHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml;
-                        enemyHTML += '<div class="hp-bg" style="height:7px;"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
-                    });
-                    eS.innerHTML += enemyHTML;
-                }
-            }
-            const partyCountBadge = document.getElementById("partyCountBadge");
-            if (partyCountBadge) partyCountBadge.innerText = "(戦闘中: " + activeParty.length + "/3体)";
-
-            const list = document.getElementById("box");
-            if (list) {
-                list.innerHTML = "";
-                p.forEach((n, i) => {
-                    let inf = getMonData(n.n);
-                    let isDead = n.hp <= 0;
-                    let deadText = isDead ? " <b style='color:red;'>[戦闘不能]</b>" : "";
-                    let liClass = isDead ? "class='dead'" : "";
-                    
-                    let orderIdx = activeParty.indexOf(n);
-                    let partyTag = n.inParty ? " <span style='background:#0284c7;color:#fff;font-size:10px;padding:1px 5px;border-radius:4px;font-weight:bold;'>[戦闘中:" + (orderIdx + 1) + "番手]</span>" : "";
-                    let btnLabel = n.inParty ? "外す" : "戦闘に出す";
-                    let btnColor = n.inParty ? "background:#64748b;border-bottom:2px solid #475569;" : "";
-
-                    let actionBtn = '<button class="btn-small" style="' + btnColor + '" onclick="toggleParty(' + i + ')" ' + (inDungeon ? 'disabled' : '') + '>' + btnLabel + '</button>';
-                    if (!n.inParty && p.length > 1) {
-                        actionBtn += '<button class="btn-small" style="background:#ef4444;border-bottom:2px solid #b91c1c;" onclick="deleteMon(' + i + ')" ' + (inDungeon ? 'disabled' : '') + '>お別れ</button>';
-                    }
-
-                    let expText = (n.lv >= 100) ? "MAX" : (n.ex + "/" + n.nx);
-                    let innateList = getInnateSkills(inf.no);
-                    let rSk = getSkillObj(n);
-
-                    let skillHtml = "<div class='skill-box-wrap'>";
-                    skillHtml += "<div class='skill-group-title'><span>✨ 固有スキル (" + innateList.length + "個)</span><span style='font-size:9px; color:#94a3b8; font-weight:normal;'>タップで詳細</span></div>";
-                    if (innateList.length === 0) {
-                        skillHtml += "<div style='font-size:10px; color:#94a3b8; padding:2px 0;'>なし</div>";
-                    } else {
-                        skillHtml += "<div class='skill-grid'>";
-                        innateList.forEach(isk => {
-                            skillHtml += '<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')"><span>' + isk.name + '</span><span style="font-size:9px; opacity:0.65;">ⓘ</span></span>';
-                        });
-                        skillHtml += "</div>";
-                    }
-
-                    skillHtml += "<div class='skill-group-title' style='margin-top:6px; padding-top:5px; border-top:1px dashed #cbd5e1; color:#b45309;'><span>🎲 追加スキル (1個)</span></div>";
-                    skillHtml += "<div class='skill-grid' style='grid-template-columns: 1fr;'>";
-                    skillHtml += '<span class="skill-badge skill-badge-extra" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')"><span>' + rSk.name + '</span><span style="font-size:9px; opacity:0.65;">ⓘ</span></span>';
-                    skillHtml += "</div></div>";
-                    
-                    list.innerHTML += '<li ' + liClass + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b>' + partyTag + deadText + actionBtn +
-                                       '<span class="status-text">📊 レベル:' + n.lv + ' (EXP:' + expText + ') / HP:' + n.hp + '・最大HP:' + n.m + ' / ⚔️攻撃:' + n.at + ' / 🛡️防御:' + n.df + ' / ⚡素早さ:' + n.sp + '</span>' + skillHtml + '</li>';
-                });
-            }
-            const mList = document.getElementById("mixBoxList");
-            if (mList) {
-                mList.innerHTML = "";
-                if (p.length < 4) {
-                    mList.innerHTML = "<li style='color:#dc2626; font-weight:bold; text-align:center; background:#fef2f2; border-color:#fecaca;'>⚠️ 手持ちモンスターが4体未満のため配合できません（現在: " + p.length + "体）</li>";
-                } else {
-                    p.forEach((n, i) => {
-                        let inf = getMonData(n.n);
-                        let isBossMon = inf.no < 0;
-                        let rSk = getSkillObj(n);
-                        if (isBossMon) {
-                            mList.innerHTML += '<li style="background:#fff1f2; border-color:#fecdd3;"> 👑 <b>No.' + inf.no + ' ' + n.n + '</b> <span style="font-size:10px;">(Lv.' + n.lv + ')</span> <span style="color:#e11d48;font-size:10px;font-weight:bold;">[ボスは配合不可]</span></li>';
+                        if (isFront) {
+                            myHTML += '<div style="border:2px solid #0284c7; border-radius:12px; padding:5px; margin-bottom:4px; background:#f0f9ff;">' +
+                                      '<div style="font-size:10px; color:#0284c7; font-weight:900;">▶ 前衛 (戦う)</div>' +
+                                      '<div class="monster-container" data-alive="true"><div class="battle-monster" style="font-size:36px;">' + inf.a + '</div><div class="monster-shadow"></div></div>' +
+                                      '<div style="font-size:11.5px; font-weight:900;">' + m.n + ' <span style="font-size:10px; color:#475569;">Lv.' + m.lv + '</span></div>' +
+                                      '<div style="min-height:14px;">' + stateIcons + '</div>' +
+                                      '<div class="hp-bg"><div class="hp" style="width:' + hpPct + '%"></div></div>' +
+                                      '<span class="sub-label">HP ' + m.hp + '/' + m.m + '</span>' +
+                                      '<div class="exp-bg"><div class="exp-bar" style="width:' + expPct + '%"></div></div>' +
+                                      '<span class="sub-label">' + expLabel + '</span></div>';
                         } else {
-                            mList.innerHTML += '<li><label style="cursor:pointer; display:block;"><input type="checkbox" class="cb" value="' + i + '" ' + (inDungeon ? 'disabled' : '') + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> <span style="font-size:10px;">(Lv.' + n.lv + ' / ' + rSk.name + ')</span></label></li>';
+                            let statusLabel = isDead ? "<span style='color:#ef4444; font-weight:900;'>[戦闘不能]</span>" : "<span style='color:#64748b;'>[待機中]</span>";
+                            let boxBg = isDead ? "#fef2f2" : "#f8fafc";
+                            let borderCol = isDead ? "#fecaca" : "#e2e8f0";
+                            myHTML += '<div style="border:1px solid ' + borderCol + '; border-radius:9px; padding:3px 5px; margin-bottom:3px; background:' + boxBg + '; opacity:' + (isDead ? '0.65' : '0.92') + '; text-align:left;">' +
+                                      '<div style="font-size:10px; font-weight:800;">' + inf.a + ' ' + m.n + ' <span style="font-size:9px;">Lv.' + m.lv + '</span> ' + statusLabel + '</div>' +
+                                      '<div class="hp-bg" style="height:4px; margin-top:2px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + hpPct + '%"></div></div>' +
+                                      '<div style="font-size:8.5px; color:#64748b; text-align:right;">HP ' + m.hp + '/' + m.m + '</div></div>';
                         }
                     });
                 }
+                mySideEl.innerHTML = myHTML;
             }
-
-            const btnMix = document.getElementById("btnMix");
-            const mixNotice = document.getElementById("mixRateNotice");
-            const pctText = Math.round(mixSuccessRate * 100) + "%";
-            if (btnMix) {
-                btnMix.disabled = inDungeon;
-                btnMix.innerText = "🧬 配合実行！（成功率" + pctText + "）";
-            }
-            if (mixNotice) {
-                if (mixSuccessRate >= 0.50) {
-                    mixNotice.style.background = "#eff6ff";
-                    mixNotice.style.borderColor = "#93c5fd";
-                    mixNotice.style.color = "#1d4ed8";
-                    mixNotice.innerText = "✨ 勇者撃破特典：配合成功率 50% にアップ中！ ／ 失敗すると2匹は消滅します！";
+            const eSideEl = document.getElementById("eSide");
+            if (eSideEl) {
+                if(!inDungeon){
+                    eSideEl.innerHTML = "<div style='font-size:10px; font-weight:900; color:#64748b;'>👾 出現モンスター</div><div style='padding:26px 0; color:#64748b; font-size:11px;'>ダンジョンに<br>入っていません</div>";
+                } else if (isTravelerEvent) {
+                    eSideEl.innerHTML = "<div style='font-size:10px; font-weight:900; color:#d97706;'>🧳 特殊イベント</div><div class='monster-container'><div class='battle-monster' style='font-size:44px;'>🧳</div><div class='monster-shadow'></div></div><div style='font-size:11.5px; font-weight:900; color:#92400e;'>謎の旅人</div><div style='font-size:9.5px; color:#b45309; margin-top:4px;'>ジャンケン勝負中！</div>";
+                } else if (isHeroChoiceEvent) {
+                    eSideEl.innerHTML = "<div style='font-size:10px; font-weight:900; color:#1d4ed8;'>🤺 伝説の勇者出現</div><div class='monster-container'><div class='battle-monster' style='font-size:44px;'>🤺</div><div class='monster-shadow'></div></div><div style='font-size:11.5px; font-weight:900; color:#1e40af;'>絵文字の勇者 (Lv.50)</div><div style='font-size:9.5px; color:#2563eb; margin-top:4px;'>戦うか逃げるか選択！</div>";
                 } else {
-                    mixNotice.style.background = "#fef2f2";
-                    mixNotice.style.borderColor = "#fca5a5";
-                    mixNotice.style.color = "#dc2626";
-                    mixNotice.innerText = "⚠️ 配合成功率：25% ／ 失敗すると選んだ2匹は消滅します！";
+                    let eHTML = "<div style='font-size:10px; font-weight:900; color:#e11d48; margin-bottom:2px;'>👾 敵 (残り" + eg.length + "体)</div>";
+                    if(eg.length === 0){
+                        eHTML += "<div style='padding:24px 0; font-size:11px;'>次の敵を探しています…</div>";
+                    } else {
+                        eg.forEach((em, idx) => {
+                            let inf = getMonData(em.n);
+                            let hpPct = Math.max(0, Math.min(100, (em.hp / em.m) * 100));
+                            let stateIcons = buildStateIcons(em);
+                            let isBossUnit = (inf && inf.no < 0);
+                            if(idx === 0) {
+                                let boxStyle = em.isHero
+                                    ? "border:2px solid #2563eb; border-radius:12px; padding:5px; margin-bottom:4px; background:#eff6ff;"
+                                    : (isBossUnit ? "border:2px solid #e11d48; border-radius:12px; padding:5px; margin-bottom:4px; background:#ffe4e6;" : "border:2px solid #ef4444; border-radius:12px; padding:5px; margin-bottom:4px; background:#fff1f2;");
+                                let tagTitle = em.isHero ? "🤺 伝説の勇者 (Lv.50)" : (isBossUnit ? "👑 BOSS (交戦中)" : "▶ 前衛 (交戦中)");
+                                eHTML += '<div style="' + boxStyle + '">' +
+                                         '<div style="font-size:10px; color:' + (em.isHero ? '#1d4ed8' : '#e11d48') + '; font-weight:900;">' + tagTitle + '</div>' +
+                                         '<div class="monster-container"><div class="battle-monster" style="font-size:' + (isBossUnit ? '44px' : '36px') + ';">' + inf.a + '</div><div class="monster-shadow"></div></div>' +
+                                         '<div style="font-size:11px; font-weight:900;">' + em.n + '</div>' +
+                                         '<div style="min-height:14px;">' + stateIcons + '</div>' +
+                                         '<div class="hp-bg"><div class="hp" style="width:' + hpPct + '%; background:linear-gradient(90deg, #fb7185 0%, #e11d48 100%);"></div></div>' +
+                                         '<span class="sub-label">HP ' + em.hp + '/' + em.m + '</span></div>';
+                            } else {
+                                eHTML += '<div style="border:1px solid #fecdd3; border-radius:8px; padding:3px 5px; margin-bottom:3px; background:#fff1f2; opacity:0.85; text-align:left;">' +
+                                         '<div style="font-size:10px; font-weight:700;">' + inf.a + ' ' + em.n + ' <span style="color:#64748b; font-size:9px;">[控え]</span></div>' +
+                                         '<div class="hp-bg" style="height:4px; margin-top:2px;"><div class="hp" style="width:' + hpPct + '%; background:#fb7185;"></div></div></div>';
+                            }
+                        });
+                    }
+                    eSideEl.innerHTML = eHTML;
                 }
             }
-            const z = document.getElementById("zk");
-            let normalFoundCount = 0;
-            if (z) {
-                z.innerHTML = "";
-                for(let k in D){
-                    let found = zk.includes(k);
-                    if(found) normalFoundCount++;
-                    let hasRecipe = Object.values(R).includes(k);
-                    let clickHint = (!found && hasRecipe) ? ' onclick="showRecipeHint(\'' + k + '\')" style="cursor:pointer;" title="タップで配合ヒント表示"' : '';
-                    let hintBadge = (!found && hasRecipe) ? '<br><span style="font-size:8.5px; color:#0284c7; font-weight:bold;">💡ヒント</span>' : '';
-                    z.innerHTML += '<div class="' + (found ? 'zukan-item' : 'zukan-unknown') + '"' + clickHint + '><span style="font-size:9px; color:#64748b;">No.' + D[k].no + '</span><br><span style="font-size:19px;" class="' + (found ? '' : 'silhouette') + '">' + D[k].a + '</span><br>' + (found ? k : '？？？') + hintBadge + '</div>';
+            const partyBadge = document.getElementById("partyCountBadge");
+            if (partyBadge) partyBadge.innerText = "(戦闘中: " + activeParty.length + "/3体)";
+
+            const pctNum = Math.round(mixSuccessRate * 100);
+            const rateNoticeEl = document.getElementById("mixRateNotice");
+            const btnMixEl = document.getElementById("btnMix");
+            if (rateNoticeEl) {
+                if (pctNum >= 50) {
+                    rateNoticeEl.style.background = "#f0fdf4";
+                    rateNoticeEl.style.borderColor = "#86efac";
+                    rateNoticeEl.style.color = "#15803d";
+                    rateNoticeEl.innerText = "🎊 勇者撃破特典適用中！配合成功率：" + pctNum + "% ／ 失敗すると2匹は消滅します";
+                } else {
+                    rateNoticeEl.style.background = "#fef2f2";
+                    rateNoticeEl.style.borderColor = "#fca5a5";
+                    rateNoticeEl.style.color = "#dc2626";
+                    rateNoticeEl.innerText = "⚠️ 配合成功率：" + pctNum + "% ／ 失敗すると選んだ2匹は消滅します！";
                 }
             }
-            const zBadge = document.getElementById("zukanCountBadge");
-            if (zBadge) zBadge.innerText = "(" + normalFoundCount + "/100種)";
+            if (btnMixEl) {
+                btnMixEl.innerText = "🧬 配合実行！（成功率" + pctNum + "%）";
+                btnMixEl.disabled = inDungeon || p.length < 4;
+            }
+            const boxEl = document.getElementById("box");
+            const mixListEl = document.getElementById("mixBoxList");
+            if (boxEl) boxEl.innerHTML = "";
+            if (mixListEl) mixListEl.innerHTML = "";
 
-            const bz = document.getElementById("bossZk");
-            let bossFoundCount = 0;
-            if (bz) {
-                bz.innerHTML = "";
-                for (let bk in BOSS_D) {
-                    let bData = BOSS_D[bk];
-                    let found = zk.includes(bk);
-                    if (found) bossFoundCount++;
-                    bz.innerHTML += '<div class="' + (found ? 'zukan-item' : 'zukan-unknown') + '" style="' + (found ? 'border-color:#fda4af; background:#fff1f2;' : '') + '"><span style="font-size:9px; color:#e11d48; font-weight:bold;">No.' + bData.no + ' (' + bData.stage + '階)</span><br><span style="font-size:19px;" class="' + (found ? '' : 'silhouette') + '">' + bData.a + '</span><br>' + (found ? bk : '？？？') + '</div>';
+            p.forEach((m, i) => {
+                let inf = getMonData(m.n);
+                let isBossUnit = (inf && inf.no < 0);
+                let btnLabel = m.inParty ? "外す" : "戦う";
+                let btnColor = m.inParty ? "background:#64748b; border-bottom:2px solid #475569;" : "background:linear-gradient(180deg, #34d399 0%, #059669 100%); border-bottom:2px solid #047857;";
+                let orderBadge = "";
+                if (m.inParty) {
+                    let rankIdx = activeParty.findIndex(item => item === m) + 1;
+                    orderBadge = "<span style='color:#0284c7; font-weight:900; font-size:10.5px;'>[戦闘中:" + rankIdx + "番手]</span> ";
+                }
+                let delBtn = (!m.inParty && !inDungeon) ? "<button class='btn-small' style='background:linear-gradient(180deg, #fb7185 0%, #e11d48 100%); border-bottom:2px solid #9f1239;' onclick='deleteMon(" + i + ")'>逃がす</button>" : "";
+                let expInfo = (m.lv >= 100) ? "EXP:MAX" : ("EXP:" + m.ex + "/" + m.nx);
+
+                let innateList = getInnateSkills(inf.no);
+                let extraSk = getSkillObj(m);
+
+                let innateHtml = "";
+                innateList.forEach(isk => {
+                    innateHtml += '<div class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">' +
+                                  '<span style="overflow:hidden;text-overflow:ellipsis;">' + isk.name + '</span><span>ℹ️</span></div>';
+                });
+
+                let extraHtml = '<div class="skill-badge skill-badge-extra" onclick="showSkillInfo(\'' + extraSk.name + '\', \'' + extraSk.desc + '\')">' +
+                                '<span style="overflow:hidden;text-overflow:ellipsis;">' + extraSk.name + '</span><span>ℹ️</span></div>';
+
+                let noBadge = isBossUnit
+                    ? "<span style='color:#e11d48; font-weight:900;'>[👑BOSS]</span>"
+                    : "<span style='color:#64748b; font-size:10px;'>No." + inf.no + "</span>";
+                let liBorder = isBossUnit ? "border: 1.5px solid #fda4af; background: #fff1f2;" : "";
+
+                if (boxEl) {
+                    boxEl.innerHTML += '<li style="' + liBorder + '">' + orderBadge + noBadge + ' ' + inf.a + ' <b>' + m.n + '</b> (Lv.' + m.lv + ')' +
+                        delBtn +
+                        '<button class="btn-small" style="' + btnColor + '" onclick="toggleParty(' + i + ')" ' + (inDungeon ? 'disabled' : '') + '>' + btnLabel + '</button>' +
+                        '<span class="status-text">HP:' + m.hp + '/' + m.m + ' 攻:' + m.at + ' 防:' + m.df + ' 速:' + m.sp + ' (' + expInfo + ')</span>' +
+                        '<div class="skill-box-wrap">' +
+                            '<div class="skill-group-title"><span>✨ 固有スキル (' + innateList.length + '個)</span><span style="color:#94a3b8;font-weight:normal;">タップで詳細</span></div>' +
+                            '<div class="skill-grid">' + innateHtml + '</div>' +
+                            '<div class="skill-group-title" style="margin-top:5px;"><span>🎲 ランダム習得スキル (1個)</span></div>' +
+                            '<div class="skill-grid" style="grid-template-columns: 1fr;">' + extraHtml + '</div>' +
+                        '</div></li>';
+                }
+
+                if (mixListEl) {
+                    let canMix = (!inDungeon && p.length >= 4);
+                    let disabledAttr = canMix ? "" : "disabled";
+                    let mixRowClass = canMix ? "" : "class='locked'";
+                    mixListEl.innerHTML += '<li ' + mixRowClass + '><label style="display:block; cursor:' + (canMix ? 'pointer' : 'not-allowed') + ';"><input type="checkbox" class="cb" value="' + i + '" ' + disabledAttr + '> ' + noBadge + ' ' + inf.a + ' <b>' + m.n + '</b> (Lv.' + m.lv + ') <span style="font-size:10px;color:#64748b;">[' + extraSk.name + ']</span></label></li>';
+                }
+            });
+            const zkEl = document.getElementById("zk");
+            const bossZkEl = document.getElementById("bossZk");
+            const rtEl = document.getElementById("rt");
+            if (zkEl) zkEl.innerHTML = "";
+            if (bossZkEl) bossZkEl.innerHTML = "";
+            if (rtEl) rtEl.innerHTML = "";
+
+            let normalDiscovered = 0;
+            for(let k in D){
+                let found = zk.includes(k);
+                if (found) normalDiscovered++;
+                if (zkEl) {
+                    if (found) {
+                        zkEl.innerHTML += '<div class="zukan-item"><span style="font-size:18px;">' + D[k].a + '</span><br><span style="font-size:9px; color:#64748b;">No.' + D[k].no + '</span><br>' + k + '</div>';
+                    } else {
+                        let hasRecipe = Object.values(R).includes(k);
+                        let hintAttr = hasRecipe ? ' onclick="showRecipeHint(\'' + k + '\')" style="cursor:pointer; border-color:#f59e0b; background:#fffbeb;"' : '';
+                        let hintLabel = hasRecipe ? '<br><span style="font-size:8px; color:#d97706; font-weight:900;">💡ヒント</span>' : '';
+                        zkEl.innerHTML += '<div class="zukan-unknown"' + hintAttr + '><span class="silhouette" style="font-size:18px;">' + D[k].a + '</span><br><span style="font-size:9px;">No.' + D[k].no + '</span><br>？？？' + hintLabel + '</div>';
+                    }
                 }
             }
-            const bzBadge = document.getElementById("bossZukanCountBadge");
-            if (bzBadge) bzBadge.innerText = " / 👑ボス(" + bossFoundCount + "/20種)";
-            const bzSubBadge = document.getElementById("bossZukanSubBadge");
-            if (bzSubBadge) bzSubBadge.innerText = "(" + bossFoundCount + "/20種)";
+            const zkBadge = document.getElementById("zukanCountBadge");
+            if (zkBadge) zkBadge.innerText = "(" + normalDiscovered + "/100種)";
 
-            const rTable = document.getElementById("rt");
-            if (rTable) {
-                let rHTML = "";
-                for (let key in R) {
-                    let parts = key.split("+");
-                    let m1 = parts[0];
-                    let m2 = parts[1];
-                    let res = R[key];
-                    let f1 = zk.includes(m1);
-                    let f2 = zk.includes(m2);
-                    let fRes = zk.includes(res);
-                    let resClick = !fRes ? ' onclick="showRecipeHint(\'' + res + '\')" style="cursor:pointer;"' : '';
-
-                    let m1Disp = (f1 ? D[m1].a : '<span class="silhouette">' + D[m1].a + '</span>') + " No." + D[m1].no + " " + (f1 ? m1 : "？？？");
-                    let m2Disp = (f2 ? D[m2].a : '<span class="silhouette">' + D[m2].a + '</span>') + " No." + D[m2].no + " " + (f2 ? m2 : "？？？");
-                    let resDisp = (fRes ? D[res].a : '<span class="silhouette">' + D[res].a + '</span>') + " <b>No." + D[res].no + " " + (fRes ? res : "？？？") + "</b>" + (!fRes ? ' <span style="color:#0284c7;font-size:8.5px;">💡</span>' : '');
-
-                    rHTML += '<tr><td>' + m1Disp + '<br>＋ ' + m2Disp + '</td><td' + resClick + '>➡️ ' + resDisp + '</td></tr>';
+            let bossDiscovered = 0;
+            for (let bk in BOSS_D) {
+                let bFound = zk.includes(bk);
+                if (bFound) bossDiscovered++;
+                if (bossZkEl) {
+                    if (bFound) {
+                        bossZkEl.innerHTML += '<div class="zukan-item" style="border-color:#fda4af; background:#fff1f2;"><span style="font-size:18px;">' + BOSS_D[bk].a + '</span><br><span style="font-size:9px; color:#e11d48; font-weight:900;">' + BOSS_D[bk].stage + '階BOSS</span><br>' + bk + '</div>';
+                    } else {
+                        bossZkEl.innerHTML += '<div class="zukan-unknown" style="border-color:#fecdd3;"><span class="silhouette" style="font-size:18px;">' + BOSS_D[bk].a + '</span><br><span style="font-size:9px; color:#f43f5e;">' + BOSS_D[bk].stage + '階BOSS</span><br>？？？</div>';
+                    }
                 }
-                rTable.innerHTML = rHTML;
+            }
+            const bossBadge = document.getElementById("bossZukanCountBadge");
+            const bossSubBadge = document.getElementById("bossZukanSubBadge");
+            if (bossBadge) bossBadge.innerText = " / 👑ボス(" + bossDiscovered + "/20種)";
+            if (bossSubBadge) bossSubBadge.innerText = "(" + bossDiscovered + "/20種)";
+
+            if (rtEl) {
+                let recipeKeys = Object.keys(R);
+                for (let i = 0; i < recipeKeys.length; i += 2) {
+                    let rowHtml = "<tr>";
+                    for (let j = 0; j < 2; j++) {
+                        let key = recipeKeys.at(i + j);
+                        if (key) {
+                            let parts = key.split("+");
+                            let m1 = parts.at(0);
+                            let m2 = parts.at(1);
+                            let res = R[key];
+                            let d1 = D[m1];
+                            let d2 = D[m2];
+                            let dRes = D[res];
+                            let m1Str = zk.includes(m1) ? (d1.a + "<b>" + m1 + "</b>") : ("<span class='silhouette'>" + d1.a + "</span><span style='color:#94a3b8;'>？？？</span>");
+                            let m2Str = zk.includes(m2) ? (d2.a + "<b>" + m2 + "</b>") : ("<span class='silhouette'>" + d2.a + "</span><span style='color:#94a3b8;'>？？？</span>");
+                            let resStr = zk.includes(res) ? (dRes.a + "<b style='color:#059669;'>" + res + "</b>") : ("<span class='silhouette'>" + dRes.a + "</span><span style='color:#94a3b8;'>？？？</span>");
+                            rowHtml += "<td>" + m1Str + "<br>＋ " + m2Str + "<br>＝ " + resStr + "</td>";
+                        } else {
+                            rowHtml += "<td></td>";
+                        }
+                    }
+                    rowHtml += "</tr>";
+                    rtEl.innerHTML += rowHtml;
+                }
             }
         }
         function exportData() {
-            const data = {
+            const payload = {
                 stg: stg,
                 maxStg: maxStg,
                 maxClearStg: maxClearStg,
@@ -1994,81 +1972,93 @@
                 zk: zk,
                 p: p
             };
-            const jsonStr = JSON.stringify(data);
-            const passCode = btoa(unescape(encodeURIComponent(jsonStr)));
+            const jsonStr = JSON.stringify(payload);
+            const code = btoa(unescape(encodeURIComponent(jsonStr)));
             const field = document.getElementById("passCodeField");
-            field.value = passCode;
-            field.select();
-            try {
-                navigator.clipboard.writeText(passCode);
-                alert("引き継ぎコードを発行し、クリップボードにコピーしました！");
-            } catch (e) {
-                alert("引き継ぎコードを発行しました！枠内のコードをすべてコピーして保管してください。");
+            if (field) {
+                field.value = code;
+                field.select();
+                field.setSelectionRange(0, 99999);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).then(() => {
+                    alert("📤 引き継ぎコードを発行し、クリップボードにコピーしました！");
+                }).catch(() => {
+                    alert("📤 引き継ぎコードを発行しました！テキストボックスの文字列をコピーして保管してください。");
+                });
+            } else {
+                try {
+                    document.execCommand("copy");
+                    alert("📤 引き継ぎコードを発行し、コピーしました！");
+                } catch(e) {
+                    alert("📤 引き継ぎコードを発行しました！テキストボックスの文字列をコピーしてください。");
+                }
             }
         }
 
         function importData() {
-            if(inDungeon) return alert("ダンジョン探索中はデータを復元できません！一度拠点に戻ってください。");
-            const code = document.getElementById("importCodeField").value.trim();
-            if(!code) return alert("引き継ぎコードを入力してください！");
+            if (inDungeon) return alert("ダンジョン探索中はデータを復元できません！一度拠点に戻ってください。");
+            const inputField = document.getElementById("importCodeField");
+            const code = inputField ? inputField.value.trim() : "";
+            if (!code) return alert("⚠️ 引き継ぎコードを入力欄に貼り付けてください。");
             try {
                 const jsonStr = decodeURIComponent(escape(atob(code)));
                 const data = JSON.parse(jsonStr);
-                if(data.p && Array.isArray(data.p)) {
-                    stg = data.stg || 1;
-                    maxStg = data.maxStg || 1;
-                    maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
-                    playerName = data.playerName || "";
-                    mixSuccessRate = (typeof data.mixSuccessRate === "number") ? data.mixSuccessRate : 0.25;
-                    zk = data.zk || ["プニシズク"];
-                    p = data.p.filter(m => getMonData(m.n));
-                    let maxOrd = 0;
-                    p.forEach(m => {
-                        getSkillObj(m);
-                        initBattleState(m);
-                        if (m.inParty) {
-                            if (typeof m.partyOrder !== "number") {
-                                maxOrd++;
-                                m.partyOrder = maxOrd;
-                            } else if (m.partyOrder > maxOrd) {
-                                maxOrd = m.partyOrder;
-                            }
-                        } else {
-                            m.partyOrder = 0;
-                        }
-                    });
-                    partyOrderCounter = maxOrd;
-                    eg = [];
-                    inDungeon = false;
-                    saveGame();
-                    updateRankingUI();
-                    up();
-                    document.getElementById("importCodeField").value = "";
-                    alert("データの復元に成功しました！");
-                } else {
-                    alert("無効な引き継ぎコードです。");
+                if (!data.p || !Array.isArray(data.p) || data.p.length === 0) throw new Error("Invalid data");
+                if (!confirm("📥 現在のデータを上書きして復元しますか？（この操作は取り消せません）")) return;
+
+                stg = data.stg || 1;
+                maxStg = data.maxStg || 1;
+                maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
+                playerName = data.playerName || "";
+                mixSuccessRate = (typeof data.mixSuccessRate === "number") ? data.mixSuccessRate : 0.25;
+                zk = data.zk || ["プニシズク"];
+                p = data.p.filter(m => getMonData(m.n));
+                if (p.length === 0) {
+                    p = [
+                        { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() },
+                        { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, skillId: getRandomSkillId() },
+                        { n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, skillId: getRandomSkillId() }
+                    ];
                 }
+                let maxOrd = 0;
+                p.forEach(m => {
+                    getSkillObj(m);
+                    initBattleState(m);
+                    if (m.inParty) {
+                        if (typeof m.partyOrder !== "number") {
+                            maxOrd++;
+                            m.partyOrder = maxOrd;
+                        } else if (m.partyOrder > maxOrd) {
+                            maxOrd = m.partyOrder;
+                        }
+                    } else {
+                        m.partyOrder = 0;
+                    }
+                });
+                partyOrderCounter = maxOrd;
+                eg = [];
+                inDungeon = false;
+                saveGame();
+                updateRankingUI();
+                up();
+                if (inputField) inputField.value = "";
+                alert("✅ データの引き継ぎ（復元）が完了しました！");
             } catch (e) {
-                alert("コードの読み取りに失敗しました。文字が欠けていないか確認してください。");
+                alert("❌ 無効な引き継ぎコードです。コピー漏れや余分な文字がないか確認してください。");
             }
         }
-        function showSkillEffect(targetIsPlayer, emojiCombo, delayMs = 0) {
+        function showSkillEffect(isPlayerTarget, emojiStr, delayMs = 0) {
             setTimeout(() => {
-                if (!inDungeon) return;
-                const sideEl = document.getElementById(targetIsPlayer ? "mySide" : "eSide");
+                const sideId = isPlayerTarget ? "mySide" : "eSide";
+                const sideEl = document.getElementById(sideId);
                 if (!sideEl) return;
-
-                const targetContainer = targetIsPlayer
-                    ? sideEl.querySelector(".monster-container[data-alive='true']")
-                    : sideEl.querySelector(".monster-container");
-
-                const parentEl = targetContainer || sideEl;
                 const fx = document.createElement("div");
                 fx.className = "skill-fx-layer";
-                fx.innerText = emojiCombo;
-                parentEl.appendChild(fx);
+                fx.innerText = emojiStr;
+                sideEl.appendChild(fx);
                 setTimeout(() => {
-                    if (fx.parentNode) fx.parentNode.removeChild(fx);
+                    if (fx && fx.parentNode) fx.parentNode.removeChild(fx);
                 }, 760);
             }, delayMs);
         }
@@ -2076,271 +2066,248 @@
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             let skillLogs = "";
             let fxStep = 0;
-            const addFx = (onAttackerSide, emojis) => {
-                let targetIsPlayer = onAttackerSide ? isPlayerAttack : !isPlayerAttack;
-                showSkillEffect(targetIsPlayer, emojis, fxStep * 320);
+            function addFx(onAttacker, emojiStr) {
+                let targetIsPlayer = onAttacker ? isPlayerAttack : !isPlayerAttack;
+                showSkillEffect(targetIsPlayer, emojiStr, fxStep * 280);
                 fxStep++;
-            };
+            }
 
-            const inf = getMonData(attacker.n);
-            const no = inf ? inf.no : 1;
+            const atkInf = getMonData(attacker.n);
+            const no = atkInf ? atkInf.no : 1;
             const atkSk = getSkillObj(attacker);
             const defSk = getSkillObj(defender);
-
-            // 【A-0】絵文字の勇者専用スキル（No.-99）
-            if (no === -99) {
-                if (defender.hp > 0 && Math.random() < 0.40) {
-                    let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
-                    let slashDmg = Math.max(3, Math.floor((atkVal - defVal / 2) * 1.2));
-                    defender.hp = Math.max(0, defender.hp - slashDmg);
-                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
-                    skillLogs += "⚔️" + attacker.n + "のブレイブスラッシュ！聖なる追撃 " + slashDmg + " ダメージ＆攻撃力UP！ ";
-                    addFx(false, "⚔️✨");
-                    if (!isPlayerAttack && defender.hp === 0) {
-                        skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
-                    }
-                }
-            }
-            // 【A-1】ボス専用固有スキル（No.-1 〜 No.-20）
-            if (no < 0 && no !== -99) {
-                const bSk = BOSS_INNATE_SKILLS[String(no)];
-                const bName = bSk ? bSk.name : "👑ボス奥義";
+            if (no < 0) {
                 if (no === -1 && Math.random() < 0.50) {
-                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(3, Math.floor(attacker.at * 0.35));
-                    skillLogs += bName + "発動！攻撃力大幅UP！ "; addFx(true, "🐃🔥");
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.35));
+                    skillLogs += "🐃" + attacker.n + "の大地の咆哮！攻撃力大幅UP！ "; addFx(true, "🐃🔥");
                 } else if (no === -2 && Math.random() < 0.50) {
-                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(3, Math.floor(attacker.sp * 0.45));
-                    skillLogs += bName + "発動！素早さ大幅UP！ "; addFx(true, "🧚🌪️");
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.45));
+                    skillLogs += "🧚" + attacker.n + "の神風の舞！素早さ大幅UP！ "; addFx(true, "🧚🌪️");
                 } else if (no === -3 && defender.hp > 0) {
-                    let dmg = Math.max(2, Math.floor((attacker.at + (attacker.buffAt || 0)) * 0.8 - (defender.df + (defender.buffDf || 0)) / 2));
-                    defender.hp = Math.max(0, defender.hp - dmg);
-                    skillLogs += bName + "発動！追加 " + dmg + " ダメージ！ "; addFx(false, "🦖💥");
+                    let bDmg = Math.max(1, Math.floor(((attacker.at + (attacker.buffAt || 0)) * 0.8) - ((defender.df + (defender.buffDf || 0)) / 2)));
+                    defender.hp = Math.max(0, defender.hp - bDmg);
+                    skillLogs += "🦖" + attacker.n + "の暴君の牙！追加 " + bDmg + " ダメージ！ "; addFx(false, "🦖💥");
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 } else if (no === -4 && Math.random() < 0.50) {
-                    let h = Math.max(5, Math.floor(attacker.m * 0.15));
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
-                    skillLogs += bName + "発動！HP " + h + " 回復！ "; addFx(true, "🧌💚");
-                } else if (no === -5 && defender.hp > 0 && Math.random() < 0.35 && defSk.id !== 5) {
-                    defender.isPoisoned = true;
-                    skillLogs += bName + "発動！" + defender.n + "は毒になった！ "; addFx(false, "🦞☠️");
+                    skillLogs += "🧌" + attacker.n + "の世界樹の恵み！HP " + h + " 回復！ "; addFx(true, "🧌💚");
+                } else if (no === -5 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 5) { defender.isPoisoned = true; skillLogs += "🦞" + attacker.n + "の深淵の渦！毒を付与！ "; addFx(false, "🦞☠️"); }
                 } else if (no === -6 && Math.random() < 0.40) {
-                    attacker.nullifyOnce = true;
-                    skillLogs += bName + "発動！次の攻撃を無効化！ "; addFx(true, "🦈🛡️");
+                    attacker.nullifyOnce = true; skillLogs += "🦈" + attacker.n + "の海神の加護！次回攻撃無効化！ "; addFx(true, "🦈🛡️");
                 } else if (no === -7 && Math.random() < 0.60) {
-                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(3, Math.floor(attacker.df * 0.40));
-                    skillLogs += bName + "発動！防御力大幅UP！ "; addFx(true, "🧟🧱");
-                } else if (no === -8 && defender.hp > 0 && Math.random() < 0.35 && defSk.id !== 7) {
-                    defender.isParalyzed = true;
-                    skillLogs += bName + "発動！" + defender.n + "は麻痺した！ "; addFx(false, "🦁⚡");
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.40));
+                    skillLogs += "🧟" + attacker.n + "の金剛の城壁！防御力大幅UP！ "; addFx(true, "🧟🛡️");
+                } else if (no === -8 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 7) { defender.isParalyzed = true; skillLogs += "🦁" + attacker.n + "の王家の呪縛！麻痺を付与！ "; addFx(false, "🦁⚡"); }
                 } else if (no === -9 && defender.hp > 0 && Math.random() < 0.45) {
                     if (defSk.id !== 5) defender.isPoisoned = true;
                     if (defSk.id !== 7) defender.isParalyzed = true;
-                    skillLogs += bName + "発動！猛毒と麻痺を浴びせた！ "; addFx(false, "🐉☣️");
+                    skillLogs += "🐉" + attacker.n + "の猛毒のブレス！毒と麻痺を付与！ "; addFx(false, "🐉☣️");
                 } else if (no === -10 && Math.random() < 0.60) {
-                    attacker.buffAt = (attacker.buffAt || 0) + Math.floor(attacker.at * 0.20);
-                    attacker.buffDf = (attacker.buffDf || 0) + Math.floor(attacker.df * 0.20);
-                    attacker.buffSp = (attacker.buffSp || 0) + Math.floor(attacker.sp * 0.20);
-                    skillLogs += bName + "発動！全能力大幅UP！ "; addFx(true, "😈🌟");
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.20));
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.20));
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.20));
+                    skillLogs += "😈" + attacker.n + "の魔界の覇気！全能力UP！ "; addFx(true, "😈🌟");
                 } else if (no === -11 && Math.random() < 0.50) {
-                    attacker.halfDmgOnce = true;
-                    skillLogs += bName + "発動！被ダメージ半減！ "; addFx(true, "🦏🔰");
+                    attacker.halfDmgOnce = true; skillLogs += "🦏" + attacker.n + "の超硬質装甲！次回ダメージ半減！ "; addFx(true, "🦏🔰");
                 } else if (no === -12 && Math.random() < 0.40) {
-                    attacker.nextAtk15 = true;
-                    skillLogs += bName + "発動！次回攻撃1.5倍！ "; addFx(true, "👹🔥");
+                    attacker.nextAtk15 = true; skillLogs += "👹" + attacker.n + "の神鍛の鉄槌！次回1.5倍！ "; addFx(true, "👹🔥");
                 } else if (no === -13 && Math.random() < 0.60) {
-                    let h = Math.max(5, Math.floor(attacker.m * 0.15));
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
-                    attacker.buffDf = (attacker.buffDf || 0) + Math.floor(attacker.df * 0.20);
-                    skillLogs += bName + "発動！HP回復＆防御UP！ "; addFx(true, "🦄✨");
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.20));
+                    skillLogs += "🦄" + attacker.n + "の聖域の光！HP回復＆防御UP！ "; addFx(true, "🦄✨");
                 } else if (no === -14 && defender.hp > 0) {
-                    let dmg = Math.max(2, Math.floor((attacker.at + (attacker.buffAt || 0)) - (defender.df + (defender.buffDf || 0)) / 2));
-                    defender.hp = Math.max(0, defender.hp - dmg);
-                    skillLogs += bName + "発動！追加 " + dmg + " ダメージ！ "; addFx(false, "👼⚔️");
+                    let bDmg = Math.max(1, Math.floor((attacker.at + (attacker.buffAt || 0)) - ((defender.df + (defender.buffDf || 0)) / 2)));
+                    defender.hp = Math.max(0, defender.hp - bDmg);
+                    skillLogs += "👼" + attacker.n + "の熾天使の裁き！追加 " + bDmg + " ダメージ！ "; addFx(false, "👼⚔️");
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 } else if (no === -15 && Math.random() < 0.50) {
-                    attacker.buffAt = (attacker.buffAt || 0) + Math.floor(attacker.at * 0.45);
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.45));
                     attacker.nextAtk15 = true;
-                    skillLogs += bName + "発動！攻撃超UP＆次回1.5倍！ "; addFx(true, "👺💥");
+                    skillLogs += "👺" + attacker.n + "の業火の爆炎！攻撃激増＆次回1.5倍！ "; addFx(true, "👺🔥");
                 } else if (no === -16 && Math.random() < 0.50) {
-                    let h = Math.max(5, Math.floor(attacker.m * 0.20));
+                    let h = Math.max(1, Math.floor(attacker.m * 0.20));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
                     attacker.nullifyOnce = true;
-                    skillLogs += bName + "発動！HP大回復＆バリア展開！ "; addFx(true, "🐦‍🔥🛡️");
+                    skillLogs += "🐦‍🔥" + attacker.n + "の太陽の恩寵！HP回復＆無効バリア！ "; addFx(true, "🐦‍🔥🛡️");
                 } else if (no === -17 && Math.random() < 0.50) {
-                    attacker.buffSp = (attacker.buffSp || 0) + Math.floor(attacker.sp * 0.40);
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.40));
                     if (defender.hp > 0 && defSk.id !== 7) defender.isParalyzed = true;
-                    skillLogs += bName + "発動！素早さUP＆凍結麻痺！ "; addFx(false, "🐺❄️");
+                    skillLogs += "🐺" + attacker.n + "の絶対零度！麻痺付与＆素早さUP！ "; addFx(false, "🐺❄️");
                 } else if (no === -18 && defender.hp > 0 && Math.random() < 0.20) {
-                    defender.hp = 0;
-                    skillLogs += bName + "発動！神槍による一撃必殺！ "; addFx(false, "💀🔱");
+                    defender.hp = 0; skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ "; addFx(false, "💀⚡");
+                    if (!isPlayerAttack) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 } else if (no === -19 && defender.hp > 0) {
-                    let dmg = Math.max(2, Math.floor((attacker.at + (attacker.buffAt || 0)) - (defender.df + (defender.buffDf || 0)) / 2));
-                    defender.hp = Math.max(0, defender.hp - dmg);
+                    let bDmg = Math.max(1, Math.floor((attacker.at + (attacker.buffAt || 0)) - ((defender.df + (defender.buffDf || 0)) / 2)));
+                    defender.hp = Math.max(0, defender.hp - bDmg);
                     if (Math.random() < 0.40) {
                         if (defSk.id !== 5) defender.isPoisoned = true;
                         if (defSk.id !== 7) defender.isParalyzed = true;
                     }
-                    skillLogs += bName + "発動！混沌連撃 " + dmg + " ダメージ！ "; addFx(false, "👿⚡");
-                } else if (no === -20) {
-                    let h = Math.max(10, Math.floor(attacker.m * 0.15));
+                    skillLogs += "👿" + attacker.n + "の混沌の連撃！追加 " + bDmg + " ダメージ！ "; addFx(false, "👿💥");
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                } else if (no === -20 && defender.hp > 0) {
+                    let bDmg = Math.max(1, Math.floor((attacker.at + (attacker.buffAt || 0)) - ((defender.df + (defender.buffDf || 0)) / 2)));
+                    defender.hp = Math.max(0, defender.hp - bDmg);
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
-                    if (defender.hp > 0) {
-                        let dmg = Math.max(5, Math.floor((attacker.at + (attacker.buffAt || 0)) - (defender.df + (defender.buffDf || 0)) / 2));
-                        defender.hp = Math.max(0, defender.hp - dmg);
-                        if (defender.hp > 0 && Math.random() < 0.25) defender.hp = 0;
+                    skillLogs += "👾" + attacker.n + "の終焉の創世神話！追撃 " + bDmg + "＆HP回復！ "; addFx(false, "👾🌌");
+                    if (defender.hp > 0 && Math.random() < 0.25) {
+                        defender.hp = 0;
+                        skillLogs += "💀次元消滅の一撃必殺！ ";
                     }
-                    skillLogs += bName + "発動！創世の力で回復＆追撃！ "; addFx(false, "👾🌌");
-                }
-                if (!isPlayerAttack && defender.hp === 0) {
-                    skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 }
             }
-            // 【A-2】通常モンスター固有スキル（No.1 〜 No.100 / 全15種）
             if (no >= 1 && no <= 50 && Math.random() < 0.25) {
                 let inc = Math.max(1, Math.floor(attacker.sp * 0.15));
                 attacker.buffSp = (attacker.buffSp || 0) + inc;
-                skillLogs += "⚡" + attacker.n + "のクイックステップ！素早さUP！ "; addFx(true, "⚡👟");
+                skillLogs += "⚡" + attacker.n + "のクイックステップ！素早さ+" + inc + "！ ";
+                addFx(true, "⚡💨");
             }
             if (no >= 1 && no <= 29 && Math.random() < 0.30) {
-                let healVal = Math.max(1, Math.floor(attacker.m * 0.08));
-                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
-                skillLogs += "🍀" + attacker.n + "のラッキーヒール！HPが " + healVal + " 回復！ "; addFx(true, "🍀💚");
+                let h = Math.max(1, Math.floor(attacker.m * 0.08));
+                attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                skillLogs += "🍀" + attacker.n + "のラッキーヒール！HP" + h + "回復！ ";
+                addFx(true, "🍀💚");
             }
             if (no >= 10 && no <= 40 && defender.hp > 0 && Math.random() < 0.25) {
                 let dec = Math.max(1, Math.floor(defender.df * 0.15));
                 defender.buffDf = (defender.buffDf || 0) - dec;
-                skillLogs += "🎯" + attacker.n + "のウィークスポット！" + defender.n + "の防御力DOWN！ "; addFx(false, "🎯💔");
+                skillLogs += "🎯" + attacker.n + "のウィークスポット！敵防御-" + dec + "！ ";
+                addFx(false, "🎯🛡️");
             }
             if (no >= 15 && no <= 45 && Math.random() < 0.20) {
                 attacker.nullifyOnce = true;
-                skillLogs += "💨" + attacker.n + "のウィンドステップ！次の攻撃を1回無効化！ "; addFx(true, "💨🛡️");
+                skillLogs += "💨" + attacker.n + "のウィンドステップ！次回無効バリア！ ";
+                addFx(true, "💨🛡️");
             }
             if (no >= 20 && no <= 60 && defender.hp > 0 && Math.random() < 0.20) {
-                if (defSk.id === 5) {
-                    skillLogs += "✨" + defender.n + "はポイズンガードで毒を防いだ！ "; addFx(false, "✨🛡️");
-                } else {
+                if (defSk.id !== 5) {
                     defender.isPoisoned = true;
-                    skillLogs += "🧪" + attacker.n + "のベノムファング！" + defender.n + "は毒状態になった！ "; addFx(false, "🧪☠️");
+                    skillLogs += "🧪" + attacker.n + "のベノムファング！敵を毒状態にした！ ";
+                    addFx(false, "🧪☠️");
                 }
             }
             if (no >= 30 && no <= 50 && Math.random() < 0.25) {
-                let inc = Math.max(2, Math.floor(attacker.at * 0.30));
+                let inc = Math.max(1, Math.floor(attacker.at * 0.30));
                 attacker.buffAt = (attacker.buffAt || 0) + inc;
-                skillLogs += "🔥" + attacker.n + "のパワーチャージ(固有)！攻撃UP！ "; addFx(true, "🔥💪");
+                skillLogs += "🔥" + attacker.n + "のパワーチャージ！攻撃+" + inc + "！ ";
+                addFx(true, "🔥⚔️");
             }
             if (no >= 30 && no <= 50 && Math.random() < 0.50) {
                 let inc = Math.max(1, Math.floor(attacker.df * 0.15));
                 attacker.buffDf = (attacker.buffDf || 0) + inc;
-                skillLogs += "🛡️" + attacker.n + "のアイアンガード！防御UP！ "; addFx(true, "🛡️✴️");
+                skillLogs += "🛡️" + attacker.n + "のアイアンガード！防御+" + inc + "！ ";
+                addFx(true, "🛡️✨");
             }
             if (no >= 35 && no <= 75 && defender.hp > 0 && Math.random() < 0.20) {
-                if (defSk.id === 7) {
-                    skillLogs += "🔋" + defender.n + "はパラライズガードで麻痺を防いだ！ "; addFx(false, "🔋✨");
-                } else {
+                if (defSk.id !== 7) {
                     defender.isParalyzed = true;
-                    skillLogs += "⚡" + attacker.n + "のサンダーショック！" + defender.n + "は麻痺状態になった！ "; addFx(false, "⚡🌩️");
+                    skillLogs += "⚡" + attacker.n + "のサンダーショック！敵を麻痺させた！ ";
+                    addFx(false, "⚡💫");
                 }
             }
             if (no >= 51 && no <= 100 && defender.hp > 0) {
                 let atkVal = attacker.at + (attacker.buffAt || 0);
                 let defVal = defender.df + (defender.buffDf || 0);
-                let extraDmg = Math.max(2, Math.floor(atkVal - (defVal / 2) + Math.random() * 3));
+                let extraDmg = Math.max(1, Math.floor(atkVal - (defVal / 2) + (Math.random() * 4 - 1)));
                 defender.hp = Math.max(0, defender.hp - extraDmg);
-                skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ "; addFx(false, "⚔️💥");
+                skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ ";
+                addFx(false, "⚔️💥");
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
             if (no >= 55 && no <= 85 && Math.random() < 0.35) {
                 let atkVal = attacker.at + (attacker.buffAt || 0);
-                let drainVal = Math.max(1, Math.floor(atkVal * 0.30));
-                attacker.hp = Math.min(attacker.m, attacker.hp + drainVal);
-                skillLogs += "🩸" + attacker.n + "のライフドレイン！HPを " + drainVal + " 吸収！ "; addFx(true, "🩸💖");
+                let h = Math.max(1, Math.floor(atkVal * 0.30));
+                attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                skillLogs += "🩸" + attacker.n + "のライフドレイン！HP" + h + "吸収！ ";
+                addFx(true, "🩸💖");
             }
             if (no >= 65 && no <= 95 && Math.random() < 0.30) {
-                let inc = Math.max(2, Math.floor(attacker.at * 0.25));
+                let inc = Math.max(1, Math.floor(attacker.at * 0.25));
                 attacker.buffAt = (attacker.buffAt || 0) + inc;
                 attacker.nextAtk15 = true;
-                skillLogs += "🔥" + attacker.n + "のバーサークレイジ！攻撃UP＆次回1.5倍！ "; addFx(true, "🔥😡");
+                skillLogs += "🔥" + attacker.n + "のバーサークレイジ！攻撃+" + inc + "＆次回1.5倍！ ";
+                addFx(true, "🔥😡");
             }
             if (no >= 70 && no <= 100 && Math.random() < 0.50) {
-                let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
-                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
-                skillLogs += "💚" + attacker.n + "のリジェネヒール！HPが " + healVal + " 回復！ "; addFx(true, "💚🌿");
+                let h = Math.max(1, Math.floor(attacker.m * 0.10));
+                attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                skillLogs += "💚" + attacker.n + "のリジェネヒール！HP" + h + "回復！ ";
+                addFx(true, "💚✨");
             }
             if (no >= 80 && no <= 100 && Math.random() < 0.35) {
                 attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.15));
                 attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.15));
                 attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.15));
-                skillLogs += "👑" + attacker.n + "のオーバーロード！全能力UP！ "; addFx(true, "👑✨");
+                skillLogs += "👑" + attacker.n + "のオーバーロード！全能力15%UP！ ";
+                addFx(true, "👑🌟");
             }
             if (no >= 90 && no <= 100 && Math.random() < 0.50) {
-                let inc = Math.max(3, Math.floor(attacker.sp * 0.50));
+                let inc = Math.max(1, Math.floor(attacker.sp * 0.50));
                 attacker.buffSp = (attacker.buffSp || 0) + inc;
-                skillLogs += "🌪️" + attacker.n + "のゴッドスピード！素早さ大幅UP！ "; addFx(true, "🌪️🌟");
+                skillLogs += "🌪️" + attacker.n + "のゴッドスピード！素早さ+" + inc + "！ ";
+                addFx(true, "🌪️⚡");
             }
             if (no >= 95 && no <= 100 && defender.hp > 0 && Math.random() < 0.25) {
                 defender.hp = 0;
-                skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ "; addFx(false, "💀🌑");
+                skillLogs += "💀" + attacker.n + "のデスエンド！一撃必殺！ ";
+                addFx(false, "💀⚡");
                 if (!isPlayerAttack) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
-            // 【B】ランダム習得スキル（全モンスター共通15種）
             if (atkSk.id === 1 && Math.random() < 0.10) {
-                attacker.nullifyOnce = true;
-                skillLogs += "🛡️" + attacker.n + "のイージスバリア！次の攻撃を1回無効化！ "; addFx(true, "🛡️✨");
+                attacker.nullifyOnce = true; skillLogs += "🛡️イージスバリア発動！ "; addFx(true, "🛡️✨");
             } else if (atkSk.id === 2 && Math.random() < 0.10) {
                 let h = Math.max(1, Math.floor(attacker.m * 0.05));
                 attacker.hp = Math.min(attacker.m, attacker.hp + h);
-                skillLogs += "💚" + attacker.n + "のリジェネレーション！HP " + h + " 回復！ "; addFx(true, "💚✨");
+                skillLogs += "💚リジェネレーションでHP " + h + " 回復！ "; addFx(true, "💚✨");
             } else if (atkSk.id === 3 && Math.random() < 0.10) {
-                attacker.nextAtk15 = true;
-                skillLogs += "🔥" + attacker.n + "のパワーチャージ！次回攻撃1.5倍！ "; addFx(true, "🔥⚡");
+                attacker.nextAtk15 = true; skillLogs += "🔥パワーチャージ！次回ダメージ1.5倍！ "; addFx(true, "🔥⚡");
             } else if (atkSk.id === 4 && defender.hp > 0 && Math.random() < 0.10) {
-                if (defSk.id === 5) {
-                    skillLogs += "✨" + defender.n + "はポイズンガードで毒を防いだ！ "; addFx(false, "✨🛡️");
-                } else {
-                    defender.isPoisoned = true;
-                    skillLogs += "☠️" + attacker.n + "のポイズンタッチ！" + defender.n + "は毒になった！ "; addFx(false, "☠️💜");
-                }
+                if (defSk.id !== 5) { defender.isPoisoned = true; skillLogs += "☠️ポイズンタッチ！敵を毒にした！ "; addFx(false, "☠️💜"); }
             } else if (atkSk.id === 6 && defender.hp > 0 && Math.random() < 0.10) {
-                if (defSk.id === 7) {
-                    skillLogs += "🔋" + defender.n + "はパラライズガードで麻痺を防いだ！ "; addFx(false, "🔋✨");
-                } else {
-                    defender.isParalyzed = true;
-                    skillLogs += "⚡" + attacker.n + "のパラライズショック！" + defender.n + "は麻痺した！ "; addFx(false, "⚡💫");
-                }
+                if (defSk.id !== 7) { defender.isParalyzed = true; skillLogs += "⚡パラライズショック！敵を麻痺させた！ "; addFx(false, "⚡💫"); }
             } else if (atkSk.id === 8 && Math.random() < 0.10) {
-                attacker.halfDmgOnce = true;
-                skillLogs += "🔰" + attacker.n + "のハーフシールド！次の被ダメージ半減！ "; addFx(true, "🔰🛡️");
+                attacker.halfDmgOnce = true; skillLogs += "🔰ハーフシールド！次回被ダメージ半減！ "; addFx(true, "🔰🛡️");
             } else if (atkSk.id === 9 && Math.random() < 0.50) {
                 attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.10));
                 attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.10));
                 attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.10));
-                skillLogs += "🌟" + attacker.n + "のオールブースト！全能力UP！ "; addFx(true, "🌟📈");
+                skillLogs += "🌟オールブースト！攻・防・速が10%UP！ "; addFx(true, "🌟✨");
             } else if (atkSk.id === 10 && defender.hp > 0 && Math.random() < 0.20) {
                 if (defSk.id !== 5) defender.isPoisoned = true;
                 if (defSk.id !== 7) defender.isParalyzed = true;
-                skillLogs += "☣️" + attacker.n + "のカオスヴェノム！毒と麻痺を付与！ "; addFx(false, "☣️⚡");
+                skillLogs += "☣️カオスヴェノム！敵に毒と麻痺を同時付与！ "; addFx(false, "☣️⚡");
             } else if (atkSk.id === 11 && defender.hp > 0 && Math.random() < 0.15) {
-                defender.buffSp = (defender.buffSp || 0) - Math.max(1, Math.floor(defender.sp * 0.15));
-                skillLogs += "💫" + attacker.n + "のめまいアタック！" + defender.n + "の素早さDOWN！ "; addFx(false, "💫🌀");
+                let dec = Math.max(1, Math.floor(defender.sp * 0.15));
+                defender.buffSp = (defender.buffSp || 0) - dec;
+                skillLogs += "💫めまいアタック！敵の素早さ-" + dec + "！ "; addFx(false, "💫🌀");
             } else if (atkSk.id === 12 && defender.hp > 0 && Math.random() < 0.15) {
-                let extraDmg = Math.max(1, Math.floor((attacker.at + (attacker.buffAt || 0)) * 0.5));
-                defender.hp = Math.max(0, defender.hp - extraDmg);
-                skillLogs += "👊" + attacker.n + "のカウンターブロー！追加 " + extraDmg + " ダメージ！ "; addFx(false, "👊💥");
+                let cDmg = Math.max(1, Math.floor((attacker.at + (attacker.buffAt || 0)) * 0.50));
+                defender.hp = Math.max(0, defender.hp - cDmg);
+                skillLogs += "👊カウンターブロー！追加 " + cDmg + " ダメージ！ "; addFx(false, "👊💥");
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             } else if (atkSk.id === 13 && Math.random() < 0.15) {
                 attacker.isPoisoned = false;
                 attacker.isParalyzed = false;
                 let h = Math.max(1, Math.floor(attacker.m * 0.03));
                 attacker.hp = Math.min(attacker.m, attacker.hp + h);
-                skillLogs += "🫧" + attacker.n + "のバブルヒール！状態異常回復＆HP " + h + " 回復！ "; addFx(true, "🫧💖");
+                skillLogs += "🫧バブルヒール！状態異常解除＆HP " + h + " 回復！ "; addFx(true, "🫧💚");
             } else if (atkSk.id === 14 && Math.random() < 0.20) {
-                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.12));
-                skillLogs += "🔥" + attacker.n + "のヒートアップ！攻撃力UP！ "; addFx(true, "🔥💪");
+                let inc = Math.max(1, Math.floor(attacker.at * 0.12));
+                attacker.buffAt = (attacker.buffAt || 0) + inc;
+                skillLogs += "🔥ヒートアップ！攻撃力+" + inc + "！ "; addFx(true, "🔥⬆️");
             } else if (atkSk.id === 15 && Math.random() < 0.20) {
-                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.12));
-                skillLogs += "❄️" + attacker.n + "のアイスアーマー！防御力UP！ "; addFx(true, "❄️🛡️");
+                let inc = Math.max(1, Math.floor(attacker.df * 0.12));
+                attacker.buffDf = (attacker.buffDf || 0) + inc;
+                skillLogs += "❄️アイスアーマー！防御力+" + inc + "！ "; addFx(true, "❄️🛡️");
             }
 
-            if (skillLogs !== "") seSkill();
+            if (fxStep > 0) seSkill();
             return skillLogs;
         }
         function atk(){
@@ -2349,13 +2316,13 @@
             let activeParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
             if(activeParty.length === 0) return;
 
-            let frontAlly = activeParty;
+            let frontAlly = activeParty.at(0);
             if(eg.length === 0) {
                 if (!checkTravelerEvent() && !checkHeroEvent()) generateEnemies();
                 up();
                 return;
             }
-            let frontEnemy = eg;
+            let frontEnemy = eg.at(0);
 
             const btnA = document.getElementById("btnAtk");
             if (btnA) btnA.disabled = true;
@@ -2370,218 +2337,8 @@
                 let currentParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
                 if(currentParty.length === 0 || eg.length === 0) return;
 
-                let attacker = isPlayerAttack ? currentParty : eg;
-                let defender = isPlayerAttack ? eg : currentParty;
-                let attSide = document.getElementById(isPlayerAttack ? "mySide" : "eSide");
-                let defSide = document.getElementById(isPlayerAttack ? "eSide" : "mySide");
-
-                if (attacker.isPoisoned) {
-                    let pDmg = Math.max(1, Math.floor(attacker.m * 0.10));
-                    attacker.hp = Math.max(0, attacker.hp - pDmg);
-                    turnLog += "☠️" + attacker.n + "は毒のダメージを " + pDmg + " 受けた！ ";
-                    showSkillEffect(isPlayerAttack, "☠️💜", 0);
-                    if (attacker.hp === 0) {
-                        turnLog += "🔴" + attacker.n + "は毒で倒れた！ ";
-                        if (!isPlayerAttack) {
-                            eg.shift();
-                            if (eg.length === 0) {
-                                handleStageClear();
-                                return;
-                            }
-                        } else {
-                            let rem = p.filter(m => m.inParty && m.hp > 0);
-                            if (rem.length === 0) {
-                                handlePartyWipe();
-                                return;
-                            }
-                        }
-                        up();
-                        return;
-                    }
-                }
-
-                if (attacker.isParalyzed) {
-                    attacker.isParalyzed = false;
-                    turnLog += "⚡" + attacker.n + "は体がしびれて動けない！ ";
-                    showSkillEffect(isPlayerAttack, "⚡💫", 0);
-                    up();
-                    return;
-                }
-
-                seAttack();
-                if (attSide) attSide.classList.add(isPlayerAttack ? "atk-forward-my" : "atk-forward-e");
-                setTimeout(() => {
-                    if (attSide) attSide.classList.remove("atk-forward-my", "atk-forward-e");
-                    if (defSide) {
-                        defSide.classList.add("hit-flash");
-                        setTimeout(() => defSide.classList.remove("hit-flash"), 350);
-                    }
-                }, 150);
-
-                if (defender.nullifyOnce) {
-                    defender.nullifyOnce = false;
-                    turnLog += "🛡️" + defender.n + "はバリアで攻撃を完全に無効化した！ ";
-                    showSkillEffect(!isPlayerAttack, "🛡️✨", 0);
-                    up();
-                    return;
-                }
-
-                let atkVal = attacker.at + (attacker.buffAt || 0);
-                let defVal = defender.df + (defender.buffDf || 0);
-                let dmg = Math.max(1, Math.floor(atkVal - (defVal / 2) + (Math.random() * 4 - 1)));
-
-                if (attacker.nextAtk15) {
-                    attacker.nextAtk15 = false;
-                    dmg = Math.floor(dmg * 1.5);
-                    turnLog += "🔥パワーチャージ炸裂！ ";
-                }
-                if (defender.halfDmgOnce) {
-                    defender.halfDmgOnce = false;
-                    dmg = Math.max(1, Math.floor(dmg * 0.5));
-                    turnLog += "🔰ハーフシールドでダメージ半減！ ";
-                }
-
-                defender.hp = Math.max(0, defender.hp - dmg);
-                turnLog += (isPlayerAttack ? "⚔️" : "💥") + attacker.n + "の攻撃！" + defender.n + "に " + dmg + " ダメージ！ ";
-
-                if (!isPlayerAttack && defender.hp === 0) {
-                    turnLog += "🔴" + defender.n + "が戦闘不能！ ";
-                }
-
-                let skLog = triggerPostAttackSkills(attacker, defender, isPlayerAttack);
-                turnLog += skLog;
-
-                if (isPlayerAttack) {
-                    let currentEnemy = eg;
-                    if (currentEnemy && currentEnemy.hp === 0) {
-                        turnLog += "💀" + currentEnemy.n + "を倒した！ ";
-                        const enemyInf = getMonData(currentEnemy.n);
-                        let targetNo = enemyInf ? enemyInf.no : 1;
-
-                        if (currentEnemy.isHero) {
-                            isHeroBattle = false;
-                            if (mixSuccessRate < 0.50) {
-                                mixSuccessRate = 0.50;
-                                turnLog += "🎊 絵文字の勇者を撃破！配合確率設定が 50% にアップした！ ";
-                                showNotice("🎊 絵文字の勇者に勝利！配合成功率が 50% にアップしました！！ 🎊", 7000);
-                                setTimeout(() => {
-                                    alert("🎊 おめでとうございます！『絵文字の勇者』に勝利しました！\n\n🧬 これ以降、モンスター配合の成功確率設定が【25% → 50%】に変更されました！");
-                                }, 150);
-                            } else {
-                                turnLog += "🎊 絵文字の勇者を再び撃破した！（配合成功率はすでに50%です） ";
-                            }
-                        } else {
-                            let joinChance = (targetNo < 0) ? 0.15 : (targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : (targetNo <= 50 ? 0.01 : 0.00)));
-                            if(Math.random() < joinChance) {
-                                const b = getMonData(currentEnemy.n);
-                                let newAlly = {
-                                    n: currentEnemy.n,
-                                    lv: 1,
-                                    m: b.hp,
-                                    hp: b.hp,
-                                    at: b.at,
-                                    df: b.df,
-                                    sp: b.sp,
-                                    ex: 0,
-                                    nx: 5,
-                                    inParty: false,
-                                    partyOrder: 0,
-                                    skillId: getRandomSkillId()
-                                };
-                                initBattleState(newAlly);
-                                p.push(newAlly);
-                                turnLog += "✨" + currentEnemy.n + "がボックスに加入した！ ";
-                                showNotice(targetNo < 0 ? ("👑 伝説のボス「" + currentEnemy.n + "」が仲間になりました！！") : ("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！"));
-                                if(!zk.includes(currentEnemy.n)) zk.push(currentEnemy.n);
-                                seJoin();
-                            } else if (targetNo >= 51) {
-                                turnLog += "📢(このモンスターは野生加入不可！) ";
-                            }
-                        }
-
-                        let expGain = currentEnemy.ex || 5;
-                        let leveledUp = false;
-                        p.filter(m => m.inParty && m.hp > 0).forEach(ally => {
-                            if (ally.lv < 100) {
-                                ally.ex += expGain;
-                                while (ally.ex >= ally.nx && ally.lv < 100) {
-                                    ally.ex -= ally.nx;
-                                    ally.lv++;
-                                    const b = getMonData(ally.n);
-                                    ally.m += Math.max(1, Math.floor(b.hp * 0.1));
-                                    ally.hp = ally.m;
-                                    ally.at += Math.max(1, Math.floor(b.at * 0.1));
-                                    ally.df += Math.max(1, Math.floor(b.df * 0.1));
-                                    ally.sp += Math.max(1, Math.floor(b.sp * 0.1));
-                                    ally.nx = Math.floor(ally.nx * 1.2);
-                                    leveledUp = true;
-                                }
-                            }
-                        });
-                        if (leveledUp) {
-                            seLvUp();
-                            turnLog += "🆙レベルアップ！ ";
-                        }
-
-                        eg.shift();
-                        if (eg.length === 0) {
-                            handleStageClear();
-                            return;
-                        }
-                    }
-                } else {
-                    let rem = p.filter(m => m.inParty && m.hp > 0);
-                    if (rem.length === 0) {
-                        handlePartyWipe();
-                        return;
-                    }
-                }
-                up();
-            }
-
-            function handleStageClear() {
-                seStageClear();
-                if (stg > maxClearStg) {
-                    maxClearStg = stg;
-                    updateRankingUI();
-                }
-                if (stg === maxStg) {
-                    maxStg = Math.min(1000, maxStg + 1);
-                }
-                turnLog += "🎉" + stg + "階クリア！ ";
-                if (stg < 1000) {
-                    stg++;
-                    resetStageBuffs();
-                    updateBgmState(true);
-        function atk(){
-            if (autoAtkTimer) { clearTimeout(autoAtkTimer); autoAtkTimer = null; }
-            if(!inDungeon || isTravelerEvent || isHeroChoiceEvent) return;
-            let activeParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
-            if(activeParty.length === 0) return;
-
-            let frontAlly = activeParty;
-            if(eg.length === 0) {
-                if (!checkTravelerEvent() && !checkHeroEvent()) generateEnemies();
-                up();
-                return;
-            }
-            let frontEnemy = eg;
-
-            const btnA = document.getElementById("btnAtk");
-            if (btnA) btnA.disabled = true;
-
-            let allySp = frontAlly.sp + (frontAlly.buffSp || 0);
-            let enemySp = frontEnemy.sp + (frontEnemy.buffSp || 0);
-            let playerFirst = allySp >= enemySp;
-            let turnLog = "";
-
-            function executeSingleStrike(isPlayerAttack) {
-                if(!inDungeon) return;
-                let currentParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
-                if(currentParty.length === 0 || eg.length === 0) return;
-
-                let attacker = isPlayerAttack ? currentParty : eg;
-                let defender = isPlayerAttack ? eg : currentParty;
+                let attacker = isPlayerAttack ? currentParty.at(0) : eg.at(0);
+                let defender = isPlayerAttack ? eg.at(0) : currentParty.at(0);
                 let attSide = document.getElementById(isPlayerAttack ? "mySide" : "eSide");
                 let defSide = document.getElementById(isPlayerAttack ? "eSide" : "mySide");
 
@@ -2661,7 +2418,7 @@
                 let skLog = triggerPostAttackSkills(attacker, defender, isPlayerAttack);
                 turnLog += skLog;
                 if (isPlayerAttack) {
-                    let currentEnemy = eg[0];
+                    let currentEnemy = eg.at(0);
                     if (currentEnemy && currentEnemy.hp === 0) {
                         turnLog += "💀" + currentEnemy.n + "を倒した！ ";
                         const enemyInf = getMonData(currentEnemy.n);
@@ -2825,8 +2582,8 @@
             if (checked.length !== 2) return alert("⚠️ 配合するモンスターをちょうど2匹選択してください！");
             if (p.length - 2 < 1) return alert("❌ 最低1体は手持ちに残す必要があります！");
 
-            const m1 = p.at(checked[0]);
-            const m2 = p.at(checked[1]);
+            const m1 = p.at(checked.at(0));
+            const m2 = p.at(checked.at(1));
             if (!m1 || !m2) return;
 
             const key1 = m1.n + "+" + m2.n;
@@ -2849,7 +2606,7 @@
                 const sumLv = Math.min(100, Math.max(1, Math.floor((m1.lv + m2.lv) / 2)));
                 const scale = 1 + (sumLv - 1) * 0.1;
                 const newSkId = getRandomSkillId();
-                const sk = RANDOM_SKILLS.find(s => s.id === newSkId) || RANDOM_SKILLS[0];
+                const sk = RANDOM_SKILLS.find(s => s.id === newSkId) || RANDOM_SKILLS.at(0);
                 const bornMon = {
                     n: resultName,
                     lv: sumLv,
