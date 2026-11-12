@@ -123,7 +123,7 @@
             text-align: center;
             box-shadow: 0 2px 6px rgba(234, 179, 8, 0.15);
         }
-        /* --- 🎨 10エリア明るいパステル背景＆超拡大絵文字背景システム --- */
+        /* --- 🎨 10エリア明るいパステル背景＆ボス戦専用背景システム --- */
         .battle-header-bar {
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
             border: 2px solid #cbd5e1;
@@ -187,6 +187,11 @@
         .bg-volcano { border-color: #f43f5e !important; background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%); } .bg-volcano::before { content: "🌋"; }
         .bg-ice { border-color: #0284c7 !important; background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%); } .bg-ice::before { content: "🌌"; }
         .bg-castle { border-color: #6366f1 !important; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); } .bg-castle::before { content: "🌃"; }
+        .bg-boss { border-color: #dc2626 !important; background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 50%, #fef08a 100%) !important; box-shadow: 0 0 18px rgba(220, 38, 38, 0.25); }
+        .bg-boss::before { content: "🏴‍☠️"; opacity: 0.30; }
+        .bg-superboss { border-color: #7c3aed !important; background: linear-gradient(180deg, #faf5ff 0%, #ede9fe 50%, #fde68a 100%) !important; box-shadow: 0 0 22px rgba(124, 58, 237, 0.35); }
+        .bg-superboss::before { content: "🕋"; opacity: 0.32; }
+        .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
 
         .side {
             width: 49%;
@@ -434,7 +439,7 @@
             </button>
         </div>
     </div>
-    <!-- 🏆 ランキング・プレイヤー名設定（配合表の上に配置・100位以下でも自分の順位を表示） -->
+    <!-- 🏆 ランキング・プレイヤー名設定 -->
     <div class="box" style="border: 1.5px solid #fcd34d; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
         <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🏆 RANKING</span>
         <div style="font-size: 12px; font-weight: 800; color: #b45309; margin-bottom: 6px;">
@@ -471,86 +476,14 @@
             </div>
         </div>
     </div>
-    <!-- ① 配合表 -->
+
+    <!-- ① 配合表（シルエット連動・動的生成） -->
     <div class="box">
         <span class="section-badge">📜 SYNTHESIS GUIDE</span><br>
         <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
             📜 配合レシピ表の表示切替
         </button>
-        <table id="rt" class="recipe">
-            <tr>
-                <td>💧No.1 プニシズク ＋ 💧No.1 プニシズク ＝ 🪼No.25 ギガジェリー</td>
-                <td>🐛No.7 キャタピラー ＋ 🐌No.8 シェルスネイル ＝ 🪼No.25 ギガジェリー</td>
-            </tr>
-            <tr>
-                <td>💧No.1 プニシズク ＋ 🦇No.2 カゲコウモリ ＝ 🧚No.26 フェアリー</td>
-                <td>🦇No.2 カゲコウモリ ＋ 👻No.3 うらめシート ＝ 🦅No.27 ホークアイ</td>
-            </tr>
-            <tr>
-                <td>👻No.3 うらめシート ＋ 🐁No.4 チューマウス ＝ 🦉No.28 ナイトオウル</td>
-                <td>🐁No.4 チューマウス ＋ 🐜No.5 ソロゾロアント ＝ 🦊No.29 ファイアフォックス</td>
-            </tr>
-            <tr>
-                <td>🐜No.5 ソロゾロアント ＋ 🐸No.6 ポイズンフロッグ ＝ 🦝No.30 マスクラクーン</td>
-                <td>🐥No.9 ピヨチビ ＋ 🐢No.10 ロックタートル ＝ 🐻No.31 ダークベア</td>
-            </tr>
-            <tr>
-                <td>🐟No.11 リバーフィッシュ ＋ 🦀No.12 コオリガニ ＝ 🐬No.32 ブルーイルカ</td>
-                <td>🐞No.13 コロテントウ ＋ 🦋No.14 パタバタフライ ＝ 🦢No.33 ホワイトスワン</td>
-            </tr>
-            <tr>
-                <td>🐝No.15 キラービー ＋ 🕷️No.16 ヴェノムスパイダー ＝ 🦂No.34 デススコーピオン</td>
-                <td>🐇No.17 ウサピョン ＋ 🐿️No.18 チップモンク ＝ 🦌No.35 フォレストディア</td>
-            </tr>
-            <tr>
-                <td>🦔No.19 ニードルホッグ ＋ 🦘No.36 バウンスルー ＝ 🦏No.46 アイアンサイ</td>
-                <td>🐍No.20 バイパー ＋ 🐺No.37 シャドウウルフ ＝ 🐊No.47 沼クロコダイル</td>
-            </tr>
-            <tr>
-                <td>🦝No.30 マスクラクーン ＋ 🦊No.29 ファイアフォックス ＝ 🦍No.44 シルバーゴリラ</td>
-                <td>🐯No.42 キラータイガー ＋ 🦭No.43 ホワイトシール ＝ 🦍No.44 シルバーゴリラ</td>
-            </tr>
-            <tr>
-                <td>🐸No.6 ポイズンフロッグ ＋ 🐁No.4 チューマウス ＝ 🦈No.45 アサシンシャーク</td>
-                <td>🦍No.44 シルバーゴリラ ＋ 🦈No.45 アサシンシャーク ＝ 🦣No.51 エンペラーマンモス <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🪼No.25 ギガジェリー ＋ 🦉No.28 ナイトオウル ＝ 🧛No.52 ヴァンパイア <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🦅No.27 ホークアイ ＋ 🧚No.26 フェアリー ＝ 🦚No.53 プリズムピーコック <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🧛No.52 ヴァンパイア ＋ 🦚No.53 プリズムピーコック ＝ 👹No.66 アシュラオーガ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🦄No.54 ホーリーユニコーン ＋ 🐉No.55 シャドードラゴン ＝ 👹No.66 アシュラオーガ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🐲No.56 エメラルドドラゴン ＋ 🦖No.57 レックスティラノ ＝ 🦕No.67 ギガブラキオ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🧜No.64 マーメイドクイーン ＋ 🦎No.65 サラマンダーキング ＝ 🦕No.67 ギガブラキオ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🪽No.58 セラフィムウイング ＋ 👁️No.59 イービルアイ ＝ 😈No.69 アークデーモン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🦁No.60 キングライオン ＋ 🐙No.61 クラーケンロード ＝ 🐳No.70 リヴァイアサン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🐘No.62 ベヒーモス ＋ 🐎No.63 ペガサスナイト ＝ 👾No.71 カオスエイリアン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🧜No.64 マーメイドクイーン ＋ 🦎No.65 サラマンダーキング ＝ 👾No.71 カオスエイリアン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>👹No.66 アシュラオーガ ＋ 🦕No.67 ギガブラキオ ＝ 🦬No.68 バッファローキング <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>😈No.69 アークデーモン ＋ 🦁No.60 キングライオン ＝ 👾No.71 カオスエイリアン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>👾No.71 カオスエイリアン ＋ 🦬No.68 バッファローキング ＝ 💀No.75 スカルリッチ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🐳No.70 リヴァイアサン ＋ 🦕No.67 ギガブラキオ ＝ 🐺No.80 フェンリルウルフ <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>💀No.75 スカルリッチ ＋ 🐺No.80 フェンリルウルフ ＝ 🐉No.85 ギャラクシードラゴン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🐉No.85 ギャラクシードラゴン ＋ 😈No.69 アークデーモン ＝ 🐲No.90 クロノスドラゴン <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-            <tr>
-                <td>🐲No.90 クロノスドラゴン ＋ 🦄No.54 ホーリーユニコーン ＝ 🐦‍🔥No.95 ゴッドフェニックス <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-                <td>🐦‍🔥No.95 ゴッドフェニックス ＋ 🐉No.85 ギャラクシードラゴン ＝ 👑No.100 ドラゴンエンペラー <span style="color:red;font-weight:bold;">(⚠️野生加入不可)</span></td>
-            </tr>
-        </table>
+        <table id="rt" class="recipe"></table>
     </div>
     <!-- ② 戦闘画面（ステージ選択UI一体化 ＆ 通知バナー付き） -->
     <div class="box" id="battleBox" style="padding-top: 12px;">
@@ -618,17 +551,35 @@
         </button>
         <ul id="mixBoxList" class="toggle-box"></ul>
     </div>
-    <!-- ⑤ みつけた図鑑 -->
+    <!-- ⑤ みつけた図鑑（通常100種 ＋ ボス専用図鑑20種） -->
     <div class="box">
         <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
-        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span></h3>
-        <button onclick="let t=document.getElementById('zk'); t.style.display==='none'?t.style.display='grid':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
-            📖 図鑑の表示切替
+        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">
+            📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span>
+            <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
+        </h3>
+        <button onclick="let t=document.getElementById('zukanWrapper'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
+            📖 図鑑の表示切替（通常＆ボス専用図鑑）
         </button>
-        <div id="zk" class="grid" style="display: none;"></div>
+        <div id="zukanWrapper" style="display: none;">
+            <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
+                💡 シルエットのモンスターをタップすると配合ヒントが見られます！
+            </div>
+            <div id="zk" class="grid"></div>
+
+            <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fca5a5;">
+                <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 14px;">
+                    👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
+                </h4>
+                <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
+                    ※50階ごとのボス戦にのみ出現！配合不可・野生加入（15%）限定モンスター
+                </p>
+                <div id="bossZk" class="grid"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- ⑥ データ引き継ぎ・セーブ管理エリア（ボタンで表示/非表示切替） -->
+    <!-- ⑥ データ引き継ぎ・セーブ管理エリア -->
     <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1.5px solid #7dd3fc;">
         <span class="section-badge">💾 SAVE & TRANSFER</span>
         <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
@@ -654,7 +605,7 @@
         </div>
     </div>
     <script>
-        // モンスターデータ前編（No.1〜No.32）
+        // 通常モンスターデータ全100種（No.1〜No.100 絵文字重複完全ゼロ）
         const D = {
             "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
             "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
@@ -681,7 +632,7 @@
             "シャドウネコ": { no: 23, a: "🐈‍⬛", hp: 13, at: 8, df: 4, sp: 11, ex: 1 },
             "モグラッパー": { no: 24, a: "🦫", hp: 16, at: 6, df: 7, sp: 5, ex: 1 },
             "ギガジェリー": { no: 25, a: "🪼", hp: 30, at: 15, df: 12, sp: 10, ex: 2 },
-            "フェアリー": { no: 26, a: "🧚", hp: 25, at: 18, df: 10, sp: 16, ex: 2 },
+            "シルフィードバード": { no: 26, a: "🕊️", hp: 25, at: 18, df: 10, sp: 16, ex: 2 },
             "ホークアイ": { no: 27, a: "🦅", hp: 28, at: 20, df: 11, sp: 17, ex: 2 },
             "ナイトオウル": { no: 28, a: "🦉", hp: 32, at: 19, df: 14, sp: 12, ex: 2 },
             "ファイアフォックス": { no: 29, a: "🦊", hp: 26, at: 18, df: 10, sp: 15, ex: 2 },
@@ -692,87 +643,114 @@
             "デススコーピオン": { no: 34, a: "🦂", hp: 28, at: 21, df: 13, sp: 13, ex: 2 },
             "フォレストディア": { no: 35, a: "🦌", hp: 30, at: 17, df: 12, sp: 15, ex: 2 },
             "バウンスルー": { no: 36, a: "🦘", hp: 29, at: 19, df: 11, sp: 16, ex: 2 },
-            "シャドウウルフ": { no: 37, a: "🐺", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
+            "シャドウハウンド": { no: 37, a: "🐕‍🦺", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
             "フロストグリズリー": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 9, ex: 2 },
             "ブラックパンサー": { no: 39, a: "🐆", hp: 29, at: 22, df: 10, sp: 18, ex: 2 },
             "ボアキング": { no: 40, a: "🐗", hp: 35, at: 21, df: 14, sp: 11, ex: 2 },
-            "ミノタウロス": { no: 41, a: "🐂", hp: 36, at: 23, df: 15, sp: 9, ex: 2 },
+            "ブレイブオックス": { no: 41, a: "🐂", hp: 36, at: 23, df: 15, sp: 9, ex: 2 },
             "キラータイガー": { no: 42, a: "🐯", hp: 32, at: 24, df: 11, sp: 17, ex: 2 },
             "ホワイトシール": { no: 43, a: "🦭", hp: 25, at: 12, df: 30, sp: 22, ex: 4 },
             "シルバーゴリラ": { no: 44, a: "🦍", hp: 50, at: 28, df: 24, sp: 10, ex: 3 },
-            "アサシンシャーク": { no: 45, a: "🦈", hp: 44, at: 32, df: 18, sp: 19, ex: 3 },
-            "アイアンサイ": { no: 46, a: "🦏", hp: 55, at: 26, df: 32, sp: 8, ex: 3 },
-            "沼クロコダイル": { no: 47, a: "🐊", hp: 48, at: 30, df: 22, sp: 12, ex: 3 },
+            "ハリセンボンバー": { no: 45, a: "🐡", hp: 44, at: 32, df: 18, sp: 19, ex: 3 },
+            "アイアンマンモス": { no: 46, a: "🦣", hp: 55, at: 26, df: 32, sp: 8, ex: 3 },
+            "ギガローチ": { no: 47, a: "🪳", hp: 48, at: 30, df: 22, sp: 12, ex: 3 },
             "ビッグフット": { no: 48, a: "🦧", hp: 52, at: 29, df: 21, sp: 11, ex: 3 },
-            "トキシックトード": { no: 49, a: "🐸", hp: 46, at: 27, df: 20, sp: 14, ex: 3 },
-            "バンパイアバット": { no: 50, a: "🦇", hp: 42, at: 31, df: 17, sp: 20, ex: 3 },
-            "エンペラーマンモス": { no: 51, a: "🦣", hp: 85, at: 50, df: 48, sp: 14, ex: 5 },
-            "ヴァンパイア": { no: 52, a: "🧛", hp: 58, at: 40, df: 30, sp: 24, ex: 4 },
+            "ヴェノムゲッコー": { no: 49, a: "🦎", hp: 46, at: 27, df: 20, sp: 14, ex: 3 },
+            "ブラッドモスキート": { no: 50, a: "🦟", hp: 42, at: 31, df: 17, sp: 20, ex: 3 },
+            "エンペラーエレファント": { no: 51, a: "🐘", hp: 85, at: 50, df: 48, sp: 14, ex: 5 },
+            "スロウロス": { no: 52, a: "🦥", hp: 58, at: 40, df: 30, sp: 24, ex: 4 },
             "プリズムピーコック": { no: 53, a: "🦚", hp: 62, at: 42, df: 28, sp: 25, ex: 4 },
-            "ホーリーユニコーン": { no: 54, a: "🦄", hp: 72, at: 46, df: 36, sp: 28, ex: 4 },
-            "シャドードラゴン": { no: 55, a: "🐉", hp: 78, at: 50, df: 38, sp: 24, ex: 4 },
-            "エメラルドドラゴン": { no: 56, a: "🐲", hp: 85, at: 54, df: 42, sp: 22, ex: 5 },
-            "レックスティラノ": { no: 57, a: "🦖", hp: 88, at: 58, df: 40, sp: 23, ex: 5 },
-            "セラフィムウイング": { no: 58, a: "🪽", hp: 90, at: 56, df: 45, sp: 30, ex: 5 },
-            "イービルアイ": { no: 59, a: "👁️", hp: 82, at: 62, df: 44, sp: 27, ex: 5 },
-            "キングライオン": { no: 60, a: "🦁", hp: 110, at: 68, df: 52, sp: 30, ex: 6 },
+            "ブレイブスタリオン": { no: 54, a: "🐎", hp: 72, at: 46, df: 36, sp: 28, ex: 4 },
+            "ヌマクロコダイル": { no: 55, a: "🐊", hp: 78, at: 50, df: 38, sp: 24, ex: 4 },
+            "エメラルドブラキオ": { no: 56, a: "🦕", hp: 85, at: 54, df: 42, sp: 22, ex: 5 },
+            "ギガヒポポ": { no: 57, a: "🦛", hp: 88, at: 58, df: 40, sp: 23, ex: 5 },
+            "フラミンゴクイーン": { no: 58, a: "🦩", hp: 90, at: 56, df: 45, sp: 30, ex: 5 },
+            "シャドウバジャー": { no: 59, a: "🦡", hp: 82, at: 62, df: 44, sp: 27, ex: 5 },
+            "クリムゾンタイガー": { no: 60, a: "🐅", hp: 110, at: 68, df: 52, sp: 30, ex: 6 },
             "クラーケンロード": { no: 61, a: "🐙", hp: 118, at: 65, df: 55, sp: 25, ex: 6 },
-            "ベヒーモス": { no: 62, a: "🐘", hp: 125, at: 70, df: 58, sp: 20, ex: 6 },
-            "ペガサスナイト": { no: 63, a: "🐎", hp: 105, at: 72, df: 50, sp: 35, ex: 6 },
-            "マーメイドクイーン": { no: 64, a: "🧜", hp: 120, at: 74, df: 56, sp: 28, ex: 7 },
-            "サラマンダーキング": { no: 65, a: "🦎", hp: 125, at: 78, df: 54, sp: 29, ex: 7 },
-            "アシュラオーガ": { no: 66, a: "👹", hp: 130, at: 80, df: 60, sp: 32, ex: 7 },
-            "ギガブラキオ": { no: 67, a: "🦕", hp: 150, at: 82, df: 70, sp: 25, ex: 8 },
-            "バッファローキング": { no: 68, a: "🦬", hp: 145, at: 86, df: 68, sp: 30, ex: 8 },
-            "アークデーモン": { no: 69, a: "😈", hp: 165, at: 95, df: 75, sp: 40, ex: 9 },
+            "グランドバイソン": { no: 62, a: "🦬", hp: 125, at: 70, df: 58, sp: 20, ex: 6 },
+            "ストライプゼブラ": { no: 63, a: "🦓", hp: 105, at: 72, df: 50, sp: 35, ex: 6 },
+            "マーメイドクイーン": { no: 64, a: "🧜‍♀️", hp: 120, at: 74, df: 56, sp: 28, ex: 7 },
+            "ヘラクレスビートル": { no: 65, a: "🪲", hp: 125, at: 78, df: 54, sp: 29, ex: 7 },
+            "メガタウロス": { no: 66, a: "🐄", hp: 130, at: 80, df: 60, sp: 32, ex: 7 },
+            "スカイジラフ": { no: 67, a: "🦒", hp: 150, at: 82, df: 70, sp: 25, ex: 8 },
+            "エルクカイザー": { no: 68, a: "🫎", hp: 145, at: 86, df: 68, sp: 30, ex: 8 },
+            "ホーンラム": { no: 69, a: "🐏", hp: 165, at: 95, df: 75, sp: 40, ex: 9 },
             "リヴァイアサン": { no: 70, a: "🐳", hp: 185, at: 98, df: 80, sp: 35, ex: 9 },
-            "カオスエイリアン": { no: 71, a: "👾", hp: 200, at: 110, df: 88, sp: 48, ex: 10 },
-            "ガイアグリズリー": { no: 72, a: "🐻", hp: 140, at: 88, df: 64, sp: 28, ex: 7 },
-            "エンジェルナイト": { no: 73, a: "👼", hp: 135, at: 92, df: 62, sp: 42, ex: 7 },
-            "フレイムウルフ": { no: 74, a: "🐺", hp: 145, at: 94, df: 60, sp: 44, ex: 8 },
-            "スカルリッチ": { no: 75, a: "💀", hp: 160, at: 96, df: 72, sp: 34, ex: 8 },
-            "鬼神ゴブリン": { no: 76, a: "👺", hp: 155, at: 102, df: 68, sp: 38, ex: 8 },
-            "ブリザードタイガー": { no: 77, a: "🐯", hp: 160, at: 100, df: 70, sp: 45, ex: 8 },
-            "ゴールデンスワン": { no: 78, a: "🦢", hp: 150, at: 90, df: 85, sp: 50, ex: 9 },
-            "ケルベロスハウンド": { no: 79, a: "🐕", hp: 170, at: 112, df: 74, sp: 46, ex: 9 },
-            "フェンリルウルフ": { no: 80, a: "🐺", hp: 185, at: 118, df: 78, sp: 52, ex: 9 },
-            "ムーンオウル": { no: 81, a: "🦉", hp: 175, at: 115, df: 80, sp: 50, ex: 9 },
+            "アルパカマスター": { no: 71, a: "🦙", hp: 200, at: 110, df: 88, sp: 48, ex: 10 },
+            "ガイアパンダ": { no: 72, a: "🐼", hp: 140, at: 88, df: 64, sp: 28, ex: 7 },
+            "ブレイズコック": { no: 73, a: "🐓", hp: 135, at: 92, df: 62, sp: 42, ex: 7 },
+            "フレイムハウンド": { no: 74, a: "🦮", hp: 145, at: 94, df: 60, sp: 44, ex: 8 },
+            "ポイズンスカンク": { no: 75, a: "🦨", hp: 160, at: 96, df: 72, sp: 34, ex: 8 },
+            "マウンテンゴート": { no: 76, a: "🐐", hp: 155, at: 102, df: 68, sp: 38, ex: 8 },
+            "アストラルキャット": { no: 77, a: "🐈", hp: 160, at: 100, df: 70, sp: 45, ex: 8 },
+            "ゴールデングース": { no: 78, a: "🪿", hp: 150, at: 90, df: 85, sp: 50, ex: 9 },
+            "ケルベロスプードル": { no: 79, a: "🐩", hp: 170, at: 112, df: 74, sp: 46, ex: 9 },
+            "疾風ホース": { no: 80, a: "🐴", hp: 185, at: 118, df: 78, sp: 52, ex: 9 },
+            "エンシェントドードー": { no: 81, a: "🦤", hp: 175, at: 115, df: 80, sp: 50, ex: 9 },
             "深海クラーケン": { no: 82, a: "🦑", hp: 205, at: 114, df: 86, sp: 38, ex: 9 },
-            "セラフィムエンジェル": { no: 83, a: "👼", hp: 195, at: 120, df: 85, sp: 48, ex: 10 },
-            "タイタンゴリラ": { no: 84, a: "🦍", hp: 230, at: 116, df: 98, sp: 30, ex: 10 },
-            "ギャラクシードラゴン": { no: 85, a: "🐉", hp: 220, at: 128, df: 92, sp: 54, ex: 10 },
-            "クリムゾンフェニックス": { no: 86, a: "🐦‍🔥", hp: 215, at: 134, df: 88, sp: 58, ex: 10 },
+            "クロウヴァルキリー": { no: 83, a: "🐦‍⬛", hp: 195, at: 120, df: 85, sp: 48, ex: 10 },
+            "タイタンモンキー": { no: 84, a: "🐒", hp: 230, at: 116, df: 98, sp: 30, ex: 10 },
+            "デザートキャメル": { no: 85, a: "🐫", hp: 220, at: 128, df: 92, sp: 54, ex: 10 },
+            "クリムゾンパロット": { no: 86, a: "🦜", hp: 215, at: 134, df: 88, sp: 58, ex: 10 },
             "シャドウマンティス": { no: 87, a: "🦗", hp: 200, at: 140, df: 82, sp: 62, ex: 10 },
-            "ディアブロデーモン": { no: 88, a: "😈", hp: 240, at: 136, df: 96, sp: 48, ex: 11 },
-            "アビスシャーク": { no: 89, a: "🦈", hp: 235, at: 142, df: 94, sp: 55, ex: 11 },
-            "クロノスドラゴン": { no: 90, a: "🐲", hp: 265, at: 148, df: 108, sp: 60, ex: 11 },
-            "ナイトメアバット": { no: 91, a: "🦇", hp: 250, at: 152, df: 102, sp: 68, ex: 11 },
-            "サンダーライオン": { no: 92, a: "🦁", hp: 275, at: 158, df: 112, sp: 64, ex: 12 },
+            "サンドキャメル": { no: 88, a: "🐪", hp: 240, at: 136, df: 96, sp: 48, ex: 11 },
+            "クリスタルシュリンプ": { no: 89, a: "🦐", hp: 235, at: 142, df: 94, sp: 55, ex: 11 },
+            "アクアフィッシュ": { no: 90, a: "🐠", hp: 265, at: 148, df: 108, sp: 60, ex: 11 },
+            "アクアオッター": { no: 91, a: "🦦", hp: 250, at: 152, df: 102, sp: 68, ex: 11 },
+            "サンダードンキー": { no: 92, a: "🫏", hp: 275, at: 158, df: 112, sp: 64, ex: 12 },
             "ポセイドンホエール": { no: 93, a: "🐋", hp: 310, at: 154, df: 125, sp: 52, ex: 12 },
-            "ゼウスイーグル": { no: 94, a: "🦅", hp: 290, at: 168, df: 118, sp: 74, ex: 12 },
-            "ゴッドフェニックス": { no: 95, a: "🐦‍🔥", hp: 320, at: 175, df: 128, sp: 78, ex: 13 },
-            "アルテミスユニコーン": { no: 96, a: "🦄", hp: 330, at: 180, df: 132, sp: 80, ex: 13 },
-            "バハムートレックス": { no: 97, a: "🦖", hp: 360, at: 195, df: 142, sp: 76, ex: 14 },
-            "ジェネシスクイーン": { no: 98, a: "🧜", hp: 380, at: 190, df: 150, sp: 82, ex: 14 },
-            "カオスヒドラ": { no: 99, a: "🐉", hp: 410, at: 210, df: 165, sp: 88, ex: 15 },
-            "ドラゴンエンペラー": { no: 100, a: "👑", hp: 480, at: 245, df: 200, sp: 100, ex: 18 }
+            "ゼウスターキー": { no: 94, a: "🦃", hp: 290, at: 168, df: 118, sp: 74, ex: 12 },
+            "スカイブルーバード": { no: 95, a: "🐦", hp: 320, at: 175, df: 128, sp: 78, ex: 13 },
+            "ウールシープ": { no: 96, a: "🐑", hp: 330, at: 180, df: 132, sp: 80, ex: 13 },
+            "ワイルドピッグ": { no: 97, a: "🐖", hp: 360, at: 195, df: 142, sp: 76, ex: 14 },
+            "トリトンキング": { no: 98, a: "🧜‍♂️", hp: 380, at: 190, df: 150, sp: 82, ex: 14 },
+            "アースワーム": { no: 99, a: "🪱", hp: 410, at: 210, df: 165, sp: 88, ex: 15 },
+            "ドラゴンエンペラー": { no: 100, a: "🐲", hp: 480, at: 245, df: 200, sp: 100, ex: 18 }
         };
-        // 配合辞書
+        // 👑 ボス専用モンスターデータ全20種（No.-1 〜 No.-20 / 絵文字重複完全ゼロ）
+        const BOSS_D = {
+            "草原の覇王バッファロー": { no: -1, stage: 50, a: "🐃", hp: 140, at: 45, df: 35, sp: 24, ex: 15 },
+            "草原の精霊フェアリー": { no: -2, stage: 100, a: "🧚", hp: 220, at: 68, df: 52, sp: 36, ex: 25 },
+            "密林の暴君ティラノ": { no: -3, stage: 150, a: "🦖", hp: 310, at: 92, df: 70, sp: 42, ex: 35 },
+            "密林の巨人トロール": { no: -4, stage: 200, a: "🧌", hp: 420, at: 115, df: 95, sp: 45, ex: 45 },
+            "深海の甲殻王ロブスター": { no: -5, stage: 250, a: "🦞", hp: 520, at: 140, df: 108, sp: 56, ex: 55 },
+            "深海の覇者メガロドン": { no: -6, stage: 300, a: "🦈", hp: 640, at: 168, df: 125, sp: 64, ex: 68 },
+            "砂漠の呪霊ゾンビロード": { no: -7, stage: 350, a: "🧟", hp: 780, at: 192, df: 155, sp: 52, ex: 80 },
+            "砂漠の獅子王レオン": { no: -8, stage: 400, a: "🦁", hp: 910, at: 220, df: 172, sp: 74, ex: 95 },
+            "毒沼の邪竜バハムート": { no: -9, stage: 450, a: "🐉", hp: 1050, at: 252, df: 190, sp: 86, ex: 110 },
+            "毒沼の大魔王ルシファー": { no: -10, stage: 500, a: "😈", hp: 1300, at: 295, df: 225, sp: 98, ex: 140 },
+            "鉱山の鋼鉄王ライノス": { no: -11, stage: 550, a: "🦏", hp: 1480, at: 320, df: 270, sp: 82, ex: 155 },
+            "鉱山の鬼神オーガキング": { no: -12, stage: 600, a: "👹", hp: 1680, at: 355, df: 290, sp: 95, ex: 175 },
+            "神殿の聖獣ユニコーン": { no: -13, stage: 650, a: "🦄", hp: 1880, at: 390, df: 315, sp: 112, ex: 195 },
+            "神殿の熾天使セラフィム": { no: -14, stage: 700, a: "👼", hp: 2100, at: 430, df: 345, sp: 125, ex: 220 },
+            "火山の魔神テング": { no: -15, stage: 750, a: "👺", hp: 2350, at: 475, df: 370, sp: 134, ex: 245 },
+            "火山の不死鳥フェニックス": { no: -16, stage: 800, a: "🐦‍🔥", hp: 2620, at: 520, df: 405, sp: 145, ex: 275 },
+            "氷結の銀狼フェンリル": { no: -17, stage: 850, a: "🐺", hp: 2900, at: 565, df: 440, sp: 158, ex: 305 },
+            "氷世界の死神スカル": { no: -18, stage: 900, a: "💀", hp: 3200, at: 615, df: 480, sp: 170, ex: 340 },
+            "魔王城の混沌魔デビル": { no: -19, stage: 950, a: "👿", hp: 3550, at: 670, df: 525, sp: 185, ex: 380 },
+            "創世の次元獣インベーダー": { no: -20, stage: 1000, a: "👾", hp: 4200, at: 750, df: 600, sp: 210, ex: 500 }
+        };
+
+        function getMonData(name) {
+            return D[name] || BOSS_D[name];
+        }
+        // 配合辞書（全120体重複ゼロ版に完全連動）
         const R = {
-            "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "フェアリー",
+            "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "シルフィードバード",
             "カゲコウモリ+うらめシート": "ホークアイ", "うらめシート+チューマウス": "ナイトオウル", "チューマウス+ソロゾロアント": "ファイアフォックス",
             "ソロゾロアント+ポイズンフロッグ": "マスクラクーン", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
             "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+ヴェノムスパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
-            "ニードルホッグ+バウンスルー": "アイアンサイ", "バイパー+シャドウウルフ": "沼クロコダイル",
-            "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "アサシンシャーク",
-            "ギガジェリー+ナイトオウル": "ヴァンパイア", "ホークアイ+フェアリー": "プリズムピーコック", "シルバーゴリラ+アサシンシャーク": "エンペラーマンモス",
-            "ホーリーユニコーン+シャドードラゴン": "アシュラオーガ", "エメラルドドラゴン+レックスティラノ": "ギガブラキオ", "セラフィムウイング+イービルアイ": "アークデーモン",
-            "キングライオン+クラーケンロード": "リヴァイアサン", "ベヒーモス+ペガサスナイト": "カオスエイリアン", "マーメイドクイーン+サラマンダーキング": "カオスエイリアン",
-            "アシュラオーガ+ギガブラキオ": "バッファローキング", "アークデーモン+キングライオン": "カオスエイリアン", "ヴァンパイア+プリズムピーコック": "アシュラオーガ",
-            "カオスエイリアン+バッファローキング": "スカルリッチ", "リヴァイアサン+ギガブラキオ": "フェンリルウルフ", "スカルリッチ+フェンリルウルフ": "ギャラクシードラゴン",
-            "ギャラクシードラゴン+アークデーモン": "クロノスドラゴン", "クロノスドラゴン+ホーリーユニコーン": "ゴッドフェニックス", "ゴッドフェニックス+ギャラクシードラゴン": "ドラゴンエンペラー"
+            "ニードルホッグ+バウンスルー": "アイアンマンモス", "バイパー+シャドウハウンド": "ギガローチ",
+            "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "ハリセンボンバー",
+            "ギガジェリー+ナイトオウル": "スロウロス", "ホークアイ+シルフィードバード": "プリズムピーコック", "シルバーゴリラ+ハリセンボンバー": "エンペラーエレファント",
+            "ブレイブスタリオン+ヌマクロコダイル": "メガタウロス", "エメラルドブラキオ+ギガヒポポ": "スカイジラフ", "フラミンゴクイーン+シャドウバジャー": "ホーンラム",
+            "クリムゾンタイガー+クラーケンロード": "リヴァイアサン", "グランドバイソン+ストライプゼブラ": "アルパカマスター", "マーメイドクイーン+ヘラクレスビートル": "アルパカマスター",
+            "メガタウロス+スカイジラフ": "エルクカイザー", "ホーンラム+クリムゾンタイガー": "アルパカマスター", "スロウロス+プリズムピーコック": "メガタウロス",
+            "アルパカマスター+エルクカイザー": "ポイズンスカンク", "リヴァイアサン+スカイジラフ": "疾風ホース", "ポイズンスカンク+疾風ホース": "デザートキャメル",
+            "デザートキャメル+ホーンラム": "アクアフィッシュ", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー"
         };
-        // --- ✨ ① 元から覚えている固有スキル定義（全7種・No.に応じて習得） ---
+        // --- ✨ ① 元から覚えている固有スキル定義（通常7種 ＋ ボス専用20種） ---
         const INNATE_SKILLS = {
             quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
             power:  { name: "🔥パワーチャージ(固有)", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のステージへ進むと上昇効果は消える。" },
@@ -783,9 +761,37 @@
             death:  { name: "💀デスエンド", desc: "攻撃後に25%の確率で目の前の敵のHPを0にする一撃必殺。" }
         };
 
-        // 図鑑No.に応じた固有スキル一覧を返す
+        // 👑 ボス20体それぞれの特別固有スキル（No.-1 〜 No.-20）
+        const BOSS_INNATE_SKILLS = {
+            "-1":  { name: "🐃大地の咆哮", desc: "【ボス固有】攻撃後に50%の確率で攻撃力が35%上昇する。" },
+            "-2":  { name: "🧚神風の舞", desc: "【ボス固有】攻撃後に50%の確率で素早さが45%上昇する。" },
+            "-3":  { name: "🦖暴君の牙", desc: "【ボス固有】攻撃後に100%の確率で0.8倍の追加追撃を行う。" },
+            "-4":  { name: "🧌世界樹の恵み", desc: "【ボス固有】攻撃後に50%の確率で最大HPの15%を回復する。" },
+            "-5":  { name: "🦞深淵の渦", desc: "【ボス固有】攻撃後に35%の確率で相手を毒状態にする。" },
+            "-6":  { name: "🦈海神の加護", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃を1回無効化するバリアを張る。" },
+            "-7":  { name: "🧟金剛の城壁", desc: "【ボス固有】攻撃後に60%の確率で防御力が40%上昇する。" },
+            "-8":  { name: "🦁王家の呪縛", desc: "【ボス固有】攻撃後に35%の確率で相手を麻痺状態にする。" },
+            "-9":  { name: "🐉猛毒のブレス", desc: "【ボス固有】攻撃後に45%の確率で相手を毒状態と麻痺状態にする。" },
+            "-10": { name: "😈魔界の覇気", desc: "【ボス固有】攻撃後に60%の確率で攻撃・防御・素早さが20%上昇する。" },
+            "-11": { name: "🦏超硬質装甲", desc: "【ボス固有】攻撃後に50%の確率で次に受けるダメージを半分にする。" },
+            "-12": { name: "👹神鍛の鉄槌", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃が1回だけ1.5倍になる。" },
+            "-13": { name: "🦄聖域の光", desc: "【ボス固有】攻撃後に60%の確率で最大HPの15%回復し、防御力が20%上昇する。" },
+            "-14": { name: "👼熾天使の裁き", desc: "【ボス固有】攻撃後に100%の確率でもう一度聖なる追加攻撃を行う。" },
+            "-15": { name: "👺業火の爆炎", desc: "【ボス固有】攻撃後に50%の確率で攻撃力+45%上昇＆次の攻撃1.5倍になる。" },
+            "-16": { name: "🐦‍🔥太陽の恩寵", desc: "【ボス固有】攻撃後に50%の確率でHP20%回復＆攻撃1回無効バリアを張る。" },
+            "-17": { name: "🐺絶対零度", desc: "【ボス固有】攻撃後に50%の確率で相手を麻痺させ、自分の素早さが40%上昇する。" },
+            "-18": { name: "💀神槍グングニル", desc: "【ボス固有】攻撃後に20%の確率で目の前の敵のHPを0にする一撃必殺。" },
+            "-19": { name: "👿混沌の連撃", desc: "【ボス固有】攻撃後に100%で追加攻撃を行い、40%の確率で毒・麻痺を付与する。" },
+            "-20": { name: "👾終焉の創世神話", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP15%回復＋25%一撃必殺が発動する最強スキル。" }
+        };
+        // 図鑑No.に応じた固有スキル一覧を返す（通常No.1〜100 ＆ ボスNo.-1〜-20両対応）
         function getInnateSkills(no) {
             let list = [];
+            if (no < 0) {
+                const bSk = BOSS_INNATE_SKILLS[String(no)];
+                if (bSk) list.push(bSk);
+                return list;
+            }
             if (no >= 1 && no <= 50) list.push(INNATE_SKILLS.quick);
             if (no >= 30 && no <= 50) list.push(INNATE_SKILLS.power);
             if (no >= 30 && no <= 50) list.push(INNATE_SKILLS.guard);
@@ -867,11 +873,12 @@
                 banner.style.display = "none";
             }, duration);
         }
-        // --- 🎵 ブラウザ標準 Web Audio API サウンドエンジン（バグ完全修正版） ---
+        // --- 🎵 ブラウザ標準 Web Audio API サウンドエンジン（バラードBGM＆ボス決戦BGM＆全ボタンSE） ---
         let soundEnabled = true;
         let audioCtx = null;
         let bgmInterval = null;
         let bgmStep = 0;
+        let currentBgmMode = "";
 
         function initAudio() {
             if (!audioCtx) {
@@ -882,6 +889,19 @@
                 audioCtx.resume();
             }
         }
+
+        // 画面上のどのボタンを押しても効果音を鳴らし、初回タップで拠点BGMも自動開始
+        document.addEventListener("click", function(e) {
+            if (e.target && e.target.tagName === "BUTTON") {
+                initAudio();
+                if (soundEnabled && e.target.id !== "btnSoundToggle") {
+                    seButtonTap();
+                }
+                if (soundEnabled && !bgmInterval) {
+                    updateBgmState();
+                }
+            }
+        });
 
         function toggleSound() {
             initAudio();
@@ -896,14 +916,13 @@
             }
             if (soundEnabled) {
                 playTone(880, "sine", 0, 0.08, 0.12);
-                if (inDungeon) startDungeonBgm();
+                updateBgmState(true);
             } else {
-                stopDungeonBgm();
+                stopAllBgm();
             }
         }
-
         function playTone(freq, type, delaySec, durationSec, vol = 0.12) {
-            if (!soundEnabled) return;
+            if (!soundEnabled || !freq) return;
             initAudio();
             if (!audioCtx) return;
             const t = audioCtx.currentTime + delaySec;
@@ -920,6 +939,10 @@
         }
 
         // 各種効果音（SE）
+        function seButtonTap() {
+            playTone(740, "sine", 0, 0.05, 0.09);
+            playTone(1046, "sine", 0.03, 0.06, 0.07);
+        }
         function seAttack() {
             playTone(190, "sawtooth", 0, 0.07, 0.16);
             playTone(95, "triangle", 0.03, 0.11, 0.20);
@@ -950,29 +973,85 @@
             playTone(180, "sawtooth", 0, 0.18, 0.16);
             playTone(130, "sawtooth", 0.16, 0.30, 0.16);
         }
-
-        // ダンジョンBGMループ
-        function startDungeonBgm() {
-            stopDungeonBgm();
-            if (!soundEnabled) return;
-            const melody = new Array(330, 392, 440, 392, 330, 294, 330, 392);
-            bgmStep = 0;
-            bgmInterval = setInterval(() => {
-                if (!soundEnabled || !inDungeon) {
-                    stopDungeonBgm();
-                    return;
-                }
-                const freq = melody.at(bgmStep % melody.length);
-                playTone(freq, "triangle", 0, 0.16, 0.06);
-                bgmStep++;
-            }, 260);
+        // 50階ごとのボスステージ判定
+        function isBossStage(stageNum) {
+            return stageNum > 0 && stageNum % 50 === 0;
         }
 
-        function stopDungeonBgm() {
+        // 状況に応じたBGM自動切替（拠点バラード / 100階別ダンジョンバラード10曲 / 盛り上がるボス戦曲）
+        function updateBgmState(forceRestart = false) {
+            if (!soundEnabled) {
+                stopAllBgm();
+                return;
+            }
+            let targetMode = "home";
+            if (inDungeon) {
+                if (isBossStage(stg)) {
+                    targetMode = "boss";
+                } else {
+                    let areaIdx = Math.min(9, Math.floor((stg - 1) / 100));
+                    targetMode = "area_" + areaIdx;
+                }
+            }
+            if (!forceRestart && currentBgmMode === targetMode && bgmInterval) return;
+
+            stopAllBgm();
+            currentBgmMode = targetMode;
+
+            // 1. 拠点バラード曲（穏やかなピアノ風アルペジオ）
+            const homeBallad = new Array(262, 330, 392, 494, 523, 494, 392, 330, 220, 262, 330, 392, 440, 392, 330, 262);
+
+            // 2. ダンジョン内バラード曲（100ステージごとに全10曲変化）
+            const areaBallads = new Array(
+                new Array(330, 392, 440, 523, 494, 440, 392, 330), // 1-100階: 草原バラード
+                new Array(294, 349, 440, 523, 494, 440, 349, 294), // 101-200階: ジャングルバラード
+                new Array(262, 330, 392, 523, 587, 523, 392, 330), // 201-300階: 海のバラード
+                new Array(294, 330, 440, 494, 587, 494, 440, 330), // 301-400階: 砂漠バラード
+                new Array(247, 294, 370, 440, 494, 440, 370, 294), // 401-500階: 毒沼バラード
+                new Array(262, 311, 392, 466, 523, 466, 392, 311), // 501-600階: 鉱山バラード
+                new Array(349, 440, 523, 659, 587, 523, 440, 349), // 601-700階: 神殿バラード
+                new Array(220, 262, 330, 415, 440, 415, 330, 262), // 701-800階: 火山バラード
+                new Array(392, 494, 587, 740, 784, 740, 587, 494), // 801-900階: 氷の世界バラード
+                new Array(247, 311, 370, 466, 494, 466, 370, 311)  // 901-1000階: 魔王城バラード
+            );
+
+            // 3. ボス戦専用：テンポが速く重厚で盛り上がる決戦BGM
+            const bossBattleNotes = new Array(220, 220, 262, 294, 330, 330, 392, 330, 294, 294, 330, 349, 392, 440, 494, 523);
+
+            bgmStep = 0;
+            if (targetMode === "boss") {
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== "boss") return;
+                    const freq = bossBattleNotes.at(bgmStep % bossBattleNotes.length);
+                    playTone(freq, "sawtooth", 0, 0.14, 0.085);
+                    if (bgmStep % 2 === 0) playTone(freq / 2, "triangle", 0, 0.16, 0.10);
+                    bgmStep++;
+                }, 175);
+            } else if (targetMode === "home") {
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== "home") return;
+                    const freq = homeBallad.at(bgmStep % homeBallad.length);
+                    playTone(freq, "sine", 0, 0.36, 0.065);
+                    bgmStep++;
+                }, 420);
+            } else {
+                const idx = parseInt(targetMode.replace("area_", "")) || 0;
+                const notes = areaBallads.at(idx) || areaBallads.at(0);
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== targetMode) return;
+                    const freq = notes.at(bgmStep % notes.length);
+                    playTone(freq, "triangle", 0, 0.34, 0.065);
+                    bgmStep++;
+                }, 380);
+            }
+        }
+
+        function stopAllBgm() {
             if (bgmInterval) {
                 clearInterval(bgmInterval);
                 bgmInterval = null;
             }
+            currentBgmMode = "";
         }
         // --- 🏆 ランキング（1位〜100位表示 ＋ 100位以下の自分の順位も常時表示） ---
         const RIVAL_NAMES = [
@@ -1099,11 +1178,11 @@
                 zk: zk,
                 p: p
             };
-            localStorage.setItem("mix_emoji_save_v7", JSON.stringify(data));
+            localStorage.setItem("mix_emoji_save_v8", JSON.stringify(data));
         }
 
         function loadGame() {
-            const saved = localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6") || localStorage.getItem("mix_emoji_save_v5");
+            const saved = localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6");
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -1113,7 +1192,10 @@
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
                         playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
-                        p = data.p;
+                        p = data.p.filter(m => getMonData(m.n));
+                        if (p.length === 0) {
+                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() }];
+                        }
                         let maxOrd = 0;
                         p.forEach(m => {
                             getSkillObj(m);
@@ -1165,7 +1247,7 @@
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
             if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
             inDungeon = true;
-            startDungeonBgm();
+            updateBgmState(true);
             resetStageBuffs();
             generateEnemies();
             const btn1 = document.getElementById("btnEnter");
@@ -1176,11 +1258,35 @@
             if (btn2) btn2.disabled = true;
             if (btnP) btnP.disabled = true;
             if (btnN) btnN.disabled = true;
-            document.getElementById("battleLog").innerText = "⚔️ ダンジョンの探索を開始した！";
+            if (isBossStage(stg)) {
+                document.getElementById("battleLog").innerText = "⚠️ 警告！エリア守護ボスが降臨した！！";
+            } else {
+                document.getElementById("battleLog").innerText = "⚔️ ダンジョンの探索を開始した！";
+            }
             up();
         }
         function generateEnemies() {
             eg = new Array();
+            // 50階ごとのボスステージ判定
+            if (isBossStage(stg)) {
+                let bossName = Object.keys(BOSS_D).find(k => BOSS_D[k].stage === stg) || "創世の次元獣インベーダー";
+                let b = BOSS_D[bossName];
+                let bossMon = {
+                    n: bossName,
+                    m: b.hp,
+                    hp: b.hp,
+                    at: b.at,
+                    df: b.df,
+                    sp: b.sp,
+                    ex: b.ex,
+                    isBoss: true,
+                    skillId: getRandomSkillId()
+                };
+                initBattleState(bossMon);
+                eg.push(bossMon);
+                return;
+            }
+
             let pool = getEnemyPool(stg);
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
             for(let i = 0; i < c; i++){
@@ -1203,14 +1309,13 @@
                 eg.push(enemyMon);
             }
         }
-
         function leaveDungeon() {
             if (autoAtkTimer) {
                 clearTimeout(autoAtkTimer);
                 autoAtkTimer = null;
             }
             inDungeon = false;
-            stopDungeonBgm();
+            updateBgmState(true);
             eg = new Array();
             resetStageBuffs();
             p.forEach(m => { m.hp = m.m; });
@@ -1265,9 +1370,26 @@
             if (mon.isParalyzed) icons += "⚡麻痺";
             return icons ? " <span class='status-badge'>" + icons + "</span>" : "";
         }
+
+        // 未発見モンスターの配合ヒントを表示する関数
+        function showRecipeHint(targetName) {
+            const entries = Object.entries(R).filter(([k, v]) => v === targetName);
+            if (entries.length === 0) {
+                alert("【未発見モンスター】\nこのモンスターはダンジョン探索で野生から仲間にできます！");
+                return;
+            }
+            let hints = entries.map(([pair]) => {
+                const parts = pair.split("+");
+                const p1 = parts.at(0);
+                const p2 = parts.at(1);
+                const s1 = zk.includes(p1) ? (D[p1].a + "No." + D[p1].no + " " + p1) : ("❓No." + D[p1].no + " ？？？");
+                const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ("❓No." + D[p2].no + " ？？？");
+                return "・" + s1 + " ＋ " + s2;
+            }).join("\n");
+            alert("【💡 配合シルエットヒント】\nシルエットの正体は配合で誕生するモンスターです！\n\n" + hints);
+        }
         function up() {
             if (!inDungeon) {
-                // ボックス内の並び順：戦闘参加中は「戦闘に出すボタンを押した順(partyOrder)」、待機中は「図鑑No.順」
                 p.sort((a, b) => {
                     if (a.inParty && b.inParty) {
                         return (a.partyOrder || 0) - (b.partyOrder || 0);
@@ -1275,25 +1397,37 @@
                     if (a.inParty !== b.inParty) {
                         return b.inParty ? 1 : -1;
                     }
-                    return D[a.n].no - D[b.n].no;
+                    return getMonData(a.n).no - getMonData(b.n).no;
                 });
             }
             
-            // 100階ごとのエリア環境名・絵文字・明るいパステル背景クラスの計算
+            // エリア環境名・絵文字・背景クラスの判定（50階ごとのボス戦時は専用表示＆背景に切替）
             let envName = "";
             let envEmoji = "";
             let envClass = "";
-            
-            if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
-            else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-jungle"; }
-            else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
-            else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-desert"; }
-            else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
-            else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
-            else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
-            else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
-            else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
-            else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
+            const isBossNow = inDungeon && isBossStage(stg);
+
+            if (isBossNow) {
+                envName = "ボス戦";
+                if (stg === 500 || stg === 1000) {
+                    envEmoji = "🕋";
+                    envClass = "bg-superboss";
+                } else {
+                    envEmoji = "🏴‍☠️";
+                    envClass = "bg-boss";
+                }
+            } else {
+                if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
+                else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-jungle"; }
+                else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
+                else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-desert"; }
+                else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
+                else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
+                else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
+                else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
+                else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
+                else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
+            }
 
             const stgEl = document.getElementById("stg");
             const maxStgEl = document.getElementById("maxStg");
@@ -1302,7 +1436,6 @@
             if (maxStgEl) maxStgEl.innerText = maxStg;
             if (clearStgEl) clearStgEl.innerText = maxClearStg;
 
-            // パーティ参加中カウント表示
             let partyNow = p.filter(m => m.inParty).length;
             const badgeEl = document.getElementById("partyCountBadge");
             if (badgeEl) badgeEl.innerText = "(戦闘中: " + partyNow + "/3体)";
@@ -1313,13 +1446,13 @@
             const bHeader = document.getElementById("battleHeaderBar");
             if (bField) bField.className = "battle-field " + envClass;
             if (bHeader) bHeader.className = "battle-header-bar " + envClass;
-            // 味方戦闘画面の描画（「⚔️ 戦闘に出す」ボタンを押した順番通りに上から表示）
+            // 味方戦闘画面の描画
             if (mS) {
                 mS.innerHTML = "<b style='font-size:12px;'>【味方】</b>";
                 let partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).slice(0, 3);
                 partyMembers.forEach((m, idx) => {
                     let isDead = m.hp <= 0;
-                    let inf = D[m.n];
+                    let inf = getMonData(m.n);
                     let stateHtml = buildStateIcons(m);
                     let orderTag = "<span style='font-size:9.5px; color:#0284c7; font-weight:900;'>[" + (idx + 1) + "番手]</span> ";
 
@@ -1337,7 +1470,7 @@
 
             // 敵戦闘画面の描画
             if (eS) {
-                eS.innerHTML = "<b style='font-size:12px;'>【敵】</b>";
+                eS.innerHTML = "<b style='font-size:12px;'>" + (isBossNow ? "【👑エリア守護ボス】" : "【敵】") + "</b>";
                 if(!inDungeon || eg.length === 0){
                     eS.innerHTML += "<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>";
                     const bEnterBtm = document.getElementById("btnEnterBtm");
@@ -1345,11 +1478,12 @@
                 } else {
                     let enemyHTML = "";
                     eg.forEach((m, i) => {
-                        let inf = D[m.n];
+                        let inf = getMonData(m.n);
                         let eId = (i === 0) ? " id='eM_front' " : "";
                         let eStateHtml = buildStateIcons(m);
+                        let sizePx = m.isBoss ? "48px" : "36px";
 
-                        enemyHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + " style='font-size:36px;'>" + inf.a + "</span><div class='monster-shadow' style='width:30px;'></div></div><b style='font-size:11px;'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + stg + ")</span>";
+                        enemyHTML += "<br><div class='monster-container'><span class='battle-monster'" + eId + " style='font-size:" + sizePx + ";'>" + inf.a + "</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:11px; color:" + (m.isBoss ? "#b91c1c" : "#1e293b") + ";'>No." + inf.no + " " + m.n + "</b> <span style='font-size:10px;'>(Lv." + stg + ")</span>";
                         enemyHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml;
                         enemyHTML += '<div class="hp-bg" style="height:7px;"><div class="hp" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
                     });
@@ -1359,7 +1493,7 @@
             const btnMix = document.getElementById("btnMix");
             if (btnMix) btnMix.disabled = inDungeon;
 
-            // 拠点ボックスの描画（固有スキル＋ランダムスキルの両方を表示＆タップで効果確認）
+            // 拠点ボックスの描画
             const list = document.getElementById("box");
             if (list) {
                 list.innerHTML = "";
@@ -1369,11 +1503,10 @@
                     let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
                     let btnBg = n.inParty ? "background:linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 2px solid #334155;" : "";
                     let actionBtn = inDungeon ? "" : '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>';
-                    let inf = D[n.n];
+                    let inf = getMonData(n.n);
                     let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
                     let partyTag = n.inParty ? " <span style='color:#059669;font-weight:bold;'>[参加中]</span>" : "";
 
-                    // 固有スキル一覧の生成
                     let innateList = getInnateSkills(inf.no);
                     let skillHtml = "<div style='margin-top:4px;'><span style='font-size:10px; color:#64748b; font-weight:bold;'>✨固有スキル: </span>";
                     if (innateList.length === 0) {
@@ -1385,7 +1518,6 @@
                     }
                     skillHtml += "</div>";
 
-                    // ランダム習得スキル1つの生成
                     let rSk = getSkillObj(n);
                     skillHtml += "<div style='margin-top:3px;'><span style='font-size:10px; color:#d97706; font-weight:bold;'>🎲追加スキル: </span>" +
                                  '<span class="skill-badge" style="background:linear-gradient(180deg, #fefce8 0%, #fef3c7 100%); color:#b45309; border-color:#fcd34d;" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">' + rSk.name + '</span></div>';
@@ -1395,31 +1527,81 @@
                 });
             }
 
-            // 配合選択用ボックスの描画
+            // 配合選択用ボックスの描画（No.・絵文字・名前・レベルのみ表示／スキル非表示）
             const mixList = document.getElementById("mixBoxList");
             if (mixList) {
                 mixList.innerHTML = "";
                 p.forEach((n, i) => {
                     let disAttr = inDungeon ? "disabled" : "";
                     let liClass = inDungeon ? "class='locked'" : "";
-                    let inf = D[n.n];
-                    let rSk = getSkillObj(n);
-                    mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ') <span style="font-size:10px;color:#b45309;">[🎲' + rSk.name + ']</span></li>';
+                    let inf = getMonData(n.n);
+                    mixList.innerHTML += '<li ' + liClass + '><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> ' + inf.a + ' <b>No.' + inf.no + ' ' + n.n + '</b> (Lv.' + n.lv + ')</li>';
                 });
             }
+            // 配合レシピ表の動的更新（未発見の結果モンスターはシルエット表示）
+            const rtTable = document.getElementById("rt");
+            if (rtTable) {
+                const recipeEntries = Object.entries(R);
+                let rowsHtml = "";
+                for (let i = 0; i < recipeEntries.length; i += 2) {
+                    rowsHtml += "<tr>";
+                    for (let j = 0; j < 2; j++) {
+                        if (i + j < recipeEntries.length) {
+                            const [pair, resName] = recipeEntries.at(i + j);
+                            const [m1Name, m2Name] = pair.split("+");
+                            const m1 = D[m1Name];
+                            const m2 = D[m2Name];
+                            const res = D[resName];
+                            const isDiscovered = zk.includes(resName);
+                            const resEmoji = isDiscovered ? res.a : '<span class="silhouette">' + res.a + '</span>';
+                            const resLabel = isDiscovered ? resName : "？？？";
+                            const noJoinTag = res.no >= 51 ? ' <span style="color:red;font-weight:bold;">(⚠️野生不可)</span>' : "";
+                            rowsHtml += '<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>';
+                        } else {
+                            rowsHtml += "<td></td>";
+                        }
+                    }
+                    rowsHtml += "</tr>";
+                }
+                rtTable.innerHTML = rowsHtml;
+            }
 
-            // みつけた図鑑の描画
+            // みつけた図鑑の描画（通常100種：配合モンスターはシルエット＋タップで材料ヒント）
+            const normalFoundCount = Object.keys(D).filter(k => zk.includes(k)).length;
             const zukanBadge = document.getElementById("zukanCountBadge");
-            if (zukanBadge) zukanBadge.innerText = "(" + zk.length + "/100種)";
+            if (zukanBadge) zukanBadge.innerText = "(" + normalFoundCount + "/100種)";
 
+            const synthResults = new Set(Object.values(R));
             const zkDiv = document.getElementById("zk");
             if (zkDiv) {
                 zkDiv.innerHTML = "";
                 Object.keys(D).forEach((k) => {
                     if(zk.includes(k)){
                         zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>';
+                    } else if (synthResults.has(k)) {
+                        zkDiv.innerHTML += '<div class="zukan-unknown" style="cursor:pointer; border-color:#93c5fd;" onclick="showRecipeHint(\'' + k + '\')"><span class="silhouette">' + D[k].a + '</span><br>No.' + D[k].no + '<br>💡配合ヒント</div>';
                     } else {
                         zkDiv.innerHTML += '<div class="zukan-unknown">❓<br>No.' + D[k].no + '<br>？？？</div>';
+                    }
+                });
+            }
+
+            // ボス専用図鑑の描画（全20種：No.-1 〜 No.-20）
+            const bossFoundCount = Object.keys(BOSS_D).filter(k => zk.includes(k)).length;
+            const bBadge1 = document.getElementById("bossZukanCountBadge");
+            const bBadge2 = document.getElementById("bossZukanSubBadge");
+            if (bBadge1) bBadge1.innerText = " / 👑ボス(" + bossFoundCount + "/20種)";
+            if (bBadge2) bBadge2.innerText = "(" + bossFoundCount + "/20種)";
+
+            const bossZkDiv = document.getElementById("bossZk");
+            if (bossZkDiv) {
+                bossZkDiv.innerHTML = "";
+                Object.keys(BOSS_D).forEach((k) => {
+                    const bInf = BOSS_D[k];
+                    if (zk.includes(k)) {
+                        bossZkDiv.innerHTML += '<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>';
+                    } else {
+                        bossZkDiv.innerHTML += '<div class="zukan-unknown" style="border-color:#fecaca;"><span class="silhouette">' + bInf.a + '</span><br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>';
                     }
                 });
             }
@@ -1460,7 +1642,10 @@
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
                         playerName = data.playerName || "";
                         zk = data.zk || ["プニシズク"];
-                        p = data.p;
+                        p = data.p.filter(m => getMonData(m.n));
+                        if (p.length === 0) {
+                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, skillId: getRandomSkillId() }];
+                        }
                         let maxOrd = 0;
                         p.forEach(m => {
                             getSkillObj(m);
@@ -1486,39 +1671,161 @@
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
         }
-        // --- ✨ 攻撃後に自動発動するスキル判定エンジン（固有スキル7種＋ランダムスキル10種両対応） ---
+        // --- ✨ 攻撃後に自動発動するスキル判定エンジン（通常固有7種＋ボス固有20種＋ランダム10種） ---
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
-            const no = D[attacker.n].no;
+            const inf = getMonData(attacker.n);
+            const no = inf ? inf.no : 1;
             const sk = getSkillObj(attacker);
             const defSk = getSkillObj(defender);
             let skillLogs = "";
 
             // ==========================================
-            // 【A】元から覚えている固有スキル（全7種）の判定
+            // 【A-1】ボス専用固有スキル（No.-1 〜 No.-20）
             // ==========================================
-            // 1. No.1〜No.50: 25%確率で素早さ（小）上昇
+            if (no < 0) {
+                if (no === -1 && Math.random() < 0.50) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.35));
+                    skillLogs += "🐃" + attacker.n + "の大地の咆哮！攻撃力大幅UP！ ";
+                }
+                if (no === -2 && Math.random() < 0.50) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.45));
+                    skillLogs += "🧚" + attacker.n + "の神風の舞！素早さ大幅UP！ ";
+                }
+                if (no === -3 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = defender.df + (defender.buffDf || 0);
+                    let dmg = Math.max(2, Math.floor((atkVal - defVal / 2) * 0.8));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "🦖" + attacker.n + "の暴君の牙！追撃 " + dmg + " ダメージ！ ";
+                }
+                if (no === -4 && Math.random() < 0.50) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "🧌" + attacker.n + "の世界樹の恵み！HPが " + h + " 回復！ ";
+                }
+                if (no === -5 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 5) {
+                        defender.isPoisoned = true;
+                        skillLogs += "🦞" + attacker.n + "の深淵の渦！" + defender.n + "は毒状態になった！ ";
+                    }
+                }
+                if (no === -6 && Math.random() < 0.40) {
+                    attacker.nullifyOnce = true;
+                    skillLogs += "🦈" + attacker.n + "の海神の加護！次の攻撃を1回無効化！ ";
+                }
+                if (no === -7 && Math.random() < 0.60) {
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.40));
+                    skillLogs += "🧟" + attacker.n + "の金剛の城壁！防御力大幅UP！ ";
+                }
+                if (no === -8 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 7) {
+                        defender.isParalyzed = true;
+                        skillLogs += "🦁" + attacker.n + "の王家の呪縛！" + defender.n + "は麻痺状態になった！ ";
+                    }
+                }
+                if (no === -9 && defender.hp > 0 && Math.random() < 0.45) {
+                    if (defSk.id !== 5) defender.isPoisoned = true;
+                    if (defSk.id !== 7) defender.isParalyzed = true;
+                    skillLogs += "🐉" + attacker.n + "の猛毒のブレス！毒と麻痺を付与！ ";
+                }
+                if (no === -10 && Math.random() < 0.60) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.20));
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.20));
+                    skillLogs += "😈" + attacker.n + "の魔界の覇気！全能力UP！ ";
+                }
+                if (no === -11 && Math.random() < 0.50) {
+                    attacker.halfDmgOnce = true;
+                    skillLogs += "🦏" + attacker.n + "の超硬質装甲！次の被ダメージ半減！ ";
+                }
+                if (no === -12 && Math.random() < 0.40) {
+                    attacker.nextAtk15 = true;
+                    skillLogs += "👹" + attacker.n + "の神鍛の鉄槌！次の攻撃が1.5倍になる！ ";
+                }
+                if (no === -13 && Math.random() < 0.60) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
+                    skillLogs += "🦄" + attacker.n + "の聖域の光！HP " + h + " 回復＆防御UP！ ";
+                }
+                if (no === -14 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = defender.df + (defender.buffDf || 0);
+                    let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "👼" + attacker.n + "の熾天使の裁き！追加 " + dmg + " ダメージ！ ";
+                }
+                if (no === -15 && Math.random() < 0.50) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.45));
+                    attacker.nextAtk15 = true;
+                    skillLogs += "👺" + attacker.n + "の業火の爆炎！攻撃大幅UP＆次回1.5倍！ ";
+                }
+                if (no === -16 && Math.random() < 0.50) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.20));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.nullifyOnce = true;
+                    skillLogs += "🐦‍🔥" + attacker.n + "の太陽の恩寵！HP " + h + " 回復＆バリア展開！ ";
+                }
+                if (no === -17 && Math.random() < 0.50) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.40));
+                    if (defender.hp > 0 && defSk.id !== 7) defender.isParalyzed = true;
+                    skillLogs += "🐺" + attacker.n + "の絶対零度！素早さUP＆麻痺付与！ ";
+                }
+                if (no === -18 && defender.hp > 0 && Math.random() < 0.20) {
+                    defender.hp = 0;
+                    skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ ";
+                }
+                if (no === -19 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = defender.df + (defender.buffDf || 0);
+                    let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "👿" + attacker.n + "の混沌の連撃！追加 " + dmg + " ダメージ！ ";
+                    if (defender.hp > 0 && Math.random() < 0.40) {
+                        if (defSk.id !== 5) defender.isPoisoned = true;
+                        if (defSk.id !== 7) defender.isParalyzed = true;
+                        skillLogs += "毒と麻痺を付与！ ";
+                    }
+                }
+                if (no === -20) {
+                    if (defender.hp > 0) {
+                        let atkVal = attacker.at + (attacker.buffAt || 0);
+                        let defVal = defender.df + (defender.buffDf || 0);
+                        let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                        defender.hp = Math.max(0, defender.hp - dmg);
+                        skillLogs += "👾" + attacker.n + "の終焉の創世神話！追撃 " + dmg + " ダメージ！ ";
+                    }
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "HP " + h + " 回復！ ";
+                    if (defender.hp > 0 && Math.random() < 0.25) {
+                        defender.hp = 0;
+                        skillLogs += "💀終焉の一撃必殺発動！ ";
+                    }
+                }
+                if (!isPlayerAttack && defender.hp === 0) {
+                    skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                }
+            }
+            // ==========================================
+            // 【A-2】通常モンスター固有スキル（No.1 〜 No.100）
+            // ==========================================
             if (no >= 1 && no <= 50 && Math.random() < 0.25) {
                 let inc = Math.max(1, Math.floor(attacker.sp * 0.15));
                 attacker.buffSp = (attacker.buffSp || 0) + inc;
                 skillLogs += "⚡" + attacker.n + "のクイックステップ！素早さUP！ ";
             }
-
-            // 2. No.30〜No.50: 25%確率で攻撃（中）上昇
             if (no >= 30 && no <= 50 && Math.random() < 0.25) {
                 let inc = Math.max(2, Math.floor(attacker.at * 0.30));
                 attacker.buffAt = (attacker.buffAt || 0) + inc;
                 skillLogs += "🔥" + attacker.n + "のパワーチャージ(固有)！攻撃UP！ ";
             }
-
-            // 3. No.30〜No.50: 50%確率で防御（小）上昇
             if (no >= 30 && no <= 50 && Math.random() < 0.50) {
                 let inc = Math.max(1, Math.floor(attacker.df * 0.15));
                 attacker.buffDf = (attacker.buffDf || 0) + inc;
                 skillLogs += "🛡️" + attacker.n + "のアイアンガード！防御UP！ ";
             }
-
-            // 4. No.51〜No.100: もう一度追加攻撃（ダブルアタック）
             if (no >= 51 && no <= 100 && defender.hp > 0) {
                 let atkVal = attacker.at + (attacker.buffAt || 0);
                 let defVal = defender.df + (defender.buffDf || 0);
@@ -1529,22 +1836,16 @@
                     skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 }
             }
-
-            // 5. No.70〜No.100: 50%の確率でHPが10%回復
             if (no >= 70 && no <= 100 && Math.random() < 0.50) {
                 let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
                 attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
                 skillLogs += "💚" + attacker.n + "のリジェネヒール！HPが " + healVal + " 回復！ ";
             }
-
-            // 6. No.90〜No.100: 50%確率で素早さ（大）上昇
             if (no >= 90 && no <= 100 && Math.random() < 0.50) {
                 let inc = Math.max(3, Math.floor(attacker.sp * 0.50));
                 attacker.buffSp = (attacker.buffSp || 0) + inc;
                 skillLogs += "🌪️" + attacker.n + "のゴッドスピード！素早さ大幅UP！ ";
             }
-
-            // 7. No.95〜No.100: 25%確率で相手のHPを0にする一撃必殺
             if (no >= 95 && no <= 100 && defender.hp > 0 && Math.random() < 0.25) {
                 defender.hp = 0;
                 skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
@@ -1555,26 +1856,19 @@
             // ==========================================
             // 【B】ランダム習得スキル（全10種）の判定
             // ==========================================
-            // 1. 10%で相手の攻撃を一度だけ無効
             if (sk.id === 1 && Math.random() < 0.10) {
                 attacker.nullifyOnce = true;
                 skillLogs += "🛡️" + attacker.n + "のイージスバリア！次の攻撃を1回無効化！ ";
             }
-
-            // 2. 10%でHPを5%回復
             if (sk.id === 2 && Math.random() < 0.10) {
                 let healVal = Math.max(1, Math.floor(attacker.m * 0.05));
                 attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
                 skillLogs += "💚" + attacker.n + "のリジェネレーション！HPが " + healVal + " 回復！ ";
             }
-
-            // 3. 10%で次のターンの自分の攻撃を一回だけ1.5倍にする（その次のターンからは元に戻る）
             if (sk.id === 3 && Math.random() < 0.10) {
                 attacker.nextAtk15 = true;
                 skillLogs += "🔥" + attacker.n + "のパワーチャージ！次の攻撃が1.5倍になる！ ";
             }
-
-            // 4. 10%で相手を毒状態にする（スキル5「毒状態にならない」を持つ相手には無効）
             if (sk.id === 4 && defender.hp > 0 && Math.random() < 0.10) {
                 if (defSk.id === 5) {
                     skillLogs += "✨" + defender.n + "はポイズンガードで毒を防いだ！ ";
@@ -1583,8 +1877,6 @@
                     skillLogs += "☠️" + attacker.n + "のポイズンタッチ！" + defender.n + "は毒状態になった！ ";
                 }
             }
-
-            // 6. 10%で相手を麻痺状態にする（スキル7「麻痺状態にならない」を持つ相手には無効）
             if (sk.id === 6 && defender.hp > 0 && Math.random() < 0.10) {
                 if (defSk.id === 7) {
                     skillLogs += "🔋" + defender.n + "はパラライズガードで麻痺を防いだ！ ";
@@ -1593,14 +1885,10 @@
                     skillLogs += "⚡" + attacker.n + "のパラライズショック！" + defender.n + "は麻痺状態になった！ ";
                 }
             }
-
-            // 8. 10%で次に自分が受けるダメージを半分にする（切り上げ）
             if (sk.id === 8 && Math.random() < 0.10) {
                 attacker.halfDmgOnce = true;
                 skillLogs += "🔰" + attacker.n + "のハーフシールド！次の被ダメージを半減！ ";
             }
-
-            // 9. 50%で攻撃と防御と素早さが（小）上昇する（次のステージに進むと元に戻る）
             if (sk.id === 9 && Math.random() < 0.50) {
                 let incAt = Math.max(1, Math.floor(attacker.at * 0.10));
                 let incDf = Math.max(1, Math.floor(attacker.df * 0.10));
@@ -1610,8 +1898,6 @@
                 attacker.buffSp = (attacker.buffSp || 0) + incSp;
                 skillLogs += "🌟" + attacker.n + "のオールブースト！攻・防・素早さUP！ ";
             }
-
-            // 10. 20%で相手を毒状態と麻痺にする（無効スキル持ちはそれぞれ防ぐ）
             if (sk.id === 10 && defender.hp > 0 && Math.random() < 0.20) {
                 skillLogs += "☣️" + attacker.n + "のカオスヴェノム！ ";
                 if (defSk.id === 5) {
@@ -1637,7 +1923,6 @@
             const btnAtk = document.getElementById("btnAtk");
             if (btnAtk) btnAtk.disabled = true;
 
-            // 「⚔️ 戦闘に出す」ボタンを押した順番（partyOrder）で生存している先頭メンバーを選ぶ
             let aliveParty = p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
             if(aliveParty.length === 0) {
                 if (btnAtk) btnAtk.disabled = false;
@@ -1652,14 +1937,12 @@
             let turnLog = "";
 
             function executeAttack(attacker, defender, isPlayerAttack) {
-                // 麻痺チェック（麻痺状態ならこのターンは攻撃できず、次のターンから動けるよう解除）
                 if (attacker.isParalyzed) {
                     attacker.isParalyzed = false;
                     turnLog += "⚡" + attacker.n + "は麻痺して動けない！（麻痺が解けた） ";
                     return;
                 }
 
-                // アニメーション演出
                 if (isPlayerAttack) {
                     mySideEl.classList.add("atk-forward-my");
                     setTimeout(() => { mySideEl.classList.remove("atk-forward-my"); }, 200);
@@ -1675,7 +1958,6 @@
                         setTimeout(() => { mySideEl.classList.remove("hit-flash"); }, 400);
                     }, 100);
                 }
-                // スキル1: 攻撃1回無効バリア判定
                 if (defender.nullifyOnce) {
                     defender.nullifyOnce = false;
                     turnLog += "🛡️" + defender.n + "はイージスバリアで" + attacker.n + "の攻撃を無効化した！ ";
@@ -1684,14 +1966,12 @@
                     let defVal = defender.df + (defender.buffDf || 0);
                     let baseDmg = Math.max(isPlayerAttack ? 2 : 1, Math.floor(atkVal - (defVal / 2) + Math.random() * (isPlayerAttack ? 3 : 2)));
 
-                    // スキル3: 1回だけ攻撃1.5倍（使用後は元に戻る）
                     if (attacker.nextAtk15) {
                         baseDmg = Math.floor(baseDmg * 1.5);
                         attacker.nextAtk15 = false;
                         turnLog += "🔥パワーチャージ発動(1.5倍)！ ";
                     }
 
-                    // スキル8: 次に受けるダメージを半分にする（切り上げ）
                     if (defender.halfDmgOnce) {
                         baseDmg = Math.ceil(baseDmg / 2);
                         defender.halfDmgOnce = false;
@@ -1701,17 +1981,15 @@
                     defender.hp = Math.max(0, defender.hp - baseDmg);
                     seAttack();
                     if (isPlayerAttack) {
-                        turnLog += "⚔️No." + D[attacker.n].no + " " + attacker.n + "の攻撃！ " + baseDmg + " ダメージ！ ";
+                        turnLog += "⚔️No." + getMonData(attacker.n).no + " " + attacker.n + "の攻撃！ " + baseDmg + " ダメージ！ ";
                     } else {
                         turnLog += "💥" + attacker.n + "の反撃！ " + baseDmg + " ダメージ！ ";
                         if (defender.hp === 0) turnLog += "🔴" + defender.n + "が戦闘不能！ ";
                     }
                 }
 
-                // 攻撃後のスキル自動発動
                 turnLog += triggerPostAttackSkills(attacker, defender, isPlayerAttack);
 
-                // 毒ダメージ判定（毒状態になったモンスターは攻撃後に最大HPの10%のダメージを受ける）
                 if (attacker.hp > 0 && attacker.isPoisoned) {
                     let poisonDmg = Math.max(1, Math.floor(attacker.m * 0.10));
                     attacker.hp = Math.max(0, attacker.hp - poisonDmg);
@@ -1759,10 +2037,10 @@
                         logBox.innerText = turnLog;
                         up();
                         setTimeout(() => {
-                            stopDungeonBgm();
                             seFail();
                             alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
                             inDungeon = false;
+                            updateBgmState(true);
                             eg = new Array();
                             resetStageBuffs();
                             p.forEach(m => { m.hp = m.m; });
@@ -1773,13 +2051,14 @@
                         }, 350);
                         return;
                     }
-                              if(currentEnemy.hp === 0){
+                    if(currentEnemy.hp === 0){
                         turnLog += "💀" + currentEnemy.n + "を倒した！ ";
-                        let targetNo = D[currentEnemy.n].no;
-                        let joinChance = targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : (targetNo <= 50 ? 0.01 : 0.00));
+                        const enemyInf = getMonData(currentEnemy.n);
+                        let targetNo = enemyInf ? enemyInf.no : 1;
+                        let joinChance = (targetNo < 0) ? 0.15 : (targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : (targetNo <= 50 ? 0.01 : 0.00)));
 
                         if(Math.random() < joinChance) {
-                            const b = D[currentEnemy.n];
+                            const b = getMonData(currentEnemy.n);
                             let newAlly = {
                                 n: currentEnemy.n,
                                 lv: 1,
@@ -1797,7 +2076,7 @@
                             initBattleState(newAlly);
                             p.push(newAlly);
                             turnLog += "✨" + currentEnemy.n + "がボックスに加入した！ ";
-                            showNotice("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！");
+                            showNotice(targetNo < 0 ? ("👑 伝説のボス「" + currentEnemy.n + "」が仲間になりました！！") : ("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！"));
                             if(!zk.includes(currentEnemy.n)) zk.push(currentEnemy.n);
                             seJoin();
                         } else if (targetNo >= 51) {
@@ -1815,7 +2094,7 @@
                                 while(ally.lv < 100 && ally.ex >= ally.nx) {
                                     ally.ex -= ally.nx;
                                     ally.lv++;
-                                    const b = D[ally.n];
+                                    const b = getMonData(ally.n);
                                     ally.m += Math.max(1, Math.floor(b.hp * 0.1));
                                     ally.hp = ally.m;
                                     ally.at += Math.max(1, Math.floor(b.at * 0.1));
@@ -1827,21 +2106,20 @@
                                 }
                             }
                         });
-                                  eg.shift();
+                        eg.shift();
                         if(eg.length === 0) {
                             turnLog += "🎉ステージクリア！ ";
                             seStageClear();
                             let clearedStg = stg;
 
-                            // 最高クリアステージ記録を更新＆ランキング反映
                             if (clearedStg > maxClearStg) {
                                 maxClearStg = clearedStg;
                                 updateRankingUI();
                             }
 
                             if (clearedStg === 500) {
-                                showNotice("🎊 ステージ500クリア！おめでとうございます！！ 🎊", 8000);
-                                setTimeout(() => { alert("🎊 ステージ500クリア！おめでとうございます！！ 🎊\n折り返し地点を突破しました！"); }, 150);
+                                showNotice("🎊 ステージ500大ボス撃破！おめでとうございます！！ 🎊", 8000);
+                                setTimeout(() => { alert("🎊 ステージ500大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！"); }, 150);
                             } else if (clearedStg === 1000) {
                                 showNotice("👑 ステージ1000完全制覇！おめでとうございます！！ 👑", 10000);
                                 setTimeout(() => { alert("👑 ステージ1000完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！"); }, 150);
@@ -1854,11 +2132,12 @@
                             if (stg < 1000) {
                                 stg++;
                                 resetStageBuffs();
+                                updateBgmState(true);
                                 turnLog += "➡️自動で " + stg + " 階に進みます。";
                                 generateEnemies();
                             } else {
                                 inDungeon = false;
-                                stopDungeonBgm();
+                                updateBgmState(true);
                                 resetStageBuffs();
                             }
                         }
@@ -1876,6 +2155,7 @@
                 }, 400);
             }, 300);
         }
+
         function mix() {
             if(inDungeon) return;
             
@@ -1892,10 +2172,12 @@
             let m1 = p.at(idx1);
             let m2 = p.at(idx2);
 
-            // A+B でも B+A でも両方検索できるように対応
+            if (getMonData(m1.n).no < 0 || getMonData(m2.n).no < 0) {
+                return alert("⚠️ ボスモンスターは特別な存在のため配合の材料にできません！");
+            }
+
             let resultName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
 
-            // レシピが存在しない、または25%の成功判定（Math.random() < 0.25）に外れた場合は失敗して消滅
             if(!resultName || Math.random() >= 0.25) {
                 seFail();
                 if (!resultName) {
@@ -1906,7 +2188,6 @@
                 p = p.filter(m => m !== m1 && m !== m2);
             } else {
                 const b = D[resultName];
-                // 配合成功後のレベルは2匹の合計レベル（上限100）
                 let sumLv = Math.min(100, m1.lv + m2.lv);
                 let newMon = {
                     n: resultName,
