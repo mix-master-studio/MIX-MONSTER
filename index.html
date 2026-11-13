@@ -195,7 +195,6 @@
         .bg-superboss::before { content: "🕋"; opacity: 0.32; }
         .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
 
-        /* --- ✨ レアモンスター（色違い＋虹色オーラ変化） --- */
         @keyframes shinyRainbow {
             0%   { filter: hue-rotate(120deg) saturate(1.7) drop-shadow(0 0 6px #f472b6); }
             25%  { filter: hue-rotate(200deg) saturate(1.8) drop-shadow(0 0 8px #38bdf8); }
@@ -318,19 +317,38 @@
             border-bottom: 2px solid #334155;
             box-shadow: none;
         }
+        .skill-panel {
+            margin-top: 4px;
+            padding: 4px 5px;
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            align-items: center;
+        }
         .skill-badge {
             display: inline-block;
             background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
             color: #0369a1;
             border: 1px solid #7dd3fc;
-            border-radius: 6px;
-            padding: 1px 6px;
-            font-size: 9.5px;
+            border-radius: 5px;
+            padding: 1px 5px;
+            font-size: 9px;
             font-weight: 800;
-            margin: 2px 2px 0 0;
             cursor: pointer;
-            box-shadow: 0 1px 2px rgba(2,132,199,0.08);
-            transition: transform 0.1s;
+            line-height: 1.35;
+        }
+        .skill-badge-rare {
+            background: linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%);
+            color: #a21caf;
+            border-color: #f0abfc;
+        }
+        .skill-badge-add {
+            background: linear-gradient(180deg, #fefce8 0%, #fef3c7 100%);
+            color: #b45309;
+            border-color: #fcd34d;
         }
         .skill-badge:active { transform: scale(0.95); }
         .status-badge {
@@ -498,6 +516,21 @@
             gap: 4px;
             flex-wrap: wrap;
         }
+        .box-ctrl-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        .box-ctrl-row button {
+            flex: 1;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 8px 4px !important;
+            font-size: 11px !important;
+            border-radius: 11px !important;
+            white-space: nowrap;
+        }
         .box-btn-row {
             display: flex;
             gap: 5px;
@@ -523,6 +556,16 @@
             font-weight: 900;
             margin-left: 3px;
         }
+        .mission-bonus-bar {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 9px;
+            padding: 5px 8px;
+            margin-bottom: 6px;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #92400e;
+        }
         .mission-row {
             display: flex;
             justify-content: space-between;
@@ -534,7 +577,7 @@
             padding: 7px 9px;
             margin: 5px 0;
             text-align: left;
-            font-size: 11.5px;
+            font-size: 11px;
         }
         .mission-row.done {
             background: #f0fdf4;
@@ -597,7 +640,7 @@
             1️⃣ <b>パーティ編成</b>：下のボックスから最大3体「⚔️戦闘に出す」で登録！<br>
             2️⃣ <b>ダンジョン冒険</b>：「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現）<br>
             3️⃣ <b>モンスター配合</b>：2匹を配合して新種を生み出そう！レベルは2匹の合計になります（失敗すると消滅するので🔒鍵で保護が安心！）<br>
-            4️⃣ <b>レア＆特別イベント</b>：低確率で虹色に光る<b>✨色違い(全能力1.25倍)</b>が出現！道中では旅人・旅商人・謎の宝箱・他国の勇者に会えることも！
+            4️⃣ <b>レア＆特別イベント</b>：低確率で虹色に光る<b>✨色違い(全能力1.25倍＋限定固有スキル)</b>が出現！道中では旅人・旅商人・謎の宝箱・他国の勇者に会えることも！
         </div>
     </div>
 
@@ -663,19 +706,23 @@
             🏆 ミッション一覧の表示切替
         </button>
         <div id="missionWrapper" style="display: none; margin-top: 8px;">
-            <div id="missionList" class="scroll-box" style="max-height: 240px; border-color: #fde68a; background: #fffbeb;"></div>
+            <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
+            <div id="missionList" class="scroll-box" style="max-height: 250px; border-color: #fde68a; background: #fffbeb;"></div>
         </div>
     </div>
 
     <div class="box">
         <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
         <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/50体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
-        <div style="display: flex; gap: 6px; justify-content: center; margin-bottom: 8px;">
-            <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="width: 48%; margin: 0; background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
+        <div class="box-ctrl-row">
+            <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
                 📦 表示切替
             </button>
-            <button id="btnSortBox" onclick="toggleBoxSort()" style="width: 48%; margin: 0; background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
-                🔃 並び順: 図鑑No.順
+            <button id="btnSortBox" onclick="toggleBoxSort()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
+                🔃 図鑑No.順
+            </button>
+            <button id="btnSkillVisToggle" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
+                📜 スキル: ON
             </button>
         </div>
         <ul id="box" class="toggle-box scroll-box"></ul>
@@ -933,6 +980,24 @@
             "-20": { name: "👾終焉の創世神話", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP15%回復＋25%一撃必殺が発動する最強スキル。" }
         };
 
+        const RARE_INNATE_SKILLS = [
+            { id: 1, name: "🌈プリズムバースト", desc: "【色違い限定】攻撃後に35%の確率で攻撃力の60%の追加光線ダメージを与え、自分の攻撃力が15%上昇する。" },
+            { id: 2, name: "✨オーラリカバー", desc: "【色違い限定】攻撃後に40%の確率で最大HPの12%を回復し、さらに20%の確率で攻撃1回無効バリアを張る。" },
+            { id: 3, name: "💎スターライトステップ", desc: "【色違い限定】攻撃後に35%の確率で素早さ25%UP＆攻撃20%UPし、さらに15%の確率で次の攻撃が1.5倍になる。" }
+        ];
+
+        function getRandomRareSkillId() {
+            return Math.floor(Math.random() * RARE_INNATE_SKILLS.length) + 1;
+        }
+
+        function getRareSkillObj(mon) {
+            if (!mon || !mon.isRare) return null;
+            if (!mon.rareSkillId || mon.rareSkillId < 1 || mon.rareSkillId > RARE_INNATE_SKILLS.length) {
+                mon.rareSkillId = getRandomRareSkillId();
+            }
+            return RARE_INNATE_SKILLS[mon.rareSkillId - 1];
+        }
+
         function getInnateSkills(no) {
             let list = [];
             if (no === "EX") {
@@ -966,7 +1031,17 @@
             { id: 7, name: "🔋パラライズガード", desc: "麻痺状態にならない（麻痺無効）。" },
             { id: 8, name: "🔰ハーフシールド", desc: "攻撃後に10%の確率で、次に自分が受けるダメージを半分（切り上げ）にする。" },
             { id: 9, name: "🌟オールブースト", desc: "攻撃後に50%の確率で、攻撃・防御・素早さが（小）上昇（+10%）する。次のステージに進むと元に戻る。" },
-            { id: 10, name: "☣️カオスヴェノム", desc: "攻撃後に20%の確率で、相手を毒状態と麻痺状態の両方にする。" }
+            { id: 10, name: "☣️カオスヴェノム", desc: "攻撃後に20%の確率で、相手を毒状態と麻痺状態の両方にする。" },
+            { id: 11, name: "🩸ヴァンパイアファング", desc: "攻撃後に25%の確率で、敵に自分の攻撃力の40%の追加ダメージを与え、その分だけ自分のHPを回復する。" },
+            { id: 12, name: "💥クリティカルアイ", desc: "常時効果：会心の一撃（ダメージ2倍）の発生率が+18%アップする。" },
+            { id: 13, name: "🔥バーニングソウル", desc: "攻撃後に20%の確率で、自分の攻撃力が20%上昇し、次の攻撃が1.5倍になる。" },
+            { id: 14, name: "❄️フロストアーマー", desc: "攻撃後に30%の確率で、自分の防御力が25%上昇し、次に受けるダメージを半減する。" },
+            { id: 15, name: "💨ウィンドダンス", desc: "攻撃後に35%の確率で、自分の素早さが25%上昇する。" },
+            { id: 16, name: "👼ミラクルキュア", desc: "攻撃後に25%の確率で、自分の毒状態を治し、最大HPの10%を回復する。" },
+            { id: 17, name: "⚡サンダーチェイン", desc: "攻撃後に25%の確率で、敵に攻撃力の60%の電撃追撃を与え、さらに15%の確率で麻痺状態にする。" },
+            { id: 18, name: "🧪アシッドミスト", desc: "攻撃後に25%の確率で、敵の防御力を20%ダウンさせる（ステージ移動で戻る）。" },
+            { id: 19, name: "🎯スナイプショット", desc: "攻撃後に20%の確率で、敵の防御力を無視して攻撃力の70%の追加ダメージを与える。" },
+            { id: 20, name: "👑インペリアルオーラ", desc: "攻撃後に20%の確率で、攻撃・防御・素早さが15%上昇し、攻撃を1回無効化するバリアを張る。" }
         ];
 
         function getRandomSkillId() {
@@ -995,16 +1070,25 @@
         let boxLimit = 50;
         let baseMixRate = 0.25;
         let mixBonus = 0;
-        let battleSpeed = 1;
+        let expBonusRate = 0;
+        let stats = {
+            mixSuccessCount: 0,
+            mixAttemptCount: 0,
+            rpsWinCount: 0,
+            heroWinCount: 0,
+            rareGetCount: 0,
+            chestOpenCount: 0,
+            claimedMissions: []
+        };
         let currentEvent = null;
         let inDungeon = false;
         let isTurnRunning = false;
         let autoAtkTimer = null;
         let autoBattleEnabled = true;
+        let battleSpeed = 1;
         let boxSortMode = "no";
+        let showBoxSkills = true;
         let partyOrderCounter = 3;
-        let stats = { mixSuccess: 0, rpsWin: 0, heroWin: 0, rareGet: 0, chestOpen: 0 };
-        let claimedMissions = [];
 
         function getEffectiveMixRate() {
             return Math.min(0.95, baseMixRate + mixBonus);
@@ -1021,6 +1105,23 @@
             });
         }
 
+        function calcStatsByLevel(baseData, targetLv, isRare = false) {
+            let mult = isRare ? 1.25 : 1;
+            let m = Math.ceil(baseData.hp * mult);
+            let at = Math.ceil(baseData.at * mult);
+            let df = Math.ceil(baseData.df * mult);
+            let sp = Math.ceil(baseData.sp * mult);
+            let nx = 5;
+            for (let i = 1; i < targetLv; i++) {
+                m += Math.max(1, Math.floor(baseData.hp * 0.1 * mult));
+                at += Math.max(1, Math.floor(baseData.at * 0.1 * mult));
+                df += Math.max(1, Math.floor(baseData.df * 0.1 * mult));
+                sp += Math.max(1, Math.floor(baseData.sp * 0.1 * mult));
+                nx = Math.floor(nx * 1.2);
+            }
+            return { m, at, df, sp, nx };
+        }
+
         function levelUpMonster(mon, addLevels) {
             const b = getMonData(mon.n);
             if (!b) return 0;
@@ -1029,11 +1130,11 @@
             for (let i = 0; i < addLevels; i++) {
                 if (mon.lv >= 100) break;
                 mon.lv++;
-                mon.m += Math.ceil(Math.max(1, Math.floor(b.hp * 0.1)) * mult);
+                mon.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
                 mon.hp = mon.m;
-                mon.at += Math.ceil(Math.max(1, Math.floor(b.at * 0.1)) * mult);
-                mon.df += Math.ceil(Math.max(1, Math.floor(b.df * 0.1)) * mult);
-                mon.sp += Math.ceil(Math.max(1, Math.floor(b.sp * 0.1)) * mult);
+                mon.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                mon.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                mon.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
                 mon.nx = Math.floor(mon.nx * 1.2);
                 if (mon.ex >= mon.nx) mon.ex = Math.max(0, mon.nx - 1);
                 gained++;
@@ -1041,33 +1142,395 @@
             return gained;
         }
 
-        function calcStatsByLevel(baseData, targetLv, isRare = false) {
-            const mult = isRare ? 1.25 : 1;
-            let m = Math.ceil(baseData.hp * mult);
-            let at = Math.ceil(baseData.at * mult);
-            let df = Math.ceil(baseData.df * mult);
-            let sp = Math.ceil(baseData.sp * mult);
-            let nx = 5;
-            for (let i = 1; i < targetLv; i++) {
-                m += Math.ceil(Math.max(1, Math.floor(baseData.hp * 0.1)) * mult);
-                at += Math.ceil(Math.max(1, Math.floor(baseData.at * 0.1)) * mult);
-                df += Math.ceil(Math.max(1, Math.floor(baseData.df * 0.1)) * mult);
-                sp += Math.ceil(Math.max(1, Math.floor(baseData.sp * 0.1)) * mult);
-                nx = Math.floor(nx * 1.2);
+        let soundEnabled = true;
+        let audioCtx = null;
+        let noiseBuffer = null;
+        let bgmInterval = null;
+        let bgmStep = 0;
+        let currentBgmMode = "";
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) audioCtx = new AudioContextClass();
             }
-            return { m, at, df, sp, nx };
+            if (audioCtx && audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+            if (audioCtx && !noiseBuffer) {
+                const len = Math.floor(audioCtx.sampleRate * 0.12);
+                noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+                const data = noiseBuffer.getChannelData(0);
+                for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+            }
         }
 
-        function toggleBattleSpeed() {
-            battleSpeed = (battleSpeed === 1) ? 2 : 1;
-            const btn = document.getElementById("btnSpeedToggle");
-            if (btn) {
-                btn.innerText = battleSpeed === 2 ? "⏩ 速度: 2倍" : "⏩ 速度: 1倍";
-                btn.style.background = battleSpeed === 2
-                    ? "linear-gradient(180deg, #ec4899 0%, #db2777 100%)"
-                    : "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
-                btn.style.borderBottom = battleSpeed === 2 ? "3px solid #9d174d" : "3px solid #0369a1";
+        document.addEventListener("click", function(e) {
+            if (e.target && e.target.tagName === "BUTTON") {
+                initAudio();
+                if (soundEnabled && e.target.id !== "btnSoundToggle") {
+                    seButtonTap();
+                }
+                if (soundEnabled && !bgmInterval) {
+                    updateBgmState();
+                }
             }
+        });
+
+        function toggleSound() {
+            initAudio();
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById("btnSoundToggle");
+            if (btn) {
+                btn.innerText = soundEnabled ? "🔊 サウンド: ON" : "🔇 サウンド: OFF";
+                btn.style.background = soundEnabled
+                    ? "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)"
+                    : "linear-gradient(180deg, #94a3b8 0%, #475569 100%)";
+                btn.style.borderBottom = soundEnabled ? "2px solid #0369a1" : "2px solid #334155";
+            }
+            if (soundEnabled) {
+                playTone(880, "sine", 0, 0.08, 0.10);
+                updateBgmState(true);
+            } else {
+                stopAllBgm();
+            }
+        }
+
+        function playTone(freq, type, delaySec, durationSec, vol = 0.08) {
+            if (!soundEnabled || !freq) return;
+            initAudio();
+            if (!audioCtx) return;
+            const t = audioCtx.currentTime + delaySec;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, t);
+            gain.gain.setValueAtTime(vol, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + durationSec);
+        }
+
+        function playKick(vol = 0.12) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            const t = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(145, t);
+            osc.frequency.exponentialRampToValueAtTime(42, t + 0.09);
+            gain.gain.setValueAtTime(vol, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.10);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + 0.10);
+        }
+
+        function playHat(dur = 0.03, vol = 0.03) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx || !noiseBuffer) return;
+            const t = audioCtx.currentTime;
+            const src = audioCtx.createBufferSource();
+            src.buffer = noiseBuffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = "highpass";
+            filter.frequency.value = 5500;
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(vol, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+            src.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            src.start(t);
+            src.stop(t + dur);
+        }
+
+        function seButtonTap() {
+            playTone(740, "sine", 0, 0.05, 0.08);
+            playTone(1046, "sine", 0.03, 0.06, 0.06);
+        }
+        function seAttack() {
+            playTone(190, "sawtooth", 0, 0.07, 0.14);
+            playTone(95, "triangle", 0.03, 0.11, 0.18);
+        }
+        function seSkill() {
+            const notes = new Array(523, 659, 784, 1046);
+            notes.forEach((f, i) => playTone(f, "sine", i * 0.045, 0.13, 0.11));
+        }
+        function seJoin() {
+            const notes = new Array(440, 554, 659, 880);
+            notes.forEach((f, i) => playTone(f, "triangle", i * 0.08, 0.22, 0.16));
+        }
+        function seLvUp() {
+            const notes = new Array(523, 523, 523, 523, 415, 466, 523);
+            const times = new Array(0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74);
+            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 6 ? 0.38 : 0.10, 0.09));
+        }
+        function seStageClear() {
+            const notes = new Array(523, 659, 784, 1046);
+            notes.forEach((f, i) => playTone(f, "square", i * 0.09, i === 3 ? 0.30 : 0.09, 0.09));
+        }
+        function seMixSuccess() {
+            const notes = new Array(392, 523, 659, 784, 659, 1046);
+            const times = new Array(0, 0.09, 0.18, 0.27, 0.40, 0.54);
+            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 5 ? 0.45 : 0.11, 0.10));
+        }
+        function seFail() {
+            playTone(180, "sawtooth", 0, 0.18, 0.14);
+            playTone(130, "sawtooth", 0.16, 0.30, 0.14);
+        }
+
+        function isBossStage(stageNum) {
+            return stageNum > 0 && stageNum % 50 === 0;
+        }
+
+        function updateBgmState(forceRestart = false) {
+            if (!soundEnabled) {
+                stopAllBgm();
+                return;
+            }
+            let targetMode = "home";
+            if (inDungeon) {
+                if (isBossStage(stg)) {
+                    targetMode = "boss_" + stg;
+                } else {
+                    let areaIdx = Math.min(9, Math.floor((stg - 1) / 100));
+                    targetMode = "area_" + areaIdx;
+                }
+            }
+            if (!forceRestart && currentBgmMode === targetMode && bgmInterval) return;
+
+            stopAllBgm();
+            currentBgmMode = targetMode;
+
+            const homeBallad = [262, 330, 392, 494, 523, 494, 392, 330, 220, 262, 330, 392, 440, 392, 330, 262];
+
+            const AREA_TRACKS = [
+                { tempo: 185, wave: "square",   lead: [523,0,587,659, 784,0,659,587, 523,659,784,880, 784,0,659,0], bass: [131,131,196,131, 147,147,220,147, 131,131,196,131, 165,147,131,196] },
+                { tempo: 175, wave: "triangle", lead: [440,523,587,0, 659,587,523,440, 494,587,659,0, 784,659,587,523], bass: [110,0,165,110, 147,0,110,147, 123,0,185,123, 165,147,131,110] },
+                { tempo: 195, wave: "sine",     lead: [392,494,587,784, 659,587,494,392, 440,523,659,880, 784,659,587,494], bass: [196,196,147,196, 165,165,131,165, 175,175,131,175, 196,147,196,147] },
+                { tempo: 170, wave: "sawtooth", lead: [440,466,554,466, 440,392,349,392, 440,554,659,587, 554,466,440,0], bass: [110,165,110,165, 117,175,117,175, 110,165,139,165, 110,117,110,165] },
+                { tempo: 185, wave: "sawtooth", lead: [330,349,415,440, 415,349,330,294, 330,392,466,440, 392,349,330,0], bass: [82,123,82,123, 87,131,87,131, 82,123,98,131, 82,92,82,123] },
+                { tempo: 175, wave: "square",   lead: [392,392,466,523, 587,523,466,392, 349,349,440,523, 587,659,587,0], bass: [98,98,147,98, 117,117,175,117, 87,87,131,87, 98,117,131,147] },
+                { tempo: 205, wave: "triangle", lead: [523,659,784,1046, 988,784,659,523, 587,698,880,1046, 988,880,784,659], bass: [131,196,262,196, 123,196,247,196, 147,220,294,220, 196,165,147,131] },
+                { tempo: 150, wave: "sawtooth", lead: [440,440,523,587, 659,587,523,440, 494,587,659,784, 880,784,659,587], bass: [110,110,110,165, 131,131,131,196, 123,123,147,147, 165,165,196,165] },
+                { tempo: 195, wave: "sine",     lead: [784,988,1175,988, 880,784,659,784, 740,880,1175,1046, 988,880,784,659], bass: [196,294,196,294, 165,247,165,247, 147,220,147,220, 196,147,196,247] },
+                { tempo: 150, wave: "square",   lead: [494,587,659,740, 784,740,659,587, 523,659,784,988, 932,784,740,659], bass: [123,123,185,123, 131,131,196,131, 147,147,220,147, 123,147,165,185] }
+            ];
+
+            const BOSS_PATTERNS = [
+                [220,262,330,294, 220,330,392,330, 247,294,370,330, 440,392,330,294],
+                [247,294,370,330, 440,392,370,294, 262,330,392,440, 494,440,392,330],
+                [196,233,294,262, 349,330,294,233, 220,262,330,392, 466,440,392,349],
+                [262,311,392,349, 466,415,392,311, 294,349,440,523, 587,523,466,392],
+                [220,330,440,392, 349,330,294,262, 247,370,494,440, 523,494,440,392]
+            ];
+
+            bgmStep = 0;
+            if (targetMode.startsWith("boss_")) {
+                const bossStage = parseInt(targetMode.replace("boss_", "")) || 50;
+                const bossIdx = Math.max(0, Math.floor(bossStage / 50) - 1);
+                const isSuper = (bossStage === 500 || bossStage === 1000);
+                const pattern = BOSS_PATTERNS[bossIdx % BOSS_PATTERNS.length];
+                const pitchShift = isSuper ? 1.12 : (1 + ((bossIdx % 4) * 0.04));
+                const tempo = bossStage === 1000 ? 120 : (bossStage === 500 ? 130 : (145 - (bossIdx % 3) * 8));
+
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== targetMode) return;
+                    const step = bgmStep % 16;
+                    const leadF = pattern[step] * pitchShift;
+                    const bassF = (pattern[step] / 2) * pitchShift;
+
+                    playTone(leadF * (isSuper && step % 4 === 0 ? 2 : 1), step % 2 === 0 ? "sawtooth" : "square", 0, 0.11, 0.055);
+                    playTone(bassF, "triangle", 0, 0.13, 0.065);
+                    if (step % 4 === 0) playKick(0.11);
+                    if (step % 2 === 1) playHat(0.03, 0.025);
+                    bgmStep++;
+                }, tempo);
+            } else if (targetMode === "home") {
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== "home") return;
+                    const freq = homeBallad[bgmStep % homeBallad.length];
+                    playTone(freq, "sine", 0, 0.36, 0.05);
+                    if (bgmStep % 4 === 0) playTone(freq / 2, "sine", 0, 0.45, 0.04);
+                    bgmStep++;
+                }, 420);
+            } else {
+                const idx = parseInt(targetMode.replace("area_", "")) || 0;
+                const tr = AREA_TRACKS[idx] || AREA_TRACKS[0];
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== targetMode) return;
+                    const step = bgmStep % 16;
+                    const lf = tr.lead[step];
+                    const bf = tr.bass[step];
+                    if (lf > 0) playTone(lf, tr.wave, 0, tr.tempo / 1000 * 0.9, 0.045);
+                    if (bf > 0) playTone(bf, "triangle", 0, tr.tempo / 1000 * 0.95, 0.05);
+                    if (step % 4 === 0) playKick(0.075);
+                    if (step % 4 === 2) playHat(0.025, 0.02);
+                    bgmStep++;
+                }, tr.tempo);
+            }
+        }
+
+        function stopAllBgm() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+            currentBgmMode = "";
+        }
+        const MISSIONS = [
+            { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },            check: () => maxClearStg >= 10 },
+            { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 },         check: () => stats.mixSuccessCount >= 1 },
+            { id: "m_stg50",   title: "最初の覇王撃破",     condText: "50階ボスをクリアする",         rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },         check: () => maxClearStg >= 50 },
+            { id: "m_zukan20", title: "えもじ研究家",       condText: "通常図鑑を20種埋める",         rewardText: "ボックス上限+5",        reward: { box: 5 },            check: () => Object.keys(D).filter(k => zk.includes(k)).length >= 20 },
+            { id: "m_rps1",    title: "ジャンケン名人",     condText: "謎の旅人に1回勝つ",            rewardText: "配合成功率+3%",         reward: { mix: 0.03 },         check: () => stats.rpsWinCount >= 1 },
+            { id: "m_chest1",  title: "トレジャーハンター", condText: "謎の宝箱を1回開ける",          rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },         check: () => stats.chestOpenCount >= 1 },
+            { id: "m_rare1",   title: "虹の輝き",           condText: "✨色違いを1体手に入れる",      rewardText: "ボックス上限+10",       reward: { box: 10 },           check: () => stats.rareGetCount >= 1 || p.some(m => m.isRare) },
+            { id: "m_hero1",   title: "異国の好敵手",       condText: "他国の絵文字勇者に勝利する",   rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },         check: () => stats.heroWinCount >= 1 },
+            { id: "m_zukan50", title: "図鑑マイスター",     condText: "通常図鑑を50種埋める",         rewardText: "配合成功率+5%",         reward: { mix: 0.05 },         check: () => Object.keys(D).filter(k => zk.includes(k)).length >= 50 },
+            { id: "m_stg500",  title: "大魔王討伐",         condText: "500階ボスをクリアする",        rewardText: "上限+15 & EXP+25%",     reward: { box: 15, exp: 0.25 }, check: () => maxClearStg >= 500 }
+        ];
+
+        function renderMissions() {
+            const badge = document.getElementById("missionBadge");
+            const bonusBar = document.getElementById("missionBonusBar");
+            const listEl = document.getElementById("missionList");
+            if (!listEl) return;
+
+            let claimedCount = 0;
+            let claimableCount = 0;
+            let boxBonusTotal = 0;
+            let html = "";
+
+            MISSIONS.forEach(m => {
+                const isClaimed = stats.claimedMissions.includes(m.id);
+                const isReady = m.check();
+                if (isClaimed) {
+                    claimedCount++;
+                    if (m.reward.box) boxBonusTotal += m.reward.box;
+                } else if (isReady) {
+                    claimableCount++;
+                }
+
+                let rightHtml = "";
+                if (isClaimed) {
+                    rightHtml = "<span style='color:#059669; font-weight:900; font-size:10.5px; white-space:nowrap;'>✅ 受取済</span>";
+                } else if (isReady) {
+                    rightHtml = '<button class="btn-small" style="margin:0; padding:5px 8px; font-size:10.5px; background:linear-gradient(180deg,#f59e0b,#d97706); border-bottom:2px solid #b45309; white-space:nowrap;" onclick="claimMission(\'' + m.id + '\')">🎁 受取</button>';
+                } else {
+                    rightHtml = "<span style='color:#94a3b8; font-weight:bold; font-size:10px; white-space:nowrap;'>未達成</span>";
+                }
+
+                html += '<div class="mission-row' + (isClaimed ? ' done' : '') + '">' +
+                    '<div><b>🏆 ' + m.title + '</b><br><span style="color:#475569; font-size:10px;">' + m.condText + '</span><br><span style="color:#d97706; font-weight:800; font-size:10px;">🎁 ' + m.rewardText + '</span></div>' +
+                    '<div>' + rightHtml + '</div></div>';
+            });
+
+            listEl.innerHTML = html;
+            if (badge) {
+                badge.innerText = "(" + claimedCount + "/" + MISSIONS.length + "達成)" + (claimableCount > 0 ? (" 🔔受取可" + claimableCount + "件!") : "");
+            }
+            if (bonusBar) {
+                bonusBar.innerText = "ミッション特典：📦上限+" + boxBonusTotal + " ／ 🧬配合+" + Math.round(mixBonus * 100) + "% ／ 💎EXP+" + Math.round(expBonusRate * 100) + "%";
+            }
+        }
+
+        function claimMission(id) {
+            const m = MISSIONS.find(x => x.id === id);
+            if (!m || stats.claimedMissions.includes(id) || !m.check()) return;
+
+            stats.claimedMissions.push(id);
+            if (m.reward.box) boxLimit += m.reward.box;
+            if (m.reward.mix) mixBonus += m.reward.mix;
+            if (m.reward.exp) expBonusRate += m.reward.exp;
+
+            seStageClear();
+            const msg = "🏆 ミッション「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
+            showNotice(msg, 4500);
+            document.getElementById("battleLog").innerText = msg;
+            saveGame();
+            up();
+        }
+
+        window.onload = function() { loadGame(); };
+
+        function saveGame() {
+            const data = {
+                stg: stg,
+                maxStg: maxStg,
+                maxClearStg: maxClearStg,
+                zk: zk,
+                boxLimit: boxLimit,
+                baseMixRate: baseMixRate,
+                mixBonus: mixBonus,
+                expBonusRate: expBonusRate,
+                stats: stats,
+                p: p
+            };
+            localStorage.setItem("mix_emoji_save_v8", JSON.stringify(data));
+        }
+
+        function loadGame() {
+            const saved = localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6");
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if(data.p && data.p.length > 0) {
+                        stg = data.stg || 1;
+                        maxStg = data.maxStg || 1;
+                        maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
+                        zk = data.zk || ["プニシズク"];
+                        boxLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
+                        if (typeof data.baseMixRate === "number") {
+                            baseMixRate = Math.max(0.25, data.baseMixRate);
+                        } else if (typeof data.mixRate === "number") {
+                            baseMixRate = data.mixRate >= 0.50 ? 0.50 : 0.25;
+                        } else {
+                            baseMixRate = 0.25;
+                        }
+                        mixBonus = (typeof data.mixBonus === "number") ? data.mixBonus : 0;
+                        expBonusRate = (typeof data.expBonusRate === "number") ? data.expBonusRate : 0;
+                        if (data.stats && typeof data.stats === "object") {
+                            stats = Object.assign({
+                                mixSuccessCount: 0, mixAttemptCount: 0, rpsWinCount: 0,
+                                heroWinCount: 0, rareGetCount: 0, chestOpenCount: 0, claimedMissions: []
+                            }, data.stats);
+                            if (!Array.isArray(stats.claimedMissions)) stats.claimedMissions = [];
+                        }
+                        p = data.p.filter(m => D[m.n] || BOSS_D[m.n]);
+                        if (p.length === 0) {
+                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, skillId: getRandomSkillId() }];
+                        }
+                        let maxOrd = 0;
+                        p.forEach(m => {
+                            m.locked = Boolean(m.locked);
+                            m.isRare = Boolean(m.isRare);
+                            if (m.isRare) getRareSkillObj(m);
+                            getSkillObj(m);
+                            initBattleState(m);
+                            if (m.inParty) {
+                                if (typeof m.partyOrder !== "number") {
+                                    maxOrd++;
+                                    m.partyOrder = maxOrd;
+                                } else if (m.partyOrder > maxOrd) {
+                                    maxOrd = m.partyOrder;
+                                }
+                            } else {
+                                m.partyOrder = 0;
+                            }
+                        });
+                        partyOrderCounter = maxOrd;
+                    }
+                } catch(e) { console.error("ロード失敗", e); }
+            }
+            up();
         }
 
         function toggleAutoBattle() {
@@ -1094,12 +1557,37 @@
             }
         }
 
+        function toggleBattleSpeed() {
+            battleSpeed = (battleSpeed === 1) ? 2 : 1;
+            const btn = document.getElementById("btnSpeedToggle");
+            if (btn) {
+                btn.innerText = battleSpeed === 2 ? "⏩ 速度: 2倍" : "⏩ 速度: 1倍";
+                btn.style.background = battleSpeed === 2
+                    ? "linear-gradient(180deg, #ec4899 0%, #db2777 100%)"
+                    : "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                btn.style.borderBottom = battleSpeed === 2 ? "3px solid #9d174d" : "3px solid #0369a1";
+            }
+        }
+
         function toggleBoxSort() {
             if (inDungeon) return alert("ダンジョン内では並び替えできません！");
             boxSortMode = (boxSortMode === "no") ? "lv" : "no";
             const btn = document.getElementById("btnSortBox");
             if (btn) {
-                btn.innerText = boxSortMode === "no" ? "🔃 並び順: 図鑑No.順" : "🔃 並び順: レベル順";
+                btn.innerText = boxSortMode === "no" ? "🔃 図鑑No.順" : "🔃 レベル順";
+            }
+            up();
+        }
+
+        function toggleBoxSkills() {
+            showBoxSkills = !showBoxSkills;
+            const btn = document.getElementById("btnSkillVisToggle");
+            if (btn) {
+                btn.innerText = showBoxSkills ? "📜 スキル: ON" : "📜 スキル: OFF";
+                btn.style.background = showBoxSkills
+                    ? "linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%)"
+                    : "linear-gradient(180deg, #64748b 0%, #475569 100%)";
+                btn.style.borderBottom = showBoxSkills ? "3px solid #5b21b6" : "3px solid #334155";
             }
             up();
         }
@@ -1124,7 +1612,7 @@
             if (target.inParty) return alert("⚠️ 戦闘参加中のモンスターはお別れできません！先に「戻す」を押してください。");
             if (target.locked) return alert("🔒 鍵がかかっているモンスターとはお別れできません！先に鍵を解除してください。");
 
-            if (confirm("👋 「" + target.n + (target.isRare ? "✨" : "") + "」(Lv." + target.lv + ") と本当にお別れしますか？\n（※一度お別れすると元に戻せません）")) {
+            if (confirm("👋 「" + target.n + "」(Lv." + target.lv + ") と本当にお別れしますか？\n（※一度お別れすると元に戻せません）")) {
                 p.splice(index, 1);
                 document.getElementById("battleLog").innerText = "🍃 " + target.n + " とお別れしました。";
                 saveGame();
@@ -1164,329 +1652,6 @@
             banner.hideTimer = setTimeout(() => {
                 banner.style.display = "none";
             }, duration);
-        }
-
-        let soundEnabled = true;
-        let audioCtx = null;
-        let bgmInterval = null;
-        let bgmStep = 0;
-        let currentBgmMode = "";
-
-        function initAudio() {
-            if (!audioCtx) {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (AudioContextClass) audioCtx = new AudioContextClass();
-            }
-            if (audioCtx && audioCtx.state === "suspended") {
-                audioCtx.resume();
-            }
-        }
-
-        document.addEventListener("click", function(e) {
-            if (e.target && e.target.tagName === "BUTTON") {
-                initAudio();
-                if (soundEnabled && e.target.id !== "btnSoundToggle") {
-                    seButtonTap();
-                }
-                if (soundEnabled && !bgmInterval) {
-                    updateBgmState();
-                }
-            }
-        });
-
-        function toggleSound() {
-            initAudio();
-            soundEnabled = !soundEnabled;
-            const btn = document.getElementById("btnSoundToggle");
-            if (btn) {
-                btn.innerText = soundEnabled ? "🔊 サウンド: ON" : "🔇 サウンド: OFF";
-                btn.style.background = soundEnabled
-                    ? "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)"
-                    : "linear-gradient(180deg, #94a3b8 0%, #475569 100%)";
-                btn.style.borderBottom = soundEnabled ? "2px solid #0369a1" : "2px solid #334155";
-            }
-            if (soundEnabled) {
-                playTone(880, "sine", 0, 0.08, 0.12);
-                updateBgmState(true);
-            } else {
-                stopAllBgm();
-            }
-        }
-
-        function playTone(freq, type, delaySec, durationSec, vol = 0.12) {
-            if (!soundEnabled || !freq) return;
-            initAudio();
-            if (!audioCtx) return;
-            const t = audioCtx.currentTime + delaySec;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, t);
-            gain.gain.setValueAtTime(vol, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(t);
-            osc.stop(t + durationSec);
-        }
-
-        function seButtonTap() {
-            playTone(740, "sine", 0, 0.05, 0.09);
-            playTone(1046, "sine", 0.03, 0.06, 0.07);
-        }
-        function seAttack() {
-            playTone(190, "sawtooth", 0, 0.07, 0.16);
-            playTone(95, "triangle", 0.03, 0.11, 0.20);
-        }
-        function seSkill() {
-            const notes = new Array(523, 659, 784, 1046);
-            notes.forEach((f, i) => playTone(f, "sine", i * 0.05, 0.14, 0.13));
-        }
-        function seJoin() {
-            const notes = new Array(440, 554, 659, 880);
-            notes.forEach((f, i) => playTone(f, "triangle", i * 0.08, 0.22, 0.18));
-        }
-        function seLvUp() {
-            const notes = new Array(523, 523, 523, 523, 415, 466, 523);
-            const times = new Array(0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74);
-            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 6 ? 0.38 : 0.10, 0.11));
-        }
-        function seStageClear() {
-            const notes = new Array(523, 659, 784, 1046);
-            notes.forEach((f, i) => playTone(f, "square", i * 0.09, i === 3 ? 0.30 : 0.09, 0.11));
-        }
-        function seMixSuccess() {
-            const notes = new Array(392, 523, 659, 784, 659, 1046);
-            const times = new Array(0, 0.09, 0.18, 0.27, 0.40, 0.54);
-            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 5 ? 0.45 : 0.11, 0.12));
-        }
-        function seFail() {
-            playTone(180, "sawtooth", 0, 0.18, 0.16);
-            playTone(130, "sawtooth", 0.16, 0.30, 0.16);
-        }
-
-        function isBossStage(stageNum) {
-            return stageNum > 0 && stageNum % 50 === 0;
-        }
-
-        function updateBgmState(forceRestart = false) {
-            if (!soundEnabled) {
-                stopAllBgm();
-                return;
-            }
-            let targetMode = "home";
-            if (inDungeon) {
-                if (isBossStage(stg)) {
-                    targetMode = "boss";
-                } else {
-                    let areaIdx = Math.min(9, Math.floor((stg - 1) / 100));
-                    targetMode = "area_" + areaIdx;
-                }
-            }
-            if (!forceRestart && currentBgmMode === targetMode && bgmInterval) return;
-
-            stopAllBgm();
-            currentBgmMode = targetMode;
-
-            const homeBallad = new Array(262, 330, 392, 494, 523, 494, 392, 330, 220, 262, 330, 392, 440, 392, 330, 262);
-            const areaBallads = new Array(
-                new Array(330, 392, 440, 523, 494, 440, 392, 330),
-                new Array(294, 349, 440, 523, 494, 440, 349, 294),
-                new Array(262, 330, 392, 523, 587, 523, 392, 330),
-                new Array(294, 330, 440, 494, 587, 494, 440, 330),
-                new Array(247, 294, 370, 440, 494, 440, 370, 294),
-                new Array(262, 311, 392, 466, 523, 466, 392, 311),
-                new Array(349, 440, 523, 659, 587, 523, 440, 349),
-                new Array(220, 262, 330, 415, 440, 415, 330, 262),
-                new Array(392, 494, 587, 740, 784, 740, 587, 494),
-                new Array(247, 311, 370, 466, 494, 466, 370, 311)
-            );
-            const bossBattleNotes = new Array(220, 220, 262, 294, 330, 330, 392, 330, 294, 294, 330, 349, 392, 440, 494, 523);
-
-            bgmStep = 0;
-            if (targetMode === "boss") {
-                bgmInterval = setInterval(() => {
-                    if (!soundEnabled || currentBgmMode !== "boss") return;
-                    const freq = bossBattleNotes.at(bgmStep % bossBattleNotes.length);
-                    playTone(freq, "sawtooth", 0, 0.14, 0.085);
-                    if (bgmStep % 2 === 0) playTone(freq / 2, "triangle", 0, 0.16, 0.10);
-                    bgmStep++;
-                }, 175);
-            } else if (targetMode === "home") {
-                bgmInterval = setInterval(() => {
-                    if (!soundEnabled || currentBgmMode !== "home") return;
-                    const freq = homeBallad.at(bgmStep % homeBallad.length);
-                    playTone(freq, "sine", 0, 0.36, 0.065);
-                    bgmStep++;
-                }, 420);
-            } else {
-                const idx = parseInt(targetMode.replace("area_", "")) || 0;
-                const notes = areaBallads.at(idx) || areaBallads.at(0);
-                bgmInterval = setInterval(() => {
-                    if (!soundEnabled || currentBgmMode !== targetMode) return;
-                    const freq = notes.at(bgmStep % notes.length);
-                    playTone(freq, "triangle", 0, 0.34, 0.065);
-                    bgmStep++;
-                }, 380);
-            }
-        }
-
-        function stopAllBgm() {
-            if (bgmInterval) {
-                clearInterval(bgmInterval);
-                bgmInterval = null;
-            }
-            currentBgmMode = "";
-        }
-        const MISSIONS = [
-            {
-                id: "m_stg10",
-                title: "10階をクリアする",
-                rewardText: "ボックス上限 +5",
-                check: () => maxClearStg >= 10,
-                grant: () => { boxLimit += 5; }
-            },
-            {
-                id: "m_stg50",
-                title: "50階ボスを撃破する",
-                rewardText: "ボックス上限 +10",
-                check: () => maxClearStg >= 50,
-                grant: () => { boxLimit += 10; }
-            },
-            {
-                id: "m_stg100",
-                title: "100階をクリアする",
-                rewardText: "配合成功率 +5%",
-                check: () => maxClearStg >= 100,
-                grant: () => { mixBonus += 0.05; }
-            },
-            {
-                id: "m_stg500",
-                title: "500階大ボスを撃破する",
-                rewardText: "ボックス上限 +15 ＆ 配合成功率 +5%",
-                check: () => maxClearStg >= 500,
-                grant: () => { boxLimit += 15; mixBonus += 0.05; }
-            },
-            {
-                id: "m_mix1",
-                title: "初めて配合に成功する",
-                rewardText: "配合成功率 +5%",
-                check: () => stats.mixSuccess >= 1,
-                grant: () => { mixBonus += 0.05; }
-            },
-            {
-                id: "m_zukan20",
-                title: "通常図鑑を20種発見する",
-                rewardText: "ボックス上限 +5",
-                check: () => Object.keys(D).filter(k => zk.includes(k)).length >= 20,
-                grant: () => { boxLimit += 5; }
-            },
-            {
-                id: "m_zukan50",
-                title: "通常図鑑を50種発見する",
-                rewardText: "配合成功率 +5%",
-                check: () => Object.keys(D).filter(k => zk.includes(k)).length >= 50,
-                grant: () => { boxLimit += 5 ? 0 : 0; mixBonus += 0.05; }
-            },
-            {
-                id: "m_boss1",
-                title: "ボスモンスターを1体仲間にする",
-                rewardText: "戦闘メンバー全員 Lv+3",
-                check: () => Object.keys(BOSS_D).some(k => zk.includes(k)),
-                grant: () => { p.forEach(m => { if (m.inParty) levelUpMonster(m, 3); }); }
-            },
-            {
-                id: "m_rare1",
-                title: "✨色違いモンスターを1体手に入れる",
-                rewardText: "ボックス上限 +5",
-                check: () => stats.rareGet >= 1 || p.some(m => m.isRare),
-                grant: () => { boxLimit += 5; }
-            },
-            {
-                id: "m_hero1",
-                title: "他国の絵文字勇者に勝利する",
-                rewardText: "ボックス上限 +10",
-                check: () => stats.heroWin >= 1,
-                grant: () => { boxLimit += 10; }
-            }
-        ];
-
-        function checkMissions() {
-            let newlyCompleted = [];
-            MISSIONS.forEach(ms => {
-                if (!claimedMissions.includes(ms.id) && ms.check()) {
-                    claimedMissions.push(ms.id);
-                    ms.grant();
-                    newlyCompleted.push(ms);
-                }
-            });
-            if (newlyCompleted.length > 0) {
-                const names = newlyCompleted.map(m => "「" + m.title + "」(" + m.rewardText + ")").join(" / ");
-                showNotice("🏆 ミッション達成！ " + names, 5500);
-                seStageClear();
-                saveGame();
-            }
-        }
-
-        window.onload = function() { loadGame(); };
-
-        function saveGame() {
-            const data = {
-                stg: stg,
-                maxStg: maxStg,
-                maxClearStg: maxClearStg,
-                zk: zk,
-                boxLimit: boxLimit,
-                baseMixRate: baseMixRate,
-                mixBonus: mixBonus,
-                stats: stats,
-                claimedMissions: claimedMissions,
-                p: p
-            };
-            localStorage.setItem("mix_emoji_save_v8", JSON.stringify(data));
-        }
-
-        function loadGame() {
-            const saved = localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6");
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    if(data.p && data.p.length > 0) {
-                        stg = data.stg || 1;
-                        maxStg = data.maxStg || 1;
-                        maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
-                        zk = data.zk || ["プニシズク"];
-                        boxLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
-                        baseMixRate = (typeof data.baseMixRate === "number") ? data.baseMixRate : ((typeof data.mixRate === "number" && data.mixRate >= 0.25) ? data.mixRate : 0.25);
-                        mixBonus = (typeof data.mixBonus === "number") ? data.mixBonus : 0;
-                        if (data.stats) stats = Object.assign({ mixSuccess: 0, rpsWin: 0, heroWin: 0, rareGet: 0, chestOpen: 0 }, data.stats);
-                        claimedMissions = Array.isArray(data.claimedMissions) ? data.claimedMissions : [];
-                        p = data.p.filter(m => D[m.n] || BOSS_D[m.n]);
-                        if (p.length === 0) {
-                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, skillId: getRandomSkillId() }];
-                        }
-                        let maxOrd = 0;
-                        p.forEach(m => {
-                            m.locked = Boolean(m.locked);
-                            m.isRare = Boolean(m.isRare);
-                            getSkillObj(m);
-                            initBattleState(m);
-                            if (m.inParty) {
-                                if (typeof m.partyOrder !== "number") {
-                                    maxOrd++;
-                                    m.partyOrder = maxOrd;
-                                } else if (m.partyOrder > maxOrd) {
-                                    maxOrd = m.partyOrder;
-                                }
-                            } else {
-                                m.partyOrder = 0;
-                            }
-                        });
-                        partyOrderCounter = maxOrd;
-                    }
-                } catch(e) { console.error("ロード失敗", e); }
-            }
-            up();
         }
 
         function getEnemyPool(stage) {
@@ -1548,18 +1713,17 @@
                     at: Math.ceil(b.at * mult),
                     df: Math.ceil(b.df * mult),
                     sp: Math.ceil(b.sp * mult),
-                    ex: isRare ? b.ex * 2 : b.ex,
+                    ex: b.ex * (isRare ? 2 : 1),
                     isBoss: true,
                     isRare: isRare,
+                    rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
                 };
                 initBattleState(bossMon);
                 eg.push(bossMon);
-                if (isRare) showNotice("✨ 激レア！色違いのボス「" + bossName + "✨」が降臨した！", 4500);
                 return;
             }
 
-            // ボスステージ以外で各1%の確率で特別イベント発生
             const evRoll = Math.random();
             if (evRoll < 0.01) {
                 currentEvent = "traveler";
@@ -1579,13 +1743,12 @@
             } else if (evRoll < 0.04) {
                 currentEvent = "chest";
                 seSkill();
-                document.getElementById("battleLog").innerText = "📦 謎の宝箱を見つけた！開けてみますか？";
+                document.getElementById("battleLog").innerText = "📦 謎の宝箱を発見した！開けますか？";
                 return;
             }
 
             let pool = getEnemyPool(stg);
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
-            let rareFound = false;
             for(let i = 0; i < c; i++){
                 let n = pool.at(Math.floor(Math.random() * pool.length));
                 let b = D[n];
@@ -1594,23 +1757,24 @@
                 let levelBonusEx = Math.floor(stageBonus * 2.5);
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
-                if (isRare) rareFound = true;
+                let rawHp = b.hp + Math.floor(stageBonus * 4.5);
+                let rawAt = b.at + Math.floor(stageBonus * 1.5);
+                let rawDf = b.df + Math.floor(stageBonus * 1.2);
+                let rawSp = b.sp + Math.floor(stageBonus * 1.0);
                 let enemyMon = {
                     n: n,
-                    m: Math.ceil((b.hp + Math.floor(stageBonus * 4.5)) * mult),
-                    hp: Math.ceil((b.hp + Math.floor(stageBonus * 4.5)) * mult),
-                    at: Math.ceil((b.at + Math.floor(stageBonus * 1.5)) * mult),
-                    df: Math.ceil((b.df + Math.floor(stageBonus * 1.2)) * mult),
-                    sp: Math.ceil((b.sp + Math.floor(stageBonus * 1.0)) * mult),
-                    ex: isRare ? (baseEx + levelBonusEx) * 2 : (baseEx + levelBonusEx),
+                    m: Math.ceil(rawHp * mult),
+                    hp: Math.ceil(rawHp * mult),
+                    at: Math.ceil(rawAt * mult),
+                    df: Math.ceil(rawDf * mult),
+                    sp: Math.ceil(rawSp * mult),
+                    ex: (baseEx + levelBonusEx) * (isRare ? 2 : 1),
                     isRare: isRare,
+                    rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
                 };
                 initBattleState(enemyMon);
                 eg.push(enemyMon);
-            }
-            if (rareFound) {
-                showNotice("✨ レアモンスター（色違い）が出現した！！", 4000);
             }
         }
 
@@ -1643,13 +1807,12 @@
             saveGame();
             up();
 
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                let spdDelay = battleSpeed === 2 ? 350 : 750;
-                autoAtkTimer = setTimeout(() => { atk(); }, spdDelay);
+                autoAtkTimer = setTimeout(() => { atk(); }, Math.floor(800 / spdDiv));
             }
         }
 
-        // ① 謎の旅人：ジャンケン
         function playTravelerRPS(playerHand) {
             if (!inDungeon || currentEvent !== "traveler") return;
             const hands = ["✊グー", "✌️チョキ", "✋パー"];
@@ -1667,7 +1830,7 @@
             let msg = "";
 
             if (isWin) {
-                stats.rpsWin++;
+                stats.rpsWinCount = (stats.rpsWinCount || 0) + 1;
                 const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75);
                 const giftName = pool.at(Math.floor(Math.random() * pool.length));
                 const b = D[giftName];
@@ -1676,30 +1839,32 @@
                     seFail();
                     msg = "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）しかしボックスが満杯(" + boxLimit + "体)のため「" + giftName + "」を受け取れなかった…";
                 } else {
-                    const isRare = Math.random() < 0.03;
-                    const st = calcStatsByLevel(b, 1, isRare);
+                    const isRareNew = Math.random() < 0.03;
+                    const st1 = calcStatsByLevel(b, 1, isRareNew);
                     let newAlly = {
                         n: giftName,
                         lv: 1,
-                        m: st.m,
-                        hp: st.m,
-                        at: st.at,
-                        df: st.df,
-                        sp: st.sp,
+                        m: st1.m,
+                        hp: st1.m,
+                        at: st1.at,
+                        df: st1.df,
+                        sp: st1.sp,
                         ex: 0,
                         nx: 5,
                         inParty: false,
                         partyOrder: 0,
                         locked: false,
-                        isRare: isRare,
+                        isRare: isRareNew,
+                        rareSkillId: isRareNew ? getRandomRareSkillId() : 0,
                         skillId: getRandomSkillId()
                     };
                     initBattleState(newAlly);
                     p.push(newAlly);
-                    if (isRare) stats.rareGet++;
+                    if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
                     if (!zk.includes(giftName)) zk.push(giftName);
                     seJoin();
-                    msg = "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）No." + b.no + "「" + giftName + (isRare ? "✨" : "") + "」(Lv.1)が仲間に加わった！";
+                    msg = (isRareNew ? "🌈✨ジャンケン大勝利！（相手:" + hands[cpuHand] + "）色違いの" : "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）") +
+                          "No." + b.no + "「" + giftName + (isRareNew ? "✨" : "") + "」(Lv.1)が仲間に加わった！";
                 }
             } else {
                 p.forEach(m => levelUpMonster(m, 1));
@@ -1711,7 +1876,6 @@
             advanceStageAfterEvent(msg);
         }
 
-        // ② 旅商人：アイテム選択
         function pickMerchantItem(choice) {
             if (!inDungeon || currentEvent !== "merchant") return;
             let msg = "";
@@ -1737,7 +1901,6 @@
             advanceStageAfterEvent(msg);
         }
 
-        // ③ 他国の絵文字勇者：戦う or 逃げる
         function chooseHeroAction(fight) {
             if (!inDungeon || currentEvent !== "hero") return;
 
@@ -1759,7 +1922,6 @@
                 sp: h.sp,
                 ex: 0,
                 isSpecialHero: true,
-                isRare: false,
                 fixedLv: 50,
                 skillId: 0
             };
@@ -1768,53 +1930,56 @@
             document.getElementById("battleLog").innerText = "⚔️ 他国の絵文字勇者(Lv.50)との決戦が始まった！";
             up();
 
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
             if (autoBattleEnabled) {
-                let spdDelay = battleSpeed === 2 ? 350 : 700;
-                autoAtkTimer = setTimeout(() => { atk(); }, spdDelay);
+                autoAtkTimer = setTimeout(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
-        // ④ 謎の宝箱：開ける or 通り過ぎる
         function openMysteryChest(open) {
             if (!inDungeon || currentEvent !== "chest") return;
             if (!open) {
-                const msg = "🚶 謎の宝箱を開けずに慎重に通り過ぎた。";
+                const msg = "🚶 謎の宝箱を開けずに通り過ぎた。";
                 showNotice(msg, 3000);
                 advanceStageAfterEvent(msg);
                 return;
             }
 
-            stats.chestOpen++;
+            stats.chestOpenCount = (stats.chestOpenCount || 0) + 1;
             let msg = "";
             if (Math.random() < 0.50) {
-                // 罠：最大HPの25%ダメージ（最低HP1は残る）
-                p.forEach(m => {
-                    if (m.inParty && m.hp > 0) {
-                        let dmg = Math.max(1, Math.floor(m.m * 0.25));
-                        m.hp = Math.max(1, m.hp - dmg);
-                    }
-                });
-                seFail();
-                msg = "💥 罠だ！宝箱が爆発した！戦闘メンバー全員が最大HPの25%ダメージを受けた！";
-            } else {
-                // お宝：パーティ全員EXP大量獲得
-                const bonusExp = Math.max(30, stg * 12);
-                let lvUps = 0;
-                let partyCount = 0;
+                const rawExp = Math.max(30, stg * 12);
+                const gainExp = Math.floor(rawExp * (1 + expBonusRate));
+                let lvUpLogs = "";
                 p.forEach(ally => {
-                    if (ally.inParty && partyCount < 3) {
-                        partyCount++;
-                        ally.ex += bonusExp;
+                    if (ally.inParty) {
+                        ally.ex += gainExp;
                         while (ally.lv < 100 && ally.ex >= ally.nx) {
                             ally.ex -= ally.nx;
-                            levelUpMonster(ally, 1);
-                            lvUps++;
+                            ally.lv++;
+                            const b = getMonData(ally.n);
+                            const mult = ally.isRare ? 1.25 : 1;
+                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
+                            ally.hp = ally.m;
+                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
+                            ally.nx = Math.floor(ally.nx * 1.2);
+                            lvUpLogs += " " + ally.n + "Lv." + ally.lv + "!";
                         }
                     }
                 });
-                seStageClear();
-                if (lvUps > 0) seLvUp();
-                msg = "✨ 大当たり！お宝を発見！戦闘メンバー全員が EXP " + bonusExp + " を獲得した！" + (lvUps > 0 ? "（レベルアップ発生！）" : "");
+                seLvUp();
+                msg = "✨ 大当たり！お宝を発見！戦闘メンバー全員が EXP " + gainExp + " を獲得！" + lvUpLogs;
+            } else {
+                p.forEach(ally => {
+                    if (ally.inParty && ally.hp > 0) {
+                        const dmg = Math.max(1, Math.floor(ally.m * 0.25));
+                        ally.hp = Math.max(1, ally.hp - dmg);
+                    }
+                });
+                seFail();
+                msg = "💥 罠だ！宝箱が爆発し、戦闘メンバー全員が最大HPの25%ダメージを受けた！";
             }
 
             showNotice(msg, 5000);
@@ -1870,6 +2035,7 @@
         function buildStateIcons(mon) {
             let icons = "";
             if ((mon.buffAt || 0) > 0 || (mon.buffDf || 0) > 0 || (mon.buffSp || 0) > 0) icons += "⬆️";
+            if ((mon.buffDf || 0) < 0) icons += "🛡️⬇️";
             if (mon.nullifyOnce) icons += "🛡️無効";
             if (mon.nextAtk15) icons += "🔥1.5倍";
             if (mon.halfDmgOnce) icons += "🔰半減";
@@ -1898,33 +2064,30 @@
         function showWildHint(targetName) {
             const inf = D[targetName];
             if (!inf) return;
-            let minStg = 9999;
-            let maxStgFound = 0;
+            let minS = 9999;
+            let maxS = 0;
             for (let s = 1; s <= 1000; s++) {
-                if (isBossStage(s)) continue;
-                let pool = getEnemyPool(s);
-                if (pool.includes(targetName)) {
-                    if (s < minStg) minStg = s;
-                    if (s > maxStgFound) maxStgFound = s;
+                if (s % 50 === 0) continue;
+                let minNo = 1, maxNo = 10;
+                if (s > 10) {
+                    let progress = (s - 11) / (1000 - 11);
+                    minNo = Math.min(90, 1 + Math.floor(progress * 89));
+                    maxNo = Math.min(100, 10 + Math.floor(progress * 90));
+                }
+                if (inf.no >= minNo && inf.no <= maxNo) {
+                    if (s < minS) minS = s;
+                    if (s > maxS) maxS = s;
                 }
             }
-            let msg = "【💡 出現場所ヒント】\nNo." + inf.no + " のモンスターは野生で出現します！\n\n";
-            if (maxStgFound > 0) {
-                msg += "📍 出現ステージ目安： " + minStg + "階 〜 " + maxStgFound + "階";
-            } else {
-                msg += "📍 ダンジョン探索で出現します！";
-            }
-            if (inf.no <= 75) {
-                msg += "\n（※🧳謎の旅人とのジャンケン勝利でも貰えることがあります！）";
-            }
-            alert(msg);
+            let extra = inf.no <= 75 ? "\n（※🧙謎の旅人のジャンケン勝利でも入手可能！）" : "";
+            alert("【📍 野生出現場所ヒント】\nNo." + inf.no + "（未発見モンスター）\n\n出現ステージ：およそ " + minS + "階 〜 " + maxS + "階" + extra);
         }
 
-        function showBossHint(bossName) {
-            const bInf = BOSS_D[bossName];
-            if (!bInf) return;
-            alert("【👑 ボス出現情報】\nこのボスは「" + bInf.stage + "階」のボス戦にのみ出現します！\n（※配合不可・撃破時に15%の確率で仲間になります）");
-                    }
+        function showBossHint(targetName) {
+            const b = BOSS_D[targetName];
+            if (!b) return;
+            alert("【👑 ボス出現情報】\nNo." + b.no + "（" + b.stage + "階ボス）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時15%で仲間になります）");
+             }
         function up() {
             if (!inDungeon) {
                 p.sort((a, b) => {
@@ -2104,7 +2267,7 @@
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🤺 他国の絵文字勇者(Lv.50)が現れた！</div>' +
-                        '<div class="event-sub">特別スキル「⚔️異国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>配合確率50%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
+                        '<div class="event-sub">特別スキル「⚔️異国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="chooseHeroAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseHeroAction(false)">💨 逃げる</button>' +
@@ -2161,17 +2324,20 @@
                             '</div>';
                     }
 
-                    let innateList = getInnateSkills(inf.no);
-                    let skillHtml = "<div style='margin-top:3px; line-height:1.4;'>";
-                    if (innateList.length > 0) {
-                        skillHtml += "<span style='font-size:9.5px; color:#64748b; font-weight:bold;'>✨固有:</span>";
+                    let skillHtml = "";
+                    if (showBoxSkills) {
+                        let innateList = getInnateSkills(inf.no);
+                        let rareSk = getRareSkillObj(n);
+                        let rSk = getSkillObj(n);
+                        skillHtml = "<div class='skill-panel'>";
                         innateList.forEach(isk => {
-                            skillHtml += '<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">' + isk.name + '</span>';
+                            skillHtml += '<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">固:' + isk.name + '</span>';
                         });
+                        if (rareSk) {
+                            skillHtml += '<span class="skill-badge skill-badge-rare" onclick="showSkillInfo(\'' + rareSk.name + '\', \'' + rareSk.desc + '\')">虹:' + rareSk.name + '</span>';
+                        }
+                        skillHtml += '<span class="skill-badge skill-badge-add" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">追:' + rSk.name + '</span></div>';
                     }
-                    let rSk = getSkillObj(n);
-                    skillHtml += "<span style='font-size:9.5px; color:#d97706; font-weight:bold; margin-left:3px;'>🎲追加:</span>" +
-                                 '<span class="skill-badge" style="background:linear-gradient(180deg, #fefce8 0%, #fef3c7 100%); color:#b45309; border-color:#fcd34d;" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">' + rSk.name + '</span></div>';
 
                     list.innerHTML += '<li class="' + liClass + '">' +
                         '<div class="box-header-row"><span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + rareTag + partyTag + lockTag + deadText + '</span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span></div>' +
@@ -2273,8 +2439,9 @@
                 maxClearStg: maxClearStg,
                 zk: zk,
                 boxLimit: boxLimit,
-                mixRate: mixRate,
+                baseMixRate: baseMixRate,
                 mixBonus: mixBonus,
+                expBonusRate: expBonusRate,
                 stats: stats,
                 p: p
             };
@@ -2305,10 +2472,20 @@
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
                         zk = data.zk || ["プニシズク"];
                         boxLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
-                        mixRate = (typeof data.mixRate === "number" && data.mixRate >= 0.25) ? data.mixRate : 0.25;
+                        if (typeof data.baseMixRate === "number") {
+                            baseMixRate = Math.max(0.25, data.baseMixRate);
+                        } else if (typeof data.mixRate === "number") {
+                            baseMixRate = data.mixRate >= 0.50 ? 0.50 : 0.25;
+                        } else {
+                            baseMixRate = 0.25;
+                        }
                         mixBonus = (typeof data.mixBonus === "number") ? data.mixBonus : 0;
+                        expBonusRate = (typeof data.expBonusRate === "number") ? data.expBonusRate : 0;
                         if (data.stats && typeof data.stats === "object") {
-                            stats = Object.assign({ mixSuccessCount: 0, mixAttemptCount: 0, rpsWinCount: 0, heroWinCount: 0, rareGetCount: 0, chestOpenCount: 0, claimedMissions: [] }, data.stats);
+                            stats = Object.assign({
+                                mixSuccessCount: 0, mixAttemptCount: 0, rpsWinCount: 0,
+                                heroWinCount: 0, rareGetCount: 0, chestOpenCount: 0, claimedMissions: []
+                            }, data.stats);
                             if (!Array.isArray(stats.claimedMissions)) stats.claimedMissions = [];
                         }
                         p = data.p.filter(m => D[m.n] || BOSS_D[m.n]);
@@ -2319,6 +2496,7 @@
                         p.forEach(m => {
                             m.locked = Boolean(m.locked);
                             m.isRare = Boolean(m.isRare);
+                            if (m.isRare) getRareSkillObj(m);
                             getSkillObj(m);
                             initBattleState(m);
                             if (m.inParty) {
@@ -2344,6 +2522,7 @@
 
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
 
             setTimeout(() => {
                 if (!attacker || attacker.hp <= 0) return;
@@ -2374,8 +2553,8 @@
 
                 setTimeout(() => {
                     if (fxEl.parentElement) fxEl.remove();
-                }, 900);
-            }, delayMs);
+                }, Math.floor(900 / spdDiv));
+            }, Math.floor(delayMs / spdDiv));
         }
 
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
@@ -2384,6 +2563,7 @@
             const no = inf ? inf.no : 1;
             const sk = getSkillObj(attacker);
             const defSk = getSkillObj(defender);
+            const rareSk = getRareSkillObj(attacker);
             let skillLogs = "";
             let fxQueue = [];
 
@@ -2396,6 +2576,36 @@
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.15));
                     skillLogs += "⚔️" + attacker.n + "の異国の剣技・閃光！HP " + h + " 回復＆攻・素UP＆次回1.5倍！ ";
                     fxQueue.push("⚔️✨");
+                }
+            }
+
+            if (rareSk) {
+                if (rareSk.id === 1 && defender.hp > 0 && Math.random() < 0.35) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let dmg = Math.max(2, Math.floor(atkVal * 0.60));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
+                    skillLogs += "🌈" + attacker.n + "のプリズムバースト！光線 " + dmg + " ダメージ＆攻撃UP！ ";
+                    fxQueue.push("🌈💥");
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                } else if (rareSk.id === 2 && Math.random() < 0.40) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.12));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "✨" + attacker.n + "のオーラリカバー！HP " + h + " 回復！ ";
+                    if (Math.random() < 0.20) {
+                        attacker.nullifyOnce = true;
+                        skillLogs += "バリア展開！ ";
+                    }
+                    fxQueue.push("✨🔆");
+                } else if (rareSk.id === 3 && Math.random() < 0.35) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.25));
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.20));
+                    skillLogs += "💎" + attacker.n + "のスターライトステップ！素早さ＆攻撃UP！ ";
+                    if (Math.random() < 0.15) {
+                        attacker.nextAtk15 = true;
+                        skillLogs += "次回1.5倍！ ";
+                    }
+                    fxQueue.push("💎⚡");
                 }
             }
 
@@ -2412,7 +2622,7 @@
                 }
                 if (no === -3 && defender.hp > 0) {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                     let dmg = Math.max(2, Math.floor((atkVal - defVal / 2) * 0.8));
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "🦖" + attacker.n + "の暴君の牙！追撃 " + dmg + " ダメージ！ ";
@@ -2480,7 +2690,7 @@
                 }
                 if (no === -14 && defender.hp > 0) {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                     let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "👼" + attacker.n + "の熾天使の裁き！追加 " + dmg + " ダメージ！ ";
@@ -2512,7 +2722,7 @@
                 }
                 if (no === -19 && defender.hp > 0) {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                     let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "👿" + attacker.n + "の混沌の連撃！追加 " + dmg + " ダメージ！ ";
@@ -2527,7 +2737,7 @@
                 if (no === -20) {
                     if (defender.hp > 0) {
                         let atkVal = attacker.at + (attacker.buffAt || 0);
-                        let defVal = defender.df + (defender.buffDf || 0);
+                        let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                         let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
                         defender.hp = Math.max(0, defender.hp - dmg);
                         skillLogs += "👾" + attacker.n + "の終焉の創世神話！追撃 " + dmg + " ダメージ！ ";
@@ -2569,7 +2779,7 @@
                 }
                 if (no >= 51 && no <= 100 && defender.hp > 0) {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                     let extraDmg = Math.max(2, Math.floor(atkVal - (defVal / 2) + Math.random() * 3));
                     defender.hp = Math.max(0, defender.hp - extraDmg);
                     skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ ";
@@ -2642,30 +2852,85 @@
                 fxQueue.push("❄️🔰");
             }
             if (sk.id === 9 && Math.random() < 0.50) {
-                let incAt = Math.max(1, Math.floor(attacker.at * 0.10));
-                let incDf = Math.max(1, Math.floor(attacker.df * 0.10));
-                let incSp = Math.max(1, Math.floor(attacker.sp * 0.10));
-                attacker.buffAt = (attacker.buffAt || 0) + incAt;
-                attacker.buffDf = (attacker.buffDf || 0) + incDf;
-                attacker.buffSp = (attacker.buffSp || 0) + incSp;
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.10));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.10));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.10));
                 skillLogs += "🌟" + attacker.n + "のオールブースト！攻・防・素早さUP！ ";
                 fxQueue.push("🌟🪄");
             }
             if (sk.id === 10 && defender.hp > 0 && Math.random() < 0.20) {
                 skillLogs += "☣️" + attacker.n + "のカオスヴェノム！ ";
                 fxQueue.push("☠️💫");
-                if (defSk.id === 5) {
-                    skillLogs += "✨" + defender.n + "は毒を防いだ！ ";
-                } else {
-                    defender.isPoisoned = true;
-                    skillLogs += "☠️" + defender.n + "は毒になった！ ";
-                }
-                if (defSk.id === 7) {
-                    skillLogs += "🔋" + defender.n + "は麻痺を防いだ！ ";
-                } else {
+                if (defSk.id === 5) skillLogs += "✨" + defender.n + "は毒を防いだ！ ";
+                else { defender.isPoisoned = true; skillLogs += "☠️" + defender.n + "は毒になった！ "; }
+                if (defSk.id === 7) skillLogs += "🔋" + defender.n + "は麻痺を防いだ！ ";
+                else { defender.isParalyzed = true; skillLogs += "⚡" + defender.n + "は麻痺した！ "; }
+            }
+            if (sk.id === 11 && defender.hp > 0 && Math.random() < 0.25) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(1, Math.floor(atkVal * 0.40));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                attacker.hp = Math.min(attacker.m, attacker.hp + dmg);
+                skillLogs += "🩸" + attacker.n + "のヴァンパイアファング！" + dmg + "吸収！ ";
+                fxQueue.push("🩸🦇");
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 13 && Math.random() < 0.20) {
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.20));
+                attacker.nextAtk15 = true;
+                skillLogs += "🔥" + attacker.n + "のバーニングソウル！攻撃UP＆次回1.5倍！ ";
+                fxQueue.push("🔥💥");
+            }
+            if (sk.id === 14 && Math.random() < 0.30) {
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.25));
+                attacker.halfDmgOnce = true;
+                skillLogs += "❄️" + attacker.n + "のフロストアーマー！防御UP＆次回半減！ ";
+                fxQueue.push("❄️🛡️");
+            }
+            if (sk.id === 15 && Math.random() < 0.35) {
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.25));
+                skillLogs += "💨" + attacker.n + "のウィンドダンス！素早さUP！ ";
+                fxQueue.push("💨⚡");
+            }
+            if (sk.id === 16 && Math.random() < 0.25) {
+                attacker.isPoisoned = false;
+                let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
+                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
+                skillLogs += "👼" + attacker.n + "のミラクルキュア！毒解除＆HP " + healVal + " 回復！ ";
+                fxQueue.push("👼✨");
+            }
+            if (sk.id === 17 && defender.hp > 0 && Math.random() < 0.25) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(2, Math.floor(atkVal * 0.60));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                skillLogs += "⚡" + attacker.n + "のサンダーチェイン！" + dmg + "電撃ダメージ！ ";
+                if (defender.hp > 0 && Math.random() < 0.15 && defSk.id !== 7) {
                     defender.isParalyzed = true;
-                    skillLogs += "⚡" + defender.n + "は麻痺した！ ";
+                    skillLogs += defender.n + "は麻痺した！ ";
                 }
+                fxQueue.push("⚡💥");
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 18 && defender.hp > 0 && Math.random() < 0.25) {
+                defender.buffDf = (defender.buffDf || 0) - Math.max(1, Math.floor(defender.df * 0.20));
+                skillLogs += "🧪" + attacker.n + "のアシッドミスト！" + defender.n + "の防御力ダウン！ ";
+                fxQueue.push("🧪💦");
+            }
+            if (sk.id === 19 && defender.hp > 0 && Math.random() < 0.20) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(2, Math.floor(atkVal * 0.70));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                skillLogs += "🎯" + attacker.n + "のスナイプショット！防御無視 " + dmg + " ダメージ！ ";
+                fxQueue.push("🎯💥");
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 20 && Math.random() < 0.20) {
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.15));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.15));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.15));
+                attacker.nullifyOnce = true;
+                skillLogs += "👑" + attacker.n + "のインペリアルオーラ！全能力UP＆バリア展開！ ";
+                fxQueue.push("👑✨");
             }
 
             if (attacker.hp > 0) {
@@ -2720,10 +2985,10 @@
                 }
                 if (defender.nullifyOnce) {
                     defender.nullifyOnce = false;
-                    turnLog += "🛡️" + defender.n + "はイージスバリアで" + attacker.n + "の攻撃を無効化した！ ";
+                    turnLog += "🛡️" + defender.n + "はバリアで" + attacker.n + "の攻撃を無効化した！ ";
                 } else {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
-                    let defVal = defender.df + (defender.buffDf || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                     let baseDmg = Math.max(isPlayerAttack ? 2 : 1, Math.floor(atkVal - (defVal / 2) + Math.random() * (isPlayerAttack ? 3 : 2)));
 
                     if (attacker.nextAtk15) {
@@ -2732,8 +2997,8 @@
                         turnLog += "🔥パワーチャージ発動(1.5倍)！ ";
                     }
 
-                    // 💥 会心の一撃（クリティカル：2倍ダメージ）
-                    let isCrit = Math.random() < (isPlayerAttack ? 0.12 : 0.05);
+                    let critRate = (isPlayerAttack ? 0.12 : 0.05) + (attacker.skillId === 12 ? 0.18 : 0);
+                    let isCrit = Math.random() < critRate;
                     if (isCrit) {
                         baseDmg = baseDmg * 2;
                         turnLog += "💥会心の一撃！ ";
@@ -2743,7 +3008,7 @@
                     if (defender.halfDmgOnce) {
                         baseDmg = Math.ceil(baseDmg / 2);
                         defender.halfDmgOnce = false;
-                        turnLog += "🔰ハーフシールドでダメージ半減！ ";
+                        turnLog += "🔰ダメージ半減！ ";
                     }
 
                     defender.hp = Math.max(0, defender.hp - baseDmg);
@@ -2870,7 +3135,8 @@
                     if(currentEnemy.hp === 0){
                         if (currentEnemy.isSpecialHero) {
                             turnLog += "🏆他国の絵文字勇者に勝利した！ ";
-                            mixRate = 0.50;
+                            baseMixRate = Math.max(baseMixRate, 0.50);
+                            const effPct = Math.round(getEffectiveMixRate() * 100);
                             stats.heroWinCount = (stats.heroWinCount || 0) + 1;
                             p.forEach(ally => {
                                 if (ally.inParty) {
@@ -2878,9 +3144,9 @@
                                 }
                             });
                             seMixSuccess();
-                            const winHeroMsg = "🏆 他国の絵文字勇者に勝利！配合確率が50%になり、戦闘メンバー全員がLv+5された！！";
+                            const winHeroMsg = "🏆 他国の絵文字勇者に勝利！基礎配合確率が50%（現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
                             showNotice(winHeroMsg, 6500);
-                            turnLog += "🧬配合確率50%＆戦闘メンバー全員Lv+5！ ";
+                            turnLog += "🧬配合確率" + effPct + "%＆戦闘メンバー全員Lv+5！ ";
 
                             eg.shift();
                             if (stg > maxClearStg) maxClearStg = stg;
@@ -2931,6 +3197,7 @@
                                         partyOrder: 0,
                                         locked: false,
                                         isRare: isRareNew,
+                                        rareSkillId: isRareNew ? (currentEnemy.rareSkillId || getRandomRareSkillId()) : 0,
                                         skillId: getRandomSkillId()
                                     };
                                     initBattleState(newAlly);
@@ -2945,7 +3212,7 @@
                                 turnLog += "📢(このモンスターは配合限定！) ";
                             }
 
-                            let gainExp = currentEnemy.ex || 3;
+                            let gainExp = Math.max(1, Math.floor((currentEnemy.ex || 3) * (1 + expBonusRate)));
                             turnLog += "💎パーティ全員に EXP " + gainExp + " 獲得！ ";
 
                             let partyCount = 0;
@@ -3082,6 +3349,7 @@
                     partyOrder: 0,
                     locked: false,
                     isRare: isRareNew,
+                    rareSkillId: isRareNew ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
                 };
                 initBattleState(newMon);
@@ -3092,9 +3360,12 @@
                 if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
                 if(!zk.includes(resultName)) zk.push(resultName);
                 let sk = getSkillObj(newMon);
+                let rSk = getRareSkillObj(newMon);
                 seMixSuccess();
                 alert((isRareNew ? "🌈✨奇跡の色違い配合大成功！！\n" : "✨配合大成功！（成功率" + mixPct + "%突破！）\n") +
-                      "「" + resultName + (isRareNew ? "✨" : "") + "」(Lv." + sumLv + ") が誕生してボックスに加わった！\n追加スキル: " + sk.name);
+                      "「" + resultName + (isRareNew ? "✨" : "") + "」(Lv." + sumLv + ") が誕生してボックスに加わった！\n" +
+                      (rSk ? ("色違い固有: " + rSk.name + "\n") : "") +
+                      "追加スキル: " + sk.name);
             }
 
             saveGame();
