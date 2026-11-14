@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>みっくすえもじ</title>
+    <link rel="icon" type="image/jpeg" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
+    <link rel="apple-touch-icon" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
     <style>
         * {
             box-sizing: border-box;
@@ -28,6 +30,101 @@
             pointer-events: none;
             z-index: 0;
         }
+        /* --- 🎮 タイトル画面 --- */
+        #titleScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: linear-gradient(160deg, #e0f2fe 0%, #eff6ff 45%, #fef3c7 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+        #titleScreen.hide {
+            opacity: 0;
+            transform: scale(1.04);
+            pointer-events: none;
+        }
+        .title-card {
+            width: 100%;
+            max-width: 370px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 2.5px solid #7dd3fc;
+            border-radius: 28px;
+            padding: 28px 20px 26px;
+            box-shadow: 0 20px 45px rgba(2, 132, 199, 0.22), inset 0 2px 0 rgba(255, 255, 255, 0.95);
+            animation: popIn 0.5s ease-out;
+        }
+        .title-icon-wrap {
+            width: 124px;
+            height: 124px;
+            margin: 0 auto 14px;
+            border-radius: 28px;
+            padding: 4px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #f59e0b);
+            box-shadow: 0 12px 26px rgba(79, 70, 229, 0.28);
+            animation: titleIconBob 2.8s ease-in-out infinite alternate;
+        }
+        .title-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            display: block;
+            background: #ffffff;
+        }
+        @keyframes titleIconBob {
+            0% { transform: translateY(0px) rotate(-1.5deg); }
+            100% { transform: translateY(-7px) rotate(1.5deg); }
+        }
+        .title-logo-main {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #0284c7 0%, #4f46e5 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 4px 0 6px;
+            filter: drop-shadow(0 2px 5px rgba(2, 132, 199, 0.18));
+        }
+        .title-desc {
+            font-size: 12px;
+            font-weight: 800;
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .btn-start {
+            width: 88% !important;
+            max-width: 260px;
+            padding: 15px 20px !important;
+            font-size: 18px !important;
+            letter-spacing: 2px;
+            border-radius: 18px !important;
+            background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
+            border-bottom: 5px solid #047857 !important;
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35), inset 0 1.5px 0 rgba(255, 255, 255, 0.5) !important;
+            animation: startPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes startPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.035); }
+        }
+        .header-icon-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            object-fit: cover;
+            vertical-align: middle;
+            border: 1.5px solid #7dd3fc;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+            margin-right: 4px;
+        }
         .title-header, .box {
             position: relative;
             z-index: 1;
@@ -50,7 +147,7 @@
             margin-bottom: 3px;
         }
         h1 {
-            font-size: 25px;
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: 1.5px;
             background: linear-gradient(90deg, #0284c7 0%, #4f46e5 50%, #d97706 100%);
@@ -58,6 +155,8 @@
             -webkit-text-fill-color: transparent;
             margin: 0;
             filter: drop-shadow(0 2px 4px rgba(2,132,199,0.18));
+            display: inline-block;
+            vertical-align: middle;
         }
         .weekend-banner {
             display: none;
@@ -805,13 +904,31 @@
             width: 85%; padding: 9px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
     </style>
-</head>
+    </head>
 <body>
+    <div id="titleScreen">
+        <div class="title-card">
+            <div class="title-icon-wrap">
+                <img src="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg" alt="みっくすえもじアイコン" class="title-icon-img" onerror="this.parentElement.innerHTML='<div style=\'font-size:66px;line-height:116px;\'>👑</div>'">
+            </div>
+            <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
+            <div class="title-logo-main">👑 みっくすえもじ 👑</div>
+            <div class="title-desc">
+                絵文字モンスターを配合して最強パーティを作ろう！<br>
+                目指せ！ダンジョン1000階完全制覇！
+            </div>
+            <button class="btn-start" onclick="startGame()">▶ START</button>
+        </div>
+    </div>
+
     <canvas id="bgCanvas"></canvas>
 
     <div class="title-header">
         <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
-        <h1>👑 みっくすえもじ 👑</h1>
+        <div>
+            <img src="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg" alt="" class="header-icon-img" onerror="this.style.display='none'">
+            <h1>👑 みっくすえもじ 👑</h1>
+        </div>
         <div id="weekendBanner" class="weekend-banner">🎉 土日限定ボーナス発動中！獲得EXP 2倍 ＆ 配合確率 +10%！ 🎉</div>
         <div class="header-btn-row">
             <button id="btnSoundToggle" onclick="toggleSound()" style="width: auto; padding: 6px 12px; font-size: 11px; margin: 0; background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); border-bottom: 2px solid #0369a1;">
@@ -826,7 +943,7 @@
             1️⃣ <b>パーティ編成</b>：下のボックスから最大3体「⚔️戦闘に出す」で登録！<br>
             2️⃣ <b>ダンジョン冒険</b>：「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
             3️⃣ <b>モンスター配合</b>：2匹を配合して新種を生み出そう！レベルは2匹の合計になります（失敗すると消滅するので🔒鍵で保護が安心！）<br>
-            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、他国の配合賢者・迷子の国王・知らない王国など特殊イベントも多数出現！土日はEXP2倍＆配合+10%！
+            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・迷子の国王・知らない王国など特殊イベントも多数出現！土日はEXP2倍＆配合+10%！
         </div>
     </div>
 
@@ -842,7 +959,7 @@
         <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
         <div class="battle-header-bar" id="battleHeaderBar">
             <div style="font-size: 13.5px; font-weight: 900; color: #1e293b;">
-                ステージ: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
+                ダンジョン: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
                 <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
             </div>
             <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 2px;">
@@ -894,10 +1011,10 @@
     </div>
 
     <div class="box" style="border: 1.5px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
-        <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🏆 MISSIONS</span>
-        <h3 style="margin: 2px 0 8px; color: #92400e; font-size: 16px;">🏆 ミッション <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/10達成)</span></h3>
+        <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
+        <h3 style="margin: 2px 0 8px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/10達成)</span></h3>
         <button onclick="let m=document.getElementById('missionWrapper'); m.style.display=m.style.display==='none'?'block':'none'" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 3px solid #b45309;">
-            🏆 ミッション一覧の表示切替
+            📜 クエスト一覧の表示切替
         </button>
         <div id="missionWrapper" style="display: none; margin-top: 8px;">
             <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
@@ -1136,8 +1253,8 @@
         };
 
         const SPECIAL_D = {
-            "他国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
-            "他国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 560, at: 170, df: 125, sp: 95, ex: 0, isSpecialSage: true }
+            "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
+            "王国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 560, at: 170, df: 125, sp: 95, ex: 0, isSpecialSage: true }
         };
 
         function getMonData(name) {
@@ -1160,12 +1277,12 @@
         };
 
         const INNATE_SKILLS = {
-            quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
-            power:  { name: "🔥パワーチャージ(固有)", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のステージへ進むと上昇効果は消える。" },
-            guard:  { name: "🛡️アイアンガード", desc: "攻撃後に50%の確率で防御力（小）上昇（+15%）。次のステージへ進むと上昇効果は消える。" },
+            quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
+            power:  { name: "🔥パワーチャージ(固有)", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のダンジョンへ進むと上昇効果は消える。" },
+            guard:  { name: "🛡️アイアンガード", desc: "攻撃後に50%の確率で防御力（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
             double: { name: "⚔️ダブルアタック", desc: "攻撃後に100%の確率でもう一度追加攻撃を行う。" },
             heal:   { name: "💚リジェネヒール", desc: "攻撃後に50%の確率で自分の最大HPの10%を回復する。" },
-            godspd: { name: "🌪️ゴッドスピード", desc: "攻撃後に50%の確率で素早さ（大）上昇（+50%）。次のステージへ進むと上昇効果は消える。" },
+            godspd: { name: "🌪️ゴッドスピード", desc: "攻撃後に50%の確率で素早さ（大）上昇（+50%）。次のダンジョンへ進むと上昇効果は消える。" },
             death:  { name: "💀デスエンド", desc: "攻撃後に25%の確率で目の前の敵のHPを0にする一撃必殺。" }
         };
 
@@ -1213,7 +1330,7 @@
         function getInnateSkills(no) {
             let list = [];
             if (no === "EX") {
-                list.push({ name: "⚔️異国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" });
+                list.push({ name: "⚔️王国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" });
                 return list;
             }
             if (no === "EX2") {
@@ -1246,7 +1363,7 @@
             { id: 6, name: "⚡パラライズショック", desc: "攻撃後に10%の確率で、相手を麻痺状態にする。麻痺状態のモンスターは次のターンだけ攻撃を出せず、その次のターンからは動けるようになる。" },
             { id: 7, name: "🔋パラライズガード", desc: "麻痺状態にならない（麻痺無効）。" },
             { id: 8, name: "🔰ハーフシールド", desc: "攻撃後に10%の確率で、次に自分が受けるダメージを半分（切り上げ）にする。" },
-            { id: 9, name: "🌟オールブースト", desc: "攻撃後に50%の確率で、攻撃・防御・素早さが（小）上昇（+10%）する。次のステージに進むと元に戻る。" },
+            { id: 9, name: "🌟オールブースト", desc: "攻撃後に50%の確率で、攻撃・防御・素早さが（小）上昇（+10%）する。次のダンジョンに進むと元に戻る。" },
             { id: 10, name: "☣️カオスヴェノム", desc: "攻撃後に20%の確率で、相手を毒状態と麻痺状態の両方にする。" },
             { id: 11, name: "🩸ヴァンパイアファング", desc: "攻撃後に25%の確率で、敵に自分の攻撃力の40%の追加ダメージを与え、その分だけ自分のHPを回復する。" },
             { id: 12, name: "💥クリティカルアイ", desc: "常時効果：会心の一撃（ダメージ2倍）の発生率が+18%アップする。" },
@@ -1255,7 +1372,7 @@
             { id: 15, name: "💨ウィンドダンス", desc: "攻撃後に35%の確率で、自分の素早さが25%上昇する。" },
             { id: 16, name: "👼ミラクルキュア", desc: "攻撃後に25%の確率で、自分の毒状態を治し、最大HPの10%を回復する。" },
             { id: 17, name: "⚡サンダーチェイン", desc: "攻撃後に25%の確率で、敵に攻撃力の60%の電撃追撃を与え、さらに15%の確率で麻痺状態にする。" },
-            { id: 18, name: "🧪アシッドミスト", desc: "攻撃後に25%の確率で、敵の防御力を20%ダウンさせる（ステージ移動で戻る）。" },
+            { id: 18, name: "🧪アシッドミスト", desc: "攻撃後に25%の確率で、敵の防御力を20%ダウンさせる（ダンジョン移動で戻る）。" },
             { id: 19, name: "🎯スナイプショット", desc: "攻撃後に20%の確率で、敵の防御力を無視して攻撃力の70%の追加ダメージを与える。" },
             { id: 20, name: "👑インペリアルオーラ", desc: "攻撃後に20%の確率で、攻撃・防御・素早さが15%上昇し、攻撃を1回無効化するバリアを張る。" }
         ];
@@ -1266,7 +1383,7 @@
 
         function getSkillObj(mon) {
             if (mon && mon.isSpecialHero) {
-                return { id: 0, name: "⚔️異国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" };
+                return { id: 0, name: "⚔️王国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" };
             }
             if (mon && mon.isSpecialSage) {
                 return { id: 0, name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" };
@@ -2134,6 +2251,19 @@
                 mixMagicRaf = null;
             }
         }
+        function startGame() {
+            const ts = document.getElementById("titleScreen");
+            if (ts && !ts.classList.contains("hide")) {
+                initAudio();
+                seStageClear();
+                updateBgmState(true);
+                ts.classList.add("hide");
+                setTimeout(() => {
+                    ts.style.display = "none";
+                    initBattleCanvas();
+                }, 460);
+            }
+        }
 
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },            checkType: "stg", val: 10 },
@@ -2143,14 +2273,14 @@
             { id: "m_rps1",    title: "ジャンケン名人",     condText: "謎の旅人に1回勝つ",            rewardText: "配合成功率+3%",         reward: { mix: 0.03 },         checkType: "rps", val: 1 },
             { id: "m_chest1",  title: "トレジャーハンター", condText: "謎の宝箱を1回開ける",          rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },         checkType: "chest", val: 1 },
             { id: "m_rare1",   title: "虹の輝き",           condText: "✨色違いを1体手に入れる",      rewardText: "ボックス上限+10",       reward: { box: 10 },           checkType: "rare", val: 1 },
-            { id: "m_hero1",   title: "異国の好敵手",       condText: "他国の絵文字勇者に勝利する",   rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },         checkType: "hero", val: 1 },
+            { id: "m_hero1",   title: "王国の好敵手",       condText: "王国の絵文字勇者に勝利する",   rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },         checkType: "hero", val: 1 },
             { id: "m_zukan50", title: "図鑑マイスター",     condText: "通常図鑑を50種埋める",         rewardText: "配合成功率+5%",         reward: { mix: 0.05 },         checkType: "zukan", val: 50 },
             { id: "m_stg500",  title: "大魔王討伐",         condText: "500階ボスをクリアする",        rewardText: "上限+15 & EXP+25%",     reward: { box: 15, exp: 0.25 }, checkType: "stg", val: 500 }
         ];
 
         const GUILD_EXTRA_MISSIONS = [
             { id: "gm_1",  title: "🏰王国の使者",       condText: "知らない王国に1回入国する",       rewardText: "ボックス上限+3",       reward: { box: 3 },             checkType: "kingdom", val: 1 },
-            { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",     condText: "他国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",        reward: { mix: 0.02 },          checkType: "sage", val: 1 },
+            { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",     condText: "王国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",        reward: { mix: 0.02 },          checkType: "sage", val: 1 },
             { id: "gm_3",  title: "🏟️闘技場の覇者",     condText: "王国の闘技場で1回勝利する",       rewardText: "戦闘EXP+10%",          reward: { exp: 0.10 },          checkType: "arena", val: 1 },
             { id: "gm_4",  title: "🤴慈悲の心",         condText: "迷子の国王を1回助ける",           rewardText: "野生加入率+0.5%",      reward: { wild: 0.005 },        checkType: "king", val: 1 },
             { id: "gm_5",  title: "🧬熟練の錬金術師",   condText: "配合に10回成功する",              rewardText: "配合成功率+3%",        reward: { mix: 0.03 },          checkType: "mix", val: 10 },
@@ -2195,8 +2325,8 @@
             const seq = stats.extraMissions.length + 1;
             const custom = {
                 id: "gm_rep_" + seq + "_" + Date.now(),
-                title: "📜王宮ギルド特別依頼 #" + seq,
-                condText: "ギルドの特別依頼を受注した",
+                title: "📜王宮ギルド特別クエスト #" + seq,
+                condText: "ギルドの特別クエストを受注した",
                 rewardText: (seq % 2 === 0) ? "ボックス上限+1" : "戦闘EXP+5%",
                 reward: (seq % 2 === 0) ? { box: 1 } : { exp: 0.05 },
                 checkType: "always",
@@ -2239,7 +2369,7 @@
 
                 const isGuildTag = (m.id && m.id.indexOf("gm_") === 0) ? "<span style='background:#ede9fe; color:#6d28d9; border-radius:4px; padding:0 4px; font-size:9px; margin-right:3px;'>ギルド</span>" : "";
                 html += '<div class="mission-row' + (isClaimed ? ' done' : '') + '">' +
-                    '<div>' + isGuildTag + '<b>🏆 ' + m.title + '</b><br><span style="color:#475569; font-size:10px;">' + m.condText + '</span><br><span style="color:#d97706; font-weight:800; font-size:10px;">🎁 ' + m.rewardText + '</span></div>' +
+                    '<div>' + isGuildTag + '<b>📜 ' + m.title + '</b><br><span style="color:#475569; font-size:10px;">' + m.condText + '</span><br><span style="color:#d97706; font-weight:800; font-size:10px;">🎁 ' + m.rewardText + '</span></div>' +
                     '<div>' + rightHtml + '</div></div>';
             });
 
@@ -2265,7 +2395,7 @@
             if (m.reward.wild) wildJoinBonus += m.reward.wild;
 
             seStageClear();
-            const msg = "🏆 ミッション「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
+            const msg = "🧭 クエスト「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
             showNotice(msg, 4500);
             document.getElementById("battleLog").innerText = msg;
             saveGame();
@@ -2289,7 +2419,7 @@
             if (sec > 0) {
                 if (el) {
                     el.style.display = "block";
-                    el.innerText = "⏳ 国王救出の休憩中！あと " + sec + "秒 ダンジョンに入れません";
+                    el.innerText = "🏰 迷子の国王をお城まで護衛しています…（あと " + sec + "秒 でダンジョンに入れます）";
                 }
                 if (btnEnter && !inDungeon) btnEnter.disabled = true;
             } else {
@@ -2557,11 +2687,11 @@
         }
 
         function changeStage(val) {
-            if (inDungeon) return alert("ダンジョン内ではステージを変更できません！");
+            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
             let nextVal = stg + val;
             if (nextVal < 1) return;
-            if (nextVal > 1000) return alert("最高ステージは1000階です！");
-            if (nextVal > maxStg) return alert("未到達のステージには進めません！");
+            if (nextVal > 1000) return alert("最高ダンジョンは1000階です！");
+            if (nextVal > maxStg) return alert("未到達のダンジョンには進めません！");
             stg = nextVal;
             saveGame();
             up();
@@ -2569,7 +2699,7 @@
 
         function enter(){
             if (isDungeonLocked()) {
-                return alert("⏳ 迷子の国王を助けた休憩中です！あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
+                return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
             }
             let aliveCount = 0;
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
@@ -2646,7 +2776,7 @@
             } else if (evRoll < 0.03) {
                 currentEvent = "hero";
                 seSkill();
-                document.getElementById("battleLog").innerText = "🤺 他国の絵文字勇者(Lv.50)が現れた！「いざ尋常に勝負するか？」";
+                document.getElementById("battleLog").innerText = "🤺 王国の絵文字勇者(Lv.50)が現れた！「いざ尋常に勝負するか？」";
                 return;
             } else if (evRoll < 0.04) {
                 currentEvent = "chest";
@@ -2656,7 +2786,7 @@
             } else if (evRoll < 0.05) {
                 currentEvent = "sage";
                 seSkill();
-                document.getElementById("battleLog").innerText = "🧝‍♂️ 他国の配合賢者(Lv.75)が現れた！「わしの秘術に挑むか？」";
+                document.getElementById("battleLog").innerText = "🧝‍♂️ 王国の配合賢者(Lv.75)が現れた！「わしの秘術に挑むか？」";
                 return;
             } else if (evRoll < 0.06) {
                 currentEvent = "king";
@@ -2841,21 +2971,21 @@
             if (!inDungeon || currentEvent !== "hero") return;
 
             if (!fight) {
-                const msg = "💨 他国の絵文字勇者から逃げ出した！";
+                const msg = "💨 王国の絵文字勇者から逃げ出した！";
                 showNotice(msg, 3500);
                 advanceStageAfterEvent(msg);
                 return;
             }
 
             currentEvent = null;
-            const h = SPECIAL_D["他国の絵文字勇者"];
+            const h = SPECIAL_D["王国の絵文字勇者"];
             let heroMon = {
-                n: "他国の絵文字勇者", m: h.hp, hp: h.hp, at: h.at, df: h.df, sp: h.sp,
+                n: "王国の絵文字勇者", m: h.hp, hp: h.hp, at: h.at, df: h.df, sp: h.sp,
                 ex: 0, isSpecialHero: true, fixedLv: 50, skillId: 0
             };
             initBattleState(heroMon);
             eg = [heroMon];
-            document.getElementById("battleLog").innerText = "⚔️ 他国の絵文字勇者(Lv.50)との決戦が始まった！";
+            document.getElementById("battleLog").innerText = "⚔️ 王国の絵文字勇者(Lv.50)との決戦が始まった！";
             up();
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -2868,21 +2998,21 @@
             if (!inDungeon || currentEvent !== "sage") return;
 
             if (!fight) {
-                const msg = "💨 他国の配合賢者から逃げ出した！";
+                const msg = "💨 王国の配合賢者から逃げ出した！";
                 showNotice(msg, 3500);
                 advanceStageAfterEvent(msg);
                 return;
             }
 
             currentEvent = null;
-            const s = SPECIAL_D["他国の配合賢者"];
+            const s = SPECIAL_D["王国の配合賢者"];
             let sageMon = {
-                n: "他国の配合賢者", m: s.hp, hp: s.hp, at: s.at, df: s.df, sp: s.sp,
+                n: "王国の配合賢者", m: s.hp, hp: s.hp, at: s.at, df: s.df, sp: s.sp,
                 ex: 0, isSpecialSage: true, fixedLv: 75, skillId: 0
             };
             initBattleState(sageMon);
             eg = [sageMon];
-            document.getElementById("battleLog").innerText = "🧝‍♂️ 他国の配合賢者(Lv.75)との決戦が始まった！";
+            document.getElementById("battleLog").innerText = "🧝‍♂️ 王国の配合賢者(Lv.75)との決戦が始まった！";
             up();
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -2963,7 +3093,7 @@
             kingCandidateSkillId = picked.id;
             currentEvent = "king_skill";
             seSkill();
-            document.getElementById("battleLog").innerText = "🤴 国王を助けた！お礼に「" + topMon.n + "」のランダムスキルを変更できます（⚠️終了後、拠点へ戻り1分間ダンジョンに入れません）。";
+            document.getElementById("battleLog").innerText = "🤴 国王を助けた！お礼に「" + topMon.n + "」のランダムスキルを変更できます（⚠️終了後、お城まで護衛するため拠点へ戻り1分間ダンジョンに入れません）。";
             up();
         }
 
@@ -2987,7 +3117,7 @@
             if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
             if (stg < 1000) stg++;
 
-            msg += " ➡️ 次のステージ(" + stg + "階)へ進み、拠点へ戻りました（⏳1分間ダンジョンに入れません）。";
+            msg += " ➡️ 次のダンジョン(" + stg + "階)へ進み、迷子の国王をお城まで護衛しています（⏳1分間ダンジョンに入れません）。";
 
             battleSessionId++;
             clearAllBattleTimers();
@@ -3049,7 +3179,7 @@
             if (fac === "guild") {
                 const newMission = addGuildExtraMission();
                 seStageClear();
-                const msg = "📜 ギルドで新しいミッション『" + newMission.title + "』が追加された！そして王国を出国した！";
+                const msg = "📜 ギルドで新しいクエスト『" + newMission.title + "』が追加された！そして王国を出国した！";
                 showNotice(msg, 5500);
                 advanceStageAfterEvent(msg);
                 return;
@@ -3259,7 +3389,7 @@
                 }
             }
             let extra = inf.no <= 75 ? "\n（※🧙謎の旅人のジャンケン勝利でも入手可能！）" : "";
-            alert("【📍 野生出現場所ヒント】\nNo." + inf.no + "（未発見モンスター）\n\n出現ステージ：およそ " + minS + "階 〜 " + maxS + "階" + extra);
+            alert("【📍 野生出現場所ヒント】\nNo." + inf.no + "（未発見モンスター）\n\n出現ダンジョン：およそ " + minS + "階 〜 " + maxS + "階" + extra);
         }
 
         function showBossHint(targetName) {
@@ -3383,11 +3513,11 @@
                     } else if (currentEvent === "merchant") {
                         eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>👳</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>旅商人</b><br><span style='font-size:10.5px; color:#475569;'>特別な品をプレゼント！</span>";
                     } else if (currentEvent === "hero") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>他国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>王国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
                     } else if (currentEvent === "chest") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🧰宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
                     } else if (currentEvent === "sage") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>他国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
                     } else if (currentEvent === "king" || currentEvent === "king_skill") {
                         eS.innerHTML = "<b style='font-size:12px;'>【👑遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤴</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>迷子の国王</b><br><span style='font-size:10.5px; color:#475569;'>道に迷っているようだ…</span>";
                     } else if (currentEvent === "kingdom_gate" || currentEvent === "kingdom_menu") {
@@ -3395,13 +3525,13 @@
                     } else if (currentEvent === "kingdom_shop") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🏪王国の商店】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の商店</b><br><span style='font-size:10.5px; color:#475569;'>特別な品を1つ進呈！</span>";
                     } else if (currentEvent === "arena_reward") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間しよう！</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間にしよう！</span>";
                     }
                 } else {
                     const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
                     const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
                     const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
-                    eS.innerHTML = "<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️他国の勇者】" : (isSageBattle ? "【🔮他国の配合賢者】" : "【敵】")))) + "</b>";
+                    eS.innerHTML = "<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : "【敵】")))) + "</b>";
                     if(!inDungeon || eg.length === 0){
                         eS.innerHTML += "<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>";
                         const bEnterBtm = document.getElementById("btnEnterBtm");
@@ -3425,7 +3555,7 @@
 
                             enemyHTML += "<br><div class='monster-container'" + eId + "><span class='battle-monster" + deadClass + rareClass + "' style='font-size:" + sizePx + ";'>" + dispEmoji + "</span>" + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>";
                             if (m.isSpecialHero) {
-                                enemyHTML += "<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️異国の剣技・閃光</span>";
+                                enemyHTML += "<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>";
                             }
                             if (m.isSpecialSage) {
                                 enemyHTML += "<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>";
@@ -3469,8 +3599,8 @@
                 } else if (inDungeon && currentEvent === "hero") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">🤺 他国の絵文字勇者(Lv.50)が現れた！</div>' +
-                        '<div class="event-sub">特別スキル「⚔️異国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
+                        '<div class="event-title">🤺 王国の絵文字勇者(Lv.50)が現れた！</div>' +
+                        '<div class="event-sub">特別スキル「⚔️王国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="chooseHeroAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseHeroAction(false)">💨 逃げる</button>' +
@@ -3489,7 +3619,7 @@
                 } else if (inDungeon && currentEvent === "sage") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">🧝‍♂️ 他国の配合賢者(Lv.75)が現れた！</div>' +
+                        '<div class="event-title">🧝‍♂️ 王国の配合賢者(Lv.75)が現れた！</div>' +
                         '<div class="event-sub">特別スキル「🔮賢者の秘術・真理錬成」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>配合確率+1%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #047857;" onclick="chooseSageAction(true)">⚔️ 戦う！</button>' +
@@ -3500,7 +3630,7 @@
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🤴 迷子の国王が現れた！</div>' +
-                        '<div class="event-sub">お礼に戦闘1番手のランダムスキルを別のスキルに変更してくれる（変更するか選べます）。<br><span style="color:#dc2626;">⚠️ 助けるとダンジョンから出て、1分間ダンジョンに入れなくなります！</span></div>' +
+                        '<div class="event-sub">お礼に戦闘1番手のランダムスキルを別のスキルに変更してくれる（変更するか選べます）。<br><span style="color:#dc2626;">⚠️ 助けるとお城まで護衛するためダンジョンから出て、1分間ダンジョンに入れなくなります！</span></div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="chooseKingHelp(true)">👑 助ける</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseKingHelp(false)">🚶 助けない</button>' +
@@ -3519,7 +3649,7 @@
                             '現在：<b>' + curSk.name + '</b><br>' +
                             '候補：<b style="color:#0284c7;">' + candSk.name + '</b><br>' +
                             '<span style="font-size:10px; color:#475569;">' + candSk.desc + '</span><br>' +
-                            '<span style="color:#dc2626; font-size:10px;">⚠️ 選択後ダンジョンから出て、1分間ダンジョンに入れなくなります。</span>' +
+                            '<span style="color:#dc2626; font-size:10px;">⚠️ 選択後お城まで護衛するためダンジョンから出て、1分間ダンジョンに入れなくなります。</span>' +
                         '</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="confirmKingSkillChange(true)">✨ 変更する</button>' +
@@ -3719,8 +3849,7 @@
                     }
                 });
             }
-        }
-
+             }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, boxLimit,
@@ -3859,7 +3988,7 @@
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
                     attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.15));
-                    skillLogs += "⚔️" + attacker.n + "の異国の剣技・閃光！HP " + h + " 回復＆攻・素UP＆次回1.5倍！ ";
+                    skillLogs += "⚔️" + attacker.n + "の王国の剣技・閃光！HP " + h + " 回復＆攻・素UP＆次回1.5倍！ ";
                     fxQueue.push("⚔️✨");
                     showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
@@ -4493,7 +4622,7 @@
                     if (currentEnemy.hp === 0) {
                         spawnBattleBurstAtMonster(currentEnemy, true, "#fbbf24", 20);
                         if (currentEnemy.isSpecialHero) {
-                            turnLog += "🏆他国の絵文字勇者に勝利した！ ";
+                            turnLog += "🏆王国の絵文字勇者に勝利した！ ";
                             baseMixRate = Math.max(baseMixRate, 0.50);
                             const effPct = getMixPctText();
                             stats.heroWinCount = (stats.heroWinCount || 0) + 1;
@@ -4501,7 +4630,7 @@
                                 if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
                             seMixSuccess();
-                            const winHeroMsg = "🏆 他国の絵文字勇者に勝利！基礎配合確率が50%（現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
+                            const winHeroMsg = "🏆 王国の絵文字勇者に勝利！基礎配合確率が50%（現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
                             showNotice(winHeroMsg, 6500);
                             turnLog += "🧬配合確率" + effPct + "%＆戦闘メンバー全員Lv+5！ ";
 
@@ -4545,7 +4674,7 @@
                                 setDungeonButtonsDisabled(false);
                             }
                         } else if (currentEnemy.isSpecialSage) {
-                            turnLog += "🏆他国の配合賢者に勝利した！ ";
+                            turnLog += "🏆王国の配合賢者に勝利した！ ";
                             mixBonus += 0.01;
                             const effPct = getMixPctText();
                             stats.sageWinCount = (stats.sageWinCount || 0) + 1;
@@ -4553,7 +4682,7 @@
                                 if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
                             seMixSuccess();
-                            const winSageMsg = "🏆 他国の配合賢者に勝利！配合確率+1%（現在" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
+                            const winSageMsg = "🏆 王国の配合賢者に勝利！配合確率+1%（現在" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
                             showNotice(winSageMsg, 6500);
                             turnLog += "🧬配合確率+1%＆戦闘メンバー全員Lv+5！ ";
 
@@ -4701,18 +4830,18 @@
                             eg.shift();
                             if(eg.length === 0) {
                                 stageJustCleared = true;
-                                turnLog += "🎉ステージクリア！ ";
+                                turnLog += "🎉ダンジョンクリア！ ";
                                 seStageClear();
                                 let clearedStg = stg;
 
                                 if (clearedStg > maxClearStg) maxClearStg = clearedStg;
 
                                 if (clearedStg === 500) {
-                                    showNotice("🎊 ステージ500大ボス撃破！おめでとうございます！！ 🎊", 8000);
-                                    setTimeout(() => { alert("🎊 ステージ500大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！"); }, 150);
+                                    showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊", 8000);
+                                    setTimeout(() => { alert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！"); }, 150);
                                 } else if (clearedStg === 1000) {
-                                    showNotice("👑 ステージ1000完全制覇！おめでとうございます！！ 👑", 10000);
-                                    setTimeout(() => { alert("👑 ステージ1000完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！"); }, 150);
+                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑", 10000);
+                                    setTimeout(() => { alert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！"); }, 150);
                                 }
 
                                 if(stg === maxStg) {
@@ -4787,9 +4916,9 @@
                             seFail();
                             p.forEach(m => { if (m.inParty) m.hp = m.m; });
                             const loseMsg = wasHeroBattle
-                                ? "😢 他国の絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                ? "😢 王国の絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
                                 : (wasSageBattle
-                                    ? "😢 他国の配合賢者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                    ? "😢 王国の配合賢者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
                                     : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）");
                             showNotice(loseMsg, 5000);
                             inDungeon = false;
