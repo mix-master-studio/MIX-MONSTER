@@ -143,7 +143,6 @@
             border-radius: 22px;
             border: 2px solid #bae6fd;
             box-shadow: 0 10px 26px rgba(2, 132, 199, 0.16), inset 0 2px 0 rgba(255,255,255,0.95);
-            transform-style: preserve-3d;
         }
         .title-sub {
             font-size: 10px;
@@ -242,8 +241,6 @@
             border-top: none;
             z-index: 1;
             min-height: 185px;
-            perspective: 900px;
-            transform-style: preserve-3d;
             box-shadow: inset 0 -18px 30px rgba(15, 23, 42, 0.08);
         }
         #battleCanvas {
@@ -254,7 +251,6 @@
             height: 100%;
             pointer-events: none;
             z-index: 15;
-            transform: translateZ(60px);
         }
         #fxLayer {
             position: absolute;
@@ -262,14 +258,13 @@
             pointer-events: none;
             z-index: 25;
             overflow: hidden;
-            transform: translateZ(60px);
         }
         @keyframes battleShake {
-            0%, 100% { transform: translate3d(0, 0, 0) rotateZ(0deg); }
-            20% { transform: translate3d(-6px, 2px, 0) rotateZ(-0.6deg); }
-            40% { transform: translate3d(6px, -2px, 0) rotateZ(0.6deg); }
-            60% { transform: translate3d(-4px, -1px, 0) rotateZ(-0.4deg); }
-            80% { transform: translate3d(4px, 1px, 0) rotateZ(0.4deg); }
+            0%, 100% { transform: translate(0, 0); }
+            20% { transform: translate(-6px, 2px); }
+            40% { transform: translate(6px, -2px); }
+            60% { transform: translate(-4px, -1px); }
+            80% { transform: translate(4px, 1px); }
         }
         .shake-hit {
             animation: battleShake 0.34s ease-in-out;
@@ -326,14 +321,14 @@
             animation: popIn 0.3s ease-out;
         }
         @keyframes popIn {
-            0% { transform: scale(0.9) rotateX(15deg); opacity: 0; }
-            100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
         .battle-field::before {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) translateZ(-40px);
+            transform: translate(-50%, -50%);
             font-size: 230px;
             opacity: 0.24;
             z-index: 0;
@@ -372,11 +367,12 @@
             100% { filter: hue-rotate(120deg) saturate(1.7) drop-shadow(0 0 6px #f472b6); }
         }
         .rare-shiny {
-            animation: floatBob3D 2.6s ease-in-out infinite alternate, shinyRainbow 3.2s linear infinite !important;
+            animation: floatBob2D 2.4s ease-in-out infinite alternate, shinyRainbow 3.2s linear infinite !important;
         }
         .rare-shiny-inline {
             display: inline-block;
-            animation: shinyRainbow 3.2s linear infinite;
+            color: #a855f7;
+            text-shadow: 0 0 6px rgba(244, 114, 182, 0.65);
         }
         .rare-card {
             background: linear-gradient(135deg, #fffbeb 0%, #fdf4ff 50%, #f0f9ff 100%) !important;
@@ -480,38 +476,35 @@
 
         .side {
             width: 49%;
-            background: rgba(255, 255, 255, 0.88) !important;
+            background: rgba(255, 255, 255, 0.90) !important;
             padding: 8px;
             text-align: left;
             border-radius: 14px;
             border: 1.5px solid rgba(255, 255, 255, 0.95);
             box-shadow: 0 6px 18px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255,255,255,0.9);
-            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+            transition: transform 0.20s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.20s ease;
             position: relative;
             color: #334155;
             z-index: 2;
-            transform-style: preserve-3d;
         }
-        #mySide { transform: rotateY(4deg); }
-        #eSide { transform: rotateY(-4deg); }
         .atk-forward-my {
-            transform: translate3d(26px, -6px, 46px) rotateY(16deg) scale(1.05) !important;
-            box-shadow: 0 14px 28px rgba(2, 132, 199, 0.28) !important;
+            transform: translate(18px, -4px) scale(1.04) !important;
+            box-shadow: 0 12px 24px rgba(2, 132, 199, 0.28) !important;
             z-index: 8 !important;
         }
         .atk-forward-e {
-            transform: translate3d(-26px, -6px, 46px) rotateY(-16deg) scale(1.05) !important;
-            box-shadow: 0 14px 28px rgba(220, 38, 38, 0.28) !important;
+            transform: translate(-18px, -4px) scale(1.04) !important;
+            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.28) !important;
             z-index: 8 !important;
         }
-        @keyframes hitKnockback3D {
-            0% { transform: translate3d(0,0,0) rotateY(0deg); background-color: rgba(239,68,68,0.45); }
-            25% { transform: translate3d(8px, -3px, -24px) rotateY(-14deg) rotateX(6deg); opacity: 0.45; }
-            55% { transform: translate3d(-5px, 2px, -10px) rotateY(8deg); background-color: rgba(239,68,68,0.35); opacity: 0.7; }
-            100% { transform: translate3d(0,0,0) rotateY(0deg); opacity: 1; }
+        @keyframes hitKnockback {
+            0% { transform: translate(0, 0); background-color: rgba(239,68,68,0.40); }
+            25% { transform: translate(7px, -2px); opacity: 0.60; }
+            55% { transform: translate(-5px, 2px); background-color: rgba(239,68,68,0.30); opacity: 0.78; }
+            100% { transform: translate(0, 0); opacity: 1; }
         }
         .hit-flash {
-            animation: hitKnockback3D 0.42s ease-out !important;
+            animation: hitKnockback 0.38s ease-out !important;
         }
 
         button {
@@ -640,17 +633,14 @@
             width: 100%;
             text-align: center;
             margin: 6px 0 10px;
-            perspective: 400px;
-            transform-style: preserve-3d;
         }
         .battle-monster {
             font-size: 38px;
             display: block;
             position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 8px 10px rgba(15,23,42,0.22));
-            animation: floatBob3D 2.6s ease-in-out infinite alternate;
-            transform-style: preserve-3d;
+            z-index: 3;
+            filter: drop-shadow(0 6px 8px rgba(15,23,42,0.20));
+            animation: floatBob2D 2.4s ease-in-out infinite alternate;
         }
         .monster-shadow {
             width: 38px;
@@ -660,14 +650,13 @@
             margin: -3px auto 0;
             filter: blur(1.5px);
             z-index: 1;
-            animation: shadowScale3D 2.6s ease-in-out infinite alternate;
+            animation: shadowScale2D 2.4s ease-in-out infinite alternate;
         }
-        @keyframes floatBob3D {
-            0%   { transform: translate3d(0px, 0px, 0px) rotateY(-6deg); }
-            50%  { transform: translate3d(0px, -4px, 10px) rotateY(0deg); }
-            100% { transform: translate3d(0px, -7px, 16px) rotateY(6deg); }
+        @keyframes floatBob2D {
+            0%   { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
         }
-        @keyframes shadowScale3D {
+        @keyframes shadowScale2D {
             0%   { transform: scale(1.02); opacity: 0.36; }
             100% { transform: scale(0.76); opacity: 0.16; }
         }
@@ -748,7 +737,7 @@
             border: 1.5px solid #e2e8f0;
             border-radius: 14px;
             line-height: 1.5;
-            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
             color: #334155;
         }
         li.locked { background: #f8fafc; color: #94a3b8; border-color: #e2e8f0; }
@@ -776,6 +765,8 @@
             border-radius: 10px !important;
             line-height: 1.35 !important;
             font-size: 11.5px;
+            content-visibility: auto;
+            contain-intrinsic-size: 78px;
         }
         .compact-mix-li {
             margin: 3px 0 !important;
@@ -783,6 +774,8 @@
             border-radius: 9px !important;
             line-height: 1.3 !important;
             font-size: 11.5px;
+            content-visibility: auto;
+            contain-intrinsic-size: 32px;
         }
         .compact-mix-li label {
             display: flex;
@@ -798,17 +791,16 @@
             gap: 4px;
             flex-wrap: wrap;
         }
-        .box-ctrl-row {
-            display: flex;
-            gap: 5px;
-            justify-content: center;
+        .box-ctrl-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
             margin-bottom: 8px;
         }
-        .box-ctrl-row button {
-            flex: 1;
-            width: auto !important;
+        .box-ctrl-grid button {
+            width: 100% !important;
             margin: 0 !important;
-            padding: 8px 4px !important;
+            padding: 8px 6px !important;
             font-size: 11px !important;
             border-radius: 11px !important;
             white-space: nowrap;
@@ -873,7 +865,7 @@
             font-family: monospace;
             border: 1px solid #e2e8f0;
         }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; perspective: 600px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
         .recipe { width: 100%; font-size: 10.5px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
         .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; }
         .zukan-item {
@@ -1008,16 +1000,19 @@
 
     <div class="box">
         <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
-        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/200体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
-        <div class="box-ctrl-row">
+        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/50体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
+        <div class="box-ctrl-grid">
             <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
                 📦 表示切替
             </button>
-            <button id="btnSortBox" onclick="toggleBoxSort()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
-                🔃 図鑑No.小→大
-            </button>
             <button id="btnSkillVisToggle" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
                 📜 スキル: ON
+            </button>
+            <button id="btnSortNo" onclick="sortBoxByNo()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
+                🔢 図鑑No.小→大 (選択中)
+            </button>
+            <button id="btnSortLv" onclick="sortBoxByLv()" style="background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 3px solid #475569;">
+                ⭐ レベル順
             </button>
         </div>
         <ul id="box" class="toggle-box scroll-box"></ul>
@@ -1392,12 +1387,13 @@
         function showSkillInfo(skillName, skillDesc) {
             alert("【スキル詳細】\n" + skillName + "\n\n" + skillDesc);
         }
+        const MAX_BOX_LIMIT = 200;
         let eg = [];
         let stg = 1;
         let maxStg = 1;
         let maxClearStg = 0;
         let zk = ["プニシズク"];
-        let boxLimit = 200;
+        let boxLimit = 50;
         let baseMixRate = 0.25;
         let mixBonus = 0;
         let expBonusRate = 0;
@@ -1433,6 +1429,7 @@
         let arenaClearedMonsters = [];
         let kingCandidateSkillId = 0;
         let boxSortMode = "no";
+        let boxNoDesc = false;
         let showBoxSkills = true;
         let partyOrderCounter = 3;
         let gameInitialized = false;
@@ -2401,7 +2398,7 @@
             if (bonusBar) {
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " ／ 🧬配合+" + mixPct + "% ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + Math.round(expBonusRate * 100) + "%";
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + Math.round(expBonusRate * 100) + "%";
             }
         }
 
@@ -2410,7 +2407,7 @@
             if (!m || stats.claimedMissions.includes(id) || !evalMissionCheck(m)) return;
 
             stats.claimedMissions.push(id);
-            if (m.reward.box) boxLimit += m.reward.box;
+            if (m.reward.box) boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + m.reward.box);
             if (m.reward.mix) mixBonus += m.reward.mix;
             if (m.reward.exp) expBonusRate += m.reward.exp;
             if (m.reward.wild) wildJoinBonus += m.reward.wild;
@@ -2467,7 +2464,7 @@
                 maxClearStg: maxClearStg,
                 zk: zk,
                 boxLimit: boxLimit,
-                boxLimitV200: true,
+                boxLimitCap200: true,
                 baseMixRate: baseMixRate,
                 mixBonus: mixBonus,
                 expBonusRate: expBonusRate,
@@ -2496,12 +2493,13 @@
                         maxStg = data.maxStg || 1;
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
                         zk = data.zk || ["プニシズク"];
-                        if (data.boxLimitV200) {
-                            boxLimit = Math.max(200, (typeof data.boxLimit === "number") ? data.boxLimit : 200);
-                        } else {
-                            let oldLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
-                            boxLimit = Math.max(200, oldLimit + 150);
+
+                        let rawLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
+                        if (data.boxLimitV200 && !data.boxLimitCap200) {
+                            rawLimit = Math.max(50, rawLimit - 150);
                         }
+                        boxLimit = Math.min(MAX_BOX_LIMIT, Math.max(50, rawLimit));
+
                         if (typeof data.baseMixRate === "number") {
                             baseMixRate = Math.max(0.25, data.baseMixRate);
                         } else if (typeof data.mixRate === "number") {
@@ -2557,6 +2555,7 @@
                 updateDungeonLockBanner();
             }
             updateRepeatButtonUI();
+            updateSortButtonsUI();
             up(true);
         }
 
@@ -2616,17 +2615,47 @@
             }
         }
 
-        function toggleBoxSort() {
-            if (inDungeon) return showNotice("⚠️ ダンジョン内では並び替えできません！", 2500);
-            if (boxSortMode === "no") boxSortMode = "no_desc";
-            else if (boxSortMode === "no_desc") boxSortMode = "lv";
-            else boxSortMode = "no";
-            const btn = document.getElementById("btnSortBox");
-            if (btn) {
-                if (boxSortMode === "no") btn.innerText = "🔃 図鑑No.小→大";
-                else if (boxSortMode === "no_desc") btn.innerText = "🔃 図鑑No.大→小";
-                else btn.innerText = "🔃 レベル順";
+        function updateSortButtonsUI() {
+            const btnNo = document.getElementById("btnSortNo");
+            const btnLv = document.getElementById("btnSortLv");
+            if (btnNo) {
+                const label = boxNoDesc ? "🔢 図鑑No.大→小" : "🔢 図鑑No.小→大";
+                if (boxSortMode === "no") {
+                    btnNo.innerText = label + " (選択中)";
+                    btnNo.style.background = "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                    btnNo.style.borderBottom = "3px solid #0369a1";
+                } else {
+                    btnNo.innerText = label;
+                    btnNo.style.background = "linear-gradient(180deg, #94a3b8 0%, #64748b 100%)";
+                    btnNo.style.borderBottom = "3px solid #475569";
+                }
             }
+            if (btnLv) {
+                if (boxSortMode === "lv") {
+                    btnLv.innerText = "⭐ レベル順 (選択中)";
+                    btnLv.style.background = "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                    btnLv.style.borderBottom = "3px solid #0369a1";
+                } else {
+                    btnLv.innerText = "⭐ レベル順";
+                    btnLv.style.background = "linear-gradient(180deg, #94a3b8 0%, #64748b 100%)";
+                    btnLv.style.borderBottom = "3px solid #475569";
+                }
+            }
+        }
+
+        function sortBoxByNo() {
+            if (boxSortMode === "no") {
+                boxNoDesc = !boxNoDesc;
+            } else {
+                boxSortMode = "no";
+            }
+            updateSortButtonsUI();
+            up(true);
+        }
+
+        function sortBoxByLv() {
+            boxSortMode = "lv";
+            updateSortButtonsUI();
             up(true);
         }
 
@@ -2996,9 +3025,9 @@
             let msg = "";
 
             if (choice === 1) {
-                boxLimit += 10;
+                boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 10);
                 seStageClear();
-                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！モンスターボックスの上限が " + boxLimit + "体 になった！";
+                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！モンスターボックスの上限が " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " (最大上限!)" : "") + " になった！";
             } else {
                 let count = 0;
                 p.forEach(m => {
@@ -3288,8 +3317,8 @@
             let msg = "";
 
             if (choice === 1) {
-                boxLimit += 1;
-                msg = "🏪 商店で「📦拡張ミニポーチ」を貰った！（ボックス上限 +1 → 現在 " + boxLimit + "体）そして出国した！";
+                boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 1);
+                msg = "🏪 商店で「📦拡張ミニポーチ」を貰った！（ボックス上限 → 現在 " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " 最大!" : "") + "）そして出国した！";
             } else if (choice === 2) {
                 mixBonus += 0.005;
                 msg = "🏪 商店で「🧬賢者の小瓶」を貰った！（配合成功率 +0.5% → 現在 " + getMixPctText() + "%）そして出国した！";
@@ -3627,7 +3656,7 @@
                         '<div class="event-title">👳 旅商人「好きなアイテムを1つ差し上げましょう！」</div>' +
                         '<div class="event-sub">受け取った瞬間から効果を発揮します！</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">(上限+10：現在' + boxLimit + '体)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">(上限+10：現在' + boxLimit + '/200体)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">(控え' + reserveCount + '体のみLv+10)</span></button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
@@ -3719,7 +3748,7 @@
                         '<div class="event-title">🏪 王国の商店（1個だけ無料プレゼント！）</div>' +
                         '<div class="event-sub">好きなアイテムを1つ選んでください（受け取ると出国します）</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">📦 拡張ミニポーチ<br><span style="font-size:10px;">(ボックス上限 +1)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">📦 拡張ミニポーチ<br><span style="font-size:10px;">(上限+1：最大200体)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">🧬 賢者の小瓶<br><span style="font-size:10px;">(配合確率 +0.5%)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🧲 魅惑のおやつ<br><span style="font-size:10px;">(野生加入率 +0.5%)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">💎 祝福のしおり<br><span style="font-size:10px;">(獲得EXP +10%)</span></button>' +
@@ -3749,24 +3778,25 @@
         }
 
         function up(forceAll = true) {
-            if (!inDungeon) {
-                p.sort((a, b) => {
-                    if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
-                    if (a.inParty !== b.inParty) return b.inParty ? 1 : -1;
-                    if (boxSortMode === "lv" && b.lv !== a.lv) return b.lv - a.lv;
-                    const noA = getMonData(a.n).no;
-                    const noB = getMonData(b.n).no;
-                    const sortA = (typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : noA;
-                    const sortB = (typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : noB;
-                    if (boxSortMode === "no_desc") return sortB - sortA;
-                    return sortA - sortB;
-                });
-            }
+            p.sort((a, b) => {
+                if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
+                if (a.inParty !== b.inParty) return b.inParty ? 1 : -1;
+                if (boxSortMode === "lv" && b.lv !== a.lv) return b.lv - a.lv;
+                const infA = getMonData(a.n) || { no: 0 };
+                const infB = getMonData(b.n) || { no: 0 };
+                const noA = infA.no;
+                const noB = infB.no;
+                const sortA = (typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : (Number(noA) || 0);
+                const sortB = (typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : (Number(noB) || 0);
+                if (boxSortMode === "no" && boxNoDesc) return sortB - sortA;
+                return sortA - sortB;
+            });
 
+            updateSortButtonsUI();
             upBattleUI();
             renderMissions(forceAll);
 
-            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length].join("_");
+            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length].join("_");
             if (forceAll || boxSig !== lastRenderedBoxSig) {
                 lastRenderedBoxSig = boxSig;
 
@@ -3776,9 +3806,10 @@
                     const canReleaseBase = p.length > 3;
                     for (let i = 0; i < p.length; i++) {
                         let n = p[i];
+                        let inf = getMonData(n.n);
+                        if (!inf) continue;
                         let liClass = "compact-li" + (inDungeon ? " locked" : "") + (n.isRare ? " rare-card" : "");
                         let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
-                        let inf = getMonData(n.n);
                         let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
                         let partyTag = n.inParty ? " <span style='color:#059669;font-weight:900;'>[参加中]</span>" : "";
                         let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
@@ -3834,6 +3865,7 @@
                     for (let i = 0; i < p.length; i++) {
                         let n = p[i];
                         let inf = getMonData(n.n);
+                        if (!inf) continue;
                         let isBossMon = typeof inf.no === "number" && inf.no < 0;
                         let isProtected = inDungeon || n.inParty || n.locked || isBossMon;
                         let disAttr = isProtected ? "disabled" : "";
@@ -3924,7 +3956,7 @@
         }
         function exportData() {
             const data = {
-                stg, maxStg, maxClearStg, zk, boxLimit, boxLimitV200: true,
+                stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
                 baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
                 dungeonLockUntil, stats, p
             };
@@ -3958,12 +3990,13 @@
                         maxStg = data.maxStg || 1;
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
                         zk = data.zk || ["プニシズク"];
-                        if (data.boxLimitV200) {
-                            boxLimit = Math.max(200, (typeof data.boxLimit === "number") ? data.boxLimit : 200);
-                        } else {
-                            let oldLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
-                            boxLimit = Math.max(200, oldLimit + 150);
+
+                        let rawLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
+                        if (data.boxLimitV200 && !data.boxLimitCap200) {
+                            rawLimit = Math.max(50, rawLimit - 150);
                         }
+                        boxLimit = Math.min(MAX_BOX_LIMIT, Math.max(50, rawLimit));
+
                         if (typeof data.baseMixRate === "number") {
                             baseMixRate = Math.max(0.25, data.baseMixRate);
                         } else if (typeof data.mixRate === "number") {
@@ -4015,6 +4048,7 @@
                         document.getElementById("importCodeField").value = "";
                         if (isDungeonLocked()) startDungeonLock(dungeonLockUntil - Date.now());
                         else updateDungeonLockBanner();
+                        updateSortButtonsUI();
                         up(true);
                     } else { alert("⚠️ 無効なコードです。"); }
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
@@ -4575,7 +4609,7 @@
                     scheduleBattleTimer(() => { mySideEl.classList.remove("atk-forward-my"); }, Math.floor(220 / spdDiv));
                     scheduleBattleTimer(() => {
                         eSideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { eSideEl.classList.remove("hit-flash"); }, Math.floor(420 / spdDiv));
+                        scheduleBattleTimer(() => { eSideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
                     }, Math.floor(90 / spdDiv));
                 } else {
                     eSideEl.classList.add("atk-forward-e");
@@ -4583,7 +4617,7 @@
                     scheduleBattleTimer(() => { eSideEl.classList.remove("atk-forward-e"); }, Math.floor(220 / spdDiv));
                     scheduleBattleTimer(() => {
                         mySideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { mySideEl.classList.remove("hit-flash"); }, Math.floor(420 / spdDiv));
+                        scheduleBattleTimer(() => { mySideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
                     }, Math.floor(90 / spdDiv));
                 }
 
@@ -4707,7 +4741,6 @@
                             p.forEach(ally => {
                                 if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
-                            needsFullUpdate = true;
                             seMixSuccess();
                             const winHeroMsg = "🏆 王国の絵文字勇者に勝利！基礎配合確率が50%（現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
                             showNotice(winHeroMsg, 6500);
@@ -4733,6 +4766,7 @@
                                     resetStageBuffs();
                                     p.forEach(m => { m.hp = m.m; });
                                     setDungeonButtonsDisabled(false);
+                                    needsFullUpdate = true;
                                 } else {
                                     resetStageBuffs();
                                     updateBgmState(true);
@@ -4751,6 +4785,7 @@
                                 resetStageBuffs();
                                 p.forEach(m => { m.hp = m.m; });
                                 setDungeonButtonsDisabled(false);
+                                needsFullUpdate = true;
                             }
                         } else if (currentEnemy.isSpecialSage) {
                             turnLog += "🏆王国の配合賢者に勝利した！ ";
@@ -4760,7 +4795,6 @@
                             p.forEach(ally => {
                                 if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
-                            needsFullUpdate = true;
                             seMixSuccess();
                             const winSageMsg = "🏆 王国の配合賢者に勝利！配合確率+1%（現在" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
                             showNotice(winSageMsg, 6500);
@@ -4786,6 +4820,7 @@
                                     resetStageBuffs();
                                     p.forEach(m => { m.hp = m.m; });
                                     setDungeonButtonsDisabled(false);
+                                    needsFullUpdate = true;
                                 } else {
                                     resetStageBuffs();
                                     updateBgmState(true);
@@ -4804,6 +4839,7 @@
                                 resetStageBuffs();
                                 p.forEach(m => { m.hp = m.m; });
                                 setDungeonButtonsDisabled(false);
+                                needsFullUpdate = true;
                             }
                         } else if (currentEnemy.isArenaEnemy) {
                             turnLog += "🏟️闘技場の" + currentEnemy.n + "を倒した！ ";
@@ -4829,7 +4865,6 @@
                                             ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
                                             ally.nx = Math.floor(ally.nx * 1.2);
                                             turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
-                                            needsFullUpdate = true;
                                             seLvUp();
                                         }
                                     }
@@ -4841,7 +4876,6 @@
                                 stageJustCleared = true;
                                 stats.arenaWinCount = (stats.arenaWinCount || 0) + 1;
                                 currentEvent = "arena_reward";
-                                needsFullUpdate = true;
                                 seStageClear();
                                 turnLog += "🏆闘技場で3体に勝利した！好きな1体を選んでください！";
                             }
@@ -4905,7 +4939,6 @@
                                             ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
                                             ally.nx = Math.floor(ally.nx * 1.2);
                                             turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
-                                            needsFullUpdate = true;
                                             seLvUp();
                                         }
                                     }
