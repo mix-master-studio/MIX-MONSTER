@@ -12,37 +12,52 @@
         body {
             font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             text-align: center;
-            background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 35%, #fefce8 100%);
+            background: linear-gradient(160deg, #dbeafe 0%, #f0f9ff 40%, #fef9c3 100%);
             background-attachment: fixed;
             margin: 0;
-            padding: 12px 10px 28px;
+            padding: 12px 10px 32px;
             color: #1e293b;
+            position: relative;
+            overflow-x: hidden;
+        }
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .title-header, .box {
+            position: relative;
+            z-index: 1;
         }
         .title-header {
             max-width: 430px;
-            margin: 0 auto 12px;
-            padding: 12px 14px;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border-radius: 20px;
+            margin: 0 auto 14px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(240,249,255,0.94) 100%);
+            border-radius: 22px;
             border: 2px solid #bae6fd;
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+            box-shadow: 0 10px 26px rgba(2, 132, 199, 0.16), inset 0 2px 0 rgba(255,255,255,0.95);
+            transform-style: preserve-3d;
         }
         .title-sub {
             font-size: 10px;
             font-weight: 800;
             color: #0284c7;
-            letter-spacing: 1.5px;
-            margin-bottom: 2px;
+            letter-spacing: 2px;
+            margin-bottom: 3px;
         }
         h1 {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: 900;
             letter-spacing: 1.5px;
             background: linear-gradient(90deg, #0284c7 0%, #4f46e5 50%, #d97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0;
-            filter: drop-shadow(0 2px 3px rgba(2,132,199,0.12));
+            filter: drop-shadow(0 2px 4px rgba(2,132,199,0.18));
         }
         .weekend-banner {
             display: none;
@@ -59,8 +74,8 @@
         .header-btn-row {
             display: flex;
             justify-content: center;
-            gap: 6px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 9px;
             flex-wrap: wrap;
         }
         .guide-panel {
@@ -76,29 +91,29 @@
             color: #334155;
         }
         .box {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 14px;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+            border-radius: 22px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08), inset 0 1.5px 0 rgba(255,255,255,0.95);
             max-width: 430px;
             margin: 0 auto 14px;
             font-size: 13px;
-            border: 1.5px solid #e2e8f0;
-            position: relative;
+            border: 1.5px solid rgba(226, 232, 240, 0.95);
             overflow: hidden;
         }
         .section-badge {
             display: inline-block;
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             color: #0369a1;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 900;
-            padding: 3px 10px;
+            padding: 3px 11px;
             border-radius: 999px;
             margin-bottom: 8px;
             border: 1px solid #7dd3fc;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
         }
         .battle-header-bar {
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -114,7 +129,7 @@
         .battle-field {
             display: flex;
             justify-content: space-between;
-            padding: 10px 8px;
+            padding: 12px 8px;
             border-radius: 0 0 16px 16px;
             gap: 8px;
             position: relative;
@@ -123,7 +138,10 @@
             border: 2px solid #cbd5e1;
             border-top: none;
             z-index: 1;
-            min-height: 170px;
+            min-height: 185px;
+            perspective: 900px;
+            transform-style: preserve-3d;
+            box-shadow: inset 0 -18px 30px rgba(15, 23, 42, 0.08);
         }
         #battleCanvas {
             position: absolute;
@@ -132,24 +150,24 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 10;
+            z-index: 15;
         }
         #fxLayer {
             position: absolute;
             inset: 0;
             pointer-events: none;
-            z-index: 20;
+            z-index: 25;
             overflow: hidden;
         }
         @keyframes battleShake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translate(-5px, 2px); }
-            40% { transform: translate(5px, -2px); }
-            60% { transform: translate(-4px, -1px); }
-            80% { transform: translate(4px, 1px); }
+            0%, 100% { transform: translate3d(0, 0, 0) rotateZ(0deg); }
+            20% { transform: translate3d(-6px, 2px, 0) rotateZ(-0.6deg); }
+            40% { transform: translate3d(6px, -2px, 0) rotateZ(0.6deg); }
+            60% { transform: translate3d(-4px, -1px, 0) rotateZ(-0.4deg); }
+            80% { transform: translate3d(4px, 1px, 0) rotateZ(0.4deg); }
         }
         .shake-hit {
-            animation: battleShake 0.32s ease-in-out;
+            animation: battleShake 0.34s ease-in-out;
         }
         .event-panel {
             display: none;
@@ -203,16 +221,16 @@
             animation: popIn 0.3s ease-out;
         }
         @keyframes popIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: scale(0.9) rotateX(15deg); opacity: 0; }
+            100% { transform: scale(1) rotateX(0deg); opacity: 1; }
         }
         .battle-field::before {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(-40px);
             font-size: 230px;
-            opacity: 0.26;
+            opacity: 0.24;
             z-index: 0;
             pointer-events: none;
             white-space: nowrap;
@@ -227,10 +245,10 @@
         .bg-volcano { border-color: #f43f5e !important; background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%); } .bg-volcano::before { content: "🌋"; }
         .bg-ice { border-color: #0284c7 !important; background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%); } .bg-ice::before { content: "🌌"; }
         .bg-castle { border-color: #6366f1 !important; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); } .bg-castle::before { content: "🌃"; }
-        .bg-boss { border-color: #dc2626 !important; background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 50%, #fef08a 100%) !important; box-shadow: 0 0 18px rgba(220, 38, 38, 0.25); }
-        .bg-boss::before { content: "🏴‍☠️"; opacity: 0.30; }
-        .bg-superboss { border-color: #7c3aed !important; background: linear-gradient(180deg, #faf5ff 0%, #ede9fe 50%, #fde68a 100%) !important; box-shadow: 0 0 22px rgba(124, 58, 237, 0.35); }
-        .bg-superboss::before { content: "🕋"; opacity: 0.32; }
+        .bg-boss { border-color: #dc2626 !important; background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 50%, #fef08a 100%) !important; box-shadow: 0 0 22px rgba(220, 38, 38, 0.28); }
+        .bg-boss::before { content: "🏴‍☠️"; opacity: 0.28; }
+        .bg-superboss { border-color: #7c3aed !important; background: linear-gradient(180deg, #faf5ff 0%, #ede9fe 50%, #fde68a 100%) !important; box-shadow: 0 0 26px rgba(124, 58, 237, 0.36); }
+        .bg-superboss::before { content: "🕋"; opacity: 0.30; }
         .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
 
         @keyframes shinyRainbow {
@@ -241,7 +259,7 @@
             100% { filter: hue-rotate(120deg) saturate(1.7) drop-shadow(0 0 6px #f472b6); }
         }
         .rare-shiny {
-            animation: floatBob 2.6s ease-in-out infinite alternate, shinyRainbow 3.2s linear infinite !important;
+            animation: floatBob3D 2.6s ease-in-out infinite alternate, shinyRainbow 3.2s linear infinite !important;
         }
         .rare-shiny-inline {
             display: inline-block;
@@ -250,7 +268,7 @@
         .rare-card {
             background: linear-gradient(135deg, #fffbeb 0%, #fdf4ff 50%, #f0f9ff 100%) !important;
             border: 2px solid #f59e0b !important;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.22) !important;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25) !important;
         }
         .rare-badge {
             display: inline-block;
@@ -268,9 +286,9 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.78);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.80);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -284,9 +302,9 @@
             pointer-events: none;
         }
         .card-3d-scene {
-            width: 280px;
-            height: 320px;
-            perspective: 1000px;
+            width: 286px;
+            height: 334px;
+            perspective: 1100px;
             position: relative;
             z-index: 2;
         }
@@ -295,23 +313,37 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .card-3d.flipped {
-            transform: rotateY(540deg);
+            transform: rotateY(540deg) rotateX(4deg);
         }
         .card-face {
             position: absolute;
             inset: 0;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            border-radius: 22px;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 18px;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45), inset 0 2px 0 rgba(255,255,255,0.6);
+            overflow: hidden;
+        }
+        .card-face::after {
+            content: "";
+            position: absolute;
+            inset: -50%;
+            background: linear-gradient(125deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%);
+            transform: translateX(-100%) rotate(15deg);
+            animation: cardShimmer 2.8s infinite ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes cardShimmer {
+            0% { transform: translateX(-100%) rotate(15deg); }
+            60%, 100% { transform: translateX(100%) rotate(15deg); }
         }
         .card-front {
             background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
@@ -335,34 +367,61 @@
 
         .side {
             width: 49%;
-            background: rgba(255, 255, 255, 0.82) !important;
+            background: rgba(255, 255, 255, 0.84) !important;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             padding: 8px;
             text-align: left;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-            transition: transform 0.2s ease-out;
+            border-radius: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255,255,255,0.9);
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
             position: relative;
             color: #334155;
             z-index: 2;
+            transform-style: preserve-3d;
         }
+        #mySide {
+            transform: rotateY(4deg);
+        }
+        #eSide {
+            transform: rotateY(-4deg);
+        }
+        .atk-forward-my {
+            transform: translate3d(26px, -6px, 46px) rotateY(16deg) scale(1.05) !important;
+            box-shadow: 0 14px 28px rgba(2, 132, 199, 0.28) !important;
+            z-index: 8 !important;
+        }
+        .atk-forward-e {
+            transform: translate3d(-26px, -6px, 46px) rotateY(-16deg) scale(1.05) !important;
+            box-shadow: 0 14px 28px rgba(220, 38, 38, 0.28) !important;
+            z-index: 8 !important;
+        }
+        @keyframes hitKnockback3D {
+            0% { transform: translate3d(0,0,0) rotateY(0deg); background-color: rgba(239,68,68,0.45); }
+            25% { transform: translate3d(8px, -3px, -24px) rotateY(-14deg) rotateX(6deg); opacity: 0.45; }
+            55% { transform: translate3d(-5px, 2px, -10px) rotateY(8deg); background-color: rgba(239,68,68,0.35); opacity: 0.7; }
+            100% { transform: translate3d(0,0,0) rotateY(0deg); opacity: 1; }
+        }
+        .hit-flash {
+            animation: hitKnockback3D 0.42s ease-out !important;
+        }
+
         button {
             font-size: 13px;
             padding: 10px 14px;
             background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
             color: #fff;
             border: none;
-            border-bottom: 3px solid #0369a1;
+            border-bottom: 3.5px solid #0369a1;
             border-radius: 14px;
             cursor: pointer;
             margin: 4px;
             width: 94%;
             font-weight: 800;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.22);
-            transition: all 0.15s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.24), inset 0 1px 0 rgba(255,255,255,0.4);
+            transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease;
         }
         .btn-battle-group {
             display: flex;
@@ -387,9 +446,9 @@
             margin: 0 !important;
             border-radius: 12px !important;
         }
-        button:hover:not(:disabled) { filter: brightness(1.05); }
+        button:hover:not(:disabled) { filter: brightness(1.06); transform: translateY(-1px); }
         button:active:not(:disabled) {
-            transform: translateY(2px);
+            transform: translateY(2px) scale(0.98);
             border-bottom-width: 1px;
             box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
         }
@@ -409,7 +468,7 @@
             font-size: 11px;
             border-radius: 9px;
             background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-            border-bottom: 2px solid #047857;
+            border-bottom: 2.5px solid #047857;
             box-shadow: 0 2px 6px rgba(16, 185, 129, 0.22);
         }
         .btn-tiny {
@@ -468,66 +527,78 @@
             font-weight: 900;
             color: #854d0e;
         }
-        .atk-forward-my { transform: translateX(25px); }
-        .atk-forward-e { transform: translateX(-25px); }
         .monster-container {
             position: relative;
             display: inline-block;
             width: 100%;
             text-align: center;
             margin: 6px 0 10px;
+            perspective: 400px;
+            transform-style: preserve-3d;
         }
         .battle-monster {
             font-size: 38px;
             display: block;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 6px 8px rgba(15,23,42,0.18));
-            animation: floatBob 2.6s ease-in-out infinite alternate;
+            filter: drop-shadow(0 8px 10px rgba(15,23,42,0.22));
+            animation: floatBob3D 2.6s ease-in-out infinite alternate;
+            transform-style: preserve-3d;
         }
         .monster-shadow {
-            width: 36px;
-            height: 7px;
-            background: rgba(15, 23, 42, 0.22);
+            width: 38px;
+            height: 8px;
+            background: radial-gradient(ellipse at center, rgba(2,132,199,0.28) 0%, rgba(15,23,42,0.24) 60%, transparent 100%);
             border-radius: 50%;
-            margin: -4px auto 0;
-            filter: blur(2px);
+            margin: -3px auto 0;
+            filter: blur(1.5px);
             z-index: 1;
-            animation: shadowScale 2.6s ease-in-out infinite alternate;
+            animation: shadowScale3D 2.6s ease-in-out infinite alternate;
         }
-        @keyframes floatBob {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-5px); }
+        @keyframes floatBob3D {
+            0%   { transform: translate3d(0px, 0px, 0px) rotateY(-6deg); }
+            50%  { transform: translate3d(0px, -4px, 10px) rotateY(0deg); }
+            100% { transform: translate3d(0px, -7px, 16px) rotateY(6deg); }
         }
-        @keyframes shadowScale {
-            0% { transform: scale(1); opacity: 0.28; }
-            100% { transform: scale(0.8); opacity: 0.14; }
+        @keyframes shadowScale3D {
+            0%   { transform: scale(1.02); opacity: 0.36; }
+            100% { transform: scale(0.76); opacity: 0.16; }
         }
-        @keyframes damageFlash {
-            0% { opacity: 1; background-color: rgba(239,68,68,0.4); }
-            25% { opacity: 0.2; }
-            50% { opacity: 1; background-color: rgba(239,68,68,0.4); }
-            75% { opacity: 0.2; }
-            100% { opacity: 1; }
-        }
-        .hit-flash { animation: damageFlash 0.4s ease-in-out; }
         .skill-fx-pop {
             position: absolute;
-            top: 50%;
-            left: 50%;
             transform: translate(-50%, -50%) scale(0.3);
-            font-size: 44px;
+            font-size: 42px;
             pointer-events: none;
-            z-index: 20;
+            z-index: 26;
             white-space: nowrap;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.98)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
             animation: skillFxBurst 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes skillFxBurst {
-            0% { opacity: 0; transform: translate(-50%, -40%) scale(0.3) rotate(-15deg); }
-            25% { opacity: 1; transform: translate(-50%, -75%) scale(1.35) rotate(8deg); }
+            0% { opacity: 0; transform: translate(-50%, -35%) scale(0.3) rotate(-18deg); }
+            25% { opacity: 1; transform: translate(-50%, -70%) scale(1.38) rotate(8deg); }
             70% { opacity: 1; transform: translate(-50%, -95%) scale(1.15) rotate(-4deg); }
-            100% { opacity: 0; transform: translate(-50%, -120%) scale(0.85) rotate(0deg); }
+            100% { opacity: 0; transform: translate(-50%, -125%) scale(0.85) rotate(0deg); }
+        }
+        .dmg-pop {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 15px;
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 28;
+            white-space: nowrap;
+            text-shadow: 0 2px 0 #ffffff, 0 -1px 0 #ffffff, 1px 0 0 #ffffff, -1px 0 0 #ffffff, 0 3px 8px rgba(0,0,0,0.35);
+            animation: dmgFloatUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .dmg-pop.crit {
+            font-size: 20px;
+            color: #d97706 !important;
+        }
+        @keyframes dmgFloatUp {
+            0%   { opacity: 0; transform: translate(-50%, -20%) scale(0.6); }
+            20%  { opacity: 1; transform: translate(-50%, -65%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -145%) scale(0.95); }
         }
         .monster-dead-coffin {
             animation: none !important;
@@ -573,10 +644,12 @@
             border: 1.5px solid #e2e8f0;
             border-radius: 14px;
             line-height: 1.5;
-            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03);
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
             color: #334155;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        li.locked { background: #f8fafc; color: #94a3b8; border-color: #e2e8f0; }
+        li:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(15, 23, 42, 0.07); }
+        li.locked { background: #f8fafc; color: #94a3b8; border-color: #e2e8f0; transform: none !important; }
         .scroll-box {
             max-height: 310px;
             overflow-y: auto;
@@ -701,7 +774,7 @@
             font-family: monospace;
             border: 1px solid #e2e8f0;
         }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; perspective: 600px; }
         .recipe { width: 100%; font-size: 10.5px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
         .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; }
         .zukan-item {
@@ -713,7 +786,12 @@
             color: #1e293b;
             font-size: 10.5px;
             font-weight: bold;
-            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.06);
+            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.08);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .zukan-item:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 14px rgba(2, 132, 199, 0.16);
         }
         .zukan-unknown {
             background: #f8fafc;
@@ -723,13 +801,16 @@
             text-align: center;
             color: #94a3b8;
             font-size: 10.5px;
+            transition: transform 0.16s ease;
         }
+        .zukan-unknown:active { transform: scale(0.95); }
         input[type="text"] {
             width: 85%; padding: 9px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
     </style>
     </head>
 <body>
+    <canvas id="bgCanvas"></canvas>
 
     <div class="title-header">
         <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
@@ -1188,7 +1269,7 @@
         function showSkillInfo(skillName, skillDesc) {
             alert("【スキル詳細】\n" + skillName + "\n\n" + skillDesc);
         }
-        let eg = new Array();
+        let eg = [];
         let stg = 1;
         let maxStg = 1;
         let maxClearStg = 0;
@@ -1217,6 +1298,7 @@
         let boxSortMode = "no";
         let showBoxSkills = true;
         let partyOrderCounter = 3;
+        let gameInitialized = false;
 
         function scheduleBattleTimer(fn, delayMs) {
             const sid = battleSessionId;
@@ -1234,7 +1316,9 @@
                 clearTimeout(autoAtkTimer);
                 autoAtkTimer = null;
             }
-            battleTimers.forEach(tid => clearTimeout(tid));
+            for (let i = 0; i < battleTimers.length; i++) {
+                clearTimeout(battleTimers[i]);
+            }
             battleTimers = [];
         }
 
@@ -1310,19 +1394,21 @@
         let currentBgmMode = "";
 
         function initAudio() {
-            if (!audioCtx) {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (AudioContextClass) audioCtx = new AudioContextClass();
-            }
-            if (audioCtx && audioCtx.state === "suspended") {
-                audioCtx.resume();
-            }
-            if (audioCtx && !noiseBuffer) {
-                const len = Math.floor(audioCtx.sampleRate * 0.12);
-                noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
-                const data = noiseBuffer.getChannelData(0);
-                for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
-            }
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) audioCtx = new AudioContextClass();
+                }
+                if (audioCtx && audioCtx.state === "suspended") {
+                    audioCtx.resume();
+                }
+                if (audioCtx && !noiseBuffer) {
+                    const len = Math.floor(audioCtx.sampleRate * 0.12);
+                    noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+                    const data = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+                }
+            } catch (e) {}
         }
 
         document.addEventListener("click", function(e) {
@@ -1358,57 +1444,63 @@
 
         function playTone(freq, type, delaySec, durationSec, vol = 0.08) {
             if (!soundEnabled || !freq) return;
-            initAudio();
-            if (!audioCtx) return;
-            const t = audioCtx.currentTime + delaySec;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, t);
-            gain.gain.setValueAtTime(vol, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(t);
-            osc.stop(t + durationSec);
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const t = audioCtx.currentTime + delaySec;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, t);
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(t);
+                osc.stop(t + durationSec);
+            } catch (e) {}
         }
 
         function playKick(vol = 0.12) {
             if (!soundEnabled) return;
-            initAudio();
-            if (!audioCtx) return;
-            const t = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(145, t);
-            osc.frequency.exponentialRampToValueAtTime(42, t + 0.09);
-            gain.gain.setValueAtTime(vol, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.10);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(t);
-            osc.stop(t + 0.10);
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const t = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(145, t);
+                osc.frequency.exponentialRampToValueAtTime(42, t + 0.09);
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.10);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(t);
+                osc.stop(t + 0.10);
+            } catch (e) {}
         }
 
         function playHat(dur = 0.03, vol = 0.03) {
             if (!soundEnabled) return;
-            initAudio();
-            if (!audioCtx || !noiseBuffer) return;
-            const t = audioCtx.currentTime;
-            const src = audioCtx.createBufferSource();
-            src.buffer = noiseBuffer;
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = "highpass";
-            filter.frequency.value = 5500;
-            const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(vol, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
-            src.connect(filter);
-            filter.connect(gain);
-            gain.connect(audioCtx.destination);
-            src.start(t);
-            src.stop(t + dur);
+            try {
+                initAudio();
+                if (!audioCtx || !noiseBuffer) return;
+                const t = audioCtx.currentTime;
+                const src = audioCtx.createBufferSource();
+                src.buffer = noiseBuffer;
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = "highpass";
+                filter.frequency.value = 5500;
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+                src.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                src.start(t);
+                src.stop(t + dur);
+            } catch (e) {}
         }
 
         function seButtonTap() {
@@ -1420,26 +1512,26 @@
             playTone(95, "triangle", 0.03, 0.11, 0.18);
         }
         function seSkill() {
-            const notes = new Array(523, 659, 784, 1046);
+            const notes = [523, 659, 784, 1046];
             notes.forEach((f, i) => playTone(f, "sine", i * 0.045, 0.13, 0.11));
         }
         function seJoin() {
-            const notes = new Array(440, 554, 659, 880);
+            const notes = [440, 554, 659, 880];
             notes.forEach((f, i) => playTone(f, "triangle", i * 0.08, 0.22, 0.16));
         }
         function seLvUp() {
-            const notes = new Array(523, 523, 523, 523, 415, 466, 523);
-            const times = new Array(0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74);
-            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 6 ? 0.38 : 0.10, 0.09));
+            const notes = [523, 523, 523, 523, 415, 466, 523];
+            const times = [0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 6 ? 0.38 : 0.10, 0.09));
         }
         function seStageClear() {
-            const notes = new Array(523, 659, 784, 1046);
+            const notes = [523, 659, 784, 1046];
             notes.forEach((f, i) => playTone(f, "square", i * 0.09, i === 3 ? 0.30 : 0.09, 0.09));
         }
         function seMixSuccess() {
-            const notes = new Array(392, 523, 659, 784, 659, 1046);
-            const times = new Array(0, 0.09, 0.18, 0.27, 0.40, 0.54);
-            notes.forEach((f, i) => playTone(f, "square", times.at(i), i === 5 ? 0.45 : 0.11, 0.10));
+            const notes = [392, 523, 659, 784, 659, 1046];
+            const times = [0, 0.09, 0.18, 0.27, 0.40, 0.54];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 5 ? 0.45 : 0.11, 0.10));
         }
         function seFail() {
             playTone(180, "sawtooth", 0, 0.18, 0.14);
@@ -1493,8 +1585,8 @@
             ];
 
             bgmStep = 0;
-            if (targetMode.startsWith("boss_")) {
-                const bossStage = parseInt(targetMode.replace("boss_", "")) || 50;
+            if (targetMode.indexOf("boss_") === 0) {
+                const bossStage = parseInt(targetMode.replace("boss_", ""), 10) || 50;
                 const bossIdx = Math.max(0, Math.floor(bossStage / 50) - 1);
                 const isSuper = (bossStage === 500 || bossStage === 1000);
                 const pattern = BOSS_PATTERNS[bossIdx % BOSS_PATTERNS.length];
@@ -1522,7 +1614,7 @@
                     bgmStep++;
                 }, 420);
             } else {
-                const idx = parseInt(targetMode.replace("area_", "")) || 0;
+                const idx = parseInt(targetMode.replace("area_", ""), 10) || 0;
                 const tr = AREA_TRACKS[idx] || AREA_TRACKS[0];
                 bgmInterval = setInterval(() => {
                     if (!soundEnabled || currentBgmMode !== targetMode) return;
@@ -1546,12 +1638,69 @@
             currentBgmMode = "";
         }
 
-        // --- 🎨 キャンバス演出（光の粒・魔法陣）＆ 3Dカードモーダル ---
+        // --- 🎨 高精細Canvas演出（背景粒子・バトルエフェクト・衝撃波・光の粒）＆ 3D演出 ---
+        let bgParticles = [];
+        let bgCanvasRaf = null;
         let battleParticles = [];
         let battleBursts = [];
+        let battleRings = [];
+        let battleBeams = [];
         let battleMagicAngle = 0;
         let battleCanvasRaf = null;
         let mixMagicRaf = null;
+
+        function initBgCanvas() {
+            const canvas = document.getElementById("bgCanvas");
+            if (!canvas) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            bgParticles = [];
+            for (let i = 0; i < 36; i++) {
+                bgParticles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: 1.8 + Math.random() * 3.5,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: -0.25 - Math.random() * 0.45,
+                    phase: Math.random() * Math.PI * 2,
+                    hue: Math.random() > 0.5 ? "#38bdf8" : "#fbbf24"
+                });
+            }
+            if (!bgCanvasRaf) startBgCanvasLoop();
+        }
+
+        function startBgCanvasLoop() {
+            function bgLoop() {
+                const canvas = document.getElementById("bgCanvas");
+                if (canvas) {
+                    if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    const ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let i = 0; i < bgParticles.length; i++) {
+                        const pt = bgParticles[i];
+                        pt.phase += 0.025;
+                        pt.x += pt.vx + Math.sin(pt.phase) * 0.2;
+                        pt.y += pt.vy;
+                        if (pt.y < -10) { pt.y = canvas.height + 10; pt.x = Math.random() * canvas.width; }
+                        if (pt.x < -10) pt.x = canvas.width + 10;
+                        if (pt.x > canvas.width + 10) pt.x = -10;
+
+                        ctx.save();
+                        ctx.globalAlpha = 0.22 + Math.sin(pt.phase) * 0.14;
+                        ctx.fillStyle = pt.hue;
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+                bgCanvasRaf = requestAnimationFrame(bgLoop);
+            }
+            bgCanvasRaf = requestAnimationFrame(bgLoop);
+        }
 
         function drawMagicCircle(ctx, cx, cy, r, angle, color, alpha) {
             ctx.save();
@@ -1644,15 +1793,26 @@
             const cx = pos ? pos.x : (isEnemyTarget ? canvas.width * 0.75 : canvas.width * 0.25);
             const cy = pos ? pos.y : (canvas.height * 0.35);
 
+            battleRings.push({
+                x: cx,
+                y: cy,
+                r: 5,
+                maxR: count >= 14 ? 46 : 32,
+                life: 1,
+                color: color
+            });
+
             for (let i = 0; i < count; i++) {
                 const ang = Math.random() * Math.PI * 2;
-                const spd = 1.2 + Math.random() * 3.4;
+                const spd = 1.4 + Math.random() * 3.8;
                 battleBursts.push({
                     x: cx,
                     y: cy,
+                    px: cx,
+                    py: cy,
                     vx: Math.cos(ang) * spd,
                     vy: Math.sin(ang) * spd,
-                    r: 2.2 + Math.random() * 3,
+                    r: 2.2 + Math.random() * 3.2,
                     life: 1,
                     decay: 0.025 + Math.random() * 0.02,
                     color: color
@@ -1660,23 +1820,51 @@
             }
         }
 
-        function spawnBattleBurst(color, count, isRightSide) {
-            const targetMon = isRightSide ? eg.at(0) : p.filter(m => m.inParty && m.hp > 0).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).at(0);
-            spawnBattleBurstAtMonster(targetMon, isRightSide, color, count);
+        function spawnBattleBeam(attackerMon, isAttackerEnemy, defenderMon, isDefenderEnemy, color) {
+            const from = getMonsterCenterInField(attackerMon, isAttackerEnemy);
+            const to = getMonsterCenterInField(defenderMon, isDefenderEnemy);
+            if (!from || !to) return;
+            battleBeams.push({
+                x1: from.x,
+                y1: from.y,
+                x2: to.x,
+                y2: to.y,
+                progress: 0,
+                speed: battleSpeed === 2 ? 0.16 : 0.10,
+                color: color
+            });
+        }
+
+        function showDamagePop(targetMon, isEnemyTarget, text, color, isCrit) {
+            const fxLayer = document.getElementById("fxLayer");
+            if (!fxLayer) return;
+            const pos = getMonsterCenterInField(targetMon, isEnemyTarget);
+            if (!pos) return;
+            const el = document.createElement("span");
+            el.className = "dmg-pop" + (isCrit ? " crit" : "");
+            el.style.color = color || "#ef4444";
+            el.style.left = (pos.x + (Math.random() * 14 - 7)) + "px";
+            el.style.top = (pos.y - 14) + "px";
+            el.innerText = text;
+            fxLayer.appendChild(el);
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            setTimeout(() => {
+                if (el.parentElement) el.remove();
+            }, Math.floor(820 / spdDiv));
         }
 
         function getAreaParticleTheme() {
-            if (inDungeon && isBossStage(stg)) return { color: "#ef4444", vx: 0, vy: -0.9, mode: "rise" };
-            if (stg <= 100) return { color: "#4ade80", vx: 0.2, vy: -0.35, mode: "float" };
-            if (stg <= 200) return { color: "#a3e635", vx: 0.3, vy: -0.45, mode: "float" };
-            if (stg <= 300) return { color: "#38bdf8", vx: 0.1, vy: -0.7, mode: "rise" };
-            if (stg <= 400) return { color: "#fbbf24", vx: 1.1, vy: 0.15, mode: "wind" };
-            if (stg <= 500) return { color: "#c084fc", vx: 0, vy: -0.5, mode: "float" };
-            if (stg <= 600) return { color: "#facc15", vx: 0, vy: -0.3, mode: "sparkle" };
-            if (stg <= 700) return { color: "#c4b5fd", vx: 0, vy: -0.4, mode: "sparkle" };
-            if (stg <= 800) return { color: "#fb7185", vx: 0.2, vy: -1.15, mode: "rise" };
-            if (stg <= 900) return { color: "#ffffff", vx: -0.25, vy: 0.85, mode: "fall" };
-            return { color: "#818cf8", vx: 0, vy: -0.65, mode: "float" };
+            if (inDungeon && isBossStage(stg)) return { color: "#ef4444", vx: 0, vy: -0.9 };
+            if (stg <= 100) return { color: "#4ade80", vx: 0.2, vy: -0.35 };
+            if (stg <= 200) return { color: "#a3e635", vx: 0.3, vy: -0.45 };
+            if (stg <= 300) return { color: "#38bdf8", vx: 0.1, vy: -0.7 };
+            if (stg <= 400) return { color: "#fbbf24", vx: 1.1, vy: 0.15 };
+            if (stg <= 500) return { color: "#c084fc", vx: 0, vy: -0.5 };
+            if (stg <= 600) return { color: "#facc15", vx: 0, vy: -0.3 };
+            if (stg <= 700) return { color: "#c4b5fd", vx: 0, vy: -0.4 };
+            if (stg <= 800) return { color: "#fb7185", vx: 0.2, vy: -1.15 };
+            if (stg <= 900) return { color: "#ffffff", vx: -0.25, vy: 0.85 };
+            return { color: "#818cf8", vx: 0, vy: -0.65 };
         }
 
         function initBattleCanvas() {
@@ -1716,7 +1904,8 @@
                         drawMagicCircle(ctx, canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.42, battleMagicAngle, mColor, 0.16);
                     }
 
-                    battleParticles.forEach(pt => {
+                    for (let i = 0; i < battleParticles.length; i++) {
+                        const pt = battleParticles[i];
                         pt.phase += 0.04;
                         pt.x += theme.vx + Math.sin(pt.phase) * 0.25;
                         pt.y += theme.vy;
@@ -1732,12 +1921,63 @@
                         ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.restore();
-                    });
+                    }
+
+                    for (let i = battleBeams.length - 1; i >= 0; i--) {
+                        const bm = battleBeams[i];
+                        bm.progress += bm.speed;
+                        if (bm.progress >= 1) {
+                            battleBeams.splice(i, 1);
+                            continue;
+                        }
+                        const cx = bm.x1 + (bm.x2 - bm.x1) * bm.progress;
+                        const cy = bm.y1 + (bm.y2 - bm.y1) * bm.progress - Math.sin(bm.progress * Math.PI) * 18;
+                        const tx = bm.x1 + (bm.x2 - bm.x1) * Math.max(0, bm.progress - 0.18);
+                        const ty = bm.y1 + (bm.y2 - bm.y1) * Math.max(0, bm.progress - 0.18) - Math.sin(Math.max(0, bm.progress - 0.18) * Math.PI) * 18;
+
+                        ctx.save();
+                        ctx.globalAlpha = 1 - bm.progress * 0.25;
+                        ctx.strokeStyle = bm.color;
+                        ctx.lineWidth = 4;
+                        ctx.lineCap = "round";
+                        ctx.beginPath();
+                        ctx.moveTo(tx, ty);
+                        ctx.lineTo(cx, cy);
+                        ctx.stroke();
+
+                        ctx.fillStyle = "#ffffff";
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                    }
+
+                    for (let i = battleRings.length - 1; i >= 0; i--) {
+                        const rg = battleRings[i];
+                        rg.r += (rg.maxR - rg.r) * 0.18 + 1.2;
+                        rg.life -= 0.055;
+                        if (rg.life <= 0) {
+                            battleRings.splice(i, 1);
+                            continue;
+                        }
+                        ctx.save();
+                        ctx.globalAlpha = rg.life * 0.85;
+                        ctx.strokeStyle = rg.color;
+                        ctx.lineWidth = 2.6;
+                        ctx.beginPath();
+                        ctx.arc(rg.x, rg.y, rg.r, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
 
                     for (let i = battleBursts.length - 1; i >= 0; i--) {
                         const b = battleBursts[i];
+                        b.px = b.x;
+                        b.py = b.y;
                         b.x += b.vx;
                         b.y += b.vy;
+                        b.vx *= 0.96;
+                        b.vy *= 0.96;
                         b.life -= b.decay;
                         if (b.life <= 0) {
                             battleBursts.splice(i, 1);
@@ -1745,9 +1985,17 @@
                         }
                         ctx.save();
                         ctx.globalAlpha = b.life;
-                        ctx.fillStyle = b.color;
+                        ctx.strokeStyle = b.color;
+                        ctx.lineWidth = b.r * 0.9;
+                        ctx.lineCap = "round";
                         ctx.beginPath();
-                        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                        ctx.moveTo(b.px, b.py);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+
+                        ctx.fillStyle = "#ffffff";
+                        ctx.beginPath();
+                        ctx.arc(b.x, b.y, b.r * 0.65, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.restore();
                     }
@@ -1776,12 +2024,15 @@
                 canvas.height = window.innerHeight;
                 const ctx = canvas.getContext("2d");
                 let angle = 0;
-                const sparks = Array.from({ length: 32 }, () => ({
-                    a: Math.random() * Math.PI * 2,
-                    dist: 40 + Math.random() * 140,
-                    spd: 0.015 + Math.random() * 0.025,
-                    r: 1.5 + Math.random() * 2.5
-                }));
+                const sparks = [];
+                for (let i = 0; i < 36; i++) {
+                    sparks.push({
+                        a: Math.random() * Math.PI * 2,
+                        dist: 40 + Math.random() * 145,
+                        spd: 0.015 + Math.random() * 0.025,
+                        r: 1.5 + Math.random() * 2.5
+                    });
+                }
                 const circleColor = resultType === "rare" ? "#f472b6" : (resultType === "fail" ? "#f43f5e" : "#34d399");
 
                 function animModal() {
@@ -1797,16 +2048,17 @@
                     drawMagicCircle(ctx, cx, cy, 175, angle, circleColor, 0.55);
                     drawMagicCircle(ctx, cx, cy, 125, -angle * 1.4, "#fde047", 0.35);
 
-                    sparks.forEach(s => {
+                    for (let i = 0; i < sparks.length; i++) {
+                        const s = sparks[i];
                         s.a += s.spd;
                         ctx.save();
-                        ctx.globalAlpha = 0.7;
+                        ctx.globalAlpha = 0.75;
                         ctx.fillStyle = "#fef08a";
                         ctx.beginPath();
                         ctx.arc(cx + Math.cos(s.a) * s.dist, cy + Math.sin(s.a) * s.dist, s.r, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.restore();
-                    });
+                    }
                     mixMagicRaf = requestAnimationFrame(animModal);
                 }
                 mixMagicRaf = requestAnimationFrame(animModal);
@@ -1825,7 +2077,6 @@
                 mixMagicRaf = null;
             }
         }
-
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },            check: () => maxClearStg >= 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 },         check: () => stats.mixSuccessCount >= 1 },
@@ -1900,11 +2151,6 @@
             up();
         }
 
-        window.onload = function() {
-            loadGame();
-            initBattleCanvas();
-        };
-
         function saveGame() {
             const data = {
                 stg: stg,
@@ -1918,15 +2164,22 @@
                 stats: stats,
                 p: p
             };
-            localStorage.setItem("mix_emoji_save_v8", JSON.stringify(data));
+            try {
+                localStorage.setItem("mix_emoji_save_v8", JSON.stringify(data));
+            } catch (e) {}
         }
 
         function loadGame() {
-            const saved = localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6");
+            let saved = null;
+            try {
+                saved = localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7") || localStorage.getItem("mix_emoji_save_v6");
+            } catch (e) {
+                saved = null;
+            }
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
-                    if(data.p && data.p.length > 0) {
+                    if (data.p && data.p.length > 0) {
                         stg = data.stg || 1;
                         maxStg = data.maxStg || 1;
                         maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
@@ -1972,7 +2225,7 @@
                         });
                         partyOrderCounter = maxOrd;
                     }
-                } catch(e) { console.error("ロード失敗", e); }
+                } catch (e) { console.error("ロード失敗", e); }
             }
             up();
         }
@@ -2038,7 +2291,7 @@
 
         function toggleLock(index) {
             if (inDungeon) return alert("ダンジョン内では鍵を切り替えられません！");
-            const target = p.at(index);
+            const target = p[index];
             if (!target) return;
             target.locked = !target.locked;
             document.getElementById("battleLog").innerText = target.locked
@@ -2051,7 +2304,7 @@
         function releaseMonster(index) {
             if (inDungeon) return alert("ダンジョン内ではお別れできません！");
             if (p.length <= 3) return alert("⚠️ モンスターが3体以下のため、これ以上お別れできません！");
-            const target = p.at(index);
+            const target = p[index];
             if (!target) return;
             if (target.inParty) return alert("⚠️ 戦闘参加中のモンスターはお別れできません！先に「戻す」を押してください。");
             if (target.locked) return alert("🔒 鍵がかかっているモンスターとはお別れできません！先に鍵を解除してください。");
@@ -2096,7 +2349,897 @@
             banner.hideTimer = setTimeout(() => {
                 banner.style.display = "none";
             }, duration);
+        }
+
+        function getEnemyPool(stage) {
+            let keys = Object.keys(D);
+            if (stage <= 10) return keys.filter(k => D[k].no <= 10);
+            let progress = (stage - 11) / (1000 - 11);
+            let minNo = 1 + Math.floor(progress * 89);
+            let maxNo = 10 + Math.floor(progress * 90);
+            if (maxNo > 100) maxNo = 100;
+            if (minNo > 90) minNo = 90;
+            let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
+            if (pool.length === 0) pool = ["ドラゴンエンペラー"];
+            return pool;
+        }
+
+        function changeStage(val) {
+            if (inDungeon) return alert("ダンジョン内ではステージを変更できません！");
+            let nextVal = stg + val;
+            if (nextVal < 1) return;
+            if (nextVal > 1000) return alert("最高ステージは1000階です！");
+            if (nextVal > maxStg) return alert("未到達のステージには進めません！");
+            stg = nextVal;
+            saveGame();
+            up();
+        }
+
+        function enter(){
+            let aliveCount = 0;
+            p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
+            if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
+
+            battleSessionId++;
+            clearAllBattleTimers();
+            const fxLayer = document.getElementById("fxLayer");
+            if (fxLayer) fxLayer.innerHTML = "";
+
+            inDungeon = true;
+            isTurnRunning = false;
+            currentEvent = null;
+            updateBgmState(true);
+            resetStageBuffs();
+            setDungeonButtonsDisabled(true);
+            if (isBossStage(stg)) {
+                document.getElementById("battleLog").innerText = "⚠️ 警告！エリア守護ボスが降臨した！！";
+            } else {
+                document.getElementById("battleLog").innerText = "⚔️ ダンジョンの探索を開始した！";
+            }
+            generateEnemies();
+            up();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(550 / spdDiv));
+            }
+        }
+
+        function generateEnemies() {
+            eg = [];
+            currentEvent = null;
+
+            if (isBossStage(stg)) {
+                let bossName = Object.keys(BOSS_D).find(k => BOSS_D[k].stage === stg) || "創世の次元獣インベーダー";
+                let b = BOSS_D[bossName];
+                let isRare = Math.random() < 0.03;
+                let mult = isRare ? 1.25 : 1;
+                let bossMon = {
+                    n: bossName,
+                    m: Math.ceil(b.hp * mult),
+                    hp: Math.ceil(b.hp * mult),
+                    at: Math.ceil(b.at * mult),
+                    df: Math.ceil(b.df * mult),
+                    sp: Math.ceil(b.sp * mult),
+                    ex: b.ex * (isRare ? 2 : 1),
+                    isBoss: true,
+                    isRare: isRare,
+                    rareSkillId: isRare ? getRandomRareSkillId() : 0,
+                    skillId: getRandomSkillId()
+                };
+                initBattleState(bossMon);
+                eg.push(bossMon);
+                return;
+            }
+
+            const evRoll = Math.random();
+            if (evRoll < 0.01) {
+                currentEvent = "traveler";
+                seSkill();
+                document.getElementById("battleLog").innerText = "🧙 謎の旅人が現れた！「ジャンケンで勝負しよう！」";
+                return;
+            } else if (evRoll < 0.02) {
+                currentEvent = "merchant";
+                seSkill();
+                document.getElementById("battleLog").innerText = "👳 旅商人が現れた！「旅のお供にアイテムをどうぞ！」";
+                return;
+            } else if (evRoll < 0.03) {
+                currentEvent = "hero";
+                seSkill();
+                document.getElementById("battleLog").innerText = "🤺 他国の絵文字勇者(Lv.50)が現れた！「いざ尋常に勝負するか？」";
+                return;
+            } else if (evRoll < 0.04) {
+                currentEvent = "chest";
+                seSkill();
+                document.getElementById("battleLog").innerText = "📦 謎の宝箱を発見した！開けますか？";
+                return;
+            }
+
+            let pool = getEnemyPool(stg);
+            let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
+            for(let i = 0; i < c; i++){
+                let n = pool[Math.floor(Math.random() * pool.length)];
+                let b = D[n];
+                let stageBonus = stg - 1;
+                let baseEx = (b.ex || 1) * 3;
+                let levelBonusEx = Math.floor(stageBonus * 2.5);
+                let isRare = Math.random() < 0.03;
+                let mult = isRare ? 1.25 : 1;
+                let rawHp = b.hp + Math.floor(stageBonus * 4.5);
+                let rawAt = b.at + Math.floor(stageBonus * 1.5);
+                let rawDf = b.df + Math.floor(stageBonus * 1.2);
+                let rawSp = b.sp + Math.floor(stageBonus * 1.0);
+                let enemyMon = {
+                    n: n,
+                    m: Math.ceil(rawHp * mult),
+                    hp: Math.ceil(rawHp * mult),
+                    at: Math.ceil(rawAt * mult),
+                    df: Math.ceil(rawDf * mult),
+                    sp: Math.ceil(rawSp * mult),
+                    ex: (baseEx + levelBonusEx) * (isRare ? 2 : 1),
+                    isRare: isRare,
+                    rareSkillId: isRare ? getRandomRareSkillId() : 0,
+                    skillId: getRandomSkillId()
+                };
+                initBattleState(enemyMon);
+                eg.push(enemyMon);
+            }
+        }
+
+        function advanceStageAfterEvent(logMsg) {
+            clearAllBattleTimers();
+            currentEvent = null;
+            let clearedStg = stg;
+            if (clearedStg > maxClearStg) maxClearStg = clearedStg;
+            if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
+
+            if (stg < 1000) {
+                stg++;
+                resetStageBuffs();
+                updateBgmState(true);
+                generateEnemies();
+                if (!currentEvent) {
+                    document.getElementById("battleLog").innerText = logMsg + " ➡️ " + stg + "階へ進みました！";
+                }
+            } else {
+                inDungeon = false;
+                updateBgmState(true);
+                resetStageBuffs();
+                setDungeonButtonsDisabled(false);
+                document.getElementById("battleLog").innerText = logMsg;
+            }
+
+            saveGame();
+            up();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
+            }
+        }
+
+        function playTravelerRPS(playerHand) {
+            if (!inDungeon || currentEvent !== "traveler") return;
+            const hands = ["✊グー", "✌️チョキ", "✋パー"];
+            const cpuHand = Math.floor(Math.random() * 3);
+
+            if (playerHand === cpuHand) {
+                seButtonTap();
+                const drawMsg = "🧙 謎の旅人「" + hands[cpuHand] + "！あいこだな、もう一回勝負だ！」";
+                document.getElementById("battleLog").innerText = drawMsg;
+                showNotice(drawMsg, 2500);
+                return;
+            }
+
+            const isWin = (playerHand === 0 && cpuHand === 1) || (playerHand === 1 && cpuHand === 2) || (playerHand === 2 && cpuHand === 0);
+            let msg = "";
+
+            if (isWin) {
+                stats.rpsWinCount = (stats.rpsWinCount || 0) + 1;
+                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75);
+                const giftName = pool[Math.floor(Math.random() * pool.length)];
+                const b = D[giftName];
+
+                if (p.length >= boxLimit) {
+                    seFail();
+                    msg = "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）しかしボックスが満杯(" + boxLimit + "体)のため「" + giftName + "」を受け取れなかった…";
+                } else {
+                    const isRareNew = Math.random() < 0.03;
+                    const st1 = calcStatsByLevel(b, 1, isRareNew);
+                    let newAlly = {
+                        n: giftName,
+                        lv: 1,
+                        m: st1.m,
+                        hp: st1.m,
+                        at: st1.at,
+                        df: st1.df,
+                        sp: st1.sp,
+                        ex: 0,
+                        nx: 5,
+                        inParty: false,
+                        partyOrder: 0,
+                        locked: false,
+                        isRare: isRareNew,
+                        rareSkillId: isRareNew ? getRandomRareSkillId() : 0,
+                        skillId: getRandomSkillId()
+                    };
+                    initBattleState(newAlly);
+                    p.push(newAlly);
+                    if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
+                    if (!zk.includes(giftName)) zk.push(giftName);
+                    seJoin();
+                    msg = (isRareNew ? "🌈✨ジャンケン大勝利！（相手:" + hands[cpuHand] + "）色違いの" : "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）") +
+                          "No." + b.no + "「" + giftName + (isRareNew ? "✨" : "") + "」(Lv.1)が仲間に加わった！";
+                }
+            } else {
+                p.forEach(m => levelUpMonster(m, 1));
+                seLvUp();
+                msg = "😢ジャンケン敗北…（相手:" + hands[cpuHand] + "）残念賞でボックスのモンスター全員がLv+1された！";
+            }
+
+            showNotice(msg, 5000);
+            advanceStageAfterEvent(msg);
+        }
+
+        function pickMerchantItem(choice) {
+            if (!inDungeon || currentEvent !== "merchant") return;
+            let msg = "";
+
+            if (choice === 1) {
+                boxLimit += 10;
+                seStageClear();
+                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！モンスターボックスの上限が " + boxLimit + "体 になった！";
+            } else {
+                let count = 0;
+                p.forEach(m => {
+                    if (!m.inParty) {
+                        if (levelUpMonster(m, 10) > 0) count++;
+                    }
+                });
+                seLvUp();
+                msg = count > 0
+                    ? ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！ボックスのモンスター" + count + "体がLv+10された！")
+                    : ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！（待機中のモンスターがいないため効果なし）");
+            }
+
+            showNotice(msg, 5000);
+            advanceStageAfterEvent(msg);
+        }
+
+        function chooseHeroAction(fight) {
+            if (!inDungeon || currentEvent !== "hero") return;
+
+            if (!fight) {
+                const msg = "💨 他国の絵文字勇者から逃げ出した！";
+                showNotice(msg, 3500);
+                advanceStageAfterEvent(msg);
+                return;
+            }
+
+            currentEvent = null;
+            const h = SPECIAL_D["他国の絵文字勇者"];
+            let heroMon = {
+                n: "他国の絵文字勇者",
+                m: h.hp,
+                hp: h.hp,
+                at: h.at,
+                df: h.df,
+                sp: h.sp,
+                ex: 0,
+                isSpecialHero: true,
+                fixedLv: 50,
+                skillId: 0
+            };
+            initBattleState(heroMon);
+            eg = [heroMon];
+            document.getElementById("battleLog").innerText = "⚔️ 他国の絵文字勇者(Lv.50)との決戦が始まった！";
+            up();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+            }
+        }
+
+        function openMysteryChest(open) {
+            if (!inDungeon || currentEvent !== "chest") return;
+            if (!open) {
+                const msg = "🚶 謎の宝箱を開けずに通り過ぎた。";
+                showNotice(msg, 3000);
+                advanceStageAfterEvent(msg);
+                return;
+            }
+
+            stats.chestOpenCount = (stats.chestOpenCount || 0) + 1;
+            let msg = "";
+            if (Math.random() < 0.50) {
+                const rawExp = Math.max(30, stg * 12);
+                const gainExp = Math.floor(rawExp * getExpMultiplier());
+                let lvUpLogs = "";
+                p.forEach(ally => {
+                    if (ally.inParty) {
+                        ally.ex += gainExp;
+                        while (ally.lv < 100 && ally.ex >= ally.nx) {
+                            ally.ex -= ally.nx;
+                            ally.lv++;
+                            const b = getMonData(ally.n);
+                            const mult = ally.isRare ? 1.25 : 1;
+                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
+                            ally.hp = ally.m;
+                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
+                            ally.nx = Math.floor(ally.nx * 1.2);
+                            lvUpLogs += " " + ally.n + "Lv." + ally.lv + "!";
+                        }
+                    }
+                });
+                seLvUp();
+                msg = "✨ 大当たり！お宝を発見！戦闘メンバー全員が EXP " + gainExp + " を獲得！" + lvUpLogs;
+            } else {
+                p.forEach(ally => {
+                    if (ally.inParty && ally.hp > 0) {
+                        const dmg = Math.max(1, Math.floor(ally.m * 0.25));
+                        ally.hp = Math.max(1, ally.hp - dmg);
+                    }
+                });
+                seFail();
+                msg = "💥 罠だ！宝箱が爆発し、戦闘メンバー全員が最大HPの25%ダメージを受けた！";
+            }
+
+            showNotice(msg, 5000);
+            advanceStageAfterEvent(msg);
+        }
+
+        function leaveDungeon() {
+            battleSessionId++;
+            clearAllBattleTimers();
+            const fxLayer = document.getElementById("fxLayer");
+            if (fxLayer) fxLayer.innerHTML = "";
+
+            isTurnRunning = false;
+            currentEvent = null;
+            inDungeon = false;
+            updateBgmState(true);
+            eg = [];
+            resetStageBuffs();
+            p.forEach(m => { m.hp = m.m; });
+
+            const banner = document.getElementById("noticeBanner");
+            if (banner) banner.style.display = "none";
+
+            setDungeonButtonsDisabled(false);
+            const btnA = document.getElementById("btnAtk");
+            if (btnA) btnA.disabled = false;
+
+            document.getElementById("battleLog").innerText = "🏡 拠点に戻った。仲間が全員全回復した！";
+            saveGame();
+            up();
+        }
+
+        function toggleParty(index) {
+            if(inDungeon) return;
+            const target = p[index];
+            if (!target) return;
+            if (target.inParty) {
+                target.inParty = false;
+                target.partyOrder = 0;
+                document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
+            } else {
+                let currentPartyCount = 0;
+                p.forEach(m => { if(m.inParty) currentPartyCount++; });
+                if (currentPartyCount >= 3) return alert("戦闘メンバーは3体までです！");
+                partyOrderCounter++;
+                target.inParty = true;
+                target.partyOrder = partyOrderCounter;
+                document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
+            }
+            saveGame();
+            up();
+        }
+
+        function buildStateIcons(mon) {
+            let icons = "";
+            if ((mon.buffAt || 0) > 0 || (mon.buffDf || 0) > 0 || (mon.buffSp || 0) > 0) icons += "⬆️";
+            if ((mon.buffDf || 0) < 0) icons += "🛡️⬇️";
+            if (mon.nullifyOnce) icons += "🛡️無効";
+            if (mon.nextAtk15) icons += "🔥1.5倍";
+            if (mon.halfDmgOnce) icons += "🔰半減";
+            if (mon.isPoisoned) icons += "☠️毒";
+            if (mon.isParalyzed) icons += "⚡麻痺";
+            return icons ? " <span class='status-badge'>" + icons + "</span>" : "";
+        }
+
+        function showRecipeHint(targetName) {
+            const entries = Object.entries(R).filter(([k, v]) => v === targetName);
+            if (entries.length === 0) {
+                showWildHint(targetName);
+                return;
+            }
+            let hints = entries.map(([pair]) => {
+                const parts = pair.split("+");
+                const p1 = parts[0];
+                const p2 = parts[1];
+                const s1 = zk.includes(p1) ? (D[p1].a + "No." + D[p1].no + " " + p1) : ("❓No." + D[p1].no + " ？？？");
+                const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ("❓No." + D[p2].no + " ？？？");
+                return "・" + s1 + " ＋ " + s2;
+            }).join("\n");
+            alert("【💡 配合シルエットヒント】\nシルエットの正体は配合で誕生するモンスターです！\n\n" + hints);
+        }
+
+        function showWildHint(targetName) {
+            const inf = D[targetName];
+            if (!inf) return;
+            let minS = 9999;
+            let maxS = 0;
+            for (let s = 1; s <= 1000; s++) {
+                if (s % 50 === 0) continue;
+                let minNo = 1, maxNo = 10;
+                if (s > 10) {
+                    let progress = (s - 11) / (1000 - 11);
+                    minNo = Math.min(90, 1 + Math.floor(progress * 89));
+                    maxNo = Math.min(100, 10 + Math.floor(progress * 90));
+                }
+                if (inf.no >= minNo && inf.no <= maxNo) {
+                    if (s < minS) minS = s;
+                    if (s > maxS) maxS = s;
+                }
+            }
+            let extra = inf.no <= 75 ? "\n（※🧙謎の旅人のジャンケン勝利でも入手可能！）" : "";
+            alert("【📍 野生出現場所ヒント】\nNo." + inf.no + "（未発見モンスター）\n\n出現ステージ：およそ " + minS + "階 〜 " + maxS + "階" + extra);
+        }
+
+        function showBossHint(targetName) {
+            const b = BOSS_D[targetName];
+            if (!b) return;
+            alert("【👑 ボス出現情報】\nNo." + b.no + "（" + b.stage + "階ボス）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時15%で仲間になります）");
+        }
+
+        function up() {
+            if (!inDungeon) {
+                p.sort((a, b) => {
+                    if (a.inParty && b.inParty) {
+                        return (a.partyOrder || 0) - (b.partyOrder || 0);
+                    }
+                    if (a.inParty !== b.inParty) {
+                        return b.inParty ? 1 : -1;
+                    }
+                    if (boxSortMode === "lv") {
+                        if (b.lv !== a.lv) return b.lv - a.lv;
+                    }
+                    const noA = getMonData(a.n).no;
+                    const noB = getMonData(b.n).no;
+                    const sortA = (typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : noA;
+                    const sortB = (typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : noB;
+                    return sortA - sortB;
+                });
+            }
+
+            const weekend = isWeekendBonus();
+            const wkBanner = document.getElementById("weekendBanner");
+            const wkMixTag = document.getElementById("dispWeekendMixTag");
+            if (wkBanner) wkBanner.style.display = weekend ? "block" : "none";
+            if (wkMixTag) wkMixTag.innerText = weekend ? " (🎉土日+10%込!)" : "";
+
+            let envName = "";
+            let envEmoji = "";
+            let envClass = "";
+            const isBossNow = inDungeon && isBossStage(stg);
+
+            if (isBossNow) {
+                envName = "ボス戦";
+                if (stg === 500 || stg === 1000) {
+                    envEmoji = "🕋";
+                    envClass = "bg-superboss";
+                } else {
+                    envEmoji = "🏴‍☠️";
+                    envClass = "bg-boss";
+                }
+            } else {
+                if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
+                else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-jungle"; }
+                else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
+                else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-desert"; }
+                else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
+                else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
+                else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
+                else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
+                else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
+                else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
+            }
+
+            const stgEl = document.getElementById("stg");
+            const maxStgEl = document.getElementById("maxStg");
+            const clearStgEl = document.getElementById("dispClearStg");
+            if (stgEl) stgEl.innerText = stg + "階 [" + envEmoji + envName + "]";
+            if (maxStgEl) maxStgEl.innerText = maxStg;
+            if (clearStgEl) clearStgEl.innerText = maxClearStg;
+
+            let partyNow = p.filter(m => m.inParty).length;
+            const boxBadgeEl = document.getElementById("boxCountBadge");
+            const badgeEl = document.getElementById("partyCountBadge");
+            if (boxBadgeEl) boxBadgeEl.innerText = "(" + p.length + "/" + boxLimit + "体)";
+            if (badgeEl) badgeEl.innerText = "(戦闘中: " + partyNow + "/3体)";
+
+            const mixPct = Math.round(getEffectiveMixRate() * 100);
+            const dispMixRateEl = document.getElementById("dispMixRate");
+            const btnMixRateEl = document.getElementById("btnMixRateText");
+            if (dispMixRateEl) dispMixRateEl.innerText = mixPct;
+            if (btnMixRateEl) btnMixRateEl.innerText = mixPct;
+
+            if (typeof renderMissions === "function") renderMissions();
+
+            const mS = document.getElementById("mySide");
+            const eS = document.getElementById("eSide");
+            const bField = document.querySelector(".battle-field");
+            const bHeader = document.getElementById("battleHeaderBar");
+            if (bField) bField.className = "battle-field " + envClass;
+            if (bHeader) bHeader.className = "battle-header-bar " + envClass;
+
+            if (mS) {
+                mS.innerHTML = "<b style='font-size:12px;'>【味方】</b>";
+                let partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).slice(0, 3);
+
+                partyMembers.forEach((m, idx) => {
+                    let isDead = m.hp <= 0;
+                    let inf = getMonData(m.n);
+                    let stateHtml = buildStateIcons(m);
+                    let orderTag = "<span style='font-size:9.5px; color:#0284c7; font-weight:900;'>[" + (idx + 1) + "番手]</span> ";
+
+                    let dispEmoji = isDead ? "⚰️" : inf.a;
+                    let deadClass = isDead ? " monster-dead-coffin" : "";
+                    let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
+                    let rareStar = m.isRare ? "✨" : "";
+                    let allyId = " id='myM_slot_" + idx + "' ";
+                    let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:30px;'></div>";
+
+                    mS.innerHTML += "<br><div class='monster-container'" + allyId + "><span class='battle-monster" + deadClass + rareClass + "' style='font-size:36px;'>" + dispEmoji + "</span>" + shadowHtml + "</div>" + orderTag + "<b style='font-size:11px;'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + m.lv + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : "");
+                    mS.innerHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml;
+                    mS.innerHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+
+                    let expPct = m.lv >= 100 ? 100 : (m.ex / m.nx) * 100;
+                    let nextText = m.lv >= 100 ? "MAX" : "NEXT: " + (m.nx - m.ex);
+                    mS.innerHTML += '<div class="exp-bg" style="height:4px; margin-top:2px;"><div class="exp-bar" style="width:' + expPct + '%"></div></div>';
+                    mS.innerHTML += '<span class="sub-label" style="font-size:8px; margin-top:1px;">' + nextText + '</span>';
+                });
+                if(partyMembers.length === 0) mS.innerHTML += "<br><span style='color:#94a3b8;font-size:11px;'>メンバー未選択</span>";
+            }
+
+            if (eS) {
+                if (inDungeon && currentEvent) {
+                    if (currentEvent === "traveler") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧙</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>謎の旅人</b><br><span style='font-size:10.5px; color:#475569;'>ジャンケン勝負を挑まれた！</span>";
+                    } else if (currentEvent === "merchant") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>👳</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>旅商人</b><br><span style='font-size:10.5px; color:#475569;'>特別な品をプレゼント！</span>";
+                    } else if (currentEvent === "hero") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>他国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
+                    } else if (currentEvent === "chest") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【📦宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>📦</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
+                    }
+                } else {
+                    const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
+                    eS.innerHTML = "<b style='font-size:12px;'>" + (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️他国の勇者】" : "【敵】")) + "</b>";
+                    if(!inDungeon || eg.length === 0){
+                        eS.innerHTML += "<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>";
+                        const bEnterBtm = document.getElementById("btnEnterBtm");
+                        if (bEnterBtm) bEnterBtm.disabled = false;
+                    } else {
+                        let enemyHTML = "";
+                        eg.forEach((m, i) => {
+                            let isDead = m.hp <= 0;
+                            let inf = getMonData(m.n);
+                            let eId = " id='eM_slot_" + i + "' ";
+                            let eStateHtml = buildStateIcons(m);
+                            let sizePx = (m.isBoss || m.isSpecialHero) ? "48px" : "36px";
+                            let dispLv = m.fixedLv ? m.fixedLv : stg;
+                            let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : "#1e293b");
+
+                            let dispEmoji = isDead ? "⚰️" : inf.a;
+                            let deadClass = isDead ? " monster-dead-coffin" : "";
+                            let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
+                            let rareStar = m.isRare ? "✨" : "";
+                            let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:34px;'></div>";
+
+                            enemyHTML += "<br><div class='monster-container'" + eId + "><span class='battle-monster" + deadClass + rareClass + "' style='font-size:" + sizePx + ";'>" + dispEmoji + "</span>" + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>";
+                            if (m.isSpecialHero) {
+                                enemyHTML += "<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️異国の剣技・閃光</span>";
                             }
+                            if (m.isRare && !isDead) {
+                                enemyHTML += " <span class='rare-badge'>✨色違い</span>";
+                            }
+                            enemyHTML += "<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml;
+                            enemyHTML += '<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>';
+                        });
+                        eS.innerHTML += enemyHTML;
+                    }
+                }
+            }
+
+            const evPanel = document.getElementById("eventPanel");
+            const btnAtk = document.getElementById("btnAtk");
+            if (evPanel) {
+                if (inDungeon && currentEvent === "traveler") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">🧙 謎の旅人「ジャンケンで勝負だ！」</div>' +
+                        '<div class="event-sub">勝てばNo.1〜75のモンスター(Lv.1)を1匹プレゼント！<br>負けても残念賞でボックス全員がLv+1！（※満杯時は仲間になりません）</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="playTravelerRPS(0)">✊ グー</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="playTravelerRPS(1)">✌️ チョキ</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="playTravelerRPS(2)">✋ パー</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "merchant") {
+                    let reserveCount = p.filter(m => !m.inParty).length;
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">👳 旅商人「好きなアイテムを1つ差し上げましょう！」</div>' +
+                        '<div class="event-sub">受け取った瞬間から効果を発揮します！</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">(上限+10：現在' + boxLimit + '体)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">(控え' + reserveCount + '体のみLv+10)</span></button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "hero") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">🤺 他国の絵文字勇者(Lv.50)が現れた！</div>' +
+                        '<div class="event-sub">特別スキル「⚔️異国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="chooseHeroAction(true)">⚔️ 戦う！</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseHeroAction(false)">💨 逃げる</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "chest") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">📦 謎の宝箱を発見した！</div>' +
+                        '<div class="event-sub">開けると「お宝（戦闘メンバー全員EXP大量獲得）」か「罠（ダメージ）」が出るぞ！</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="openMysteryChest(true)">🔓 宝箱を開ける！</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="openMysteryChest(false)">🚶 開けずに進む</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else {
+                    evPanel.style.display = "none";
+                    evPanel.innerHTML = "";
+                    if (btnAtk && inDungeon && !isTurnRunning) btnAtk.disabled = false;
+                }
+            }
+
+            const btnMix = document.getElementById("btnMix");
+            if (btnMix) btnMix.disabled = inDungeon;
+
+            const list = document.getElementById("box");
+            if (list) {
+                list.innerHTML = "";
+                p.forEach((n, i) => {
+                    let liClass = "compact-li" + (inDungeon ? " locked" : "") + (n.isRare ? " rare-card" : "");
+                    let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
+                    let inf = getMonData(n.n);
+                    let expText = n.lv >= 100 ? "MAX" : n.ex + "/" + n.nx;
+                    let partyTag = n.inParty ? " <span style='color:#059669;font-weight:900;'>[参加中]</span>" : "";
+                    let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
+                    let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
+                    let rareStar = n.isRare ? "✨" : "";
+                    let emojiHtml = n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a;
+
+                    let actionBtns = "";
+                    if (!inDungeon) {
+                        let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
+                        let btnBg = n.inParty ? "background:linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 2px solid #334155;" : "";
+                        let lockBtnText = n.locked ? "🔓 鍵解除" : "🔒 鍵";
+                        let lockBtnBg = n.locked
+                            ? "background:linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 2px solid #b45309;"
+                            : "background:linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 2px solid #475569;";
+                        let canRelease = !n.inParty && !n.locked && p.length > 3;
+
+                        actionBtns = '<div class="box-btn-row">' +
+                            '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>' +
+                            '<button class="btn-small" style="' + lockBtnBg + '" onclick="toggleLock(' + i + ')">' + lockBtnText + '</button>' +
+                            '<button class="btn-small" style="background:linear-gradient(180deg, #f43f5e 0%, #e11d48 100%); border-bottom: 2px solid #be123c;" onclick="releaseMonster(' + i + ')"' + (canRelease ? '' : ' disabled') + '>👋 お別れ</button>' +
+                            '</div>';
+                    }
+
+                    let skillHtml = "";
+                    if (showBoxSkills) {
+                        let innateList = getInnateSkills(inf.no);
+                        let rareSk = getRareSkillObj(n);
+                        let rSk = getSkillObj(n);
+                        skillHtml = "<div class='skill-panel'>";
+                        innateList.forEach(isk => {
+                            skillHtml += '<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">固:' + isk.name + '</span>';
+                        });
+                        if (rareSk) {
+                            skillHtml += '<span class="skill-badge skill-badge-rare" onclick="showSkillInfo(\'' + rareSk.name + '\', \'' + rareSk.desc + '\')">虹:' + rareSk.name + '</span>';
+                        }
+                        skillHtml += '<span class="skill-badge skill-badge-add" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">追:' + rSk.name + '</span></div>';
+                    }
+
+                    list.innerHTML += '<li class="' + liClass + '">' +
+                        '<div class="box-header-row"><span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + rareTag + partyTag + lockTag + deadText + '</span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span></div>' +
+                        '<span class="status-text">HP:' + n.hp + '/' + n.m + ' 攻:' + n.at + ' 防:' + n.df + ' 素:' + n.sp + ' (EXP:' + expText + ')</span>' +
+                        skillHtml + actionBtns + '</li>';
+                });
+            }
+
+            const mixList = document.getElementById("mixBoxList");
+            if (mixList) {
+                mixList.innerHTML = "";
+                p.forEach((n, i) => {
+                    let isBossMon = typeof getMonData(n.n).no === "number" && getMonData(n.n).no < 0;
+                    let isProtected = inDungeon || n.inParty || n.locked || isBossMon;
+                    let disAttr = isProtected ? "disabled" : "";
+                    let liClass = "compact-mix-li" + (isProtected ? " locked" : "") + (n.isRare ? " rare-card" : "");
+                    let inf = getMonData(n.n);
+                    let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
+                    let rareStar = n.isRare ? "✨" : "";
+                    let emojiHtml = n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a;
+                    let tags = "";
+                    if (n.inParty) tags += " <span style='color:#059669;font-weight:900;font-size:10px;'>[参加中]</span>";
+                    if (n.locked) tags += "<span class='lock-badge'>🔒保護</span>";
+                    if (isBossMon) tags += " <span style='color:#dc2626;font-weight:900;font-size:10px;'>[配合不可]</span>";
+                    mixList.innerHTML += '<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + rareTag + tags + '</span></label></li>';
+                });
+            }
+
+            const rtTable = document.getElementById("rt");
+            if (rtTable) {
+                const recipeEntries = Object.entries(R);
+                let rowsHtml = "";
+                for (let i = 0; i < recipeEntries.length; i += 2) {
+                    rowsHtml += "<tr>";
+                    for (let j = 0; j < 2; j++) {
+                        if (i + j < recipeEntries.length) {
+                            const [pair, resName] = recipeEntries[i + j];
+                            const [m1Name, m2Name] = pair.split("+");
+                            const m1 = D[m1Name];
+                            const m2 = D[m2Name];
+                            const res = D[resName];
+                            const isDiscovered = zk.includes(resName);
+                            const resEmoji = isDiscovered ? res.a : '<span class="silhouette">' + res.a + '</span>';
+                            const resLabel = isDiscovered ? resName : "？？？";
+                            const noJoinTag = isSynthOnly(resName) ? ' <span style="color:red;font-weight:bold;">(⚠️配合限定)</span>' : "";
+                            rowsHtml += '<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>';
+                        } else {
+                            rowsHtml += "<td></td>";
+                        }
+                    }
+                    rowsHtml += "</tr>";
+                }
+                rtTable.innerHTML = rowsHtml;
+            }
+
+            const normalFoundCount = Object.keys(D).filter(k => zk.includes(k)).length;
+            const zukanBadge = document.getElementById("zukanCountBadge");
+            if (zukanBadge) zukanBadge.innerText = "(" + normalFoundCount + "/100種)";
+
+            const synthResults = new Set(Object.values(R));
+            const zkDiv = document.getElementById("zk");
+            if (zkDiv) {
+                zkDiv.innerHTML = "";
+                Object.keys(D).forEach((k) => {
+                    if(zk.includes(k)){
+                        zkDiv.innerHTML += '<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>';
+                    } else if (synthResults.has(k)) {
+                        zkDiv.innerHTML += '<div class="zukan-unknown" style="cursor:pointer; border-color:#93c5fd;" onclick="showRecipeHint(\'' + k + '\')"><span class="silhouette">' + D[k].a + '</span><br>No.' + D[k].no + '<br>💡配合ヒント</div>';
+                    } else {
+                        zkDiv.innerHTML += '<div class="zukan-unknown" style="cursor:pointer; border-color:#cbd5e1;" onclick="showWildHint(\'' + k + '\')">❓<br>No.' + D[k].no + '<br>📍出現ヒント</div>';
+                    }
+                });
+            }
+
+            const bossFoundCount = Object.keys(BOSS_D).filter(k => zk.includes(k)).length;
+            const bBadge1 = document.getElementById("bossZukanCountBadge");
+            const bBadge2 = document.getElementById("bossZukanSubBadge");
+            if (bBadge1) bBadge1.innerText = " / 👑ボス(" + bossFoundCount + "/20種)";
+            if (bBadge2) bBadge2.innerText = "(" + bossFoundCount + "/20種)";
+
+            const bossZkDiv = document.getElementById("bossZk");
+            if (bossZkDiv) {
+                bossZkDiv.innerHTML = "";
+                Object.keys(BOSS_D).forEach((k) => {
+                    const bInf = BOSS_D[k];
+                    if (zk.includes(k)) {
+                        bossZkDiv.innerHTML += '<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>';
+                    } else {
+                        bossZkDiv.innerHTML += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')"><span class="silhouette">' + bInf.a + '</span><br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>';
+                    }
+                });
+            }
+        }
+
+        function exportData() {
+            const data = {
+                stg: stg,
+                maxStg: maxStg,
+                maxClearStg: maxClearStg,
+                zk: zk,
+                boxLimit: boxLimit,
+                baseMixRate: baseMixRate,
+                mixBonus: mixBonus,
+                expBonusRate: expBonusRate,
+                stats: stats,
+                p: p
+            };
+            try {
+                const jsonStr = JSON.stringify(data);
+                const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
+                const field = document.getElementById("passCodeField");
+                field.value = base64Str;
+                field.select();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(base64Str).then(() => {
+                        alert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！");
+                    }).catch(() => {
+                        alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                    });
+                } else {
+                    alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                }
+            } catch(e) { alert("⚠️ コード発行失敗。"); }
+        }
+
+        function importData() {
+            const code = document.getElementById("importCodeField").value.trim();
+            if (!code) return alert("コードを入力してください。");
+            if (confirm("⚠️ セーブデータを上書きしますか？")) {
+                try {
+                    const jsonStr = decodeURIComponent(escape(atob(code)));
+                    const data = JSON.parse(jsonStr);
+                    if (data.p && Array.isArray(data.p)) {
+                        stg = data.stg || 1;
+                        maxStg = data.maxStg || 1;
+                        maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
+                        zk = data.zk || ["プニシズク"];
+                        boxLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
+                        if (typeof data.baseMixRate === "number") {
+                            baseMixRate = Math.max(0.25, data.baseMixRate);
+                        } else if (typeof data.mixRate === "number") {
+                            baseMixRate = data.mixRate >= 0.50 ? 0.50 : 0.25;
+                        } else {
+                            baseMixRate = 0.25;
+                        }
+                        mixBonus = (typeof data.mixBonus === "number") ? data.mixBonus : 0;
+                        expBonusRate = (typeof data.expBonusRate === "number") ? data.expBonusRate : 0;
+                        if (data.stats && typeof data.stats === "object") {
+                            stats = Object.assign({
+                                mixSuccessCount: 0, mixAttemptCount: 0, rpsWinCount: 0,
+                                heroWinCount: 0, rareGetCount: 0, chestOpenCount: 0, claimedMissions: []
+                            }, data.stats);
+                            if (!Array.isArray(stats.claimedMissions)) stats.claimedMissions = [];
+                        }
+                        p = data.p.filter(m => D[m.n] || BOSS_D[m.n]);
+                        if (p.length === 0) {
+                            p = [{ n: "プニシズク", lv: 10, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, skillId: getRandomSkillId() }];
+                        }
+                        let maxOrd = 0;
+                        p.forEach(m => {
+                            m.locked = Boolean(m.locked);
+                            m.isRare = Boolean(m.isRare);
+                            if (m.isRare) getRareSkillObj(m);
+                            getSkillObj(m);
+                            initBattleState(m);
+                            if (m.inParty) {
+                                if (typeof m.partyOrder !== "number") {
+                                    maxOrd++;
+                                    m.partyOrder = maxOrd;
+                                } else if (m.partyOrder > maxOrd) {
+                                    maxOrd = m.partyOrder;
+                                }
+                            } else {
+                                m.partyOrder = 0;
+                            }
+                        });
+                        partyOrderCounter = maxOrd;
+                        saveGame();
+                        alert("📥 データの復元に成功しました！");
+                        document.getElementById("importCodeField").value = "";
+                        up();
+                    } else { alert("⚠️ 無効なコードです。"); }
+                } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
+            }
+        }
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -2144,6 +3287,7 @@
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.15));
                     skillLogs += "⚔️" + attacker.n + "の異国の剣技・閃光！HP " + h + " 回復＆攻・素UP＆次回1.5倍！ ";
                     fxQueue.push("⚔️✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                 }
             }
@@ -2156,6 +3300,7 @@
                     attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
                     skillLogs += "🌈" + attacker.n + "のプリズムバースト！光線 " + dmg + " ダメージ＆攻撃UP！ ";
                     fxQueue.push("🌈💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#ec4899", false);
                     hitDefender = true;
                     if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
                 } else if (rareSk.id === 2 && Math.random() < 0.40) {
@@ -2167,6 +3312,7 @@
                         skillLogs += "バリア展開！ ";
                     }
                     fxQueue.push("✨🔆");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                 } else if (rareSk.id === 3 && Math.random() < 0.35) {
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.25));
@@ -2201,6 +3347,7 @@
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "🦖" + attacker.n + "の暴君の牙！追撃 " + dmg + " ダメージ！ ";
                     fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#f97316", false);
                     hitDefender = true;
                 }
                 if (no === -4 && Math.random() < 0.50) {
@@ -2208,6 +3355,7 @@
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
                     skillLogs += "🧌" + attacker.n + "の世界樹の恵み！HPが " + h + " 回復！ ";
                     fxQueue.push("🔆✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                 }
                 if (no === -5 && defender.hp > 0 && Math.random() < 0.35) {
@@ -2271,6 +3419,7 @@
                     attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
                     skillLogs += "🦄" + attacker.n + "の聖域の光！HP " + h + " 回復＆防御UP！ ";
                     fxQueue.push("🔆🌟");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                 }
                 if (no === -14 && defender.hp > 0) {
@@ -2280,6 +3429,7 @@
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "👼" + attacker.n + "の熾天使の裁き！追加 " + dmg + " ダメージ！ ";
                     fxQueue.push("☄️✨");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#f59e0b", false);
                     hitDefender = true;
                 }
                 if (no === -15 && Math.random() < 0.50) {
@@ -2295,6 +3445,7 @@
                     attacker.nullifyOnce = true;
                     skillLogs += "🐦‍🔥" + attacker.n + "の太陽の恩寵！HP " + h + " 回復＆バリア展開！ ";
                     fxQueue.push("🔆🧿");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                 }
                 if (no === -17 && Math.random() < 0.50) {
@@ -2311,6 +3462,7 @@
                     defender.hp = 0;
                     skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ ";
                     fxQueue.push("☄️💀");
+                    showDamagePop(defender, isPlayerAttack, "即死!", "#7c3aed", true);
                     hitDefender = true;
                 }
                 if (no === -19 && defender.hp > 0) {
@@ -2320,6 +3472,7 @@
                     defender.hp = Math.max(0, defender.hp - dmg);
                     skillLogs += "👿" + attacker.n + "の混沌の連撃！追加 " + dmg + " ダメージ！ ";
                     fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#9333ea", false);
                     hitDefender = true;
                     if (defender.hp > 0 && Math.random() < 0.40) {
                         if (defSk.id !== 5) defender.isPoisoned = true;
@@ -2336,17 +3489,20 @@
                         defender.hp = Math.max(0, defender.hp - dmg);
                         skillLogs += "👾" + attacker.n + "の終焉の創世神話！追撃 " + dmg + " ダメージ！ ";
                         fxQueue.push("☄️💥");
+                        showDamagePop(defender, isPlayerAttack, "-" + dmg, "#7c3aed", false);
                         hitDefender = true;
                     }
                     let h = Math.max(1, Math.floor(attacker.m * 0.15));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
                     skillLogs += "HP " + h + " 回復！ ";
                     fxQueue.push("🔆🌟");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                     buffSelf = true;
                     if (defender.hp > 0 && Math.random() < 0.25) {
                         defender.hp = 0;
                         skillLogs += "💀終焉の一撃必殺発動！ ";
                         fxQueue.push("🪄💀");
+                        showDamagePop(defender, isPlayerAttack, "終焉!", "#7c3aed", true);
                         hitDefender = true;
                     }
                 }
@@ -2384,6 +3540,7 @@
                     defender.hp = Math.max(0, defender.hp - extraDmg);
                     skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ ";
                     fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + extraDmg, "#f97316", false);
                     hitDefender = true;
                     if (!isPlayerAttack && defender.hp === 0) {
                         skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
@@ -2394,6 +3551,7 @@
                     attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
                     skillLogs += "💚" + attacker.n + "のリジェネヒール！HPが " + healVal + " 回復！ ";
                     fxQueue.push("🔆✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
                     buffSelf = true;
                 }
                 if (no >= 90 && no <= 100 && Math.random() < 0.50) {
@@ -2407,6 +3565,7 @@
                     defender.hp = 0;
                     skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
                     fxQueue.push("☄️💀");
+                    showDamagePop(defender, isPlayerAttack, "必殺!", "#7c3aed", true);
                     hitDefender = true;
                     if (!isPlayerAttack) {
                         skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
@@ -2425,6 +3584,7 @@
                 attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
                 skillLogs += "💚" + attacker.n + "のリジェネレーション！HPが " + healVal + " 回復！ ";
                 fxQueue.push("🫧🔆");
+                showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
                 buffSelf = true;
             }
             if (sk.id === 3 && Math.random() < 0.10) {
@@ -2484,6 +3644,8 @@
                 attacker.hp = Math.min(attacker.m, attacker.hp + dmg);
                 skillLogs += "🩸" + attacker.n + "のヴァンパイアファング！" + dmg + "吸収！ ";
                 fxQueue.push("🩸🦇");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#e11d48", false);
+                showDamagePop(attacker, !isPlayerAttack, "+" + dmg, "#10b981", false);
                 hitDefender = true;
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
@@ -2513,6 +3675,7 @@
                 attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
                 skillLogs += "👼" + attacker.n + "のミラクルキュア！毒解除＆HP " + healVal + " 回復！ ";
                 fxQueue.push("👼✨");
+                showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
                 buffSelf = true;
             }
             if (sk.id === 17 && defender.hp > 0 && Math.random() < 0.25) {
@@ -2525,6 +3688,7 @@
                     skillLogs += defender.n + "は麻痺した！ ";
                 }
                 fxQueue.push("⚡💥");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#eab308", false);
                 hitDefender = true;
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
@@ -2540,6 +3704,7 @@
                 defender.hp = Math.max(0, defender.hp - dmg);
                 skillLogs += "🎯" + attacker.n + "のスナイプショット！防御無視 " + dmg + " ダメージ！ ";
                 fxQueue.push("🎯💥");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#dc2626", false);
                 hitDefender = true;
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
@@ -2562,7 +3727,7 @@
             if (skillLogs !== "") {
                 seSkill();
                 if (hitDefender) {
-                    spawnBattleBurstAtMonster(defender, isPlayerAttack, "#c084fc", 10);
+                    spawnBattleBurstAtMonster(defender, isPlayerAttack, "#c084fc", 11);
                 } else if (buffSelf) {
                     spawnBattleBurstAtMonster(attacker, !isPlayerAttack, "#34d399", 8);
                 }
@@ -2586,8 +3751,8 @@
             if (btnAtk) btnAtk.disabled = true;
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
-            const activeAlly = aliveParty.at(0);
-            const currentEnemy = eg.at(0);
+            const activeAlly = aliveParty[0];
+            const currentEnemy = eg[0];
             const logBox = document.getElementById("battleLog");
             const mySideEl = document.getElementById("mySide");
             const eSideEl = document.getElementById("eSide");
@@ -2597,28 +3762,33 @@
                 if (attacker.isParalyzed) {
                     attacker.isParalyzed = false;
                     turnLog += "⚡" + attacker.n + "は麻痺して動けない！（麻痺が解けた） ";
+                    showDamagePop(attacker, !isPlayerAttack, "麻痺!", "#eab308", false);
                     return;
                 }
 
                 if (isPlayerAttack) {
                     mySideEl.classList.add("atk-forward-my");
-                    scheduleBattleTimer(() => { mySideEl.classList.remove("atk-forward-my"); }, Math.floor(200 / spdDiv));
+                    spawnBattleBeam(attacker, false, defender, true, "#38bdf8");
+                    scheduleBattleTimer(() => { mySideEl.classList.remove("atk-forward-my"); }, Math.floor(220 / spdDiv));
                     scheduleBattleTimer(() => {
                         eSideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { eSideEl.classList.remove("hit-flash"); }, Math.floor(400 / spdDiv));
-                    }, Math.floor(100 / spdDiv));
+                        scheduleBattleTimer(() => { eSideEl.classList.remove("hit-flash"); }, Math.floor(420 / spdDiv));
+                    }, Math.floor(90 / spdDiv));
                 } else {
                     eSideEl.classList.add("atk-forward-e");
-                    scheduleBattleTimer(() => { eSideEl.classList.remove("atk-forward-e"); }, Math.floor(200 / spdDiv));
+                    spawnBattleBeam(attacker, true, defender, false, "#f87171");
+                    scheduleBattleTimer(() => { eSideEl.classList.remove("atk-forward-e"); }, Math.floor(220 / spdDiv));
                     scheduleBattleTimer(() => {
                         mySideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { mySideEl.classList.remove("hit-flash"); }, Math.floor(400 / spdDiv));
-                    }, Math.floor(100 / spdDiv));
+                        scheduleBattleTimer(() => { mySideEl.classList.remove("hit-flash"); }, Math.floor(420 / spdDiv));
+                    }, Math.floor(90 / spdDiv));
                 }
+
                 if (defender.nullifyOnce) {
                     defender.nullifyOnce = false;
                     turnLog += "🛡️" + defender.n + "はバリアで" + attacker.n + "の攻撃を無効化した！ ";
-                    spawnBattleBurstAtMonster(defender, isPlayerAttack, "#e2e8f0", 7);
+                    spawnBattleBurstAtMonster(defender, isPlayerAttack, "#cbd5e1", 8);
+                    showDamagePop(defender, isPlayerAttack, "無効!", "#64748b", false);
                 } else {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
                     let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
@@ -2636,7 +3806,7 @@
                         baseDmg = baseDmg * 2;
                         turnLog += "💥会心の一撃！ ";
                         playSkillEffect(attacker, isPlayerAttack, "💥⚡", 0);
-                        spawnBattleBurstAtMonster(defender, isPlayerAttack, "#facc15", 16);
+                        spawnBattleBurstAtMonster(defender, isPlayerAttack, "#facc15", 18);
                         const bBox = document.getElementById("battleBox");
                         if (bBox) {
                             bBox.classList.remove("shake-hit");
@@ -2644,7 +3814,7 @@
                             bBox.classList.add("shake-hit");
                         }
                     } else {
-                        spawnBattleBurstAtMonster(defender, isPlayerAttack, isPlayerAttack ? "#38bdf8" : "#f87171", 9);
+                        spawnBattleBurstAtMonster(defender, isPlayerAttack, isPlayerAttack ? "#38bdf8" : "#f87171", 10);
                     }
 
                     if (defender.halfDmgOnce) {
@@ -2654,6 +3824,7 @@
                     }
 
                     defender.hp = Math.max(0, defender.hp - baseDmg);
+                    showDamagePop(defender, isPlayerAttack, (isCrit ? "💥-" : "-") + baseDmg, isCrit ? "#d97706" : (isPlayerAttack ? "#0284c7" : "#dc2626"), isCrit);
                     seAttack();
                     if (isCrit) seSkill();
 
@@ -2670,7 +3841,8 @@
                 if (attacker.hp > 0 && attacker.isPoisoned) {
                     let poisonDmg = Math.max(1, Math.floor(attacker.m * 0.10));
                     attacker.hp = Math.max(0, attacker.hp - poisonDmg);
-                    spawnBattleBurstAtMonster(attacker, !isPlayerAttack, "#a855f7", 7);
+                    spawnBattleBurstAtMonster(attacker, !isPlayerAttack, "#a855f7", 8);
+                    showDamagePop(attacker, !isPlayerAttack, "☠️-" + poisonDmg, "#9333ea", false);
                     turnLog += "☠️" + attacker.n + "は毒のダメージで " + poisonDmg + " 受けた！ ";
                     if (!isPlayerAttack && attacker.hp === 0) {
                         turnLog += "🔴" + attacker.n + "は毒で倒れた！ ";
@@ -2725,7 +3897,7 @@
                             inDungeon = false;
                             isTurnRunning = false;
                             updateBgmState(true);
-                            eg = new Array();
+                            eg = [];
                             resetStageBuffs();
                             setDungeonButtonsDisabled(false);
                             if (btnAtk) btnAtk.disabled = false;
@@ -2744,7 +3916,7 @@
                             isTurnRunning = false;
                             clearAllBattleTimers();
                             updateBgmState(true);
-                            eg = new Array();
+                            eg = [];
                             resetStageBuffs();
                             p.forEach(m => { m.hp = m.m; });
                             logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
@@ -2757,7 +3929,7 @@
                     }
 
                     if(currentEnemy.hp === 0){
-                        spawnBattleBurstAtMonster(currentEnemy, true, "#fbbf24", 18);
+                        spawnBattleBurstAtMonster(currentEnemy, true, "#fbbf24", 20);
                         if (currentEnemy.isSpecialHero) {
                             turnLog += "🏆他国の絵文字勇者に勝利した！ ";
                             baseMixRate = Math.max(baseMixRate, 0.50);
@@ -2925,11 +4097,11 @@
             const cbs = document.querySelectorAll(".cb:checked");
             if(cbs.length !== 2) return alert("配合するにはモンスターを2匹チェックしてください！");
 
-            let idx1 = parseInt(cbs.item(0).value);
-            let idx2 = parseInt(cbs.item(1).value);
+            let idx1 = parseInt(cbs[0].value, 10);
+            let idx2 = parseInt(cbs[1].value, 10);
 
-            let m1 = p.at(idx1);
-            let m2 = p.at(idx2);
+            let m1 = p[idx1];
+            let m2 = p[idx2];
             if (!m1 || !m2) return;
 
             if (m1.inParty || m2.inParty) {
@@ -3004,6 +4176,20 @@
 
             saveGame();
             up();
+        }
+
+        function initGame() {
+            if (gameInitialized) return;
+            gameInitialized = true;
+            loadGame();
+            initBgCanvas();
+            initBattleCanvas();
+        }
+
+        window.addEventListener("DOMContentLoaded", initGame);
+        window.addEventListener("load", initGame);
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            initGame();
         }
     </script>
 </body>
