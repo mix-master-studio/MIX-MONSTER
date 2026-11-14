@@ -151,6 +151,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 15;
+            transform: translateZ(60px);
         }
         #fxLayer {
             position: absolute;
@@ -158,6 +159,7 @@
             pointer-events: none;
             z-index: 25;
             overflow: hidden;
+            transform: translateZ(60px);
         }
         @keyframes battleShake {
             0%, 100% { transform: translate3d(0, 0, 0) rotateZ(0deg); }
@@ -803,7 +805,7 @@
             width: 85%; padding: 9px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
     </style>
-    </head>
+</head>
 <body>
     <canvas id="bgCanvas"></canvas>
 
@@ -1367,7 +1369,7 @@
         }
 
         function setDungeonButtonsDisabled(disabled) {
-            ["btnEnter", "btnEnterBtm", "btnPrevStg", "btnNextStg"].forEach(id => {
+            ["btnEnterBtm", "btnPrevStg", "btnNextStg"].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.disabled = disabled;
             });
@@ -1692,7 +1694,7 @@
                 bgmInterval = null;
             }
             currentBgmMode = "";
-                                          }
+        }
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -2305,7 +2307,8 @@
             if (dungeonLockInterval) clearInterval(dungeonLockInterval);
             updateDungeonLockBanner();
             dungeonLockInterval = setInterval(updateDungeonLockBanner, 500);
-                        }
+        }
+
         function saveGame() {
             const data = {
                 stg: stg,
@@ -2375,6 +2378,7 @@
                             if (m.isRare) getRareSkillObj(m);
                             getSkillObj(m);
                             initBattleState(m);
+                            m.hp = m.m;
                             if (m.inParty) {
                                 if (typeof m.partyOrder !== "number") {
                                     maxOrd++;
@@ -2398,7 +2402,6 @@
             updateRepeatButtonUI();
             up();
         }
-
         function updateRepeatButtonUI() {
             const btn = document.getElementById("btnRepeatToggle");
             if (!btn) return;
@@ -2539,6 +2542,7 @@
                 banner.style.display = "none";
             }, duration);
         }
+
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
             if (stage <= 10) return keys.filter(k => D[k].no <= 10);
@@ -2647,14 +2651,14 @@
             } else if (evRoll < 0.04) {
                 currentEvent = "chest";
                 seSkill();
-                document.getElementById("battleLog").innerText = "🪎 謎の宝箱を発見した！開けますか？";
+                document.getElementById("battleLog").innerText = "🧰 謎の宝箱を発見した！開けますか？";
                 return;
-            } else if (evRoll < 0.07) {
+            } else if (evRoll < 0.05) {
                 currentEvent = "sage";
                 seSkill();
                 document.getElementById("battleLog").innerText = "🧝‍♂️ 他国の配合賢者(Lv.75)が現れた！「わしの秘術に挑むか？」";
                 return;
-            } else if (evRoll < 0.08) {
+            } else if (evRoll < 0.06) {
                 currentEvent = "king";
                 seSkill();
                 document.getElementById("battleLog").innerText = "🤴 迷子の国王が現れた！「おお、助けてくれるのか！？」";
@@ -2708,7 +2712,30 @@
             if (clearedStg > maxClearStg) maxClearStg = clearedStg;
             if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
 
-            if (stg < 1000) {
+            if (repeatStageMode) {
+                repeatCount++;
+                updateRepeatButtonUI();
+                if (repeatCount >= 50) {
+                    const doneMsg = logMsg + " 🏁 同じ階（" + stg + "階）の50回周回が完了したため、一度停止しました！";
+                    repeatStageMode = false;
+                    repeatCount = 0;
+                    updateRepeatButtonUI();
+                    inDungeon = false;
+                    updateBgmState(true);
+                    resetStageBuffs();
+                    p.forEach(m => { m.hp = m.m; });
+                    setDungeonButtonsDisabled(false);
+                    showNotice(doneMsg, 6500);
+                    document.getElementById("battleLog").innerText = doneMsg;
+                } else {
+                    resetStageBuffs();
+                    updateBgmState(true);
+                    generateEnemies();
+                    if (!currentEvent) {
+                        document.getElementById("battleLog").innerText = logMsg + " 🔁 同じ " + stg + " 階を繰り返します（" + repeatCount + "/50回目）";
+                    }
+                }
+            } else if (stg < 1000) {
                 stg++;
                 resetStageBuffs();
                 updateBgmState(true);
@@ -2720,6 +2747,7 @@
                 inDungeon = false;
                 updateBgmState(true);
                 resetStageBuffs();
+                p.forEach(m => { m.hp = m.m; });
                 setDungeonButtonsDisabled(false);
                 document.getElementById("battleLog").innerText = logMsg;
             }
@@ -2751,7 +2779,7 @@
 
             if (isWin) {
                 stats.rpsWinCount = (stats.rpsWinCount || 0) + 1;
-                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75);
+                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75 && !isSynthOnly(k));
                 const giftName = pool[Math.floor(Math.random() * pool.length)];
                 const b = D[giftName];
 
@@ -2970,6 +2998,8 @@
             inDungeon = false;
             inKingdom = false;
             kingdomScene = "";
+            repeatCount = 0;
+            updateRepeatButtonUI();
             eg = [];
             resetStageBuffs();
             p.forEach(m => { m.hp = m.m; });
@@ -3043,7 +3073,7 @@
                 let maxPartyLv = 1;
                 partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
 
-                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75);
+                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75 && !isSynthOnly(k));
                 eg = [];
                 for (let i = 0; i < 3; i++) {
                     const name = pool[Math.floor(Math.random() * pool.length)];
@@ -3158,7 +3188,8 @@
             document.getElementById("battleLog").innerText = "🏡 拠点に戻った。仲間が全員全回復した！";
             saveGame();
             up();
-                    }
+        }
+
         function toggleParty(index) {
             if(inDungeon) return;
             const target = p[index];
@@ -3354,7 +3385,7 @@
                     } else if (currentEvent === "hero") {
                         eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>他国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
                     } else if (currentEvent === "chest") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🪎宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪎</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【🧰宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
                     } else if (currentEvent === "sage") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>他国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
                     } else if (currentEvent === "king" || currentEvent === "king_skill") {
@@ -3448,7 +3479,7 @@
                 } else if (inDungeon && currentEvent === "chest") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">🪎 謎の宝箱を発見した！</div>' +
+                        '<div class="event-title">🧰 謎の宝箱を発見した！</div>' +
                         '<div class="event-sub">開けると「お宝（戦闘メンバー全員EXP大量獲得）」か「罠（ダメージ）」が出るぞ！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="openMysteryChest(true)">🔓 宝箱を開ける！</button>' +
@@ -3760,6 +3791,7 @@
                             if (m.isRare) getRareSkillObj(m);
                             getSkillObj(m);
                             initBattleState(m);
+                            m.hp = m.m;
                             if (m.inParty) {
                                 if (typeof m.partyOrder !== "number") {
                                     maxOrd++;
@@ -3781,7 +3813,7 @@
                     } else { alert("⚠️ 無効なコードです。"); }
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
-                       }
+        }
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -4299,6 +4331,7 @@
             }
             return skillLogs;
         }
+
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
@@ -4448,70 +4481,16 @@
                 }
 
                 scheduleBattleTimer(() => {
+                    const wasHeroBattle = eg.some(e => e.isSpecialHero);
+                    const wasSageBattle = eg.some(e => e.isSpecialSage);
+                    const wasArenaBattle = inKingdom && kingdomScene === "arena";
+
                     let partyDead = true;
                     p.forEach(m => { if(m.inParty && m.hp > 0) partyDead = false; });
 
-                    if(partyDead) {
-                        const wasHeroBattle = eg.some(e => e.isSpecialHero);
-                        const wasSageBattle = eg.some(e => e.isSpecialSage);
-                        const wasArenaBattle = inKingdom && kingdomScene === "arena";
+                    let stageJustCleared = false;
 
-                        if (wasHeroBattle) {
-                            seFail();
-                            p.forEach(m => { if (m.inParty) m.hp = m.m; });
-                            const loseMsg = "😢 他国の絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）";
-                            showNotice(loseMsg, 5000);
-                            inDungeon = false;
-                            isTurnRunning = false;
-                            updateBgmState(true);
-                            eg = [];
-                            resetStageBuffs();
-                            setDungeonButtonsDisabled(false);
-                            if (btnAtk) btnAtk.disabled = false;
-                            logBox.innerText = loseMsg;
-                            saveGame();
-                            up();
-                            return;
-                        }
-
-                        if (wasSageBattle || wasArenaBattle) {
-                            seFail();
-                            p.forEach(m => { if (m.inParty) m.hp = m.m; });
-                            const loseMsg = wasSageBattle
-                                ? "😢 他国の配合賢者に敗北した…（何もなく体力を回復して次のステージへ進みます）"
-                                : "😢 王国の闘技場で敗北した…（体力を回復して王国を出国します）";
-                            showNotice(loseMsg, 5000);
-                            isTurnRunning = false;
-                            advanceStageAfterEvent(loseMsg);
-                            return;
-                        }
-
-                        logBox.innerText = turnLog;
-                        up();
-                        scheduleBattleTimer(() => {
-                            seFail();
-                            alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
-                            inDungeon = false;
-                            inKingdom = false;
-                            kingdomScene = "";
-                            repeatCount = 0;
-                            updateRepeatButtonUI();
-                            isTurnRunning = false;
-                            clearAllBattleTimers();
-                            updateBgmState(true);
-                            eg = [];
-                            resetStageBuffs();
-                            p.forEach(m => { m.hp = m.m; });
-                            logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
-                            setDungeonButtonsDisabled(false);
-                            if (btnAtk) btnAtk.disabled = false;
-                            saveGame();
-                            up();
-                        }, Math.floor(350 / spdDiv));
-                        return;
-                    }
-
-                    if(currentEnemy.hp === 0){
+                    if (currentEnemy.hp === 0) {
                         spawnBattleBurstAtMonster(currentEnemy, true, "#fbbf24", 20);
                         if (currentEnemy.isSpecialHero) {
                             turnLog += "🏆他国の絵文字勇者に勝利した！ ";
@@ -4519,7 +4498,7 @@
                             const effPct = getMixPctText();
                             stats.heroWinCount = (stats.heroWinCount || 0) + 1;
                             p.forEach(ally => {
-                                if (ally.inParty) levelUpMonster(ally, 5);
+                                if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
                             seMixSuccess();
                             const winHeroMsg = "🏆 他国の絵文字勇者に勝利！基礎配合確率が50%（現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
@@ -4527,9 +4506,32 @@
                             turnLog += "🧬配合確率" + effPct + "%＆戦闘メンバー全員Lv+5！ ";
 
                             eg.shift();
+                            stageJustCleared = true;
                             if (stg > maxClearStg) maxClearStg = stg;
                             if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                            if (stg < 1000) {
+
+                            if (repeatStageMode) {
+                                repeatCount++;
+                                updateRepeatButtonUI();
+                                if (repeatCount >= 50) {
+                                    const doneMsg = "🏁 同じ階（" + stg + "階）の50回周回が完了したため、一度停止しました！";
+                                    turnLog += doneMsg;
+                                    showNotice(doneMsg, 6500);
+                                    repeatStageMode = false;
+                                    repeatCount = 0;
+                                    updateRepeatButtonUI();
+                                    inDungeon = false;
+                                    updateBgmState(true);
+                                    resetStageBuffs();
+                                    p.forEach(m => { m.hp = m.m; });
+                                    setDungeonButtonsDisabled(false);
+                                } else {
+                                    resetStageBuffs();
+                                    updateBgmState(true);
+                                    generateEnemies();
+                                    if (!currentEvent) turnLog += "🔁 同じ " + stg + " 階を繰り返します（" + repeatCount + "/50回目）";
+                                }
+                            } else if (stg < 1000) {
                                 stg++;
                                 resetStageBuffs();
                                 updateBgmState(true);
@@ -4539,6 +4541,7 @@
                                 inDungeon = false;
                                 updateBgmState(true);
                                 resetStageBuffs();
+                                p.forEach(m => { m.hp = m.m; });
                                 setDungeonButtonsDisabled(false);
                             }
                         } else if (currentEnemy.isSpecialSage) {
@@ -4547,7 +4550,7 @@
                             const effPct = getMixPctText();
                             stats.sageWinCount = (stats.sageWinCount || 0) + 1;
                             p.forEach(ally => {
-                                if (ally.inParty) levelUpMonster(ally, 5);
+                                if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5);
                             });
                             seMixSuccess();
                             const winSageMsg = "🏆 他国の配合賢者に勝利！配合確率+1%（現在" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！";
@@ -4555,9 +4558,32 @@
                             turnLog += "🧬配合確率+1%＆戦闘メンバー全員Lv+5！ ";
 
                             eg.shift();
+                            stageJustCleared = true;
                             if (stg > maxClearStg) maxClearStg = stg;
                             if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                            if (stg < 1000) {
+
+                            if (repeatStageMode) {
+                                repeatCount++;
+                                updateRepeatButtonUI();
+                                if (repeatCount >= 50) {
+                                    const doneMsg = "🏁 同じ階（" + stg + "階）の50回周回が完了したため、一度停止しました！";
+                                    turnLog += doneMsg;
+                                    showNotice(doneMsg, 6500);
+                                    repeatStageMode = false;
+                                    repeatCount = 0;
+                                    updateRepeatButtonUI();
+                                    inDungeon = false;
+                                    updateBgmState(true);
+                                    resetStageBuffs();
+                                    p.forEach(m => { m.hp = m.m; });
+                                    setDungeonButtonsDisabled(false);
+                                } else {
+                                    resetStageBuffs();
+                                    updateBgmState(true);
+                                    generateEnemies();
+                                    if (!currentEvent) turnLog += "🔁 同じ " + stg + " 階を繰り返します（" + repeatCount + "/50回目）";
+                                }
+                            } else if (stg < 1000) {
                                 stg++;
                                 resetStageBuffs();
                                 updateBgmState(true);
@@ -4567,6 +4593,7 @@
                                 inDungeon = false;
                                 updateBgmState(true);
                                 resetStageBuffs();
+                                p.forEach(m => { m.hp = m.m; });
                                 setDungeonButtonsDisabled(false);
                             }
                         } else if (currentEnemy.isArenaEnemy) {
@@ -4579,26 +4606,29 @@
                             p.forEach(ally => {
                                 if (ally.inParty && partyCount < 3) {
                                     partyCount++;
-                                    ally.ex += gainExp;
-                                    while(ally.lv < 100 && ally.ex >= ally.nx) {
-                                        ally.ex -= ally.nx;
-                                        ally.lv++;
-                                        const b = getMonData(ally.n);
-                                        const mult = ally.isRare ? 1.25 : 1;
-                                        ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
-                                        ally.hp = ally.m;
-                                        ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
-                                        ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
-                                        ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
-                                        ally.nx = Math.floor(ally.nx * 1.2);
-                                        turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
-                                        seLvUp();
+                                    if (ally.hp > 0) {
+                                        ally.ex += gainExp;
+                                        while(ally.lv < 100 && ally.ex >= ally.nx) {
+                                            ally.ex -= ally.nx;
+                                            ally.lv++;
+                                            const b = getMonData(ally.n);
+                                            const mult = ally.isRare ? 1.25 : 1;
+                                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
+                                            ally.hp = ally.m;
+                                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
+                                            ally.nx = Math.floor(ally.nx * 1.2);
+                                            turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
+                                            seLvUp();
+                                        }
                                     }
                                 }
                             });
 
                             eg.shift();
                             if (eg.length === 0) {
+                                stageJustCleared = true;
                                 stats.arenaWinCount = (stats.arenaWinCount || 0) + 1;
                                 currentEvent = "arena_reward";
                                 seStageClear();
@@ -4649,25 +4679,28 @@
                             p.forEach(ally => {
                                 if (ally.inParty && partyCount < 3) {
                                     partyCount++;
-                                    ally.ex += gainExp;
-                                    while(ally.lv < 100 && ally.ex >= ally.nx) {
-                                        ally.ex -= ally.nx;
-                                        ally.lv++;
-                                        const b = getMonData(ally.n);
-                                        const mult = ally.isRare ? 1.25 : 1;
-                                        ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
-                                        ally.hp = ally.m;
-                                        ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
-                                        ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
-                                        ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
-                                        ally.nx = Math.floor(ally.nx * 1.2);
-                                        turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
-                                        seLvUp();
+                                    if (ally.hp > 0) {
+                                        ally.ex += gainExp;
+                                        while(ally.lv < 100 && ally.ex >= ally.nx) {
+                                            ally.ex -= ally.nx;
+                                            ally.lv++;
+                                            const b = getMonData(ally.n);
+                                            const mult = ally.isRare ? 1.25 : 1;
+                                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
+                                            ally.hp = ally.m;
+                                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
+                                            ally.nx = Math.floor(ally.nx * 1.2);
+                                            turnLog += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
+                                            seLvUp();
+                                        }
                                     }
                                 }
                             });
                             eg.shift();
                             if(eg.length === 0) {
+                                stageJustCleared = true;
                                 turnLog += "🎉ステージクリア！ ";
                                 seStageClear();
                                 let clearedStg = stg;
@@ -4718,10 +4751,87 @@
                                     inDungeon = false;
                                     updateBgmState(true);
                                     resetStageBuffs();
+                                    p.forEach(m => { m.hp = m.m; });
                                     setDungeonButtonsDisabled(false);
                                 }
                             }
                         }
+                    }
+
+                    // レベルアップ後の最終生存判定
+                    partyDead = true;
+                    p.forEach(m => { if (m.inParty && m.hp > 0) partyDead = false; });
+
+                    if (partyDead && stageJustCleared) {
+                        if (currentEvent === "arena_reward") {
+                            p.forEach(m => { if (m.inParty) m.hp = m.m; });
+                        } else if (inDungeon) {
+                            inDungeon = false;
+                            inKingdom = false;
+                            kingdomScene = "";
+                            repeatCount = 0;
+                            updateRepeatButtonUI();
+                            isTurnRunning = false;
+                            clearAllBattleTimers();
+                            updateBgmState(true);
+                            eg = [];
+                            resetStageBuffs();
+                            p.forEach(m => { m.hp = m.m; });
+                            setDungeonButtonsDisabled(false);
+                            if (btnAtk) btnAtk.disabled = false;
+                            turnLog += " 💥 相討ちで最後の敵を撃破！クリア扱いとなり体力を回復して拠点へ戻ります。";
+                            showNotice("💥 相討ちで撃破！クリア扱いとなり、体力を回復して拠点へ戻ります。", 5000);
+                        }
+                    } else if (partyDead) {
+                        if (wasHeroBattle || wasSageBattle || wasArenaBattle) {
+                            seFail();
+                            p.forEach(m => { if (m.inParty) m.hp = m.m; });
+                            const loseMsg = wasHeroBattle
+                                ? "😢 他国の絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                : (wasSageBattle
+                                    ? "😢 他国の配合賢者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                    : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）");
+                            showNotice(loseMsg, 5000);
+                            inDungeon = false;
+                            inKingdom = false;
+                            kingdomScene = "";
+                            repeatCount = 0;
+                            updateRepeatButtonUI();
+                            isTurnRunning = false;
+                            updateBgmState(true);
+                            eg = [];
+                            resetStageBuffs();
+                            setDungeonButtonsDisabled(false);
+                            if (btnAtk) btnAtk.disabled = false;
+                            logBox.innerText = loseMsg;
+                            saveGame();
+                            up();
+                            return;
+                        }
+
+                        logBox.innerText = turnLog;
+                        up();
+                        scheduleBattleTimer(() => {
+                            seFail();
+                            alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
+                            inDungeon = false;
+                            inKingdom = false;
+                            kingdomScene = "";
+                            repeatCount = 0;
+                            updateRepeatButtonUI();
+                            isTurnRunning = false;
+                            clearAllBattleTimers();
+                            updateBgmState(true);
+                            eg = [];
+                            resetStageBuffs();
+                            p.forEach(m => { m.hp = m.m; });
+                            logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
+                            setDungeonButtonsDisabled(false);
+                            if (btnAtk) btnAtk.disabled = false;
+                            saveGame();
+                            up();
+                        }, Math.floor(350 / spdDiv));
+                        return;
                     }
 
                     if (!currentEvent) {
