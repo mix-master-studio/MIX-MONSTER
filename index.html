@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="title-locked">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,16 @@
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+        }
+        html.title-locked,
+        body.title-locked {
+            overflow: hidden !important;
+            height: 100% !important;
+            width: 100% !important;
+            position: fixed !important;
+            inset: 0 !important;
+            touch-action: none !important;
+            overscroll-behavior: none !important;
         }
         body {
             font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -30,144 +40,61 @@
             pointer-events: none;
             z-index: 0;
         }
-        /* --- 🎮 タイトル画面（Canvas + CSS 3D） --- */
+        /* --- 🎮 タイトル画面（スクロール固定・Canvas/CSS 3Dなし） --- */
         #titleScreen {
             position: fixed;
             inset: 0;
+            width: 100%;
+            height: 100%;
             z-index: 10000;
-            background: #090d16;
+            background: #0f172a;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            padding: 20px 20px 58px;
+            padding: 20px 20px 60px;
             overflow: hidden;
-            transition: opacity 0.45s ease, transform 0.45s ease;
+            touch-action: none;
+            overscroll-behavior: none;
+            transition: opacity 0.4s ease;
         }
         #titleScreen.hide {
             opacity: 0;
-            transform: scale(1.04);
             pointer-events: none;
         }
         .title-bg-blur {
             position: absolute;
-            inset: -24px;
+            inset: -20px;
             background: url('file_00000000dacc8209b15b245f2492d89e.png') center center / cover no-repeat;
-            filter: blur(18px) brightness(0.62) saturate(1.15);
+            filter: blur(18px) brightness(0.65);
             z-index: 0;
-            transform: scale(1.06);
-        }
-        #titleCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
             pointer-events: none;
-        }
-        .title-3d-stage {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1100px;
-            z-index: 2;
-            pointer-events: none;
-            padding: 24px 16px 115px;
-        }
-        .title-3d-card {
-            width: 100%;
-            max-width: 400px;
-            height: 100%;
-            max-height: 540px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: titleCardFloat3D 6.5s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        @keyframes titleCardFloat3D {
-            0%   { transform: translateY(0px) rotateX(2deg) rotateY(-4deg); }
-            25%  { transform: translateY(-8px) rotateX(-2deg) rotateY(3deg); }
-            50%  { transform: translateY(-3px) rotateX(3deg) rotateY(5deg); }
-            75%  { transform: translateY(-10px) rotateX(-1deg) rotateY(-3deg); }
-            100% { transform: translateY(0px) rotateX(2deg) rotateY(-4deg); }
         }
         .title-full-img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 22px;
-            filter: drop-shadow(0 20px 38px rgba(0, 0, 0, 0.65));
-            transform: translateZ(26px);
+            z-index: 1;
             pointer-events: none;
-        }
-        .title-3d-glow-ring {
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(168, 85, 247, 0.12) 45%, transparent 72%);
-            transform: translateZ(-20px);
-            animation: titleRingPulse 3.6s ease-in-out infinite;
-        }
-        @keyframes titleRingPulse {
-            0%, 100% { transform: translateZ(-20px) scale(0.95); opacity: 0.7; }
-            50%      { transform: translateZ(-20px) scale(1.12); opacity: 1; }
-        }
-        .title-3d-badge {
-            position: absolute;
-            top: 8px;
-            padding: 4px 14px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.52);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid rgba(253, 224, 71, 0.65);
-            color: #fef08a;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-            transform: translateZ(52px);
         }
         .btn-start {
             position: relative;
-            z-index: 4;
+            z-index: 10;
             width: 78% !important;
-            max-width: 265px;
+            max-width: 260px;
             padding: 15px 20px !important;
             font-size: 20px !important;
             letter-spacing: 4px;
             border-radius: 18px !important;
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.34) 0%, rgba(5, 150, 105, 0.44) 100%) !important;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(167, 243, 208, 0.78) !important;
-            border-bottom: 4px solid rgba(4, 120, 87, 0.72) !important;
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.16) 0%, rgba(5, 150, 105, 0.24) 100%) !important;
+            border: 2px solid rgba(110, 231, 183, 0.85) !important;
+            border-bottom: 4px solid rgba(5, 150, 105, 0.72) !important;
             color: #ffffff !important;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 12px rgba(52, 211, 153, 0.75);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), 0 0 18px rgba(52, 211, 153, 0.25), inset 0 1.5px 0 rgba(255, 255, 255, 0.42) !important;
-            overflow: hidden;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 10px rgba(16, 185, 129, 0.85);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.38) !important;
             animation: startPulse 1.8s infinite ease-in-out;
-        }
-        .btn-start::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 45%;
-            height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
-            transform: rotate(25deg);
-            animation: startShine 2.8s infinite ease-in-out;
-            pointer-events: none;
-        }
-        @keyframes startShine {
-            0% { left: -60%; }
-            45%, 100% { left: 130%; }
         }
         @keyframes startPulse {
             0%, 100% { transform: scale(1); }
@@ -978,7 +905,6 @@
             border-radius: 8px !important;
             white-space: nowrap;
         }
-        /* --- 🔍 ボックス絞り込み＆一括お別れ --- */
         .filter-row {
             display: flex;
             flex-wrap: wrap;
@@ -1037,7 +963,6 @@
             border: 1px solid #fda4af;
             cursor: pointer;
         }
-        /* --- ✨ 配合アシスト --- */
         .assist-panel {
             display: none;
             background: #ecfdf5;
@@ -1145,17 +1070,10 @@
         }
     </style>
 </head>
-<body>
+<body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur"></div>
-        <canvas id="titleCanvas"></canvas>
-        <div class="title-3d-stage">
-            <div class="title-3d-card">
-                <div class="title-3d-glow-ring"></div>
-                <div class="title-3d-badge">✨ MONSTER SYNTHESIS RPG ✨</div>
-                <img src="file_00000000dacc8209b15b245f2492d89e.png" alt="タイトル画面" class="title-full-img" onerror="this.style.display='none'">
-            </div>
-        </div>
+        <img src="file_00000000dacc8209b15b245f2492d89e.png" alt="タイトル画面" class="title-full-img" onerror="this.style.display='none'">
         <button class="btn-start" onclick="startGame()">START</button>
     </div>
 
@@ -1413,7 +1331,355 @@
             </div>
         </div>
     </div>
-    function scheduleBattleTimer(fn, delayMs) {
+    <script>
+        const D = {
+            "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
+            "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
+            "うらめシート": { no: 3, a: "👻", hp: 15, at: 7, df: 5, sp: 5, ex: 1 },
+            "チューマウス": { no: 4, a: "🐁", hp: 14, at: 8, df: 4, sp: 9, ex: 1 },
+            "ソロゾロアント": { no: 5, a: "🐜", hp: 8, at: 4, df: 2, sp: 7, ex: 1 },
+            "ポイズンフロッグ": { no: 6, a: "🐸", hp: 13, at: 6, df: 4, sp: 7, ex: 1 },
+            "キャタピラー": { no: 7, a: "🐛", hp: 11, at: 4, df: 4, sp: 5, ex: 1 },
+            "シェルスネイル": { no: 8, a: "🐌", hp: 15, at: 4, df: 8, sp: 2, ex: 1 },
+            "ピヨチビ": { no: 9, a: "🐥", hp: 12, at: 6, df: 4, sp: 8, ex: 1 },
+            "ロックタートル": { no: 10, a: "🐢", hp: 18, at: 5, df: 8, sp: 3, ex: 1 },
+            "リバーフィッシュ": { no: 11, a: "🐟", hp: 11, at: 5, df: 4, sp: 9, ex: 1 },
+            "コオリガニ": { no: 12, a: "🦀", hp: 15, at: 5, df: 6, sp: 4, ex: 1 },
+            "コロテントウ": { no: 13, a: "🐞", hp: 9, at: 4, df: 5, sp: 7, ex: 1 },
+            "パタバタフライ": { no: 14, a: "🦋", hp: 10, at: 6, df: 3, sp: 11, ex: 1 },
+            "キラービー": { no: 15, a: "🐝", hp: 11, at: 8, df: 2, sp: 13, ex: 1 },
+            "ヴェノムスパイダー": { no: 16, a: "🕷️", hp: 12, at: 7, df: 4, sp: 8, ex: 1 },
+            "ウサピョン": { no: 17, a: "🐇", hp: 14, at: 6, df: 4, sp: 11, ex: 1 },
+            "チップモンク": { no: 18, a: "🐿️", hp: 13, at: 7, df: 4, sp: 10, ex: 1 },
+            "ニードルホッグ": { no: 19, a: "🦔", hp: 17, at: 6, df: 9, sp: 4, ex: 1 },
+            "バイパー": { no: 20, a: "🐍", hp: 14, at: 8, df: 4, sp: 9, ex: 1 },
+            "スノーペンギン": { no: 21, a: "🐧", hp: 14, at: 5, df: 5, sp: 6, ex: 1 },
+            "ゴールデンワン": { no: 22, a: "🐕", hp: 15, at: 6, df: 5, sp: 8, ex: 1 },
+            "シャドウネコ": { no: 23, a: "🐈‍⬛", hp: 13, at: 8, df: 4, sp: 11, ex: 1 },
+            "モグラッパー": { no: 24, a: "🦫", hp: 16, at: 6, df: 7, sp: 5, ex: 1 },
+            "ギガジェリー": { no: 25, a: "🪼", hp: 30, at: 15, df: 12, sp: 10, ex: 2 },
+            "シルフィードバード": { no: 26, a: "🕊️", hp: 25, at: 18, df: 10, sp: 16, ex: 2 },
+            "ホークアイ": { no: 27, a: "🦅", hp: 28, at: 20, df: 11, sp: 17, ex: 2 },
+            "ナイトオウル": { no: 28, a: "🦉", hp: 32, at: 19, df: 14, sp: 12, ex: 2 },
+            "ファイアフォックス": { no: 29, a: "🦊", hp: 26, at: 18, df: 10, sp: 15, ex: 2 },
+            "マスクラクーン": { no: 30, a: "🦝", hp: 24, at: 14, df: 11, sp: 12, ex: 2 },
+            "ダークベア": { no: 31, a: "🐻", hp: 34, at: 19, df: 13, sp: 8, ex: 2 },
+            "ブルーイルカ": { no: 32, a: "🐬", hp: 28, at: 16, df: 12, sp: 16, ex: 2 },
+            "ホワイトスワン": { no: 33, a: "🦢", hp: 26, at: 15, df: 11, sp: 16, ex: 2 },
+            "デススコーピオン": { no: 34, a: "🦂", hp: 28, at: 21, df: 13, sp: 13, ex: 2 },
+            "フォレストディア": { no: 35, a: "🦌", hp: 30, at: 17, df: 12, sp: 15, ex: 2 },
+            "バウンスルー": { no: 36, a: "🦘", hp: 29, at: 19, df: 11, sp: 16, ex: 2 },
+            "シャドウハウンド": { no: 37, a: "🐕‍🦺", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
+            "フロストグリズリー": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 9, ex: 2 },
+            "ブラックパンサー": { no: 39, a: "🐆", hp: 29, at: 22, df: 10, sp: 18, ex: 2 },
+            "ボアキング": { no: 40, a: "🐗", hp: 35, at: 21, df: 14, sp: 11, ex: 2 },
+            "ブレイブオックス": { no: 41, a: "🐂", hp: 36, at: 23, df: 15, sp: 9, ex: 2 },
+            "キラータイガー": { no: 42, a: "🐯", hp: 32, at: 24, df: 11, sp: 17, ex: 2 },
+            "ホワイトシール": { no: 43, a: "🦭", hp: 25, at: 12, df: 30, sp: 22, ex: 4 },
+            "シルバーゴリラ": { no: 44, a: "🦍", hp: 50, at: 28, df: 24, sp: 10, ex: 3 },
+            "ハリセンボンバー": { no: 45, a: "🐡", hp: 44, at: 32, df: 18, sp: 19, ex: 3 },
+            "アイアンマンモス": { no: 46, a: "🦣", hp: 55, at: 26, df: 32, sp: 8, ex: 3 },
+            "ギガローチ": { no: 47, a: "🪳", hp: 48, at: 30, df: 22, sp: 12, ex: 3 },
+            "ビッグフット": { no: 48, a: "🦧", hp: 52, at: 29, df: 21, sp: 11, ex: 3 },
+            "ヴェノムゲッコー": { no: 49, a: "🦎", hp: 46, at: 27, df: 20, sp: 14, ex: 3 },
+            "ブラッドモスキート": { no: 50, a: "🦟", hp: 42, at: 31, df: 17, sp: 20, ex: 3 },
+            "エンペラーエレファント": { no: 51, a: "🐘", hp: 85, at: 50, df: 48, sp: 14, ex: 5 },
+            "スロウロス": { no: 52, a: "🦥", hp: 58, at: 40, df: 30, sp: 24, ex: 4 },
+            "プリズムピーコック": { no: 53, a: "🦚", hp: 62, at: 42, df: 28, sp: 25, ex: 4 },
+            "ブレイブスタリオン": { no: 54, a: "🐎", hp: 72, at: 46, df: 36, sp: 28, ex: 4 },
+            "ヌマクロコダイル": { no: 55, a: "🐊", hp: 78, at: 50, df: 38, sp: 24, ex: 4 },
+            "エメラルドブラキオ": { no: 56, a: "🦕", hp: 85, at: 54, df: 42, sp: 22, ex: 5 },
+            "ギガヒポポ": { no: 57, a: "🦛", hp: 88, at: 58, df: 40, sp: 23, ex: 5 },
+            "フラミンゴクイーン": { no: 58, a: "🦩", hp: 90, at: 56, df: 45, sp: 30, ex: 5 },
+            "シャドウバジャー": { no: 59, a: "🦡", hp: 82, at: 62, df: 44, sp: 27, ex: 5 },
+            "クリムゾンタイガー": { no: 60, a: "🐅", hp: 110, at: 68, df: 52, sp: 30, ex: 6 },
+            "クラーケンロード": { no: 61, a: "🐙", hp: 118, at: 65, df: 55, sp: 25, ex: 6 },
+            "グランドバイソン": { no: 62, a: "🦬", hp: 125, at: 70, df: 58, sp: 20, ex: 6 },
+            "ストライプゼブラ": { no: 63, a: "🦓", hp: 105, at: 72, df: 50, sp: 35, ex: 6 },
+            "マーメイドクイーン": { no: 64, a: "🧜‍♀️", hp: 120, at: 74, df: 56, sp: 28, ex: 7 },
+            "ヘラクレスビートル": { no: 65, a: "🪲", hp: 125, at: 78, df: 54, sp: 29, ex: 7 },
+            "メガタウロス": { no: 66, a: "🐄", hp: 130, at: 80, df: 60, sp: 32, ex: 7 },
+            "スカイジラフ": { no: 67, a: "🦒", hp: 150, at: 82, df: 70, sp: 25, ex: 8 },
+            "エルクカイザー": { no: 68, a: "🫎", hp: 145, at: 86, df: 68, sp: 30, ex: 8 },
+            "ホーンラム": { no: 69, a: "🐏", hp: 165, at: 95, df: 75, sp: 40, ex: 9 },
+            "リヴァイアサン": { no: 70, a: "🐳", hp: 185, at: 98, df: 80, sp: 35, ex: 9 },
+            "アルパカマスター": { no: 71, a: "🦙", hp: 200, at: 110, df: 88, sp: 48, ex: 10 },
+            "ガイアパンダ": { no: 72, a: "🐼", hp: 140, at: 88, df: 64, sp: 28, ex: 7 },
+            "ブレイズコック": { no: 73, a: "🐓", hp: 135, at: 92, df: 62, sp: 42, ex: 7 },
+            "フレイムハウンド": { no: 74, a: "🦮", hp: 145, at: 94, df: 60, sp: 44, ex: 8 },
+            "ポイズンスカンク": { no: 75, a: "🦨", hp: 160, at: 96, df: 72, sp: 34, ex: 8 },
+            "マウンテンゴート": { no: 76, a: "🐐", hp: 155, at: 102, df: 68, sp: 38, ex: 8 },
+            "アストラルキャット": { no: 77, a: "🐈", hp: 160, at: 100, df: 70, sp: 45, ex: 8 },
+            "ゴールデングース": { no: 78, a: "🪿", hp: 150, at: 90, df: 85, sp: 50, ex: 9 },
+            "ケルベロスプードル": { no: 79, a: "🐩", hp: 170, at: 112, df: 74, sp: 46, ex: 9 },
+            "疾風ホース": { no: 80, a: "🐴", hp: 185, at: 118, df: 78, sp: 52, ex: 9 },
+            "エンシェントドードー": { no: 81, a: "🦤", hp: 175, at: 115, df: 80, sp: 50, ex: 9 },
+            "深海クラーケン": { no: 82, a: "🦑", hp: 205, at: 114, df: 86, sp: 38, ex: 9 },
+            "クロウヴァルキリー": { no: 83, a: "🐦‍⬛", hp: 195, at: 120, df: 85, sp: 48, ex: 10 },
+            "タイタンモンキー": { no: 84, a: "🐒", hp: 230, at: 116, df: 98, sp: 30, ex: 10 },
+            "デザートキャメル": { no: 85, a: "🐫", hp: 220, at: 128, df: 92, sp: 54, ex: 10 },
+            "クリムゾンパロット": { no: 86, a: "🦜", hp: 215, at: 134, df: 88, sp: 58, ex: 10 },
+            "シャドウマンティス": { no: 87, a: "🦗", hp: 200, at: 140, df: 82, sp: 62, ex: 10 },
+            "サンドキャメル": { no: 88, a: "🐪", hp: 240, at: 136, df: 96, sp: 48, ex: 11 },
+            "クリスタルシュリンプ": { no: 89, a: "🦐", hp: 235, at: 142, df: 94, sp: 55, ex: 11 },
+            "アクアフィッシュ": { no: 90, a: "🐠", hp: 265, at: 148, df: 108, sp: 60, ex: 11 },
+            "アクアオッター": { no: 91, a: "🦦", hp: 250, at: 152, df: 102, sp: 68, ex: 11 },
+            "サンダードンキー": { no: 92, a: "🫏", hp: 275, at: 158, df: 112, sp: 64, ex: 12 },
+            "ポセイドンホエール": { no: 93, a: "🐋", hp: 310, at: 154, df: 125, sp: 52, ex: 12 },
+            "ゼウスターキー": { no: 94, a: "🦃", hp: 290, at: 168, df: 118, sp: 74, ex: 12 },
+            "スカイブルーバード": { no: 95, a: "🐦", hp: 320, at: 175, df: 128, sp: 78, ex: 13 },
+            "ウールシープ": { no: 96, a: "🐑", hp: 330, at: 180, df: 132, sp: 80, ex: 13 },
+            "ワイルドピッグ": { no: 97, a: "🐖", hp: 360, at: 195, df: 142, sp: 76, ex: 14 },
+            "トリトンキング": { no: 98, a: "🧜‍♂️", hp: 380, at: 190, df: 150, sp: 82, ex: 14 },
+            "アースワーム": { no: 99, a: "🪱", hp: 410, at: 210, df: 165, sp: 88, ex: 15 },
+            "ドラゴンエンペラー": { no: 100, a: "🐲", hp: 480, at: 245, df: 200, sp: 100, ex: 18 }
+        };
+
+        const BOSS_D = {
+            "草原の覇王バッファロー": { no: -1, stage: 50, a: "🐃", hp: 140, at: 45, df: 35, sp: 24, ex: 15 },
+            "草原の精霊フェアリー": { no: -2, stage: 100, a: "🧚", hp: 220, at: 68, df: 52, sp: 36, ex: 25 },
+            "密林の暴君ティラノ": { no: -3, stage: 150, a: "🦖", hp: 310, at: 92, df: 70, sp: 42, ex: 35 },
+            "密林の巨人トロール": { no: -4, stage: 200, a: "🧌", hp: 420, at: 115, df: 95, sp: 45, ex: 45 },
+            "深海の甲殻王ロブスター": { no: -5, stage: 250, a: "🦞", hp: 520, at: 140, df: 108, sp: 56, ex: 55 },
+            "深海の覇者メガロドン": { no: -6, stage: 300, a: "🦈", hp: 640, at: 168, df: 125, sp: 64, ex: 68 },
+            "砂漠の呪霊ゾンビロード": { no: -7, stage: 350, a: "🧟", hp: 780, at: 192, df: 155, sp: 52, ex: 80 },
+            "砂漠の獅子王レオン": { no: -8, stage: 400, a: "🦁", hp: 910, at: 220, df: 172, sp: 74, ex: 95 },
+            "毒沼の邪竜バハムート": { no: -9, stage: 450, a: "🐉", hp: 1050, at: 252, df: 190, sp: 86, ex: 110 },
+            "毒沼の大魔王ルシファー": { no: -10, stage: 500, a: "😈", hp: 1300, at: 295, df: 225, sp: 98, ex: 140 },
+            "鉱山の鋼鉄王ライノス": { no: -11, stage: 550, a: "🦏", hp: 1480, at: 320, df: 270, sp: 82, ex: 155 },
+            "鉱山の鬼神オーガキング": { no: -12, stage: 600, a: "👹", hp: 1680, at: 355, df: 290, sp: 95, ex: 175 },
+            "神殿の聖獣ユニコーン": { no: -13, stage: 650, a: "🦄", hp: 1880, at: 390, df: 315, sp: 112, ex: 195 },
+            "神殿の熾天使セラフィム": { no: -14, stage: 700, a: "👼", hp: 2100, at: 430, df: 345, sp: 125, ex: 220 },
+            "火山の魔神テング": { no: -15, stage: 750, a: "👺", hp: 2350, at: 475, df: 370, sp: 134, ex: 245 },
+            "火山の不死鳥フェニックス": { no: -16, stage: 800, a: "🐦‍🔥", hp: 2620, at: 520, df: 405, sp: 145, ex: 275 },
+            "氷結の銀狼フェンリル": { no: -17, stage: 850, a: "🐺", hp: 2900, at: 565, df: 440, sp: 158, ex: 305 },
+            "氷世界の死神スカル": { no: -18, stage: 900, a: "💀", hp: 3200, at: 615, df: 480, sp: 170, ex: 340 },
+            "魔王城の混沌魔デビル": { no: -19, stage: 950, a: "👿", hp: 3550, at: 670, df: 525, sp: 185, ex: 380 },
+            "創世の次元獣インベーダー": { no: -20, stage: 1000, a: "👾", hp: 4200, at: 750, df: 600, sp: 210, ex: 500 }
+        };
+
+        const SPECIAL_D = {
+            "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
+            "王国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 560, at: 170, df: 125, sp: 95, ex: 0, isSpecialSage: true },
+            "廃国のゾンビ絵文字勇者": { no: "A", a: "🤺", hp: 460, at: 145, df: 105, sp: 82, ex: 45, isZombieHero: true, recruitable: true }
+        };
+
+        function getMonData(name) {
+            return D[name] || BOSS_D[name] || SPECIAL_D[name];
+        }
+
+        function isZombieMon(nameOrMon) {
+            if (!nameOrMon) return false;
+            if (typeof nameOrMon === "string") return nameOrMon === "廃国のゾンビ絵文字勇者";
+            return Boolean(nameOrMon.isZombieHero || nameOrMon.n === "廃国のゾンビ絵文字勇者");
+        }
+
+        function renderMonEmojiHtml(nameOrMon, extraClass = "", sizeStyle = "") {
+            const inf = typeof nameOrMon === "string" ? getMonData(nameOrMon) : getMonData(nameOrMon.n);
+            const emoji = inf ? inf.a : "❓";
+            const styleAttr = sizeStyle ? (' style="' + sizeStyle + '"') : "";
+            if (isZombieMon(nameOrMon)) {
+                return '<span class="zombie-aura-wrap"><span class="zombie-emoji ' + extraClass + '"' + styleAttr + '>' + emoji + '</span></span>';
+            }
+            return '<span class="' + extraClass + '"' + styleAttr + '>' + emoji + '</span>';
+        }
+
+        const R = {
+            "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "シルフィードバード",
+            "カゲコウモリ+うらめシート": "ホークアイ", "うらめシート+チューマウス": "ナイトオウル", "チューマウス+ソロゾロアント": "ファイアフォックス",
+            "ソロゾロアント+ポイズンフロッグ": "マスクラクーン", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
+            "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+ヴェノムスパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
+            "ニードルホッグ+バウンスルー": "アイアンマンモス", "バイパー+シャドウハウンド": "ギガローチ",
+            "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "ハリセンボンバー",
+            "ギガジェリー+ナイトオウル": "スロウロス", "ホークアイ+シルフィードバード": "プリズムピーコック", "シルバーゴリラ+ハリセンボンバー": "エンペラーエレファント",
+            "ブレイブスタリオン+ヌマクロコダイル": "メガタウロス", "エメラルドブラキオ+ギガヒポポ": "スカイジラフ", "フラミンゴクイーン+シャドウバジャー": "ホーンラム",
+            "クリムゾンタイガー+クラーケンロード": "リヴァイアサン", "グランドバイソン+ストライプゼブラ": "アルパカマスター", "マーメイドクイーン+ヘラクレスビートル": "アルパカマスター",
+            "メガタウロス+スカイジラフ": "エルクカイザー", "ホーンラム+クリムゾンタイガー": "アルパカマスター", "スロウロス+プリズムピーコック": "メガタウロス",
+            "アルパカマスター+エルクカイザー": "ポイズンスカンク", "リヴァイアサン+スカイジラフ": "疾風ホース", "ポイズンスカンク+疾風ホース": "デザートキャメル",
+            "デザートキャメル+ホーンラム": "アクアフィッシュ", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー"
+        };
+
+        const INNATE_SKILLS = {
+            quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
+            power:  { name: "🔥パワーチャージ(固有)", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のダンジョンへ進むと上昇効果は消える。" },
+            guard:  { name: "🛡️アイアンガード", desc: "攻撃後に50%の確率で防御力（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
+            double: { name: "⚔️ダブルアタック", desc: "攻撃後に100%の確率でもう一度追加攻撃を行う。" },
+            heal:   { name: "💚リジェネヒール", desc: "攻撃後に50%の確率で自分の最大HPの10%を回復する。" },
+            godspd: { name: "🌪️ゴッドスピード", desc: "攻撃後に50%の確率で素早さ（大）上昇（+50%）。次のダンジョンへ進むと上昇効果は消える。" },
+            death:  { name: "💀デスエンド", desc: "攻撃後に25%の確率で目の前の敵のHPを0にする一撃必殺。" }
+        };
+
+        const BOSS_INNATE_SKILLS = {
+            "-1":  { name: "🐃大地の咆哮", desc: "【ボス固有】攻撃後に50%の確率で攻撃力が35%上昇する。" },
+            "-2":  { name: "🧚神風の舞", desc: "【ボス固有】攻撃後に50%の確率で素早さが45%上昇する。" },
+            "-3":  { name: "🦖暴君の牙", desc: "【ボス固有】攻撃後に100%の確率で0.8倍の追加追撃を行う。" },
+            "-4":  { name: "🧌世界樹の恵み", desc: "【ボス固有】攻撃後に50%の確率で最大HPの15%を回復する。" },
+            "-5":  { name: "🦞深淵の渦", desc: "【ボス固有】攻撃後に35%の確率で相手を毒状態にする。" },
+            "-6":  { name: "🦈海神の加護", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃を1回無効化するバリアを張る。" },
+            "-7":  { name: "🧟金剛の城壁", desc: "【ボス固有】攻撃後に60%の確率で防御力が40%上昇する。" },
+            "-8":  { name: "🦁王家の呪縛", desc: "【ボス固有】攻撃後に35%の確率で相手を麻痺状態にする。" },
+            "-9":  { name: "🐉猛毒のブレス", desc: "【ボス固有】攻撃後に45%の確率で相手を毒状態と麻痺状態にする。" },
+            "-10": { name: "😈魔界の覇気", desc: "【ボス固有】攻撃後に60%の確率で攻撃・防御・素早さが20%上昇する。" },
+            "-11": { name: "🦏超硬質装甲", desc: "【ボス固有】攻撃後に50%の確率で次に受けるダメージを半分にする。" },
+            "-12": { name: "👹神鍛の鉄槌", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃が1回だけ1.5倍になる。" },
+            "-13": { name: "🦄聖域の光", desc: "【ボス固有】攻撃後に60%の確率で最大HPの15%回復し、防御力が20%上昇する。" },
+            "-14": { name: "👼熾天使の裁き", desc: "【ボス固有】攻撃後に100%の確率でもう一度聖なる追加攻撃を行う。" },
+            "-15": { name: "👺業火の爆炎", desc: "【ボス固有】攻撃後に50%の確率で攻撃力+45%上昇＆次の攻撃1.5倍になる。" },
+            "-16": { name: "🐦‍🔥太陽の恩寵", desc: "【ボス固有】攻撃後に50%の確率でHP20%回復＆攻撃1回無効バリアを張る。" },
+            "-17": { name: "🐺絶対零度", desc: "【ボス固有】攻撃後に50%の確率で相手を麻痺させ、自分の素早さが40%上昇する。" },
+            "-18": { name: "💀神槍グングニル", desc: "【ボス固有】攻撃後に20%の確率で目の前の敵のHPを0にする一撃必殺。" },
+            "-19": { name: "👿混沌の連撃", desc: "【ボス固有】攻撃後に100%で追加攻撃を行い、40%の確率で毒・麻痺を付与する。" },
+            "-20": { name: "👾終焉の創世神話", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP15%回復＋25%一撃必殺が発動する最強スキル。" }
+        };
+
+        const RARE_INNATE_SKILLS = [
+            { id: 1, name: "🌈プリズムバースト", desc: "【色違い限定】攻撃後に35%の確率で攻撃力の60%の追加光線ダメージを与え、自分の攻撃力が15%上昇する。" },
+            { id: 2, name: "✨オーラリカバー", desc: "【色違い限定】攻撃後に40%の確率で最大HPの12%を回復し、さらに20%の確率で攻撃1回無効バリアを張る。" },
+            { id: 3, name: "💎スターライトステップ", desc: "【色違い限定】攻撃後に35%の確率で素早さ25%UP＆攻撃20%UPし、さらに15%の確率で次の攻撃が1.5倍になる。" }
+        ];
+
+        function getRandomRareSkillId() {
+            return Math.floor(Math.random() * RARE_INNATE_SKILLS.length) + 1;
+        }
+
+        function getRareSkillObj(mon) {
+            if (!mon || !mon.isRare) return null;
+            if (!mon.rareSkillId || mon.rareSkillId < 1 || mon.rareSkillId > RARE_INNATE_SKILLS.length) {
+                mon.rareSkillId = getRandomRareSkillId();
+            }
+            return RARE_INNATE_SKILLS[mon.rareSkillId - 1];
+        }
+
+        function getInnateSkills(no) {
+            let list = [];
+            if (no === "EX") {
+                list.push({ name: "⚔️王国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" });
+                return list;
+            }
+            if (no === "EX2") {
+                list.push({ name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" });
+                return list;
+            }
+            if (no === "A") {
+                list.push({ name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" });
+                return list;
+            }
+            if (typeof no === "number" && no < 0) {
+                const bSk = BOSS_INNATE_SKILLS[String(no)];
+                if (bSk) list.push(bSk);
+                return list;
+            }
+            if (typeof no === "number") {
+                if (no >= 1 && no <= 50) list.push(INNATE_SKILLS.quick);
+                if (no >= 30 && no <= 50) list.push(INNATE_SKILLS.power);
+                if (no >= 30 && no <= 50) list.push(INNATE_SKILLS.guard);
+                if (no >= 51 && no <= 100) list.push(INNATE_SKILLS.double);
+                if (no >= 70 && no <= 100) list.push(INNATE_SKILLS.heal);
+                if (no >= 90 && no <= 100) list.push(INNATE_SKILLS.godspd);
+                if (no >= 95 && no <= 100) list.push(INNATE_SKILLS.death);
+            }
+            return list;
+        }
+
+        const SKILLS = [
+            { id: 1, name: "🛡️イージスバリア", desc: "攻撃後に10%の確率で、相手の攻撃を一度だけ無効化するバリアを張る。" },
+            { id: 2, name: "💚リジェネレーション", desc: "攻撃後に10%の確率で、自分の最大HPの5%を回復する。" },
+            { id: 3, name: "🔥パワーチャージ", desc: "攻撃後に10%の確率で、次のターンの自分の攻撃を1回だけ1.5倍にする（その次のターンからは元に戻る）。" },
+            { id: 4, name: "☠️ポイズンタッチ", desc: "攻撃後に10%の確率で、相手を毒状態にする。毒状態のモンスターは攻撃後に最大HPの10%のダメージを受ける。" },
+            { id: 5, name: "✨ポイズンガード", desc: "毒状態にならない（毒無効）。" },
+            { id: 6, name: "⚡パラライズショック", desc: "攻撃後に10%の確率で、相手を麻痺状態にする。麻痺状態のモンスターは次のターンだけ攻撃を出せず、その次のターンからは動けるようになる。" },
+            { id: 7, name: "🔋パラライズガード", desc: "麻痺状態にならない（麻痺無効）。" },
+            { id: 8, name: "🔰ハーフシールド", desc: "攻撃後に10%の確率で、次に自分が受けるダメージを半分（切り上げ）にする。" },
+            { id: 9, name: "🌟オールブースト", desc: "攻撃後に50%の確率で、攻撃・防御・素早さが（小）上昇（+10%）する。次のダンジョンに進むと元に戻る。" },
+            { id: 10, name: "☣️カオスヴェノム", desc: "攻撃後に20%の確率で、相手を毒状態と麻痺状態の両方にする。" },
+            { id: 11, name: "🩸ヴァンパイアファング", desc: "攻撃後に25%の確率で、敵に自分の攻撃力の40%の追加ダメージを与え、その分だけ自分のHPを回復する。" },
+            { id: 12, name: "💥クリティカルアイ", desc: "常時効果：会心の一撃（ダメージ2倍）の発生率が+18%アップする。" },
+            { id: 13, name: "🔥バーニングソウル", desc: "攻撃後に20%の確率で、自分の攻撃力が20%上昇し、次の攻撃が1.5倍になる。" },
+            { id: 14, name: "❄️フロストアーマー", desc: "攻撃後に30%の確率で、自分の防御力が25%上昇し、次に受けるダメージを半減する。" },
+            { id: 15, name: "💨ウィンドダンス", desc: "攻撃後に35%の確率で、自分の素早さが25%上昇する。" },
+            { id: 16, name: "👼ミラクルキュア", desc: "攻撃後に25%の確率で、自分の毒状態を治し、最大HPの10%を回復する。" },
+            { id: 17, name: "⚡サンダーチェイン", desc: "攻撃後に25%の確率で、敵に攻撃力の60%の電撃追撃を与え、さらに15%の確率で麻痺状態にする。" },
+            { id: 18, name: "🧪アシッドミスト", desc: "攻撃後に25%の確率で、敵の防御力を20%ダウンさせる（ダンジョン移動で戻る）。" },
+            { id: 19, name: "🎯スナイプショット", desc: "攻撃後に20%の確率で、敵の防御力を無視して攻撃力の70%の追加ダメージを与える。" },
+            { id: 20, name: "👑インペリアルオーラ", desc: "攻撃後に20%の確率で、攻撃・防御・素早さが15%上昇し、攻撃を1回無効化するバリアを張る。" }
+        ];
+
+        function getRandomSkillId() {
+            return Math.floor(Math.random() * SKILLS.length) + 1;
+        }
+
+        function getSkillObj(mon) {
+            if (mon && mon.isSpecialHero) {
+                return { id: 0, name: "⚔️王国の剣技・閃光", desc: "【勇者特別スキル】攻撃後に40%の確率で次回1.5倍＋HP10%回復＋攻撃・素早さ15%上昇。" };
+            }
+            if (mon && mon.isSpecialSage) {
+                return { id: 0, name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" };
+            }
+            if (!mon.skillId || mon.skillId < 1 || mon.skillId > SKILLS.length) {
+                mon.skillId = getRandomSkillId();
+            }
+            return SKILLS[mon.skillId - 1];
+        }
+
+        function showSkillInfo(skillName, skillDesc) {
+            alert("【スキル詳細】\n" + skillName + "\n\n" + skillDesc);
+        }
+
+        const MAX_BOX_LIMIT = 200;
+        let eg = [];
+        let stg = 1;
+        let maxStg = 1;
+        let maxClearStg = 0;
+        let zk = ["プニシズク"];
+        let boxLimit = 50;
+        let baseMixRate = 0.25;
+        let mixBonus = 0;
+        let expBonusRate = 0;
+        let wildJoinBonus = 0;
+        let stats = {
+            mixSuccessCount: 0,
+            mixAttemptCount: 0,
+            rpsWinCount: 0,
+            heroWinCount: 0,
+            sageWinCount: 0,
+            kingHelpCount: 0,
+            kingdomVisitCount: 0,
+            arenaWinCount: 0,
+            rareGetCount: 0,
+            chestOpenCount: 0,
+            claimedMissions: [],
+            extraMissions: []
+        };
+        let currentEvent = null;
+        let inDungeon = false;
+        let isTurnRunning = false;
+        let autoAtkTimer = null;
+        let battleTimers = [];
+        let battleSessionId = 0;
+        let autoBattleEnabled = true;
+        let battleSpeed = 1;
+        let repeatStageMode = false;
+        let repeatCount = 0;
+        let dungeonLockUntil = 0;
+        let dungeonLockInterval = null;
+        let inKingdom = false;
+        let kingdomScene = "";
+        let arenaClearedMonsters = [];
+        let kingCandidateSkillId = 0;
+        let boxSortMode = "no";
+        let boxNoDesc = false;
+        let boxFilterMode = "all";
+        let bulkReleaseMode = false;
+        let bulkSelectedMons = new Set();
+        let showMixAssist = false;
+        let showBoxSkills = true;
+        let partyOrderCounter = 3;
+        let gameInitialized = false;
+        let pendingReleaseList = [];
+        let lastRenderedZkCount = -1;
+        let lastRenderedMissionSig = "";
+        let lastRenderedBoxSig = "";
+        function scheduleBattleTimer(fn, delayMs) {
             const sid = battleSessionId;
             const tid = setTimeout(() => {
                 battleTimers = battleTimers.filter(id => id !== tid);
@@ -1784,9 +2050,6 @@
             currentBgmMode = "";
         }
 
-        let titleParticles = [];
-        let titleCanvasRaf = null;
-        let titleMagicAngle = 0;
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -1797,81 +2060,26 @@
         let battleCanvasRaf = null;
         let mixMagicRaf = null;
 
-        function initTitleCanvas() {
-            const canvas = document.getElementById("titleCanvas");
-            if (!canvas) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            titleParticles = [];
-            for (let i = 0; i < 48; i++) {
-                titleParticles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: 1.5 + Math.random() * 3.2,
-                    vy: -0.35 - Math.random() * 0.75,
-                    vx: (Math.random() - 0.5) * 0.35,
-                    phase: Math.random() * Math.PI * 2,
-                    color: i % 3 === 0 ? "#fde047" : (i % 3 === 1 ? "#38bdf8" : "#c084fc")
-                });
-            }
-            if (titleCanvasRaf) cancelAnimationFrame(titleCanvasRaf);
-            function titleLoop() {
-                const ts = document.getElementById("titleScreen");
-                if (!ts || ts.style.display === "none") return;
-                if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                }
-                const ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                titleMagicAngle += 0.008;
-                const cx = canvas.width / 2;
-                const cy = canvas.height * 0.45;
-                const radius = Math.min(canvas.width, canvas.height) * 0.36;
-                drawMagicCircle(ctx, cx, cy, radius, titleMagicAngle, "#38bdf8", 0.22);
-                drawMagicCircle(ctx, cx, cy, radius * 0.72, -titleMagicAngle * 1.35, "#fde047", 0.18);
-
-                for (let i = 0; i < titleParticles.length; i++) {
-                    const pt = titleParticles[i];
-                    pt.phase += 0.035;
-                    pt.x += pt.vx + Math.sin(pt.phase) * 0.25;
-                    pt.y += pt.vy;
-                    if (pt.y < -10) { pt.y = canvas.height + 10; pt.x = Math.random() * canvas.width; }
-                    if (pt.x < -10) pt.x = canvas.width + 10;
-                    if (pt.x > canvas.width + 10) pt.x = -10;
-
-                    ctx.save();
-                    ctx.globalAlpha = 0.35 + Math.sin(pt.phase) * 0.25;
-                    ctx.fillStyle = pt.color;
-                    ctx.beginPath();
-                    ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
-                titleCanvasRaf = requestAnimationFrame(titleLoop);
-            }
-            titleCanvasRaf = requestAnimationFrame(titleLoop);
-        }
-
         function initBgCanvas() {
-            const canvas = document.getElementById("bgCanvas");
-            if (!canvas) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            bgParticles = [];
-            for (let i = 0; i < 36; i++) {
-                bgParticles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: 1.8 + Math.random() * 3.5,
-                    vx: (Math.random() - 0.5) * 0.35,
-                    vy: -0.25 - Math.random() * 0.45,
-                    phase: Math.random() * Math.PI * 2,
-                    hue: Math.random() > 0.5 ? "#38bdf8" : "#fbbf24"
-                });
-            }
-            if (!bgCanvasRaf) startBgCanvasLoop();
+            try {
+                const canvas = document.getElementById("bgCanvas");
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                bgParticles = [];
+                for (let i = 0; i < 36; i++) {
+                    bgParticles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        r: 1.8 + Math.random() * 3.5,
+                        vx: (Math.random() - 0.5) * 0.35,
+                        vy: -0.25 - Math.random() * 0.45,
+                        phase: Math.random() * Math.PI * 2,
+                        hue: Math.random() > 0.5 ? "#38bdf8" : "#fbbf24"
+                    });
+                }
+                if (!bgCanvasRaf) startBgCanvasLoop();
+            } catch (e) {}
         }
 
         function startBgCanvasLoop() {
@@ -1951,8 +2159,8 @@
                 ctx.fill();
             }
             ctx.restore();
-        }
-                function getMonsterCenterInField(targetMon, isEnemyTarget) {
+                                                       }
+        function getMonsterCenterInField(targetMon, isEnemyTarget) {
             const field = document.getElementById("battleField");
             if (!field) return null;
             const fieldRect = field.getBoundingClientRect();
@@ -2074,21 +2282,23 @@
         }
 
         function initBattleCanvas() {
-            const canvas = document.getElementById("battleCanvas");
-            const field = document.getElementById("battleField");
-            if (!canvas || !field) return;
-            canvas.width = field.clientWidth || 380;
-            canvas.height = field.clientHeight || 180;
-            battleParticles = [];
-            for (let i = 0; i < 24; i++) {
-                battleParticles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: 1.5 + Math.random() * 2.5,
-                    phase: Math.random() * Math.PI * 2
-                });
-            }
-            if (!battleCanvasRaf) startBattleCanvasLoop();
+            try {
+                const canvas = document.getElementById("battleCanvas");
+                const field = document.getElementById("battleField");
+                if (!canvas || !field) return;
+                canvas.width = field.clientWidth || 380;
+                canvas.height = field.clientHeight || 180;
+                battleParticles = [];
+                for (let i = 0; i < 24; i++) {
+                    battleParticles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        r: 1.5 + Math.random() * 2.5,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+                if (!battleCanvasRaf) startBattleCanvasLoop();
+            } catch (e) {}
         }
 
         function startBattleCanvasLoop() {
@@ -2106,7 +2316,7 @@
                     const theme = getAreaParticleTheme();
                     if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "zombie_hero" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isZombieHero))) {
                         battleMagicAngle += 0.012;
-                        const mColor = eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero"
+                        const mColor = (eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero")
                             ? "#22c55e"
                             : (inKingdom ? "#eab308" : ((stg === 500 || stg === 1000) ? "#9333ea" : (isBossStage(stg) ? "#dc2626" : "#4f46e5")));
                         drawMagicCircle(ctx, canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.42, battleMagicAngle, mColor, 0.16);
@@ -2287,20 +2497,20 @@
         }
 
         function startGame() {
+            document.documentElement.classList.remove("title-locked");
+            document.body.classList.remove("title-locked");
             const ts = document.getElementById("titleScreen");
             if (ts && !ts.classList.contains("hide")) {
-                initAudio();
-                seStageClear();
-                updateBgmState(true);
+                try {
+                    initAudio();
+                    seStageClear();
+                    updateBgmState(true);
+                } catch (e) {}
                 ts.classList.add("hide");
                 setTimeout(() => {
                     ts.style.display = "none";
-                    if (titleCanvasRaf) {
-                        cancelAnimationFrame(titleCanvasRaf);
-                        titleCanvasRaf = null;
-                    }
                     initBattleCanvas();
-                }, 460);
+                }, 420);
             }
         }
 
@@ -2600,8 +2810,8 @@
             updateRepeatButtonUI();
             updateSortButtonsUI();
             up(true);
-        }
-           function updateRepeatButtonUI() {
+                }
+        function updateRepeatButtonUI() {
             const btn = document.getElementById("btnRepeatToggle");
             if (!btn) return;
             if (repeatStageMode) {
@@ -3029,8 +3239,8 @@
             stg = nextVal;
             saveGame();
             upBattleUI();
-        }
-                function enter(){
+                        }
+        function enter(){
             if (isDungeonLocked()) {
                 return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
             }
@@ -3243,8 +3453,7 @@
 
             if (playerHand === cpuHand) {
                 seButtonTap();
-                const drawMsg = "🧙 謎の旅人「" + hands[cpuHand] + "！あいこだな、もう一回勝負だ！」";
-                showNotice(drawMsg, 2500);
+                showNotice("🧙 謎の旅人「" + hands[cpuHand] + "！あいこだな、もう一回勝負だ！」", 2500);
                 return;
             }
 
@@ -3764,8 +3973,8 @@
 
         function showZombieHeroHint() {
             alert("【💀 特別遭遇情報】\nNo.A（廃国のゾンビ絵文字勇者）\n\nボス以外の階で0.5%の確率で遭遇！（撃破時0.1%で仲間になります・配合不可）");
-        }
-       function upBattleUI() {
+                                                }
+        function upBattleUI() {
             const weekend = isWeekendBonus();
             const wkBanner = document.getElementById("weekendBanner");
             const wkMixTag = document.getElementById("dispWeekendMixTag");
@@ -4413,8 +4622,8 @@
                     } else { alert("⚠️ 無効なコードです。"); }
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
-        }
-             function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
+            }
+        function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
             const isEnemySide = !isPlayerAttack;
@@ -4955,8 +5164,8 @@
                 }
             }
             return skillLogs;
-        }
-                function atk(){
+            }
+        function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
             if (autoAtkTimer) {
@@ -5655,10 +5864,9 @@
         function initGame() {
             if (gameInitialized) return;
             gameInitialized = true;
-            loadGame();
-            initTitleCanvas();
-            initBgCanvas();
-            initBattleCanvas();
+            try { loadGame(); } catch (e) { console.error(e); }
+            try { initBgCanvas(); } catch (e) {}
+            try { initBattleCanvas(); } catch (e) {}
         }
 
         window.addEventListener("DOMContentLoaded", initGame);
@@ -5668,4 +5876,4 @@
         }
     </script>
 </body>
-                </html>
+</html>
