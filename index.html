@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>みっくすえもじ</title>
-    <link rel="apple-touch-icon" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
-    <link rel="icon" type="image/jpeg" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
     <style>
         * {
             box-sizing: border-box;
@@ -2135,7 +2133,8 @@
                 cancelAnimationFrame(mixMagicRaf);
                 mixMagicRaf = null;
             }
-                    }
+        }
+
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },            checkType: "stg", val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 },         checkType: "mix", val: 1 },
@@ -2290,7 +2289,7 @@
             if (sec > 0) {
                 if (el) {
                     el.style.display = "block";
-                    el.innerText = "🏰 迷子の国王をお城まで護衛しています！あと " + sec + "秒 ダンジョンに入れません";
+                    el.innerText = "⏳ 国王救出の休憩中！あと " + sec + "秒 ダンジョンに入れません";
                 }
                 if (btnEnter && !inDungeon) btnEnter.disabled = true;
             } else {
@@ -2402,7 +2401,7 @@
             }
             updateRepeatButtonUI();
             up();
-                        }
+        }
         function updateRepeatButtonUI() {
             const btn = document.getElementById("btnRepeatToggle");
             if (!btn) return;
@@ -2570,7 +2569,7 @@
 
         function enter(){
             if (isDungeonLocked()) {
-                return alert("🏰 迷子の国王をお城まで護衛しています！あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
+                return alert("⏳ 迷子の国王を助けた休憩中です！あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
             }
             let aliveCount = 0;
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
@@ -2964,7 +2963,7 @@
             kingCandidateSkillId = picked.id;
             currentEvent = "king_skill";
             seSkill();
-            document.getElementById("battleLog").innerText = "🤴 国王を助けた！お礼に「" + topMon.n + "」のランダムスキルを変更できます（⚠️終了後、お城まで護衛するため1分間ダンジョンに入れません）。";
+            document.getElementById("battleLog").innerText = "🤴 国王を助けた！お礼に「" + topMon.n + "」のランダムスキルを変更できます（⚠️終了後、拠点へ戻り1分間ダンジョンに入れません）。";
             up();
         }
 
@@ -2988,7 +2987,7 @@
             if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
             if (stg < 1000) stg++;
 
-            msg += " ➡️ 次のステージ(" + stg + "階)へ進み、迷子の国王をお城まで護衛しています（⏳1分間ダンジョンに入れません）。";
+            msg += " ➡️ 次のステージ(" + stg + "階)へ進み、拠点へ戻りました（⏳1分間ダンジョンに入れません）。";
 
             battleSessionId++;
             clearAllBattleTimers();
@@ -3159,6 +3158,7 @@
             showNotice(msg, 5500);
             advanceStageAfterEvent(msg);
         }
+
         function leaveDungeon() {
             battleSessionId++;
             clearAllBattleTimers();
@@ -3500,7 +3500,7 @@
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🤴 迷子の国王が現れた！</div>' +
-                        '<div class="event-sub">お礼に戦闘1番手のランダムスキルを別のスキルに変更してくれる（変更するか選べます）。<br><span style="color:#dc2626;">⚠️ 助けるとお城まで護衛するためダンジョンから出て、1分間ダンジョンに入れなくなります！</span></div>' +
+                        '<div class="event-sub">お礼に戦闘1番手のランダムスキルを別のスキルに変更してくれる（変更するか選べます）。<br><span style="color:#dc2626;">⚠️ 助けるとダンジョンから出て、1分間ダンジョンに入れなくなります！</span></div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="chooseKingHelp(true)">👑 助ける</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseKingHelp(false)">🚶 助けない</button>' +
@@ -3519,7 +3519,7 @@
                             '現在：<b>' + curSk.name + '</b><br>' +
                             '候補：<b style="color:#0284c7;">' + candSk.name + '</b><br>' +
                             '<span style="font-size:10px; color:#475569;">' + candSk.desc + '</span><br>' +
-                            '<span style="color:#dc2626; font-size:10px;">⚠️ 選択後お城まで護衛するためダンジョンから出て、1分間ダンジョンに入れなくなります。</span>' +
+                            '<span style="color:#dc2626; font-size:10px;">⚠️ 選択後ダンジョンから出て、1分間ダンジョンに入れなくなります。</span>' +
                         '</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="confirmKingSkillChange(true)">✨ 変更する</button>' +
@@ -3814,6 +3814,524 @@
                 } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
             }
         }
+        function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
+            if (!attacker || attacker.hp <= 0) return;
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const isEnemySide = !isPlayerAttack;
+
+            scheduleBattleTimer(() => {
+                if (!attacker || attacker.hp <= 0) return;
+                const fxLayer = document.getElementById("fxLayer");
+                if (!fxLayer) return;
+
+                const pos = getMonsterCenterInField(attacker, isEnemySide);
+                if (!pos) return;
+
+                const fxEl = document.createElement("span");
+                fxEl.className = "skill-fx-pop";
+                fxEl.innerText = fxEmojis;
+                fxEl.style.left = pos.x + "px";
+                fxEl.style.top = pos.y + "px";
+                fxLayer.appendChild(fxEl);
+
+                setTimeout(() => {
+                    if (fxEl.parentElement) fxEl.remove();
+                }, Math.floor(900 / spdDiv));
+            }, Math.floor(delayMs / spdDiv));
+        }
+
+        function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
+            if (attacker.hp <= 0) return "";
+            const inf = getMonData(attacker.n);
+            const no = inf ? inf.no : 1;
+            const sk = getSkillObj(attacker);
+            const defSk = getSkillObj(defender);
+            const rareSk = getRareSkillObj(attacker);
+            let skillLogs = "";
+            let fxQueue = [];
+            let hitDefender = false;
+            let buffSelf = false;
+
+            if (inf && inf.isSpecialHero) {
+                if (Math.random() < 0.40) {
+                    attacker.nextAtk15 = true;
+                    let h = Math.max(1, Math.floor(attacker.m * 0.10));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.15));
+                    skillLogs += "⚔️" + attacker.n + "の異国の剣技・閃光！HP " + h + " 回復＆攻・素UP＆次回1.5倍！ ";
+                    fxQueue.push("⚔️✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                }
+            }
+
+            if (inf && inf.isSpecialSage) {
+                if (Math.random() < 0.45) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let dmg = Math.max(2, Math.floor(atkVal * 0.65));
+                    if (defender.hp > 0) {
+                        defender.hp = Math.max(0, defender.hp - dmg);
+                        showDamagePop(defender, isPlayerAttack, "-" + dmg, "#059669", false);
+                        hitDefender = true;
+                    }
+                    let h = Math.max(1, Math.floor(attacker.m * 0.12));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.15));
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.15));
+                    attacker.nullifyOnce = true;
+                    skillLogs += "🔮" + attacker.n + "の賢者の秘術・真理錬成！追撃 " + dmg + " ＆HP " + h + " 回復＆全能力UP＆バリア！ ";
+                    fxQueue.push("🔮✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                }
+            }
+
+            if (rareSk) {
+                if (rareSk.id === 1 && defender.hp > 0 && Math.random() < 0.35) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let dmg = Math.max(2, Math.floor(atkVal * 0.60));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
+                    skillLogs += "🌈" + attacker.n + "のプリズムバースト！光線 " + dmg + " ダメージ＆攻撃UP！ ";
+                    fxQueue.push("🌈💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#ec4899", false);
+                    hitDefender = true;
+                    if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                } else if (rareSk.id === 2 && Math.random() < 0.40) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.12));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "✨" + attacker.n + "のオーラリカバー！HP " + h + " 回復！ ";
+                    if (Math.random() < 0.20) {
+                        attacker.nullifyOnce = true;
+                        skillLogs += "バリア展開！ ";
+                    }
+                    fxQueue.push("✨🔆");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                } else if (rareSk.id === 3 && Math.random() < 0.35) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.25));
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.20));
+                    skillLogs += "💎" + attacker.n + "のスターライトステップ！素早さ＆攻撃UP！ ";
+                    if (Math.random() < 0.15) {
+                        attacker.nextAtk15 = true;
+                        skillLogs += "次回1.5倍！ ";
+                    }
+                    fxQueue.push("💎⚡");
+                    buffSelf = true;
+                }
+            }
+
+            if (typeof no === "number" && no < 0) {
+                if (no === -1 && Math.random() < 0.50) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.35));
+                    skillLogs += "🐃" + attacker.n + "の大地の咆哮！攻撃力大幅UP！ ";
+                    fxQueue.push("💥🔥");
+                    buffSelf = true;
+                }
+                if (no === -2 && Math.random() < 0.50) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.45));
+                    skillLogs += "🧚" + attacker.n + "の神風の舞！素早さ大幅UP！ ";
+                    fxQueue.push("🌪️✨");
+                    buffSelf = true;
+                }
+                if (no === -3 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
+                    let dmg = Math.max(2, Math.floor((atkVal - defVal / 2) * 0.8));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "🦖" + attacker.n + "の暴君の牙！追撃 " + dmg + " ダメージ！ ";
+                    fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#f97316", false);
+                    hitDefender = true;
+                }
+                if (no === -4 && Math.random() < 0.50) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "🧌" + attacker.n + "の世界樹の恵み！HPが " + h + " 回復！ ";
+                    fxQueue.push("🔆✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                }
+                if (no === -5 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 5) {
+                        defender.isPoisoned = true;
+                        skillLogs += "🦞" + attacker.n + "の深淵の渦！" + defender.n + "は毒状態になった！ ";
+                        fxQueue.push("🫧💦");
+                        hitDefender = true;
+                    }
+                }
+                if (no === -6 && Math.random() < 0.40) {
+                    attacker.nullifyOnce = true;
+                    skillLogs += "🦈" + attacker.n + "の海神の加護！次の攻撃を1回無効化！ ";
+                    fxQueue.push("🫧🧿");
+                    buffSelf = true;
+                }
+                if (no === -7 && Math.random() < 0.60) {
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.40));
+                    skillLogs += "🧟" + attacker.n + "の金剛の城壁！防御力大幅UP！ ";
+                    fxQueue.push("✴️🛡️");
+                    buffSelf = true;
+                }
+                if (no === -8 && defender.hp > 0 && Math.random() < 0.35) {
+                    if (defSk.id !== 7) {
+                        defender.isParalyzed = true;
+                        skillLogs += "🦁" + attacker.n + "の王家の呪縛！" + defender.n + "は麻痺状態になった！ ";
+                        fxQueue.push("⚡💫");
+                        hitDefender = true;
+                    }
+                }
+                if (no === -9 && defender.hp > 0 && Math.random() < 0.45) {
+                    if (defSk.id !== 5) defender.isPoisoned = true;
+                    if (defSk.id !== 7) defender.isParalyzed = true;
+                    skillLogs += "🐉" + attacker.n + "の猛毒のブレス！毒と麻痺を付与！ ";
+                    fxQueue.push("☠️🔥");
+                    hitDefender = true;
+                }
+                if (no === -10 && Math.random() < 0.60) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.20));
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.20));
+                    skillLogs += "😈" + attacker.n + "の魔界の覇気！全能力UP！ ";
+                    fxQueue.push("🌟🪄");
+                    buffSelf = true;
+                }
+                if (no === -11 && Math.random() < 0.50) {
+                    attacker.halfDmgOnce = true;
+                    skillLogs += "🦏" + attacker.n + "の超硬質装甲！次の被ダメージ半減！ ";
+                    fxQueue.push("✴️🔰");
+                    buffSelf = true;
+                }
+                if (no === -12 && Math.random() < 0.40) {
+                    attacker.nextAtk15 = true;
+                    skillLogs += "👹" + attacker.n + "の神鍛の鉄槌！次の攻撃が1.5倍になる！ ";
+                    fxQueue.push("🔥💥");
+                    buffSelf = true;
+                }
+                if (no === -13 && Math.random() < 0.60) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
+                    skillLogs += "🦄" + attacker.n + "の聖域の光！HP " + h + " 回復＆防御UP！ ";
+                    fxQueue.push("🔆🌟");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                }
+                if (no === -14 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
+                    let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "👼" + attacker.n + "の熾天使の裁き！追加 " + dmg + " ダメージ！ ";
+                    fxQueue.push("☄️✨");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#f59e0b", false);
+                    hitDefender = true;
+                }
+                if (no === -15 && Math.random() < 0.50) {
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.45));
+                    attacker.nextAtk15 = true;
+                    skillLogs += "👺" + attacker.n + "の業火の爆炎！攻撃大幅UP＆次回1.5倍！ ";
+                    fxQueue.push("🔥☄️");
+                    buffSelf = true;
+                }
+                if (no === -16 && Math.random() < 0.50) {
+                    let h = Math.max(1, Math.floor(attacker.m * 0.20));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    attacker.nullifyOnce = true;
+                    skillLogs += "🐦‍🔥" + attacker.n + "の太陽の恩寵！HP " + h + " 回復＆バリア展開！ ";
+                    fxQueue.push("🔆🧿");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                }
+                if (no === -17 && Math.random() < 0.50) {
+                    attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.40));
+                    if (defender.hp > 0 && defSk.id !== 7) {
+                        defender.isParalyzed = true;
+                        hitDefender = true;
+                    }
+                    skillLogs += "🐺" + attacker.n + "の絶対零度！素早さUP＆麻痺付与！ ";
+                    fxQueue.push("❄️💫");
+                    buffSelf = true;
+                }
+                if (no === -18 && defender.hp > 0 && Math.random() < 0.20) {
+                    defender.hp = 0;
+                    skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ ";
+                    fxQueue.push("☄️💀");
+                    showDamagePop(defender, isPlayerAttack, "即死!", "#7c3aed", true);
+                    hitDefender = true;
+                }
+                if (no === -19 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
+                    let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    skillLogs += "👿" + attacker.n + "の混沌の連撃！追加 " + dmg + " ダメージ！ ";
+                    fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + dmg, "#9333ea", false);
+                    hitDefender = true;
+                    if (defender.hp > 0 && Math.random() < 0.40) {
+                        if (defSk.id !== 5) defender.isPoisoned = true;
+                        if (defSk.id !== 7) defender.isParalyzed = true;
+                        skillLogs += "毒と麻痺を付与！ ";
+                        fxQueue.push("☠️⚡");
+                    }
+                }
+                if (no === -20) {
+                    if (defender.hp > 0) {
+                        let atkVal = attacker.at + (attacker.buffAt || 0);
+                        let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
+                        let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
+                        defender.hp = Math.max(0, defender.hp - dmg);
+                        skillLogs += "👾" + attacker.n + "の終焉の創世神話！追撃 " + dmg + " ダメージ！ ";
+                        fxQueue.push("☄️💥");
+                        showDamagePop(defender, isPlayerAttack, "-" + dmg, "#7c3aed", false);
+                        hitDefender = true;
+                    }
+                    let h = Math.max(1, Math.floor(attacker.m * 0.15));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                    skillLogs += "HP " + h + " 回復！ ";
+                    fxQueue.push("🔆🌟");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                    buffSelf = true;
+                    if (defender.hp > 0 && Math.random() < 0.25) {
+                        defender.hp = 0;
+                        skillLogs += "💀終焉の一撃必殺発動！ ";
+                        fxQueue.push("🪄💀");
+                        showDamagePop(defender, isPlayerAttack, "終焉!", "#7c3aed", true);
+                        hitDefender = true;
+                    }
+                }
+                if (!isPlayerAttack && defender.hp === 0) {
+                    skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                }
+            }
+
+            if (typeof no === "number") {
+                if (no >= 1 && no <= 50 && Math.random() < 0.25) {
+                    let inc = Math.max(1, Math.floor(attacker.sp * 0.15));
+                    attacker.buffSp = (attacker.buffSp || 0) + inc;
+                    skillLogs += "⚡" + attacker.n + "のクイックステップ！素早さUP！ ";
+                    fxQueue.push("⚡💨");
+                    buffSelf = true;
+                }
+                if (no >= 30 && no <= 50 && Math.random() < 0.25) {
+                    let inc = Math.max(2, Math.floor(attacker.at * 0.30));
+                    attacker.buffAt = (attacker.buffAt || 0) + inc;
+                    skillLogs += "🔥" + attacker.n + "のパワーチャージ(固有)！攻撃UP！ ";
+                    fxQueue.push("🔥💥");
+                    buffSelf = true;
+                }
+                if (no >= 30 && no <= 50 && Math.random() < 0.50) {
+                    let inc = Math.max(1, Math.floor(attacker.df * 0.15));
+                    attacker.buffDf = (attacker.buffDf || 0) + inc;
+                    skillLogs += "🛡️" + attacker.n + "のアイアンガード！防御UP！ ";
+                    fxQueue.push("✴️🛡️");
+                    buffSelf = true;
+                }
+                if (no >= 51 && no <= 100 && defender.hp > 0) {
+                    let atkVal = attacker.at + (attacker.buffAt || 0);
+                    let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
+                    let extraDmg = Math.max(2, Math.floor(atkVal - (defVal / 2) + Math.random() * 3));
+                    defender.hp = Math.max(0, defender.hp - extraDmg);
+                    skillLogs += "⚔️" + attacker.n + "のダブルアタック！追加 " + extraDmg + " ダメージ！ ";
+                    fxQueue.push("👊💥");
+                    showDamagePop(defender, isPlayerAttack, "-" + extraDmg, "#f97316", false);
+                    hitDefender = true;
+                    if (!isPlayerAttack && defender.hp === 0) {
+                        skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                    }
+                }
+                if (no >= 70 && no <= 100 && Math.random() < 0.50) {
+                    let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
+                    attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
+                    skillLogs += "💚" + attacker.n + "のリジェネヒール！HPが " + healVal + " 回復！ ";
+                    fxQueue.push("🔆✨");
+                    showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
+                    buffSelf = true;
+                }
+                if (no >= 90 && no <= 100 && Math.random() < 0.50) {
+                    let inc = Math.max(3, Math.floor(attacker.sp * 0.50));
+                    attacker.buffSp = (attacker.buffSp || 0) + inc;
+                    skillLogs += "🌪️" + attacker.n + "のゴッドスピード！素早さ大幅UP！ ";
+                    fxQueue.push("🌪️⚡");
+                    buffSelf = true;
+                }
+                if (no >= 95 && no <= 100 && defender.hp > 0 && Math.random() < 0.25) {
+                    defender.hp = 0;
+                    skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
+                    fxQueue.push("☄️💀");
+                    showDamagePop(defender, isPlayerAttack, "必殺!", "#7c3aed", true);
+                    hitDefender = true;
+                    if (!isPlayerAttack) {
+                        skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                    }
+                }
+            }
+
+            if (sk.id === 1 && Math.random() < 0.10) {
+                attacker.nullifyOnce = true;
+                skillLogs += "🛡️" + attacker.n + "のイージスバリア！次の攻撃を1回無効化！ ";
+                fxQueue.push("🧿✨");
+                buffSelf = true;
+            }
+            if (sk.id === 2 && Math.random() < 0.10) {
+                let healVal = Math.max(1, Math.floor(attacker.m * 0.05));
+                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
+                skillLogs += "💚" + attacker.n + "のリジェネレーション！HPが " + healVal + " 回復！ ";
+                fxQueue.push("🫧🔆");
+                showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
+                buffSelf = true;
+            }
+            if (sk.id === 3 && Math.random() < 0.10) {
+                attacker.nextAtk15 = true;
+                skillLogs += "🔥" + attacker.n + "のパワーチャージ！次の攻撃が1.5倍になる！ ";
+                fxQueue.push("🔥🌟");
+                buffSelf = true;
+            }
+            if (sk.id === 4 && defender.hp > 0 && Math.random() < 0.10) {
+                if (defSk.id === 5) {
+                    skillLogs += "✨" + defender.n + "はポイズンガードで毒を防いだ！ ";
+                    fxQueue.push("✴️");
+                } else {
+                    defender.isPoisoned = true;
+                    skillLogs += "☠️" + attacker.n + "のポイズンタッチ！" + defender.n + "は毒状態になった！ ";
+                    fxQueue.push("☠️💦");
+                    hitDefender = true;
+                }
+            }
+            if (sk.id === 6 && defender.hp > 0 && Math.random() < 0.10) {
+                if (defSk.id === 7) {
+                    skillLogs += "🔋" + defender.n + "はパラライズガードで麻痺を防いだ！ ";
+                    fxQueue.push("✴️");
+                } else {
+                    defender.isParalyzed = true;
+                    skillLogs += "⚡" + attacker.n + "のパラライズショック！" + defender.n + "は麻痺状態になった！ ";
+                    fxQueue.push("⚡💫");
+                    hitDefender = true;
+                }
+            }
+            if (sk.id === 8 && Math.random() < 0.10) {
+                attacker.halfDmgOnce = true;
+                skillLogs += "🔰" + attacker.n + "のハーフシールド！次の被ダメージを半減！ ";
+                fxQueue.push("❄️🔰");
+                buffSelf = true;
+            }
+            if (sk.id === 9 && Math.random() < 0.50) {
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.10));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.10));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.10));
+                skillLogs += "🌟" + attacker.n + "のオールブースト！攻・防・素早さUP！ ";
+                fxQueue.push("🌟🪄");
+                buffSelf = true;
+            }
+            if (sk.id === 10 && defender.hp > 0 && Math.random() < 0.20) {
+                skillLogs += "☣️" + attacker.n + "のカオスヴェノム！ ";
+                fxQueue.push("☠️💫");
+                if (defSk.id === 5) skillLogs += "✨" + defender.n + "は毒を防いだ！ ";
+                else { defender.isPoisoned = true; skillLogs += "☠️" + defender.n + "は毒になった！ "; hitDefender = true; }
+                if (defSk.id === 7) skillLogs += "🔋" + defender.n + "は麻痺を防いだ！ ";
+                else { defender.isParalyzed = true; skillLogs += "⚡" + defender.n + "は麻痺した！ "; hitDefender = true; }
+            }
+            if (sk.id === 11 && defender.hp > 0 && Math.random() < 0.25) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(1, Math.floor(atkVal * 0.40));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                attacker.hp = Math.min(attacker.m, attacker.hp + dmg);
+                skillLogs += "🩸" + attacker.n + "のヴァンパイアファング！" + dmg + "吸収！ ";
+                fxQueue.push("🩸🦇");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#e11d48", false);
+                showDamagePop(attacker, !isPlayerAttack, "+" + dmg, "#10b981", false);
+                hitDefender = true;
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 13 && Math.random() < 0.20) {
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.20));
+                attacker.nextAtk15 = true;
+                skillLogs += "🔥" + attacker.n + "のバーニングソウル！攻撃UP＆次回1.5倍！ ";
+                fxQueue.push("🔥💥");
+                buffSelf = true;
+            }
+            if (sk.id === 14 && Math.random() < 0.30) {
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.25));
+                attacker.halfDmgOnce = true;
+                skillLogs += "❄️" + attacker.n + "のフロストアーマー！防御UP＆次回半減！ ";
+                fxQueue.push("❄️🛡️");
+                buffSelf = true;
+            }
+            if (sk.id === 15 && Math.random() < 0.35) {
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.25));
+                skillLogs += "💨" + attacker.n + "のウィンドダンス！素早さUP！ ";
+                fxQueue.push("💨⚡");
+                buffSelf = true;
+            }
+            if (sk.id === 16 && Math.random() < 0.25) {
+                attacker.isPoisoned = false;
+                let healVal = Math.max(1, Math.floor(attacker.m * 0.10));
+                attacker.hp = Math.min(attacker.m, attacker.hp + healVal);
+                skillLogs += "👼" + attacker.n + "のミラクルキュア！毒解除＆HP " + healVal + " 回復！ ";
+                fxQueue.push("👼✨");
+                showDamagePop(attacker, !isPlayerAttack, "+" + healVal, "#10b981", false);
+                buffSelf = true;
+            }
+            if (sk.id === 17 && defender.hp > 0 && Math.random() < 0.25) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(2, Math.floor(atkVal * 0.60));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                skillLogs += "⚡" + attacker.n + "のサンダーチェイン！" + dmg + "電撃ダメージ！ ";
+                if (defender.hp > 0 && Math.random() < 0.15 && defSk.id !== 7) {
+                    defender.isParalyzed = true;
+                    skillLogs += defender.n + "は麻痺した！ ";
+                }
+                fxQueue.push("⚡💥");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#eab308", false);
+                hitDefender = true;
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 18 && defender.hp > 0 && Math.random() < 0.25) {
+                defender.buffDf = (defender.buffDf || 0) - Math.max(1, Math.floor(defender.df * 0.20));
+                skillLogs += "🧪" + attacker.n + "のアシッドミスト！" + defender.n + "の防御力ダウン！ ";
+                fxQueue.push("🧪💦");
+                hitDefender = true;
+            }
+            if (sk.id === 19 && defender.hp > 0 && Math.random() < 0.20) {
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(2, Math.floor(atkVal * 0.70));
+                defender.hp = Math.max(0, defender.hp - dmg);
+                skillLogs += "🎯" + attacker.n + "のスナイプショット！防御無視 " + dmg + " ダメージ！ ";
+                fxQueue.push("🎯💥");
+                showDamagePop(defender, isPlayerAttack, "-" + dmg, "#dc2626", false);
+                hitDefender = true;
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+            if (sk.id === 20 && Math.random() < 0.20) {
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.15));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.15));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.15));
+                attacker.nullifyOnce = true;
+                skillLogs += "👑" + attacker.n + "のインペリアルオーラ！全能力UP＆バリア展開！ ";
+                fxQueue.push("👑✨");
+                buffSelf = true;
+            }
+
+            if (attacker.hp > 0) {
+                fxQueue.forEach((emojis, idx) => {
+                    playSkillEffect(attacker, isPlayerAttack, emojis, idx * 220);
+                });
+            }
+
+            if (skillLogs !== "") {
+                seSkill();
+                if (hitDefender) {
+                    spawnBattleBurstAtMonster(defender, isPlayerAttack, "#c084fc", 11);
+                } else if (buffSelf) {
+                    spawnBattleBurstAtMonster(attacker, !isPlayerAttack, "#34d399", 8);
+                }
+            }
+            return skillLogs;
+        }
+
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
@@ -4240,6 +4758,7 @@
                         }
                     }
 
+                    // レベルアップ後の最終生存判定
                     partyDead = true;
                     p.forEach(m => { if (m.inParty && m.hp > 0) partyDead = false; });
 
