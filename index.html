@@ -414,6 +414,8 @@
         .bg-guild::before { content: "📜"; opacity: 0.28; }
         .bg-zombie { border-color: #14532d !important; background: linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #14532d 100%) !important; box-shadow: 0 0 26px rgba(0, 0, 0, 0.45); }
         .bg-zombie::before { content: "🏚️"; opacity: 0.26; }
+        .bg-god { border-color: #eab308 !important; background: linear-gradient(180deg, #1e1b4b 0%, #312e81 55%, #581c87 100%) !important; box-shadow: 0 0 28px rgba(250, 204, 21, 0.48); }
+        .bg-god::before { content: "🌌"; opacity: 0.34; }
         .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
 
         .zombie-aura-wrap {
@@ -469,6 +471,54 @@
             font-weight: 900;
             margin-left: 3px;
             border: 1px solid #000;
+        }
+
+        /* --- 🌌 No.B 星辰の大魔神（神聖ゴールド＆星雲オーラ） --- */
+        .god-aura-wrap {
+            position: relative;
+            display: inline-block;
+            isolation: isolate;
+        }
+        .god-aura-wrap::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.85) 18%, rgba(168, 85, 247, 0.50) 58%, transparent 78%);
+            z-index: -1;
+            animation: zombieDarkAura 1.4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        .god-aura-wrap::after {
+            content: "";
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px dashed rgba(250, 204, 21, 0.88);
+            box-shadow: 0 0 16px rgba(250, 204, 21, 0.90), inset 0 0 10px rgba(168, 85, 247, 0.75);
+            z-index: -1;
+            animation: zombieAuraSpin 5s linear infinite;
+            pointer-events: none;
+        }
+        .god-emoji {
+            display: inline-block;
+            filter: drop-shadow(0 0 6px #fde047) drop-shadow(0 0 14px #a855f7);
+        }
+        .god-card {
+            background: linear-gradient(135deg, #fefce8 0%, #f3e8ff 50%, #e0f2fe 100%) !important;
+            border: 2px solid #d97706 !important;
+            box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35) !important;
+        }
+        .god-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #b45309, #7c3aed);
+            color: #fef08a;
+            border-radius: 5px;
+            padding: 0 5px;
+            font-size: 9px;
+            font-weight: 900;
+            margin-left: 3px;
+            border: 1px solid #f59e0b;
         }
 
         @keyframes shinyRainbow {
@@ -685,7 +735,7 @@
         .btn-tiny {
             width: auto !important;
             display: inline-block;
-            padding: 4px 8px;
+            padding: 4px 7px;
             margin: 0;
             font-size: 10.5px;
             border-radius: 8px;
@@ -1137,7 +1187,7 @@
             1️⃣ <b>パーティ編成</b>：下のボックスから最大3体「⚔️戦闘に出す」で登録！<br>
             2️⃣ <b>ダンジョン冒険</b>：「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
             3️⃣ <b>モンスター配合</b>：2匹を配合して新種を生み出そう！レベルは2匹の合計になります（配合アシストで作成可能な組み合わせを自動検索できます）。<br>
-            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・迷子の国王・知らない王国（闘技場「小文字級/大文字級」・商店15種・ギルド25種）・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
+            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・星辰の大魔神(No.B)・迷子の国王・知らない王国（闘技場「小文字級/大文字級」・商店15種・ギルド25種）・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
             ⚠️ <b>注意</b>：「🔁同じ階周回」がONの間は、すべての遭遇イベントは発生しません。またイベントは2回連続で発生しません。土日はEXP2倍＆配合+10%！
         </div>
     </div>
@@ -1157,7 +1207,8 @@
                 ダンジョン: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
                 <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
             </div>
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 2px;">
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
+                <button class="btn-tiny stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
                 <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
                 <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
                 <button class="btn-tiny stg-ctrl-btn" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
@@ -1244,7 +1295,7 @@
             <button class="filter-chip" onclick="setBoxFilter('rare')">✨色違い</button>
             <button class="filter-chip" onclick="setBoxFilter('unlocked')">🔓鍵なし</button>
             <button class="filter-chip" onclick="setBoxFilter('reserve')">🛡️控えのみ</button>
-            <button class="filter-chip" onclick="setBoxFilter('boss')">👑ボス・No.A</button>
+            <button class="filter-chip" onclick="setBoxFilter('boss')">👑ボス・No.A/B</button>
         </div>
         <button id="btnBulkModeToggle" onclick="toggleBulkReleaseMode()" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%); border-bottom: 3px solid #be123c; padding: 7px 10px; font-size: 11.5px; margin-bottom: 6px;">
             🗑️ 一括お別れモード: OFF
@@ -1270,7 +1321,7 @@
         </p>
         <div class="limit-hint">※配合成功率：初期25% ／ イベント・アイテムでの上昇上限80%まで</div>
         <div style="background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; font-size: 11px; font-weight: 900; padding: 6px 8px; border-radius: 10px; margin-bottom: 6px;">
-            ⚠️ 配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.Aは保護）
+            ⚠️ 配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.A/Bは保護）
         </div>
         <button style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-bottom: 3px solid #047857;" id="btnMix" onclick="mix()">
             🧬 配合実行！（成功率<span id="btnMixRateText">25</span>%）
@@ -1290,7 +1341,7 @@
         <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">
             📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span>
             <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
-            <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/1種)</span>
+            <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
         </h3>
         <button onclick="let t=document.getElementById('zukanWrapper'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
             📖 図鑑の表示切替（通常・ボス・特別図鑑）
@@ -1313,10 +1364,10 @@
 
             <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #86efac;">
                 <h4 style="margin: 0 0 6px; color: #14532d; font-size: 14px;">
-                    💀 特別遭遇図鑑 <span id="specialZukanSubBadge" style="font-size:12px;">(0/1種)</span>
+                    💀 特別遭遇図鑑 <span id="specialZukanSubBadge" style="font-size:12px;">(0/2種)</span>
                 </h4>
                 <p style="font-size: 10.5px; color: #166534; margin: 0 0 8px; font-weight: bold;">
-                    ※ボス以外の階で0.4%出現！配合不可・撃破時0.1%加入の超希少キャラクター
+                    ※ボス以外の階で超低確率出現（No.A: 0.4%・撃破時0.1%加入 / No.B: 0.01%・撃破時100%加入）！配合不可
                 </p>
                 <div id="specialZk" class="grid"></div>
             </div>
@@ -1505,7 +1556,8 @@
         const SPECIAL_D = {
             "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
             "王国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 560, at: 170, df: 125, sp: 95, ex: 0, isSpecialSage: true },
-            "廃国のゾンビ絵文字勇者": { no: "A", a: "🤺", hp: 460, at: 145, df: 105, sp: 82, ex: 45, isZombieHero: true, recruitable: true }
+            "廃国のゾンビ絵文字勇者": { no: "A", a: "🤺", hp: 460, at: 145, df: 105, sp: 82, ex: 45, isZombieHero: true, recruitable: true },
+            "星辰の大魔神": { no: "B", a: "🧞‍♂️", hp: 360, at: 60, df: 45, sp: 22, ex: 1000, isGodEntity: true, recruitable: true }
         };
 
         function getMonData(name) {
@@ -1518,12 +1570,21 @@
             return Boolean(nameOrMon.isZombieHero || nameOrMon.n === "廃国のゾンビ絵文字勇者");
         }
 
+        function isGodMon(nameOrMon) {
+            if (!nameOrMon) return false;
+            if (typeof nameOrMon === "string") return nameOrMon === "星辰の大魔神";
+            return Boolean(nameOrMon.isGodEntity || nameOrMon.n === "星辰の大魔神");
+        }
+
         function renderMonEmojiHtml(nameOrMon, extraClass = "", sizeStyle = "") {
             const inf = typeof nameOrMon === "string" ? getMonData(nameOrMon) : getMonData(nameOrMon.n);
             const emoji = inf ? inf.a : "❓";
             const styleAttr = sizeStyle ? (' style="' + sizeStyle + '"') : "";
             if (isZombieMon(nameOrMon)) {
                 return '<span class="zombie-aura-wrap"><span class="zombie-emoji ' + extraClass + '"' + styleAttr + '>' + emoji + '</span></span>';
+            }
+            if (isGodMon(nameOrMon)) {
+                return '<span class="god-aura-wrap"><span class="god-emoji ' + extraClass + '"' + styleAttr + '>' + emoji + '</span></span>';
             }
             return '<span class="' + extraClass + '"' + styleAttr + '>' + emoji + '</span>';
         }
@@ -1606,6 +1667,10 @@
             }
             if (no === "A") {
                 list.push({ name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" });
+                return list;
+            }
+            if (no === "B") {
+                list.push({ name: "🌌星辰崩壊・アルマゲドン", desc: "【No.B特別スキル】攻撃後に70%の確率で攻撃力100%の防御無視追撃＋最大HP20%回復＋相手を毒＆麻痺にし、自分の全能力20%UP＆次回1.5倍＆1回無効バリア展開。" });
                 return list;
             }
             if (typeof no === "number" && no < 0) {
@@ -1876,16 +1941,15 @@
 
             if (upNames.length > 0) {
                 seJoin();
-                return "🔮 ダンジョンの水晶を使った！✨ " + upNames.join("・") + " の上限レベルが+1された！";
+                return "✨【効果】" + upNames.join("・") + " の上限Lvが+1された！";
             }
             seSkill();
             if (targets.length > 0 && alreadyMaxCount === targets.length) {
-                return "🔮 ダンジョンの水晶を使った！（対象モンスターは全員すでに上限+20に達している！）";
+                return "【効果】対象モンスターは全員すでにLv上限+20に達している！";
             }
-            return "🔮 ダンジョンの水晶を使った！しかし光は届かず上限は上がらなかった…（30%抽選外れ）";
+            return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
         }
 
-        // 初期クエスト5件
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },    checkType: "stg",   val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 }, checkType: "mix",   val: 1 },
@@ -1894,7 +1958,6 @@
             { id: "m_rps1",    title: "ジャンケン名人",     condText: "謎の旅人に1回勝つ",            rewardText: "配合成功率+3%",         reward: { mix: 0.03 }, checkType: "rps",   val: 1 }
         ];
 
-        // ギルド追加クエスト25種類（上限20件まで追加可能）
         const GUILD_EXTRA_MISSIONS = [
             { id: "gm_1",  title: "🏰王国の使者",         condText: "知らない王国に1回入国する",       rewardText: "ボックス上限+3",        reward: { box: 3 },               checkType: "kingdom",    val: 1 },
             { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",       condText: "王国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",         reward: { mix: 0.02 },            checkType: "sage",       val: 1 },
@@ -1909,7 +1972,7 @@
             { id: "gm_11", title: "🌈虹のコレクター",     condText: "✨色違いを3体手に入れる",         rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "rare",       val: 3 },
             { id: "gm_12", title: "⚔️百階への道",         condText: "100階をクリアする",               rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "stg",        val: 100 },
             { id: "gm_13", title: "📖博識の冒険者",       condText: "通常図鑑を75種埋める",            rewardText: "野生加入率+1%",         reward: { wild: 0.01 },           checkType: "zukan",      val: 75 },
-            { id: "gm_14", title: "👑王宮の守護騎士",     condText: "750階をクリアする",               rewardText: "ボックス上限+15",       reward: { box: 15 },              checkType: "stg",        val: 750 },
+            { id: "gm_14", title: "👑王宮の守護騎士",   condText: "750階をクリアする",               rewardText: "ボックス上限+15",       reward: { box: 15 },              checkType: "stg",        val: 750 },
             { id: "gm_15", title: "🌟神話の探究者",       condText: "1000階をクリアする",              rewardText: "配合+5% & EXP+25%",     reward: { mix: 0.05, exp: 0.25 }, checkType: "stg",        val: 1000 },
             { id: "gm_16", title: "🔮旅立ちの試練",       condText: "30階をクリアする",                rewardText: "戦闘EXP+5%",            reward: { exp: 0.05 },            checkType: "stg",        val: 30 },
             { id: "gm_17", title: "🌿密林の突破者",       condText: "200階ボスをクリアする",           rewardText: "ボックス上限+5",        reward: { box: 5 },               checkType: "stg",        val: 200 },
@@ -2203,6 +2266,7 @@
                 m.locked = Boolean(m.locked);
                 m.isRare = Boolean(m.isRare);
                 m.isZombieHero = isZombieMon(m.n);
+                m.isGodEntity = isGodMon(m.n);
                 m.lvCapBonus = (typeof m.lvCapBonus === "number") ? Math.min(MAX_LV_CAP_BONUS, Math.max(0, Math.floor(m.lvCapBonus))) : 0;
                 if (m.isRare) getRareSkillObj(m);
                 getSkillObj(m);
@@ -2377,7 +2441,7 @@
             if (boxFilterMode === "reserve") return !mon.inParty;
             if (boxFilterMode === "boss") {
                 const inf = getMonData(mon.n);
-                return inf && ((typeof inf.no === "number" && inf.no < 0) || inf.no === "A");
+                return inf && ((typeof inf.no === "number" && inf.no < 0) || inf.no === "A" || inf.no === "B");
             }
             return true;
         }
@@ -2685,6 +2749,14 @@
             let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
             if (pool.length === 0) pool = ["ドラゴンエンペラー"];
             return pool;
+        }
+
+        function goFirstStage() {
+            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
+            if (stg === 1) return;
+            stg = 1;
+            saveGame();
+            upBattleUI();
         }
 
         function changeStage(val) {
@@ -3196,6 +3268,7 @@
         }
 
         function getAreaParticleTheme() {
+            if (inDungeon && (currentEvent === "god_entity" || eg.some(e => e.isGodEntity))) return { color: "#fde047", vx: 0.1, vy: -0.95 };
             if (inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero))) return { color: "#4ade80", vx: 0, vy: -0.85 };
             if (inDungeon && inKingdom) return { color: "#facc15", vx: 0.15, vy: -0.55 };
             if (inDungeon && isBossStage(stg)) return { color: "#ef4444", vx: 0, vy: -0.9 };
@@ -3244,11 +3317,13 @@
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                     const theme = getAreaParticleTheme();
-                    if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "zombie_hero" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isZombieHero))) {
+                    if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "zombie_hero" || currentEvent === "god_entity" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isZombieHero || e.isGodEntity))) {
                         battleMagicAngle += 0.012;
-                        const mColor = (eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero")
-                            ? "#22c55e"
-                            : (inKingdom ? "#eab308" : ((stg === 500 || stg === 1000) ? "#9333ea" : (isBossStage(stg) ? "#dc2626" : "#4f46e5")));
+                        const mColor = (eg.some(e => e.isGodEntity) || currentEvent === "god_entity")
+                            ? "#facc15"
+                            : ((eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero")
+                                ? "#22c55e"
+                                : (inKingdom ? "#eab308" : ((stg === 500 || stg === 1000) ? "#9333ea" : (isBossStage(stg) ? "#dc2626" : "#4f46e5"))));
                         drawMagicCircle(ctx, canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.42, battleMagicAngle, mColor, 0.16);
                     }
 
@@ -3564,6 +3639,12 @@
                     seSkill();
                     document.getElementById("battleLog").innerText = "🏚️ 禍々しい気配が立ち込めている…上の枠から選択してください。";
                     return;
+                } else if (evRoll < 0.0901) {
+                    currentEvent = "god_entity";
+                    lastFloorWasEvent = true;
+                    seMixSuccess();
+                    document.getElementById("battleLog").innerText = "🌌 次元の裂け目から神々しい気配が溢れている…上の枠から選択してください！";
+                    return;
                 }
             }
 
@@ -3717,33 +3798,33 @@
             if (choice === 1) {
                 boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 5);
                 seStageClear();
-                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！ボックス上限が " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " (最大!)" : "") + " になった！";
+                msg = "👳 旅商人から『📦拡張ポーチ』を受け取った！【効果】ボックス上限が+5体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。";
             } else if (choice === 2) {
                 let count = 0;
                 p.forEach(m => { if (!m.inParty && levelUpMonster(m, 10) > 0) count++; });
                 seLvUp();
                 msg = count > 0
-                    ? ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！控えモンスター" + count + "体がLv+10された！")
-                    : ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！（控えに育成できるモンスターがいないため効果なし）");
+                    ? ("👳 旅商人から『🧪奇跡のエキス』を受け取った！【効果】控えモンスター" + count + "体のLvが+10された。")
+                    : ("👳 旅商人から『🧪奇跡のエキス』を受け取った！【効果】育てられる控えモンスターがいなかった。");
             } else if (choice === 3) {
-                msg = "👳 旅商人から「🔮ダンジョンの水晶」を受け取った！ " + useDungeonCrystal();
+                msg = "👳 旅商人から『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal();
             } else if (choice === 4) {
                 const lvLogs = grantExpToParty(40);
                 seLvUp();
-                msg = "👳 旅商人から「🍙おにぎりセット」を受け取った！戦闘メンバー全員に EXP+40！" + (lvLogs ? (" " + lvLogs) : "");
+                msg = "👳 旅商人から『🍙おにぎりセット』を受け取った！【効果】戦闘メンバー全員がEXP+40を獲得した。" + (lvLogs ? (" " + lvLogs) : "");
             } else if (choice === 5) {
                 p.forEach(m => { if (m.inParty) { m.df += 2; m.m += 4; m.hp = Math.min(m.m, m.hp + 4); } });
                 seStageClear();
-                msg = "👳 旅商人から「🧣旅人のマント」を受け取った！戦闘メンバー全員の最大HP+4・防御+2！";
+                msg = "👳 旅商人から『🧣旅人のマント』を受け取った！【効果】戦闘メンバー全員の最大HP+4・防御+2された。";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty) { m.sp += 2; m.at += 1; } });
                 seStageClear();
-                msg = "👳 旅商人から「🥾俊足のブーツ」を受け取った！戦闘メンバー全員の素早さ+2・攻撃+1！";
+                msg = "👳 旅商人から『🥾俊足のブーツ』を受け取った！【効果】戦闘メンバー全員の素早さ+2・攻撃+1された。";
             } else {
                 expBonusRate += 0.05;
                 const raised = addMixBonusCapped(0.003);
                 seStageClear();
-                msg = "👳 旅商人から「🪙古びた金貨」を受け取った！獲得EXP+5%" + (raised ? (" ＆ 配合確率+0.3%（現在" + getMixPctText() + "%）！") : "！（配合確率は上限80%に達しています）");
+                msg = "👳 旅商人から『🪙古びた金貨』を受け取った！【効果】獲得EXP+5%" + (raised ? ("・配合確率+0.3%された（現在" + getMixPctText() + "%）。") : "された（配合確率は上限80%に達しています）。");
             }
 
             showNotice(msg, 5500);
@@ -3820,6 +3901,33 @@
             initBattleState(zombieMon);
             eg = [zombieMon];
             document.getElementById("battleLog").innerText = "💀 廃国のゾンビ絵文字勇者(Lv.50)との決戦が始まった！";
+            upBattleUI();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+            }
+        }
+
+        function chooseGodEntityAction(fight) {
+            if (!inDungeon || currentEvent !== "god_entity") return;
+
+            if (!fight) {
+                showNotice("💨 星辰の大魔神から逃げ出した！", 3500);
+                advanceStageAfterEvent("", true);
+                return;
+            }
+
+            currentEvent = null;
+            const g = SPECIAL_D["星辰の大魔神"];
+            const st100 = calcStatsByLevel(g, 100, false);
+            let godMon = {
+                n: "星辰の大魔神", m: st100.m, hp: st100.m, at: st100.at, df: st100.df, sp: st100.sp,
+                ex: g.ex, isGodEntity: true, fixedLv: 100, skillId: 0
+            };
+            initBattleState(godMon);
+            eg = [godMon];
+            document.getElementById("battleLog").innerText = "🧞‍♂️ 星辰の大魔神(Lv.100)との超絶決戦が始まった！";
             upBattleUI();
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -4017,25 +4125,16 @@
             let maxPartyLv = 1;
             partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
 
-            let pool, targetLv, rareChance, gradeLabel;
-            if (grade === "large") {
-                pool = Object.keys(D).filter(k => D[k].no >= 51 && D[k].no <= 100 && !isSynthOnly(k));
-                if (pool.length === 0) pool = Object.keys(D).filter(k => !isSynthOnly(k));
-                targetLv = Math.min(100, Math.max(25, maxPartyLv + 10));
-                rareChance = 0.10;
-                gradeLabel = "🏆大文字級";
-            } else {
-                pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 60 && !isSynthOnly(k));
-                targetLv = maxPartyLv;
-                rareChance = 0.03;
-                gradeLabel = "🥉小文字級";
-            }
+            const isLarge = (grade === "large");
+            const pool = Object.keys(D).filter(k => isLarge ? (D[k].no >= 51 && D[k].no <= 100) : (D[k].no >= 1 && D[k].no <= 50));
+            const gradeLabel = isLarge ? "🏆大文字級" : "🥉小文字級";
 
             eg = [];
             for (let i = 0; i < 3; i++) {
                 const name = pool[Math.floor(Math.random() * pool.length)];
                 const b = D[name];
-                const isRare = Math.random() < rareChance;
+                const targetLv = isLarge ? maxPartyLv : (Math.floor(Math.random() * 50) + 1);
+                const isRare = Math.random() < 0.03;
                 const st = calcStatsByLevel(b, targetLv, isRare);
                 const mon = {
                     n: name, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
@@ -4051,7 +4150,7 @@
             }
 
             seSkill();
-            document.getElementById("battleLog").innerText = "🏟️ 闘技場【" + gradeLabel + "】開始！Lv." + targetLv + "のモンスター3体に勝利せよ！";
+            document.getElementById("battleLog").innerText = "🏟️ 闘技場【" + gradeLabel + "】開始！ランダムな3体に勝利せよ！";
             upBattleUI();
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -4085,40 +4184,40 @@
             if (choice === 1) {
                 boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 1);
                 seStageClear();
-                msg = "🏪 商店で「👝拡張ミニポーチ」を貰った！（ボックス上限 → 現在 " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " 最大!" : "") + "）そして出国した！";
+                msg = "🏪 商店で『👝拡張ミニポーチ』を受け取った！【効果】ボックス上限が+1体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。そして出国した！";
             } else if (choice === 2) {
                 const raised = addMixBonusCapped(0.005);
                 seStageClear();
                 msg = raised
-                    ? ("🏪 商店で「⚗️賢者の小瓶」を貰った！（配合確率 +0.5% → 現在 " + getMixPctText() + "%）そして出国した！")
-                    : ("🏪 商店で「⚗️賢者の小瓶」を貰った！（強化上限80%に達しているためこれ以上上がらない）そして出国した！");
+                    ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
+                    : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているためこれ以上上がらない。そして出国した！");
             } else if (choice === 3) {
                 wildJoinBonus += 0.005;
                 seStageClear();
-                msg = "🏪 商店で「🍪魅惑のおやつ」を貰った！（野生モンスター加入率 +0.5%）そして出国した！";
+                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生モンスターの加入率が+0.5%された。そして出国した！";
             } else if (choice === 4) {
                 expBonusRate += 0.10;
                 seStageClear();
-                msg = "🏪 商店で「🔖祝福のしおり」を貰った！（獲得EXP +10%）そして出国した！";
+                msg = "🏪 商店で『🔖祝福のしおり』を受け取った！【効果】獲得EXPが+10%された。そして出国した！";
             } else if (choice === 5) {
-                msg = "🏪 商店で「🔮ダンジョンの水晶」を貰った！ " + useDungeonCrystal() + " そして出国した！";
+                msg = "🏪 商店で『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal() + " そして出国した！";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
                 const lvLogs = grantExpToParty(25);
                 seLvUp();
-                msg = "🏪 商店で「🍞焼きたてパン」を貰った！戦闘メンバーHP全回復＆EXP+25！" + (lvLogs ? (" " + lvLogs) : "") + " そして出国した！";
+                msg = "🏪 商店で『🍞焼きたてパン』を受け取った！【効果】戦闘メンバー全員のHPが全回復し、EXP+25を獲得した。" + (lvLogs ? (" " + lvLogs) : "") + " そして出国した！";
             } else if (choice === 7) {
                 p.forEach(m => { if (m.inParty) { m.m += 2; m.hp += 2; m.at += 1; } });
                 seStageClear();
-                msg = "🏪 商店で「🍬ほのかな飴玉」を貰った！戦闘メンバー全員の最大HP+2・攻撃+1！そして出国した！";
+                msg = "🏪 商店で『🍬ほのかな飴玉』を受け取った！【効果】戦闘メンバー全員の最大HP+2・攻撃+1された。そして出国した！";
             } else if (choice === 8) {
                 p.forEach(m => { if (m.inParty) { m.df += 1; } });
                 seStageClear();
-                msg = "🏪 商店で「🛡️木の小盾」を貰った！戦闘メンバー全員の防御+1！そして出国した！";
+                msg = "🏪 商店で『🛡️木の小盾』を受け取った！【効果】戦闘メンバー全員の防御+1された。そして出国した！";
             } else if (choice === 9) {
                 p.forEach(m => { if (m.inParty) { m.sp += 1; } });
                 seStageClear();
-                msg = "🏪 商店で「🪶軽やかな羽根」を貰った！戦闘メンバー全員の素早さ+1！そして出国した！";
+                msg = "🏪 商店で『🪶軽やかな羽根』を受け取った！【効果】戦闘メンバー全員の素早さ+1された。そして出国した！";
             } else if (choice === 10) {
                 let lvCnt = 0;
                 p.forEach(m => {
@@ -4131,38 +4230,38 @@
                     }
                 });
                 seLvUp();
-                msg = "🏪 商店で「🌱若葉の苗」を貰った！控えモンスター全員にEXP+15" + (lvCnt > 0 ? ("（" + lvCnt + "回LvUP!）") : "") + "！そして出国した！";
+                msg = "🏪 商店で『🌱若葉の苗』を受け取った！【効果】控えモンスター全員がEXP+15を獲得した" + (lvCnt > 0 ? ("（" + lvCnt + "回LvUP!）") : "") + "。そして出国した！";
             } else if (choice === 11) {
                 const raised = addMixBonusCapped(0.002);
                 seStageClear();
                 msg = raised
-                    ? ("🏪 商店で「🕯️小さなろうそく」を貰った！（配合確率 +0.2% → 現在 " + getMixPctText() + "%）そして出国した！")
-                    : ("🏪 商店で「🕯️小さなろうそく」を貰った！（強化上限80%に達しているためこれ以上上がらない）そして出国した！");
+                    ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
+                    : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているためこれ以上上がらない。そして出国した！");
             } else if (choice === 12) {
                 wildJoinBonus += 0.002;
                 seStageClear();
-                msg = "🏪 商店で「🍯甘いミツ」を貰った！（野生モンスター加入率 +0.2%）そして出国した！";
+                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生モンスターの加入率が+0.2%された。そして出国した！";
             } else if (choice === 13) {
                 expBonusRate += 0.03;
                 seStageClear();
-                msg = "🏪 商店で「📜古びた羊皮紙」を貰った！（獲得EXP +3%）そして出国した！";
+                msg = "🏪 商店で『📜古びた羊皮紙』を受け取った！【効果】獲得EXPが+3%された。そして出国した！";
             } else if (choice === 14) {
                 const top = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0))[0];
                 const g = top ? levelUpMonster(top, 1) : 0;
                 seLvUp();
                 msg = g > 0
-                    ? ("🏪 商店で「🍀四つ葉のしおり」を貰った！先頭の「" + top.n + "」がLv." + top.lv + "に上がった！そして出国した！")
-                    : ("🏪 商店で「🍀四つ葉のしおり」を貰った！（先頭モンスターが上限Lvのため効果なし）そして出国した！");
+                    ? ("🏪 商店で『🍀四つ葉のしおり』を受け取った！【効果】戦闘1番手「" + top.n + "」のLvが+1された（Lv." + top.lv + "）。そして出国した！")
+                    : ("🏪 商店で『🍀四つ葉のしおり』を受け取った！【効果】戦闘1番手が上限Lvのため上がらなかった。そして出国した！");
             } else {
                 const reserves = p.filter(m => !m.inParty && m.lv < getMaxLv(m));
                 if (reserves.length > 0) {
                     const pick = reserves[Math.floor(Math.random() * reserves.length)];
                     const g = levelUpMonster(pick, 2);
                     seLvUp();
-                    msg = "🏪 商店で「🎲運命のサイコロ」を貰った！控えの「" + pick.n + "」がLv+" + g + "された！そして出国した！";
+                    msg = "🏪 商店で『🎲運命のサイコロ』を受け取った！【効果】控えの「" + pick.n + "」のLvが+" + g + "された。そして出国した！";
                 } else {
                     seStageClear();
-                    msg = "🏪 商店で「🎲運命のサイコロ」を貰った！（育てられる控えモンスターがいないため効果なし）そして出国した！";
+                    msg = "🏪 商店で『🎲運命のサイコロ』を受け取った！【効果】育てられる控えモンスターがいなかった。そして出国した！";
                 }
             }
 
@@ -4312,6 +4411,10 @@
             alert("【💀 特別遭遇情報】\nNo.A（廃国のゾンビ絵文字勇者）\n\nボス以外の階で0.4%の確率で遭遇！（撃破時0.1%で仲間になります・配合不可）");
         }
 
+        function showGodEntityHint() {
+            alert("【🌌 超特別遭遇情報】\nNo.B（星辰の大魔神）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）");
+        }
+
         function upBattleUI() {
             const weekend = isWeekendBonus();
             const wkBanner = document.getElementById("weekendBanner");
@@ -4322,8 +4425,10 @@
             let envName = "", envEmoji = "", envClass = "";
             const isBossNow = inDungeon && !inKingdom && isBossStage(stg);
             const isZombieNow = inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero));
+            const isGodNow = inDungeon && (currentEvent === "god_entity" || eg.some(e => e.isGodEntity));
 
-            if (isZombieNow) { envName = "廃国の決戦"; envEmoji = "🏚️"; envClass = "bg-zombie"; }
+            if (isGodNow) { envName = "星辰の聖域"; envEmoji = "🌌"; envClass = "bg-god"; }
+            else if (isZombieNow) { envName = "廃国の決戦"; envEmoji = "🏚️"; envClass = "bg-zombie"; }
             else if (inDungeon && inKingdom) {
                 envName = "知らない王国"; envEmoji = "🏰";
                 if (kingdomScene === "arena" || kingdomScene === "arena_menu") envClass = "bg-arena";
@@ -4418,6 +4523,8 @@
                         eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>王国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
                     } else if (currentEvent === "zombie_hero") {
                         eS.innerHTML = "<b style='font-size:12px; color:#14532d;'>【💀特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("廃国のゾンビ絵文字勇者", "battle-monster", "font-size:46px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#15803d;'>廃国のゾンビ絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#334155;'>黒きオーラを纏い立ち塞がった！</span>";
+                    } else if (currentEvent === "god_entity") {
+                        eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【🌌超特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("星辰の大魔神", "battle-monster", "font-size:48px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#7c3aed;'>星辰の大魔神</b> <span style='font-size:10px;'>(Lv.100)</span><br><span style='font-size:10.5px; color:#334155;'>宇宙の理を司る神魔が降臨した！</span>";
                     } else if (currentEvent === "chest") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🧰宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
                     } else if (currentEvent === "sage") {
@@ -4439,8 +4546,9 @@
                     const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
                     const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
                     const isZombieBattle = inDungeon && eg.some(m => m.isZombieHero);
+                    const isGodBattle = inDungeon && eg.some(m => m.isGodEntity);
                     const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
-                    let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : "【敵】"))))) + "</b>"];
+                    let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の大魔神】" : "【敵】")))))) + "</b>"];
                     if (!inDungeon || eg.length === 0) {
                         eHtml.push("<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>");
                         const bEnterBtm = document.getElementById("btnEnterBtm");
@@ -4451,9 +4559,9 @@
                             let inf = getMonData(m.n);
                             let eId = " id='eM_slot_" + i + "' ";
                             let eStateHtml = buildStateIcons(m);
-                            let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero) ? "48px" : "36px";
+                            let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
                             let dispLv = m.fixedLv ? m.fixedLv : stg;
-                            let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : "#1e293b")));
+                            let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b"))));
 
                             let deadClass = isDead ? " monster-dead-coffin" : "";
                             let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
@@ -4467,6 +4575,7 @@
                             if (m.isSpecialHero) eHtml.push("<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>");
                             if (m.isSpecialSage) eHtml.push("<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>");
                             if (m.isZombieHero) eHtml.push("<br><span class='skill-badge' style='background:#090d16; color:#bef264; border-color:#166534;'>💀廃国の呪剣・黒蝕</span>");
+                            if (m.isGodEntity) eHtml.push("<br><span class='skill-badge' style='background:#fefce8; color:#b45309; border-color:#f59e0b;'>🌌星辰崩壊・アルマゲドン</span>");
                             if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
                             eHtml.push("<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml);
                             eHtml.push('<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
@@ -4493,13 +4602,13 @@
                 } else if (inDungeon && currentEvent === "merchant") {
                     let reserveCount = p.filter(m => !m.inParty).length;
                     const merchantDefs = {
-                        1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">(上限+5：現在' + boxLimit + '/200体)</span></button>',
-                        2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">(控え' + reserveCount + '体のみLv+10)</span></button>',
-                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中・死亡中30%で上限Lv+1)</span></button>',
-                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<br><span style="font-size:10px;">(戦闘メンバー全員EXP+40)</span></button>',
-                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<br><span style="font-size:10px;">(戦闘メンバーHP+4・防+2)</span></button>',
-                        6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<br><span style="font-size:10px;">(戦闘メンバー素+2・攻+1)</span></button>',
-                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<br><span style="font-size:10px;">(EXP+5% & 配合+0.3%)</span></button>'
+                        1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">【効果】ボックス上限+5体 (現在' + boxLimit + '/200)</span></button>',
+                        2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">【効果】控え全員(' + reserveCount + '体) Lv+10</span></button>',
+                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">【効果】戦闘中・死亡中 30%でLv上限+1</span></button>',
+                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<br><span style="font-size:10px;">【効果】戦闘中全員 EXP+40</span></button>',
+                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<br><span style="font-size:10px;">【効果】戦闘中全員 最大HP+4・防御+2</span></button>',
+                        6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<br><span style="font-size:10px;">【効果】戦闘中全員 素早さ+2・攻撃+1</span></button>',
+                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<br><span style="font-size:10px;">【効果】永続 EXP+5%・配合+0.3%</span></button>'
                     };
                     let mBtns = (currentMerchantItems || [1, 2]).map(id => merchantDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -4526,6 +4635,16 @@
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#16a34a,#14532d);border-bottom:3px solid #052e16;" onclick="chooseZombieHeroAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseZombieHeroAction(false)">💨 逃げる</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "god_entity") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title" style="color:#7c3aed;">🌌 星辰の大魔神(Lv.100)が現れた！！</div>' +
+                        '<div class="event-sub" style="color:#1e293b;">出現率<b>0.01%</b>の超希少キャラクター！最強スキル「🌌星辰崩壊・アルマゲドン」を操る！<br>図鑑<b>No.B</b>（配合不可）・撃破すれば<b>100%確実にLv.100で仲間になる！</b><br>勝利または逃走で次の階へ進みます（敗北時もペナルティなし）。</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#f59e0b,#d97706);border-bottom:3px solid #b45309;" onclick="chooseGodEntityAction(true)">⚔️ 戦う！</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="chooseGodEntityAction(false)">💨 逃げる</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "chest") {
@@ -4604,34 +4723,37 @@
                     const partyMembers = p.filter(m => m.inParty);
                     let maxPartyLv = 1;
                     partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
-                    const lgLv = Math.min(100, Math.max(25, maxPartyLv + 10));
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">🏟️ 王国の闘技場：階級を選んでください！</div>' +
-                        '<div class="event-sub">3体の対戦相手を倒せば、その中から1体を仲間にできます！</div>' +
+                        '<div class="event-title">🏟️ 王国の闘技場：階級を選んで挑戦しよう！</div>' +
+                        '<div class="event-sub" style="text-align:left; background:rgba(255,255,255,0.85); padding:7px 9px; border-radius:9px; border:1px solid #fed7aa;">' +
+                            '🥉 <b>小文字級</b>：図鑑<b>No.1〜No.50</b>からランダム3体（各<b>Lv.1〜50ランダム</b>）と対戦！<br>' +
+                            '🏆 <b>大文字級</b>：図鑑<b>No.51〜No.100</b>からランダム3体（全員 戦闘中の最高<b>Lv.' + maxPartyLv + '</b>と同じ）と対戦！<br>' +
+                            '<span style="color:#c2410c;">※3体すべて倒すと、倒した3体の中から好きな1体を仲間にできます！負けてもペナルティなし！</span>' +
+                        '</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<br><span style="font-size:10px;">(No.1〜60 / Lv.' + maxPartyLv + ')</span></button>' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<br><span style="font-size:10px;">(No.51〜100 / Lv.' + lgLv + '・色違い10%)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<br><span style="font-size:10px;">(No.1〜50 / Lv.1〜50)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<br><span style="font-size:10px;">(No.51〜100 / Lv.' + maxPartyLv + ')</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="startArenaBattle(\'back\')">🔙 戻る</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "kingdom_shop") {
                     const shopDefs = {
-                        1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<br><span style="font-size:10px;">(上限+1：最大200体)</span></button>',
-                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<br><span style="font-size:10px;">(配合+0.5% / 上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<br><span style="font-size:10px;">(野生加入率 +0.5%)</span></button>',
-                        4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<br><span style="font-size:10px;">(獲得EXP +10%)</span></button>',
-                        5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中・死亡中30%で上限Lv+1)</span></button>',
-                        6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<br><span style="font-size:10px;">(戦闘中HP全快 & EXP+25)</span></button>',
-                        7:  '<button class="btn-event" style="background:linear-gradient(180deg,#f43f5e,#e11d48);border-bottom:3px solid #9f1239;" onclick="pickKingdomShopItem(7)">🍬 ほのかな飴玉<br><span style="font-size:10px;">(戦闘中HP+2・攻+1)</span></button>',
-                        8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<br><span style="font-size:10px;">(戦闘メンバー防御+1)</span></button>',
-                        9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<br><span style="font-size:10px;">(戦闘メンバー素早さ+1)</span></button>',
-                        10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<br><span style="font-size:10px;">(控え全員EXP+15)</span></button>',
-                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<br><span style="font-size:10px;">(配合+0.2% / 上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<br><span style="font-size:10px;">(野生加入率 +0.2%)</span></button>',
-                        13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<br><span style="font-size:10px;">(獲得EXP +3%)</span></button>',
-                        14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<br><span style="font-size:10px;">(戦闘1番手のLv+1)</span></button>',
-                        15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<br><span style="font-size:10px;">(控え1体ランダムLv+2)</span></button>'
+                        1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<br><span style="font-size:10px;">【効果】ボックス上限+1体 (最大200)</span></button>',
+                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<br><span style="font-size:10px;">【効果】永続 配合+0.5% (上限80%)</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<br><span style="font-size:10px;">【効果】永続 野生加入率+0.5%</span></button>',
+                        4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<br><span style="font-size:10px;">【効果】永続 獲得EXP+10%</span></button>',
+                        5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">【効果】戦闘中・死亡中 30%でLv上限+1</span></button>',
+                        6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<br><span style="font-size:10px;">【効果】戦闘中HP全回復・EXP+25</span></button>',
+                        7:  '<button class="btn-event" style="background:linear-gradient(180deg,#f43f5e,#e11d48);border-bottom:3px solid #9f1239;" onclick="pickKingdomShopItem(7)">🍬 ほのかな飴玉<br><span style="font-size:10px;">【効果】戦闘中全員 最大HP+2・攻撃+1</span></button>',
+                        8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<br><span style="font-size:10px;">【効果】戦闘中全員 防御+1</span></button>',
+                        9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<br><span style="font-size:10px;">【効果】戦闘中全員 素早さ+1</span></button>',
+                        10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<br><span style="font-size:10px;">【効果】控え全員 EXP+15</span></button>',
+                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<br><span style="font-size:10px;">【効果】永続 配合+0.2% (上限80%)</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<br><span style="font-size:10px;">【効果】永続 野生加入率+0.2%</span></button>',
+                        13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<br><span style="font-size:10px;">【効果】永続 獲得EXP+3%</span></button>',
+                        14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<br><span style="font-size:10px;">【効果】戦闘1番手 Lv+1</span></button>',
+                        15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<br><span style="font-size:10px;">【効果】控えランダム1体 Lv+2</span></button>'
                     };
                     let sBtns = (currentShopItems || [1, 2, 3, 4]).map(id => shopDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -4688,8 +4810,8 @@
                 const infB = getMonData(b.n) || { no: 0 };
                 const noA = infA.no;
                 const noB = infB.no;
-                const sortA = noA === "A" ? 1050 : ((typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : (Number(noA) || 0));
-                const sortB = noB === "A" ? 1050 : ((typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : (Number(noB) || 0));
+                const sortA = noA === "B" ? 1060 : (noA === "A" ? 1050 : ((typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : (Number(noA) || 0)));
+                const sortB = noB === "B" ? 1060 : (noB === "A" ? 1050 : ((typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : (Number(noB) || 0)));
                 if (boxSortMode === "no" && boxNoDesc) return sortB - sortA;
                 return sortA - sortB;
             });
@@ -4713,7 +4835,8 @@
                         let inf = getMonData(n.n);
                         if (!inf) continue;
                         let isZmb = isZombieMon(n);
-                        let liClass = "compact-li" + (inDungeon ? " locked" : "") + (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : ""));
+                        let isGod = isGodMon(n);
+                        let liClass = "compact-li" + (inDungeon ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
                         let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
                         let maxLv = getMaxLv(n);
                         let capB = n.lvCapBonus || 0;
@@ -4722,8 +4845,9 @@
                         let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
                         let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
                         let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
+                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
                         let rareStar = n.isRare ? "✨" : "";
-                        let emojiHtml = isZmb
+                        let emojiHtml = (isZmb || isGod)
                             ? renderMonEmojiHtml(n, "", "font-size:15px;")
                             : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
 
@@ -4772,7 +4896,7 @@
                         }
 
                         boxParts.push('<li class="' + liClass + '">' +
-                            '<div class="box-header-row"><span>' + bulkCheckHtml + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + zmbTag + rareTag + partyTag + lockTag + deadText + '</span><span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span> <span style="font-weight:900; font-size:10px; color:' + (capB > 0 ? '#7c3aed' : '#94a3b8') + ';">(+' + capB + ')</span></span></div>' +
+                            '<div class="box-header-row"><span>' + bulkCheckHtml + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + godTag + zmbTag + rareTag + partyTag + lockTag + deadText + '</span><span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span> <span style="font-weight:900; font-size:10px; color:' + (capB > 0 ? '#7c3aed' : '#94a3b8') + ';">(+' + capB + ')</span></span></div>' +
                             '<span class="status-text">HP:' + n.hp + '/' + n.m + ' 攻:' + n.at + ' 防:' + n.df + ' 素:' + n.sp + ' (EXP:' + expText + ')</span>' +
                             skillHtml + actionBtns + '</li>');
                     }
@@ -4789,22 +4913,24 @@
                         let n = p[i];
                         let inf = getMonData(n.n);
                         if (!inf) continue;
-                        let isBossOrSpecial = (typeof inf.no === "number" && inf.no < 0) || inf.no === "A";
+                        let isBossOrSpecial = (typeof inf.no === "number" && inf.no < 0) || inf.no === "A" || inf.no === "B";
                         let isProtected = inDungeon || n.inParty || n.locked || isBossOrSpecial;
                         let disAttr = isProtected ? "disabled" : "";
                         let isZmb = isZombieMon(n);
-                        let liClass = "compact-mix-li" + (isProtected ? " locked" : "") + (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : ""));
+                        let isGod = isGodMon(n);
+                        let liClass = "compact-mix-li" + (isProtected ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
                         let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
                         let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
+                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
                         let rareStar = n.isRare ? "✨" : "";
-                        let emojiHtml = isZmb
+                        let emojiHtml = (isZmb || isGod)
                             ? renderMonEmojiHtml(n, "", "font-size:14px;")
                             : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
                         let tags = "";
                         if (n.inParty) tags += " <span style='color:#059669;font-weight:900;font-size:10px;'>[参加中]</span>";
                         if (n.locked) tags += "<span class='lock-badge'>🔒保護</span>";
                         if (isBossOrSpecial) tags += " <span style='color:#dc2626;font-weight:900;font-size:10px;'>[配合不可]</span>";
-                        mixParts.push('<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" onchange="onMixCbChange(this)" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + zmbTag + rareTag + tags + '</span></label></li>');
+                        mixParts.push('<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" onchange="onMixCbChange(this)" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + godTag + zmbTag + rareTag + tags + '</span></label></li>');
                     }
                     mixList.innerHTML = mixParts.join("");
                 }
@@ -4882,21 +5008,30 @@
                     bossZkDiv.innerHTML = bParts.join("");
                 }
 
-                const spName = "廃国のゾンビ絵文字勇者";
-                const spFound = zk.includes(spName) ? 1 : 0;
+                const spA = "廃国のゾンビ絵文字勇者";
+                const spB = "星辰の大魔神";
+                const spFound = (zk.includes(spA) ? 1 : 0) + (zk.includes(spB) ? 1 : 0);
                 const spBadge1 = document.getElementById("specialZukanCountBadge");
                 const spBadge2 = document.getElementById("specialZukanSubBadge");
-                if (spBadge1) spBadge1.innerText = " / 💀特別(" + spFound + "/1種)";
-                if (spBadge2) spBadge2.innerText = "(" + spFound + "/1種)";
+                if (spBadge1) spBadge1.innerText = " / 💀特別(" + spFound + "/2種)";
+                if (spBadge2) spBadge2.innerText = "(" + spFound + "/2種)";
 
                 const spZkDiv = document.getElementById("specialZk");
                 if (spZkDiv) {
-                    const zh = SPECIAL_D[spName];
-                    if (spFound) {
-                        spZkDiv.innerHTML = '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spName, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spName + '</div>';
+                    const zh = SPECIAL_D[spA];
+                    const gd = SPECIAL_D[spB];
+                    let spHtml = "";
+                    if (zk.includes(spA)) {
+                        spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
                     } else {
-                        spZkDiv.innerHTML = '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()"><span class="silhouette">' + zh.a + '</span><br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()"><span class="silhouette">' + zh.a + '</span><br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
                     }
+                    if (zk.includes(spB)) {
+                        spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
+                    } else {
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()"><span class="silhouette">' + gd.a + '</span><br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
+                    }
+                    spZkDiv.innerHTML = spHtml;
                 }
             }
         }
@@ -5036,6 +5171,30 @@
                 skillLogs += "💀" + attacker.n + "の廃国の呪剣・黒蝕！追撃 " + dmg + " 吸収＆毒・麻痺＆全能力UP＆バリア＆次回1.5倍！ ";
                 fxQueue.push("💀🖤");
                 showDamagePop(attacker, !isPlayerAttack, "+" + dmg, "#10b981", false);
+                buffSelf = true;
+                if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+
+            if (no === "B" && Math.random() < 0.70) {
+                attacker.nextAtk15 = true;
+                let atkVal = attacker.at + (attacker.buffAt || 0);
+                let dmg = Math.max(5, Math.floor(atkVal * 1.00));
+                if (defender.hp > 0) {
+                    defender.hp = Math.max(0, defender.hp - dmg);
+                    showDamagePop(defender, isPlayerAttack, "🌌-" + dmg, "#7c3aed", true);
+                    hitDefender = true;
+                    if (defSk.id !== 5) defender.isPoisoned = true;
+                    if (defSk.id !== 7) defender.isParalyzed = true;
+                }
+                let h = Math.max(2, Math.floor(attacker.m * 0.20));
+                attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(3, Math.floor(attacker.at * 0.20));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(3, Math.floor(attacker.df * 0.20));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(3, Math.floor(attacker.sp * 0.20));
+                attacker.nullifyOnce = true;
+                skillLogs += "🌌" + attacker.n + "の星辰崩壊・アルマゲドン！防御無視 " + dmg + " 追撃＆HP " + h + " 回復＆毒・麻痺＆全能力20%UP＆バリア＆次回1.5倍！ ";
+                fxQueue.push("🌌☄️");
+                showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                 buffSelf = true;
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
             }
@@ -5592,6 +5751,7 @@
                     const wasHeroBattle = eg.some(e => e.isSpecialHero);
                     const wasSageBattle = eg.some(e => e.isSpecialSage);
                     const wasZombieBattle = eg.some(e => e.isZombieHero);
+                    const wasGodBattle = eg.some(e => e.isGodEntity);
                     const wasArenaBattle = inKingdom && kingdomScene === "arena";
                     let needsFullUpdate = false;
                     let stageJustCleared = false;
@@ -5668,6 +5828,38 @@
                             const prog = handleFloorProgressAfterClear();
                             if (prog.needsFullUpdate) needsFullUpdate = true;
                             turnLog += prog.log;
+                        } else if (currentEnemy.isGodEntity) {
+                            turnLog += "🌌星辰の大魔神(No.B)に勝利した！ ";
+                            let gainExp = Math.max(1, Math.floor((currentEnemy.ex || 1000) * getExpMultiplier()));
+                            turnLog += "💎EXP " + gainExp + " 獲得！ " + grantExpToParty(gainExp);
+
+                            if (p.length >= boxLimit) {
+                                seStageClear();
+                                showNotice("⚠️ ボックスが上限(" + boxLimit + "体)のため「星辰の大魔神 (No.B)」が仲間にならなかった…", 7000);
+                                turnLog += "📦ボックス上限(" + boxLimit + "体)のため星辰の大魔神は仲間にならなかった… ";
+                            } else {
+                                const gd = SPECIAL_D["星辰の大魔神"];
+                                const st100 = calcStatsByLevel(gd, 100, false);
+                                let newAlly = {
+                                    n: "星辰の大魔神", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m, at: st100.at, df: st100.df, sp: st100.sp,
+                                    ex: 0, nx: st100.nx, inParty: false, partyOrder: 0, locked: false,
+                                    isRare: false, isGodEntity: true, skillId: getRandomSkillId()
+                                };
+                                initBattleState(newAlly);
+                                p.push(newAlly);
+                                if (!zk.includes("星辰の大魔神")) zk.push("星辰の大魔神");
+                                showNotice("🌌✨ 超絶奇跡(0.01%)！！「星辰の大魔神 (No.B)」(Lv.100)が確実に仲間になりました！！", 8000);
+                                needsFullUpdate = true;
+                                seMixSuccess();
+                            }
+
+                            eg.shift();
+                            stageJustCleared = true;
+                            if (stg > maxClearStg) maxClearStg = stg;
+                            if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
+                            const prog = handleFloorProgressAfterClear();
+                            if (prog.needsFullUpdate) needsFullUpdate = true;
+                            turnLog += prog.log;
                         } else if (currentEnemy.isArenaEnemy) {
                             turnLog += "🏟️闘技場の" + currentEnemy.n + "を倒した！ ";
                             arenaClearedMonsters.push(currentEnemy);
@@ -5678,10 +5870,6 @@
                             if (eg.length === 0) {
                                 stageJustCleared = true;
                                 stats.arenaWinCount = (stats.arenaWinCount || 0) + 1;
-                                if (currentArenaGrade === "large") {
-                                    p.forEach(ally => { if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 1); });
-                                    turnLog += "✨大文字級制覇ボーナスで戦闘メンバー全員Lv+1！ ";
-                                }
                                 currentEvent = "arena_reward";
                                 seStageClear();
                                 turnLog += "🏆闘技場で3体に勝利した！上の枠から1体選んでください！";
@@ -5776,7 +5964,7 @@
                             needsFullUpdate = true;
                         }
                     } else if (partyDead) {
-                        if (wasHeroBattle || wasSageBattle || wasZombieBattle || wasArenaBattle) {
+                        if (wasHeroBattle || wasSageBattle || wasZombieBattle || wasGodBattle || wasArenaBattle) {
                             seFail();
                             p.forEach(m => { if (m.inParty) m.hp = m.m; });
                             const loseMsg = wasHeroBattle
@@ -5785,7 +5973,9 @@
                                     ? "😢 王国の配合賢者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
                                     : (wasZombieBattle
                                         ? "😢 廃国のゾンビ絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
-                                        : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"));
+                                        : (wasGodBattle
+                                            ? "😢 星辰の大魔神に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                            : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）")));
                             showNotice(loseMsg, 5000);
                             inDungeon = false;
                             inKingdom = false;
@@ -5870,7 +6060,7 @@
             }
             const no1 = getMonData(m1.n).no;
             const no2 = getMonData(m2.n).no;
-            if ((typeof no1 === "number" && no1 < 0) || (typeof no2 === "number" && no2 < 0) || no1 === "A" || no2 === "A") {
+            if ((typeof no1 === "number" && no1 < 0) || (typeof no2 === "number" && no2 < 0) || no1 === "A" || no2 === "A" || no1 === "B" || no2 === "B") {
                 return alert("⚠️ ボス・特別モンスターは配合の材料にできません！");
             }
 
