@@ -351,10 +351,6 @@
             margin: 4px 0;
             font-size: 10.5px;
         }
-        .guild-pick-row.taken {
-            background: #f1f5f9;
-            opacity: 0.72;
-        }
         .notice-banner {
             display: none;
             background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
@@ -1141,7 +1137,7 @@
             1️⃣ <b>パーティ編成</b>：下のボックスから最大3体「⚔️戦闘に出す」で登録！<br>
             2️⃣ <b>ダンジョン冒険</b>：「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
             3️⃣ <b>モンスター配合</b>：2匹を配合して新種を生み出そう！レベルは2匹の合計になります（配合アシストで作成可能な組み合わせを自動検索できます）。<br>
-            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・迷子の国王・知らない王国・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
+            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・迷子の国王・知らない王国（闘技場「小文字級/大文字級」・商店15種・ギルド25種）・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
             ⚠️ <b>注意</b>：「🔁同じ階周回」がONの間は、すべての遭遇イベントは発生しません。またイベントは2回連続で発生しません。土日はEXP2倍＆配合+10%！
         </div>
     </div>
@@ -1704,7 +1700,9 @@
         let currentEvent = null;
         let lastFloorWasEvent = false;
         let currentMerchantItems = [1, 2];
-        let currentShopItems = [1, 2, 3];
+        let currentShopItems = [1, 2, 3, 4];
+        let currentGuildChoices = [];
+        let currentArenaGrade = "small";
         let inDungeon = false;
         let isTurnRunning = false;
         let autoAtkTimer = null;
@@ -1862,15 +1860,15 @@
         }
 
         function useDungeonCrystal() {
-            const partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
+            const targets = p.filter(m => m.inParty || m.hp <= 0);
             let upNames = [];
-            let alreadyMaxNames = [];
+            let alreadyMaxCount = 0;
 
-            partyMembers.forEach(mon => {
+            targets.forEach(mon => {
                 const curBonus = mon.lvCapBonus || 0;
                 if (curBonus >= MAX_LV_CAP_BONUS) {
-                    alreadyMaxNames.push(mon.n);
-                } else if (Math.random() < 0.05) {
+                    alreadyMaxCount++;
+                } else if (Math.random() < 0.30) {
                     mon.lvCapBonus = curBonus + 1;
                     upNames.push(mon.n + "(上限Lv." + getMaxLv(mon) + " / +" + mon.lvCapBonus + ")");
                 }
@@ -1881,12 +1879,13 @@
                 return "🔮 ダンジョンの水晶を使った！✨ " + upNames.join("・") + " の上限レベルが+1された！";
             }
             seSkill();
-            if (alreadyMaxNames.length === partyMembers.length && partyMembers.length > 0) {
-                return "🔮 ダンジョンの水晶を使った！（戦闘メンバーは全員すでに上限+20に達している！）";
+            if (targets.length > 0 && alreadyMaxCount === targets.length) {
+                return "🔮 ダンジョンの水晶を使った！（対象モンスターは全員すでに上限+20に達している！）";
             }
-            return "🔮 ダンジョンの水晶を使った！しかし光は届かず上限は上がらなかった…（5%抽選外れ）";
+            return "🔮 ダンジョンの水晶を使った！しかし光は届かず上限は上がらなかった…（30%抽選外れ）";
         }
 
+        // 初期クエスト5件
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },    checkType: "stg",   val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 }, checkType: "mix",   val: 1 },
@@ -1895,22 +1894,33 @@
             { id: "m_rps1",    title: "ジャンケン名人",     condText: "謎の旅人に1回勝つ",            rewardText: "配合成功率+3%",         reward: { mix: 0.03 }, checkType: "rps",   val: 1 }
         ];
 
+        // ギルド追加クエスト25種類（上限20件まで追加可能）
         const GUILD_EXTRA_MISSIONS = [
-            { id: "gm_1",  title: "🏰王国の使者",         condText: "知らない王国に1回入国する",       rewardText: "ボックス上限+3",       reward: { box: 3 },              checkType: "kingdom", val: 1 },
-            { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",       condText: "王国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",        reward: { mix: 0.02 },           checkType: "sage",    val: 1 },
-            { id: "gm_3",  title: "🏟️闘技場の覇者",       condText: "王国の闘技場で1回勝利する",       rewardText: "戦闘EXP+10%",          reward: { exp: 0.10 },           checkType: "arena",   val: 1 },
-            { id: "gm_4",  title: "🤴慈悲の心",           condText: "迷子の国王を1回助ける",           rewardText: "野生加入率+0.5%",      reward: { wild: 0.005 },         checkType: "king",    val: 1 },
-            { id: "gm_5",  title: "🧰トレジャーハンター", condText: "謎の宝箱を1回開ける",             rewardText: "戦闘EXP+10%",          reward: { exp: 0.10 },           checkType: "chest",   val: 1 },
-            { id: "gm_6",  title: "🌈虹の輝き",           condText: "✨色違いを1体手に入れる",         rewardText: "ボックス上限+10",      reward: { box: 10 },             checkType: "rare",    val: 1 },
-            { id: "gm_7",  title: "⚔️王国の好敵手",       condText: "王国の絵文字勇者に勝利する",       rewardText: "戦闘EXP+15%",          reward: { exp: 0.15 },           checkType: "hero",    val: 1 },
-            { id: "gm_8",  title: "📖図鑑マイスター",     condText: "通常図鑑を50種埋める",            rewardText: "配合成功率+5%",        reward: { mix: 0.05 },           checkType: "zukan",   val: 50 },
-            { id: "gm_9",  title: "😈大魔王討伐",         condText: "500階ボスをクリアする",           rewardText: "上限+15 & EXP+25%",    reward: { box: 15, exp: 0.25 },  checkType: "stg",     val: 500 },
-            { id: "gm_10", title: "🧬熟練の錬金術師",     condText: "配合に10回成功する",              rewardText: "配合成功率+3%",        reward: { mix: 0.03 },           checkType: "mix",     val: 10 },
-            { id: "gm_11", title: "🌈虹のコレクター",     condText: "✨色違いを3体手に入れる",         rewardText: "ボックス上限+10",      reward: { box: 10 },             checkType: "rare",    val: 3 },
-            { id: "gm_12", title: "⚔️百階への道",         condText: "100階をクリアする",               rewardText: "戦闘EXP+15%",          reward: { exp: 0.15 },           checkType: "stg",     val: 100 },
-            { id: "gm_13", title: "📖博識の冒険者",       condText: "通常図鑑を75種埋める",            rewardText: "野生加入率+1%",        reward: { wild: 0.01 },          checkType: "zukan",   val: 75 },
-            { id: "gm_14", title: "👑王宮の守護騎士",   condText: "750階をクリアする",               rewardText: "ボックス上限+15",      reward: { box: 15 },             checkType: "stg",     val: 750 },
-            { id: "gm_15", title: "🌟神話の探究者",       condText: "1000階をクリアする",              rewardText: "配合+5% & EXP+25%",    reward: { mix: 0.05, exp: 0.25 },checkType: "stg",     val: 1000 }
+            { id: "gm_1",  title: "🏰王国の使者",         condText: "知らない王国に1回入国する",       rewardText: "ボックス上限+3",        reward: { box: 3 },               checkType: "kingdom",    val: 1 },
+            { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",       condText: "王国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",         reward: { mix: 0.02 },            checkType: "sage",       val: 1 },
+            { id: "gm_3",  title: "🏟️闘技場の覇者",       condText: "王国の闘技場で1回勝利する",       rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "arena",      val: 1 },
+            { id: "gm_4",  title: "🤴慈悲の心",           condText: "迷子の国王を1回助ける",           rewardText: "野生加入率+0.5%",       reward: { wild: 0.005 },          checkType: "king",       val: 1 },
+            { id: "gm_5",  title: "🧰トレジャーハンター", condText: "謎の宝箱を1回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 1 },
+            { id: "gm_6",  title: "🌈虹の輝き",           condText: "✨色違いを1体手に入れる",         rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "rare",       val: 1 },
+            { id: "gm_7",  title: "⚔️王国の好敵手",       condText: "王国の絵文字勇者に勝利する",       rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "hero",       val: 1 },
+            { id: "gm_8",  title: "📖図鑑マイスター",     condText: "通常図鑑を50種埋める",            rewardText: "配合成功率+5%",         reward: { mix: 0.05 },            checkType: "zukan",      val: 50 },
+            { id: "gm_9",  title: "😈大魔王討伐",         condText: "500階ボスをクリアする",           rewardText: "上限+15 & EXP+25%",     reward: { box: 15, exp: 0.25 },   checkType: "stg",        val: 500 },
+            { id: "gm_10", title: "🧬熟練の錬金術師",     condText: "配合に10回成功する",              rewardText: "配合成功率+3%",         reward: { mix: 0.03 },            checkType: "mix",        val: 10 },
+            { id: "gm_11", title: "🌈虹のコレクター",     condText: "✨色違いを3体手に入れる",         rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "rare",       val: 3 },
+            { id: "gm_12", title: "⚔️百階への道",         condText: "100階をクリアする",               rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "stg",        val: 100 },
+            { id: "gm_13", title: "📖博識の冒険者",       condText: "通常図鑑を75種埋める",            rewardText: "野生加入率+1%",         reward: { wild: 0.01 },           checkType: "zukan",      val: 75 },
+            { id: "gm_14", title: "👑王宮の守護騎士",     condText: "750階をクリアする",               rewardText: "ボックス上限+15",       reward: { box: 15 },              checkType: "stg",        val: 750 },
+            { id: "gm_15", title: "🌟神話の探究者",       condText: "1000階をクリアする",              rewardText: "配合+5% & EXP+25%",     reward: { mix: 0.05, exp: 0.25 }, checkType: "stg",        val: 1000 },
+            { id: "gm_16", title: "🔮旅立ちの試練",       condText: "30階をクリアする",                rewardText: "戦闘EXP+5%",            reward: { exp: 0.05 },            checkType: "stg",        val: 30 },
+            { id: "gm_17", title: "🌿密林の突破者",       condText: "200階ボスをクリアする",           rewardText: "ボックス上限+5",        reward: { box: 5 },               checkType: "stg",        val: 200 },
+            { id: "gm_18", title: "🏜️砂漠の踏破者",       condText: "400階ボスをクリアする",           rewardText: "配合成功率+2%",         reward: { mix: 0.02 },            checkType: "stg",        val: 400 },
+            { id: "gm_19", title: "🌋火山の挑戦者",       condText: "800階ボスをクリアする",           rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "stg",        val: 800 },
+            { id: "gm_20", title: "🧬配合研究者",         condText: "配合を合計20回実行する",          rewardText: "配合成功率+3%",         reward: { mix: 0.03 },            checkType: "mixAttempt", val: 20 },
+            { id: "gm_21", title: "✌️じゃんけん達人",     condText: "謎の旅人に3回勝つ",               rewardText: "野生加入率+0.5%",       reward: { wild: 0.005 },          checkType: "rps",        val: 3 },
+            { id: "gm_22", title: "🧰お宝ハンター",       condText: "謎の宝箱を3回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 3 },
+            { id: "gm_23", title: "🏰王国の常連客",       condText: "知らない王国に3回入国する",       rewardText: "ボックス上限+5",        reward: { box: 5 },               checkType: "kingdom",    val: 3 },
+            { id: "gm_24", title: "🏟️闘技場の常勝王",     condText: "王国の闘技場で3回勝利する",       rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "arena",      val: 3 },
+            { id: "gm_25", title: "📖図鑑コンプへの道",   condText: "通常図鑑を90種埋める",            rewardText: "配合+5% & 上限+10",     reward: { mix: 0.05, box: 10 },   checkType: "zukan",      val: 90 }
         ];
 
         function migrateLegacyMissions() {
@@ -1978,6 +1988,7 @@
             if (!m) return false;
             if (m.checkType === "stg") return maxClearStg >= m.val;
             if (m.checkType === "mix") return (stats.mixSuccessCount || 0) >= m.val;
+            if (m.checkType === "mixAttempt") return (stats.mixAttemptCount || 0) >= m.val;
             if (m.checkType === "zukan") return Object.keys(D).filter(k => zk.includes(k)).length >= m.val;
             if (m.checkType === "rps") return (stats.rpsWinCount || 0) >= m.val;
             if (m.checkType === "chest") return (stats.chestOpenCount || 0) >= m.val;
@@ -1997,6 +2008,7 @@
         }
 
         function getAvailableGuildMissions() {
+            if ((stats.extraMissions || []).length >= 15) return [];
             const existingIds = new Set((stats.extraMissions || []).map(x => x.id));
             return GUILD_EXTRA_MISSIONS.filter(x => !existingIds.has(x.id));
         }
@@ -2013,6 +2025,7 @@
                 stats.claimedMissions.length,
                 maxClearStg,
                 stats.mixSuccessCount,
+                stats.mixAttemptCount,
                 zk.length,
                 stats.rpsWinCount,
                 stats.chestOpenCount,
@@ -3510,7 +3523,7 @@
                     return;
                 } else if (evRoll < 0.020) {
                     currentEvent = "merchant";
-                    currentMerchantItems = pickRandomSubset([1, 2, 3], 2);
+                    currentMerchantItems = pickRandomSubset([1, 2, 3, 4, 5, 6, 7], 2);
                     lastFloorWasEvent = true;
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 遭遇イベント発生！上の枠から選択してください。";
@@ -3539,13 +3552,13 @@
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 遭遇イベント発生！上の枠から選択してください。";
                     return;
-                } else if (evRoll < 0.076) {
+                } else if (evRoll < 0.086) {
                     currentEvent = "kingdom_gate";
                     lastFloorWasEvent = true;
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 王国イベント発生！上の枠から選択してください。";
                     return;
-                } else if (evRoll < 0.080) {
+                } else if (evRoll < 0.090) {
                     currentEvent = "zombie_hero";
                     lastFloorWasEvent = true;
                     seSkill();
@@ -3704,20 +3717,33 @@
             if (choice === 1) {
                 boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 5);
                 seStageClear();
-                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！モンスターボックスの上限が " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " (最大上限!)" : "") + " になった！";
+                msg = "👳 旅商人から「📦マジック拡張ポーチ」を受け取った！ボックス上限が " + boxLimit + "体" + (boxLimit >= MAX_BOX_LIMIT ? " (最大!)" : "") + " になった！";
             } else if (choice === 2) {
                 let count = 0;
-                p.forEach(m => {
-                    if (!m.inParty) {
-                        if (levelUpMonster(m, 10) > 0) count++;
-                    }
-                });
+                p.forEach(m => { if (!m.inParty && levelUpMonster(m, 10) > 0) count++; });
                 seLvUp();
                 msg = count > 0
-                    ? ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！控えのモンスター" + count + "体がLv+10された！")
+                    ? ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！控えモンスター" + count + "体がLv+10された！")
                     : ("👳 旅商人から「🧪奇跡の成長エキス」を受け取った！（控えに育成できるモンスターがいないため効果なし）");
-            } else {
+            } else if (choice === 3) {
                 msg = "👳 旅商人から「🔮ダンジョンの水晶」を受け取った！ " + useDungeonCrystal();
+            } else if (choice === 4) {
+                const lvLogs = grantExpToParty(40);
+                seLvUp();
+                msg = "👳 旅商人から「🍙おにぎりセット」を受け取った！戦闘メンバー全員に EXP+40！" + (lvLogs ? (" " + lvLogs) : "");
+            } else if (choice === 5) {
+                p.forEach(m => { if (m.inParty) { m.df += 2; m.m += 4; m.hp = Math.min(m.m, m.hp + 4); } });
+                seStageClear();
+                msg = "👳 旅商人から「🧣旅人のマント」を受け取った！戦闘メンバー全員の最大HP+4・防御+2！";
+            } else if (choice === 6) {
+                p.forEach(m => { if (m.inParty) { m.sp += 2; m.at += 1; } });
+                seStageClear();
+                msg = "👳 旅商人から「🥾俊足のブーツ」を受け取った！戦闘メンバー全員の素早さ+2・攻撃+1！";
+            } else {
+                expBonusRate += 0.05;
+                const raised = addMixBonusCapped(0.003);
+                seStageClear();
+                msg = "👳 旅商人から「🪙古びた金貨」を受け取った！獲得EXP+5%" + (raised ? (" ＆ 配合確率+0.3%（現在" + getMixPctText() + "%）！") : "！（配合確率は上限80%に達しています）");
             }
 
             showNotice(msg, 5500);
@@ -3815,26 +3841,7 @@
             if (Math.random() < 0.50) {
                 const rawExp = Math.max(30, stg * 12);
                 const gainExp = Math.floor(rawExp * getExpMultiplier());
-                let lvUpLogs = "";
-                p.forEach(ally => {
-                    if (ally.inParty) {
-                        const maxLv = getMaxLv(ally);
-                        ally.ex += gainExp;
-                        while (ally.lv < maxLv && ally.ex >= ally.nx) {
-                            ally.ex -= ally.nx;
-                            ally.lv++;
-                            const b = getMonData(ally.n);
-                            const mult = ally.isRare ? 1.25 : 1;
-                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
-                            ally.hp = ally.m;
-                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
-                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
-                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
-                            ally.nx = Math.floor(ally.nx * 1.2);
-                            lvUpLogs += " " + ally.n + "Lv." + ally.lv + "!";
-                        }
-                    }
-                });
+                const lvUpLogs = grantExpToParty(gainExp);
                 seLvUp();
                 msg = "✨ 大当たり！お宝を発見！戦闘メンバー全員が EXP " + gainExp + " を獲得！" + lvUpLogs;
             } else {
@@ -3958,14 +3965,15 @@
                 const available = getAvailableGuildMissions();
                 if (available.length === 0) {
                     seButtonTap();
-                    showNotice("📜 ギルドの追加クエスト（全15種）はすべて受注・クリア済みで選べるクエストが無いため、そのまま出国しました！", 5500);
+                    showNotice("📜 ギルドで受注できるクエストが無い（上限達成または全受注済み）ため、そのまま出国しました！", 5500);
                     advanceStageAfterEvent("", true);
                     return;
                 }
                 kingdomScene = "guild";
                 currentEvent = "kingdom_guild";
+                currentGuildChoices = pickRandomSubset(available, Math.min(2, available.length));
                 seSkill();
-                document.getElementById("battleLog").innerText = "📜 王国のギルド！追加したいクエストを1つ選んでください。";
+                document.getElementById("battleLog").innerText = "📜 王国のギルド！表示されたクエストから1つだけ選べます。";
                 upBattleUI();
                 return;
             }
@@ -3973,7 +3981,7 @@
             if (fac === "shop") {
                 kingdomScene = "shop";
                 currentEvent = "kingdom_shop";
-                currentShopItems = pickRandomSubset([1, 2, 3, 4, 5], 3);
+                currentShopItems = pickRandomSubset([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 4);
                 seSkill();
                 document.getElementById("battleLog").innerText = "🏪 王国の商店！上の枠からアイテムを1つ選んでください。";
                 upBattleUI();
@@ -3981,42 +3989,74 @@
             }
 
             if (fac === "arena") {
-                kingdomScene = "arena";
-                currentEvent = null;
-                arenaClearedMonsters = [];
-
-                const partyMembers = p.filter(m => m.inParty);
-                let maxPartyLv = 1;
-                partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
-
-                const pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 75 && !isSynthOnly(k));
-                eg = [];
-                for (let i = 0; i < 3; i++) {
-                    const name = pool[Math.floor(Math.random() * pool.length)];
-                    const b = D[name];
-                    const isRare = Math.random() < 0.03;
-                    const st = calcStatsByLevel(b, maxPartyLv, isRare);
-                    const mon = {
-                        n: name, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
-                        ex: (b.ex || 1) * maxPartyLv,
-                        isRare: isRare,
-                        rareSkillId: isRare ? getRandomRareSkillId() : 0,
-                        skillId: getRandomSkillId(),
-                        fixedLv: maxPartyLv,
-                        isArenaEnemy: true
-                    };
-                    initBattleState(mon);
-                    eg.push(mon);
-                }
-
+                kingdomScene = "arena_menu";
+                currentEvent = "arena_menu";
                 seSkill();
-                document.getElementById("battleLog").innerText = "🏟️ 闘技場バトル開始！Lv." + maxPartyLv + "のモンスター3体に勝利せよ！";
+                document.getElementById("battleLog").innerText = "🏟️ 闘技場へ入場！挑戦する階級（小文字級・大文字級）を選んでください。";
                 upBattleUI();
+            }
+        }
 
-                const spdDiv = (battleSpeed === 2) ? 2 : 1;
-                if (autoBattleEnabled) {
-                    autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
-                }
+        function startArenaBattle(grade) {
+            if (!inDungeon || !inKingdom || currentEvent !== "arena_menu") return;
+            if (grade === "back") {
+                kingdomScene = "menu";
+                currentEvent = "kingdom_menu";
+                seButtonTap();
+                document.getElementById("battleLog").innerText = "🏰 王国メニューに戻りました。";
+                upBattleUI();
+                return;
+            }
+
+            currentArenaGrade = grade;
+            kingdomScene = "arena";
+            currentEvent = null;
+            arenaClearedMonsters = [];
+
+            const partyMembers = p.filter(m => m.inParty);
+            let maxPartyLv = 1;
+            partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
+
+            let pool, targetLv, rareChance, gradeLabel;
+            if (grade === "large") {
+                pool = Object.keys(D).filter(k => D[k].no >= 51 && D[k].no <= 100 && !isSynthOnly(k));
+                if (pool.length === 0) pool = Object.keys(D).filter(k => !isSynthOnly(k));
+                targetLv = Math.min(100, Math.max(25, maxPartyLv + 10));
+                rareChance = 0.10;
+                gradeLabel = "🏆大文字級";
+            } else {
+                pool = Object.keys(D).filter(k => D[k].no >= 1 && D[k].no <= 60 && !isSynthOnly(k));
+                targetLv = maxPartyLv;
+                rareChance = 0.03;
+                gradeLabel = "🥉小文字級";
+            }
+
+            eg = [];
+            for (let i = 0; i < 3; i++) {
+                const name = pool[Math.floor(Math.random() * pool.length)];
+                const b = D[name];
+                const isRare = Math.random() < rareChance;
+                const st = calcStatsByLevel(b, targetLv, isRare);
+                const mon = {
+                    n: name, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
+                    ex: (b.ex || 1) * targetLv,
+                    isRare: isRare,
+                    rareSkillId: isRare ? getRandomRareSkillId() : 0,
+                    skillId: getRandomSkillId(),
+                    fixedLv: targetLv,
+                    isArenaEnemy: true
+                };
+                initBattleState(mon);
+                eg.push(mon);
+            }
+
+            seSkill();
+            document.getElementById("battleLog").innerText = "🏟️ 闘技場【" + gradeLabel + "】開始！Lv." + targetLv + "のモンスター3体に勝利せよ！";
+            upBattleUI();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -4030,7 +4070,7 @@
             const preset = GUILD_EXTRA_MISSIONS.find(x => x.id === missionId);
             if (!preset) return;
             if (!Array.isArray(stats.extraMissions)) stats.extraMissions = [];
-            if (stats.extraMissions.some(x => x.id === missionId)) return;
+            if (stats.extraMissions.some(x => x.id === missionId) || stats.extraMissions.length >= 15) return;
 
             stats.extraMissions.push(JSON.parse(JSON.stringify(preset)));
             seStageClear();
@@ -4051,7 +4091,7 @@
                 seStageClear();
                 msg = raised
                     ? ("🏪 商店で「⚗️賢者の小瓶」を貰った！（配合確率 +0.5% → 現在 " + getMixPctText() + "%）そして出国した！")
-                    : ("🏪 商店で「⚗️賢者の小瓶」を貰った！（強化上限80%に達しているためこれ以上上がらない／現在 " + getMixPctText() + "%）そして出国した！");
+                    : ("🏪 商店で「⚗️賢者の小瓶」を貰った！（強化上限80%に達しているためこれ以上上がらない）そして出国した！");
             } else if (choice === 3) {
                 wildJoinBonus += 0.005;
                 seStageClear();
@@ -4060,8 +4100,70 @@
                 expBonusRate += 0.10;
                 seStageClear();
                 msg = "🏪 商店で「🔖祝福のしおり」を貰った！（獲得EXP +10%）そして出国した！";
-            } else {
+            } else if (choice === 5) {
                 msg = "🏪 商店で「🔮ダンジョンの水晶」を貰った！ " + useDungeonCrystal() + " そして出国した！";
+            } else if (choice === 6) {
+                p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
+                const lvLogs = grantExpToParty(25);
+                seLvUp();
+                msg = "🏪 商店で「🍞焼きたてパン」を貰った！戦闘メンバーHP全回復＆EXP+25！" + (lvLogs ? (" " + lvLogs) : "") + " そして出国した！";
+            } else if (choice === 7) {
+                p.forEach(m => { if (m.inParty) { m.m += 2; m.hp += 2; m.at += 1; } });
+                seStageClear();
+                msg = "🏪 商店で「🍬ほのかな飴玉」を貰った！戦闘メンバー全員の最大HP+2・攻撃+1！そして出国した！";
+            } else if (choice === 8) {
+                p.forEach(m => { if (m.inParty) { m.df += 1; } });
+                seStageClear();
+                msg = "🏪 商店で「🛡️木の小盾」を貰った！戦闘メンバー全員の防御+1！そして出国した！";
+            } else if (choice === 9) {
+                p.forEach(m => { if (m.inParty) { m.sp += 1; } });
+                seStageClear();
+                msg = "🏪 商店で「🪶軽やかな羽根」を貰った！戦闘メンバー全員の素早さ+1！そして出国した！";
+            } else if (choice === 10) {
+                let lvCnt = 0;
+                p.forEach(m => {
+                    if (!m.inParty && m.lv < getMaxLv(m)) {
+                        m.ex += 15;
+                        while (m.lv < getMaxLv(m) && m.ex >= m.nx) {
+                            m.ex -= m.nx;
+                            if (levelUpMonster(m, 1) > 0) lvCnt++;
+                        }
+                    }
+                });
+                seLvUp();
+                msg = "🏪 商店で「🌱若葉の苗」を貰った！控えモンスター全員にEXP+15" + (lvCnt > 0 ? ("（" + lvCnt + "回LvUP!）") : "") + "！そして出国した！";
+            } else if (choice === 11) {
+                const raised = addMixBonusCapped(0.002);
+                seStageClear();
+                msg = raised
+                    ? ("🏪 商店で「🕯️小さなろうそく」を貰った！（配合確率 +0.2% → 現在 " + getMixPctText() + "%）そして出国した！")
+                    : ("🏪 商店で「🕯️小さなろうそく」を貰った！（強化上限80%に達しているためこれ以上上がらない）そして出国した！");
+            } else if (choice === 12) {
+                wildJoinBonus += 0.002;
+                seStageClear();
+                msg = "🏪 商店で「🍯甘いミツ」を貰った！（野生モンスター加入率 +0.2%）そして出国した！";
+            } else if (choice === 13) {
+                expBonusRate += 0.03;
+                seStageClear();
+                msg = "🏪 商店で「📜古びた羊皮紙」を貰った！（獲得EXP +3%）そして出国した！";
+            } else if (choice === 14) {
+                const top = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0))[0];
+                const g = top ? levelUpMonster(top, 1) : 0;
+                seLvUp();
+                msg = g > 0
+                    ? ("🏪 商店で「🍀四つ葉のしおり」を貰った！先頭の「" + top.n + "」がLv." + top.lv + "に上がった！そして出国した！")
+                    : ("🏪 商店で「🍀四つ葉のしおり」を貰った！（先頭モンスターが上限Lvのため効果なし）そして出国した！");
+            } else {
+                const reserves = p.filter(m => !m.inParty && m.lv < getMaxLv(m));
+                if (reserves.length > 0) {
+                    const pick = reserves[Math.floor(Math.random() * reserves.length)];
+                    const g = levelUpMonster(pick, 2);
+                    seLvUp();
+                    msg = "🏪 商店で「🎲運命のサイコロ」を貰った！控えの「" + pick.n + "」がLv+" + g + "された！そして出国した！";
+                } else {
+                    seStageClear();
+                    msg = "🏪 商店で「🎲運命のサイコロ」を貰った！（育てられる控えモンスターがいないため効果なし）そして出国した！";
+                }
             }
 
             showNotice(msg, 6000);
@@ -4168,14 +4270,10 @@
 
         function showRecipeHint(targetName) {
             const entries = Object.entries(R).filter(([k, v]) => v === targetName);
-            if (entries.length === 0) {
-                showWildHint(targetName);
-                return;
-            }
+            if (entries.length === 0) { showWildHint(targetName); return; }
             let hints = entries.map(([pair]) => {
                 const parts = pair.split("+");
-                const p1 = parts[0];
-                const p2 = parts[1];
+                const p1 = parts[0], p2 = parts[1];
                 const s1 = zk.includes(p1) ? (D[p1].a + "No." + D[p1].no + " " + p1) : ("❓No." + D[p1].no + " ？？？");
                 const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ("❓No." + D[p2].no + " ？？？");
                 return "・" + s1 + " ＋ " + s2;
@@ -4186,8 +4284,7 @@
         function showWildHint(targetName) {
             const inf = D[targetName];
             if (!inf) return;
-            let minS = 9999;
-            let maxS = 0;
+            let minS = 9999, maxS = 0;
             for (let s = 1; s <= 1000; s++) {
                 if (s % 50 === 0) continue;
                 let minNo = 1, maxNo = 10;
@@ -4222,20 +4319,14 @@
             if (wkBanner) wkBanner.style.display = weekend ? "block" : "none";
             if (wkMixTag) wkMixTag.innerText = weekend ? " (🎉土日+10%込!)" : "";
 
-            let envName = "";
-            let envEmoji = "";
-            let envClass = "";
+            let envName = "", envEmoji = "", envClass = "";
             const isBossNow = inDungeon && !inKingdom && isBossStage(stg);
             const isZombieNow = inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero));
 
-            if (isZombieNow) {
-                envName = "廃国の決戦";
-                envEmoji = "🏚️";
-                envClass = "bg-zombie";
-            } else if (inDungeon && inKingdom) {
-                envName = "知らない王国";
-                envEmoji = "🏰";
-                if (kingdomScene === "arena") envClass = "bg-arena";
+            if (isZombieNow) { envName = "廃国の決戦"; envEmoji = "🏚️"; envClass = "bg-zombie"; }
+            else if (inDungeon && inKingdom) {
+                envName = "知らない王国"; envEmoji = "🏰";
+                if (kingdomScene === "arena" || kingdomScene === "arena_menu") envClass = "bg-arena";
                 else if (kingdomScene === "shop") envClass = "bg-shop";
                 else if (kingdomScene === "guild") envClass = "bg-guild";
                 else envClass = "bg-kingdom";
@@ -4259,9 +4350,7 @@
             const stgEl = document.getElementById("stg");
             const maxStgEl = document.getElementById("maxStg");
             const clearStgEl = document.getElementById("dispClearStg");
-            if (stgEl) {
-                stgEl.innerText = (inDungeon && inKingdom) ? "知らない王国 [🏰]" : (stg + "階 [" + envEmoji + envName + "]");
-            }
+            if (stgEl) stgEl.innerText = (inDungeon && inKingdom) ? "知らない王国 [🏰]" : (stg + "階 [" + envEmoji + envName + "]");
             if (maxStgEl) maxStgEl.innerText = maxStg;
             if (clearStgEl) clearStgEl.innerText = maxClearStg;
 
@@ -4337,10 +4426,12 @@
                         eS.innerHTML = "<b style='font-size:12px;'>【👑遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤴</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>迷子の国王</b><br><span style='font-size:10.5px; color:#475569;'>道に迷っているようだ…</span>";
                     } else if (currentEvent === "kingdom_gate" || currentEvent === "kingdom_menu") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🏰知らない王国】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>知らない王国</b><br><span style='font-size:10.5px; color:#475569;'>未知の都が目の前に広がる！</span>";
+                    } else if (currentEvent === "arena_menu") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【🏟️王国の闘技場】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏟️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>王国の闘技場</b><br><span style='font-size:10.5px; color:#475569;'>小文字級・大文字級を選ぼう！</span>";
                     } else if (currentEvent === "kingdom_shop") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🏪王国の商店】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の商店</b><br><span style='font-size:10.5px; color:#475569;'>特別な品を1つ進呈！</span>";
                     } else if (currentEvent === "kingdom_guild") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【📜王国のギルド】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>📜</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#6d28d9;'>王国のギルド</b><br><span style='font-size:10.5px; color:#475569;'>追加クエストを1つ選ぼう！</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【📜王国のギルド】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>📜</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#6d28d9;'>王国のギルド</b><br><span style='font-size:10.5px; color:#475569;'>2つの中から1つ選ぼう！</span>";
                     } else if (currentEvent === "arena_reward") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間にしよう！</span>";
                     }
@@ -4404,13 +4495,17 @@
                     const merchantDefs = {
                         1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">(上限+5：現在' + boxLimit + '/200体)</span></button>',
                         2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">(控え' + reserveCount + '体のみLv+10)</span></button>',
-                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中全員5%で上限Lv+1 / 最大+20)</span></button>'
+                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中・死亡中30%で上限Lv+1)</span></button>',
+                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<br><span style="font-size:10px;">(戦闘メンバー全員EXP+40)</span></button>',
+                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<br><span style="font-size:10px;">(戦闘メンバーHP+4・防+2)</span></button>',
+                        6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<br><span style="font-size:10px;">(戦闘メンバー素+2・攻+1)</span></button>',
+                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<br><span style="font-size:10px;">(EXP+5% & 配合+0.3%)</span></button>'
                     };
                     let mBtns = (currentMerchantItems || [1, 2]).map(id => merchantDefs[id] || "").join("");
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">👳 旅商人「好きなアイテムを1つ差し上げましょう！」</div>' +
-                        '<div class="event-sub">全3種類の中から本日の2品を厳選しました！（受け取ると効果発動）</div>' +
+                        '<div class="event-sub">全7種類の中から本日の2品を厳選しました！（受け取ると効果発動）</div>' +
                         '<div class="event-btn-row">' + mBtns + '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "hero") {
@@ -4505,38 +4600,57 @@
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="selectKingdomFacility(\'leave\')">🚪 出国</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "arena_menu") {
+                    const partyMembers = p.filter(m => m.inParty);
+                    let maxPartyLv = 1;
+                    partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
+                    const lgLv = Math.min(100, Math.max(25, maxPartyLv + 10));
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">🏟️ 王国の闘技場：階級を選んでください！</div>' +
+                        '<div class="event-sub">3体の対戦相手を倒せば、その中から1体を仲間にできます！</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<br><span style="font-size:10px;">(No.1〜60 / Lv.' + maxPartyLv + ')</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<br><span style="font-size:10px;">(No.51〜100 / Lv.' + lgLv + '・色違い10%)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="startArenaBattle(\'back\')">🔙 戻る</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "kingdom_shop") {
                     const shopDefs = {
-                        1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<br><span style="font-size:10px;">(上限+1：最大200体)</span></button>',
-                        2: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<br><span style="font-size:10px;">(配合確率 +0.5% / 上限80%)</span></button>',
-                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<br><span style="font-size:10px;">(野生加入率 +0.5%)</span></button>',
-                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<br><span style="font-size:10px;">(獲得EXP +10%)</span></button>',
-                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中全員5%で上限Lv+1 / 最大+20)</span></button>'
+                        1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<br><span style="font-size:10px;">(上限+1：最大200体)</span></button>',
+                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<br><span style="font-size:10px;">(配合+0.5% / 上限80%)</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<br><span style="font-size:10px;">(野生加入率 +0.5%)</span></button>',
+                        4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<br><span style="font-size:10px;">(獲得EXP +10%)</span></button>',
+                        5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">(戦闘中・死亡中30%で上限Lv+1)</span></button>',
+                        6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<br><span style="font-size:10px;">(戦闘中HP全快 & EXP+25)</span></button>',
+                        7:  '<button class="btn-event" style="background:linear-gradient(180deg,#f43f5e,#e11d48);border-bottom:3px solid #9f1239;" onclick="pickKingdomShopItem(7)">🍬 ほのかな飴玉<br><span style="font-size:10px;">(戦闘中HP+2・攻+1)</span></button>',
+                        8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<br><span style="font-size:10px;">(戦闘メンバー防御+1)</span></button>',
+                        9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<br><span style="font-size:10px;">(戦闘メンバー素早さ+1)</span></button>',
+                        10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<br><span style="font-size:10px;">(控え全員EXP+15)</span></button>',
+                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<br><span style="font-size:10px;">(配合+0.2% / 上限80%)</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<br><span style="font-size:10px;">(野生加入率 +0.2%)</span></button>',
+                        13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<br><span style="font-size:10px;">(獲得EXP +3%)</span></button>',
+                        14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<br><span style="font-size:10px;">(戦闘1番手のLv+1)</span></button>',
+                        15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<br><span style="font-size:10px;">(控え1体ランダムLv+2)</span></button>'
                     };
-                    let sBtns = (currentShopItems || [1, 2, 3]).map(id => shopDefs[id] || "").join("");
+                    let sBtns = (currentShopItems || [1, 2, 3, 4]).map(id => shopDefs[id] || "").join("");
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🏪 王国の商店（1個だけ無料プレゼント！）</div>' +
-                        '<div class="event-sub">全5種類の中からランダムな3品が並んでいます（受け取ると出国します）</div>' +
+                        '<div class="event-sub">全15種類の中からランダムな4品が並んでいます（1つ選ぶと出国します）</div>' +
                         '<div class="event-btn-row">' + sBtns + '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "kingdom_guild") {
-                    const takenIds = new Set((stats.extraMissions || []).map(x => x.id));
                     let gRows = "";
-                    GUILD_EXTRA_MISSIONS.forEach(gm => {
-                        const isTaken = takenIds.has(gm.id);
-                        const isDone = stats.claimedMissions.includes(gm.id);
-                        const btnHtml = isTaken
-                            ? ('<span style="font-size:10px; font-weight:900; color:' + (isDone ? '#059669' : '#64748b') + '; white-space:nowrap;">' + (isDone ? '✅ 達成済' : '📌 受注済') + '</span>')
-                            : ('<button class="btn-small" style="margin:0; padding:5px 8px; font-size:10.5px; background:linear-gradient(180deg,#8b5cf6,#6d28d9); border-bottom:2px solid #4c1d95; white-space:nowrap;" onclick="pickGuildMission(\'' + gm.id + '\')">📜 選ぶ</button>');
-                        gRows += '<div class="guild-pick-row' + (isTaken ? ' taken' : '') + '">' +
+                    (currentGuildChoices || []).forEach(gm => {
+                        gRows += '<div class="guild-pick-row">' +
                             '<div><b>' + gm.title + '</b><br><span style="color:#475569;">' + gm.condText + '</span><br><span style="color:#d97706; font-weight:800;">🎁 ' + gm.rewardText + '</span></div>' +
-                            '<div>' + btnHtml + '</div></div>';
+                            '<div><button class="btn-small" style="margin:0; padding:6px 10px; font-size:11px; background:linear-gradient(180deg,#8b5cf6,#6d28d9); border-bottom:2px solid #4c1d95; white-space:nowrap;" onclick="pickGuildMission(\'' + gm.id + '\')">📜 選ぶ</button></div></div>';
                     });
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">📜 王国のギルド（追加クエスト15種から1つ選択）</div>' +
-                        '<div class="event-sub">未受注のクエストから1つだけ選んで追加できます（選ぶと出国します）</div>' +
+                        '<div class="event-title">📜 王国のギルド（全25種からランダム2種）</div>' +
+                        '<div class="event-sub">以下のクエストから1つだけ選んで受注できます（選ぶと出国します）</div>' +
                         '<div class="guild-pick-list">' + gRows + '</div>' +
                         '<div class="event-btn-row"><button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="pickGuildMission(\'leave\')">🚪 選ばずに出国</button></div>';
                     if (btnAtk) btnAtk.disabled = true;
@@ -4548,7 +4662,7 @@
                         rewardBtns += '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickArenaReward(' + idx + ')">' + inf.a + ' ' + m.n + (m.isRare ? "✨" : "") + '<br><span style="font-size:10px;">(No.' + inf.no + ' Lv.' + m.fixedLv + ')</span></button>';
                     });
                     evPanel.innerHTML =
-                        '<div class="event-title">🏆 闘技場 優勝おめでとう！</div>' +
+                        '<div class="event-title">🏆 闘技場（' + (currentArenaGrade === "large" ? "大文字級" : "小文字級") + '）優勝おめでとう！</div>' +
                         '<div class="event-sub">倒した3体の中から1体だけ選んで仲間にできます！（選ぶと出国します）</div>' +
                         '<div class="event-btn-row">' + rewardBtns + '</div>';
                     if (btnAtk) btnAtk.disabled = true;
@@ -5564,6 +5678,10 @@
                             if (eg.length === 0) {
                                 stageJustCleared = true;
                                 stats.arenaWinCount = (stats.arenaWinCount || 0) + 1;
+                                if (currentArenaGrade === "large") {
+                                    p.forEach(ally => { if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 1); });
+                                    turnLog += "✨大文字級制覇ボーナスで戦闘メンバー全員Lv+1！ ";
+                                }
                                 currentEvent = "arena_reward";
                                 seStageClear();
                                 turnLog += "🏆闘技場で3体に勝利した！上の枠から1体選んでください！";
