@@ -321,13 +321,22 @@
             flex-wrap: wrap;
         }
         .btn-event {
-            flex: 1 1 42%;
-            min-width: 90px;
+            flex: 1 1 45%;
+            min-width: 110px;
             width: auto !important;
             margin: 0 !important;
-            padding: 9px 8px !important;
+            padding: 8px 7px !important;
             font-size: 11.5px !important;
+            line-height: 1.35 !important;
             border-radius: 11px !important;
+        }
+        .item-desc-mini {
+            display: block;
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-top: 2px;
+            opacity: 0.96;
         }
         .guild-pick-list {
             max-height: 210px;
@@ -390,16 +399,16 @@
             pointer-events: none;
             white-space: nowrap;
         }
-        .bg-grass { border-color: #22c55e !important; background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); } .bg-grass::before { content: "🏕"; }
-        .bg-jungle { border-color: #16a34a !important; background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%); } .bg-jungle::before { content: "🏞️"; }
-        .bg-ocean { border-color: #0ea5e9 !important; background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); } .bg-ocean::before { content: "🏝️"; }
+        .bg-grass { border-color: #22c55e !important; background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); } .bg-grass::before { content: "🌿"; }
+        .bg-jungle { border-color: #16a34a !important; background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%); } .bg-jungle::before { content: "🌴"; }
+        .bg-ocean { border-color: #0ea5e9 !important; background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); } .bg-ocean::before { content: "🌊"; }
         .bg-desert { border-color: #f59e0b !important; background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); } .bg-desert::before { content: "🏜️"; }
-        .bg-poison { border-color: #a855f7 !important; background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%); } .bg-poison::before { content: "🟪"; }
-        .bg-mine { border-color: #84cc16 !important; background: linear-gradient(180deg, #f7fee7 0%, #ecfccb 100%); } .bg-mine::before { content: "🏔️"; }
+        .bg-poison { border-color: #a855f7 !important; background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%); } .bg-poison::before { content: "☣️"; }
+        .bg-mine { border-color: #84cc16 !important; background: linear-gradient(180deg, #f7fee7 0%, #ecfccb 100%); } .bg-mine::before { content: "⛏️"; }
         .bg-shrine { border-color: #8b5cf6 !important; background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%); } .bg-shrine::before { content: "🏛️"; }
         .bg-volcano { border-color: #f43f5e !important; background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%); } .bg-volcano::before { content: "🌋"; }
-        .bg-ice { border-color: #0284c7 !important; background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%); } .bg-ice::before { content: "🌌"; }
-        .bg-castle { border-color: #6366f1 !important; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); } .bg-castle::before { content: "🌃"; }
+        .bg-ice { border-color: #0284c7 !important; background: linear-gradient(180deg, #f0f9ff 0%, #bae6fd 100%); } .bg-ice::before { content: "❄️"; }
+        .bg-castle { border-color: #6366f1 !important; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); } .bg-castle::before { content: "🏯"; }
         .bg-boss { border-color: #dc2626 !important; background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 50%, #fef08a 100%) !important; box-shadow: 0 0 22px rgba(220, 38, 38, 0.28); }
         .bg-boss::before { content: "🏴‍☠️"; opacity: 0.28; }
         .bg-superboss { border-color: #7c3aed !important; background: linear-gradient(180deg, #faf5ff 0%, #ede9fe 50%, #fde68a 100%) !important; box-shadow: 0 0 26px rgba(124, 58, 237, 0.36); }
@@ -473,7 +482,6 @@
             border: 1px solid #000;
         }
 
-        /* --- 🌌 No.B 星辰の大魔神（神聖ゴールド＆星雲オーラ） --- */
         .god-aura-wrap {
             position: relative;
             display: inline-block;
@@ -1837,6 +1845,7 @@
 
         function clampMixRate() {
             if (baseMixRate > MAX_MIX_CAP) baseMixRate = MAX_MIX_CAP;
+            mixBonus = Math.max(0, Math.round(mixBonus * 10000) / 10000);
             if (baseMixRate + mixBonus > MAX_MIX_CAP) {
                 mixBonus = Math.max(0, Math.round((MAX_MIX_CAP - baseMixRate) * 10000) / 10000);
             }
@@ -1844,7 +1853,7 @@
 
         function addMixBonusCapped(delta) {
             const before = getRawMixRate();
-            mixBonus += delta;
+            mixBonus = Math.round((mixBonus + delta) * 10000) / 10000;
             clampMixRate();
             return getRawMixRate() > before;
         }
@@ -1924,6 +1933,30 @@
             return gained;
         }
 
+        function grantExpToSingleMonster(mon, gainExp) {
+            if (!mon || gainExp <= 0) return 0;
+            const b = getMonData(mon.n);
+            if (!b) return 0;
+            const maxLv = getMaxLv(mon);
+            if (mon.lv >= maxLv) return 0;
+            const mult = mon.isRare ? 1.25 : 1;
+            let lvUps = 0;
+            mon.ex += gainExp;
+            while (mon.lv < maxLv && mon.ex >= mon.nx) {
+                mon.ex -= mon.nx;
+                mon.lv++;
+                mon.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
+                mon.hp = mon.m;
+                mon.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
+                mon.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
+                mon.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
+                mon.nx = Math.floor(mon.nx * 1.2);
+                lvUps++;
+            }
+            if (mon.lv >= maxLv) mon.ex = 0;
+            return lvUps;
+        }
+
         function useDungeonCrystal() {
             const targets = p.filter(m => m.inParty || m.hp <= 0);
             let upNames = [];
@@ -1945,7 +1978,7 @@
             }
             seSkill();
             if (targets.length > 0 && alreadyMaxCount === targets.length) {
-                return "【効果】対象モンスターは全員すでにLv上限+20に達している！";
+                return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
         }
@@ -3517,7 +3550,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-        }
+            }
         function enter(){
             if (isDungeonLocked()) {
                 return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
@@ -3796,9 +3829,12 @@
             let msg = "";
 
             if (choice === 1) {
+                const before = boxLimit;
                 boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 5);
                 seStageClear();
-                msg = "👳 旅商人から『📦拡張ポーチ』を受け取った！【効果】ボックス上限が+5体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。";
+                msg = boxLimit > before
+                    ? ("👳 旅商人から『📦拡張ポーチ』を受け取った！【効果】ボックス上限が+" + (boxLimit - before) + "体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。")
+                    : ("👳 旅商人から『📦拡張ポーチ』を受け取った！【効果】ボックス上限はすでに最大200体に達している。");
             } else if (choice === 2) {
                 let count = 0;
                 p.forEach(m => { if (!m.inParty && levelUpMonster(m, 10) > 0) count++; });
@@ -3811,20 +3847,26 @@
             } else if (choice === 4) {
                 const lvLogs = grantExpToParty(40);
                 seLvUp();
-                msg = "👳 旅商人から『🍙おにぎりセット』を受け取った！【効果】戦闘メンバー全員がEXP+40を獲得した。" + (lvLogs ? (" " + lvLogs) : "");
+                msg = "👳 旅商人から『🍙おにぎりセット』を受け取った！【効果】戦闘中(生存)の味方全員がEXP+40を獲得した。" + (lvLogs ? (" " + lvLogs) : "");
             } else if (choice === 5) {
-                p.forEach(m => { if (m.inParty) { m.df += 2; m.m += 4; m.hp = Math.min(m.m, m.hp + 4); } });
+                p.forEach(m => {
+                    if (m.inParty) {
+                        m.m += 4;
+                        m.df += 2;
+                        if (m.hp > 0) m.hp = Math.min(m.m, m.hp + 4);
+                    }
+                });
                 seStageClear();
-                msg = "👳 旅商人から『🧣旅人のマント』を受け取った！【効果】戦闘メンバー全員の最大HP+4・防御+2された。";
+                msg = "👳 旅商人から『🧣旅人のマント』を受け取った！【効果】戦闘中の味方全員の最大HP+4(生存はHPも+4)・防御+2された。";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty) { m.sp += 2; m.at += 1; } });
                 seStageClear();
-                msg = "👳 旅商人から『🥾俊足のブーツ』を受け取った！【効果】戦闘メンバー全員の素早さ+2・攻撃+1された。";
+                msg = "👳 旅商人から『🥾俊足のブーツ』を受け取った！【効果】戦闘中の味方全員の素早さ+2・攻撃+1された。";
             } else {
-                expBonusRate += 0.05;
+                expBonusRate = Math.round((expBonusRate + 0.05) * 1000) / 1000;
                 const raised = addMixBonusCapped(0.003);
                 seStageClear();
-                msg = "👳 旅商人から『🪙古びた金貨』を受け取った！【効果】獲得EXP+5%" + (raised ? ("・配合確率+0.3%された（現在" + getMixPctText() + "%）。") : "された（配合確率は上限80%に達しています）。");
+                msg = "👳 旅商人から『🪙古びた金貨』を受け取った！【効果】永続で獲得EXP+5%" + (raised ? ("・配合確率+0.3%された（現在" + getMixPctText() + "%）。") : "された（配合確率は上限80%に達しています）。");
             }
 
             showNotice(msg, 5500);
@@ -4182,69 +4224,72 @@
             let msg = "";
 
             if (choice === 1) {
+                const before = boxLimit;
                 boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 1);
                 seStageClear();
-                msg = "🏪 商店で『👝拡張ミニポーチ』を受け取った！【効果】ボックス上限が+1体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。そして出国した！";
+                msg = boxLimit > before
+                    ? ("🏪 商店で『👝拡張ミニポーチ』を受け取った！【効果】ボックス上限が+1体された（現在 " + boxLimit + "/" + MAX_BOX_LIMIT + "体）。そして出国した！")
+                    : ("🏪 商店で『👝拡張ミニポーチ』を受け取った！【効果】ボックス上限はすでに最大200体に達している。そして出国した！");
             } else if (choice === 2) {
                 const raised = addMixBonusCapped(0.005);
                 seStageClear();
                 msg = raised
-                    ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
-                    : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているためこれ以上上がらない。そして出国した！");
+                    ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】永続で配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
+                    : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 3) {
-                wildJoinBonus += 0.005;
+                wildJoinBonus = Math.round((wildJoinBonus + 0.005) * 10000) / 10000;
                 seStageClear();
-                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生モンスターの加入率が+0.5%された。そして出国した！";
+                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.5%された。そして出国した！";
             } else if (choice === 4) {
-                expBonusRate += 0.10;
+                expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
                 seStageClear();
-                msg = "🏪 商店で『🔖祝福のしおり』を受け取った！【効果】獲得EXPが+10%された。そして出国した！";
+                msg = "🏪 商店で『🔖祝福のしおり』を受け取った！【効果】永続で獲得EXPが+10%された。そして出国した！";
             } else if (choice === 5) {
                 msg = "🏪 商店で『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal() + " そして出国した！";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
                 const lvLogs = grantExpToParty(25);
                 seLvUp();
-                msg = "🏪 商店で『🍞焼きたてパン』を受け取った！【効果】戦闘メンバー全員のHPが全回復し、EXP+25を獲得した。" + (lvLogs ? (" " + lvLogs) : "") + " そして出国した！";
+                msg = "🏪 商店で『🍞焼きたてパン』を受け取った！【効果】戦闘中(生存)の味方全員がHP全回復＆EXP+25を獲得した。" + (lvLogs ? (" " + lvLogs) : "") + " そして出国した！";
             } else if (choice === 7) {
-                p.forEach(m => { if (m.inParty) { m.m += 2; m.hp += 2; m.at += 1; } });
+                p.forEach(m => {
+                    if (m.inParty) {
+                        m.m += 2;
+                        m.at += 1;
+                        if (m.hp > 0) m.hp = Math.min(m.m, m.hp + 2);
+                    }
+                });
                 seStageClear();
-                msg = "🏪 商店で『🍬ほのかな飴玉』を受け取った！【効果】戦闘メンバー全員の最大HP+2・攻撃+1された。そして出国した！";
+                msg = "🏪 商店で『🍬ほのかな飴玉』を受け取った！【効果】戦闘中の味方全員の最大HP+2(生存はHPも+2)・攻撃+1された。そして出国した！";
             } else if (choice === 8) {
                 p.forEach(m => { if (m.inParty) { m.df += 1; } });
                 seStageClear();
-                msg = "🏪 商店で『🛡️木の小盾』を受け取った！【効果】戦闘メンバー全員の防御+1された。そして出国した！";
+                msg = "🏪 商店で『🛡️木の小盾』を受け取った！【効果】戦闘中の味方全員の防御+1された。そして出国した！";
             } else if (choice === 9) {
                 p.forEach(m => { if (m.inParty) { m.sp += 1; } });
                 seStageClear();
-                msg = "🏪 商店で『🪶軽やかな羽根』を受け取った！【効果】戦闘メンバー全員の素早さ+1された。そして出国した！";
+                msg = "🏪 商店で『🪶軽やかな羽根』を受け取った！【効果】戦闘中の味方全員の素早さ+1された。そして出国した！";
             } else if (choice === 10) {
                 let lvCnt = 0;
                 p.forEach(m => {
-                    if (!m.inParty && m.lv < getMaxLv(m)) {
-                        m.ex += 15;
-                        while (m.lv < getMaxLv(m) && m.ex >= m.nx) {
-                            m.ex -= m.nx;
-                            if (levelUpMonster(m, 1) > 0) lvCnt++;
-                        }
-                    }
+                    if (!m.inParty) lvCnt += grantExpToSingleMonster(m, 15);
                 });
                 seLvUp();
-                msg = "🏪 商店で『🌱若葉の苗』を受け取った！【効果】控えモンスター全員がEXP+15を獲得した" + (lvCnt > 0 ? ("（" + lvCnt + "回LvUP!）") : "") + "。そして出国した！";
+                msg = "🏪 商店で『🌱若葉の苗』を受け取った！【効果】控えモンスター全員にEXP+15を与えた" + (lvCnt > 0 ? ("（合計" + lvCnt + "回LvUP!）") : "") + "。そして出国した！";
             } else if (choice === 11) {
                 const raised = addMixBonusCapped(0.002);
                 seStageClear();
                 msg = raised
-                    ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
-                    : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているためこれ以上上がらない。そして出国した！");
+                    ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】永続で配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
+                    : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 12) {
-                wildJoinBonus += 0.002;
+                wildJoinBonus = Math.round((wildJoinBonus + 0.002) * 10000) / 10000;
                 seStageClear();
-                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生モンスターの加入率が+0.2%された。そして出国した！";
+                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！";
             } else if (choice === 13) {
-                expBonusRate += 0.03;
+                expBonusRate = Math.round((expBonusRate + 0.03) * 1000) / 1000;
                 seStageClear();
-                msg = "🏪 商店で『📜古びた羊皮紙』を受け取った！【効果】獲得EXPが+3%された。そして出国した！";
+                msg = "🏪 商店で『📜古びた羊皮紙』を受け取った！【効果】永続で獲得EXPが+3%された。そして出国した！";
             } else if (choice === 14) {
                 const top = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0))[0];
                 const g = top ? levelUpMonster(top, 1) : 0;
@@ -4441,15 +4486,15 @@
                 else { envEmoji = "🏴‍☠️"; envClass = "bg-boss"; }
             } else {
                 if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
-                else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌳"; envClass = "bg-jungle"; }
+                else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌴"; envClass = "bg-jungle"; }
                 else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
-                else if (stg <= 400) { envName = "砂漠"; envEmoji = "⏳"; envClass = "bg-desert"; }
+                else if (stg <= 400) { envName = "砂漠"; envEmoji = "🏜️"; envClass = "bg-desert"; }
                 else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
                 else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
                 else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
                 else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
                 else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
-                else { envName = "魔王城"; envEmoji = "👑"; envClass = "bg-castle"; }
+                else { envName = "魔王城"; envEmoji = "🏯"; envClass = "bg-castle"; }
             }
 
             const stgEl = document.getElementById("stg");
@@ -4588,6 +4633,7 @@
             const evPanel = document.getElementById("eventPanel");
             const btnAtk = document.getElementById("btnAtk");
             if (evPanel) {
+                let reserveCount = p.filter(m => !m.inParty).length;
                 if (inDungeon && currentEvent === "traveler") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
@@ -4600,15 +4646,14 @@
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "merchant") {
-                    let reserveCount = p.filter(m => !m.inParty).length;
                     const merchantDefs = {
-                        1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<br><span style="font-size:10px;">【効果】ボックス上限+5体 (現在' + boxLimit + '/200)</span></button>',
-                        2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<br><span style="font-size:10px;">【効果】控え全員(' + reserveCount + '体) Lv+10</span></button>',
-                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">【効果】戦闘中・死亡中 30%でLv上限+1</span></button>',
-                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<br><span style="font-size:10px;">【効果】戦闘中全員 EXP+40</span></button>',
-                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<br><span style="font-size:10px;">【効果】戦闘中全員 最大HP+4・防御+2</span></button>',
-                        6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<br><span style="font-size:10px;">【効果】戦闘中全員 素早さ+2・攻撃+1</span></button>',
-                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<br><span style="font-size:10px;">【効果】永続 EXP+5%・配合+0.3%</span></button>'
+                        1: '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickMerchantItem(1)">📦 拡張ポーチ<span class="item-desc-mini">【効果】ボックス上限を+5体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
+                        2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)の<br>レベルを+10する</span></button>',
+                        3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
+                        4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員に<br>EXP+40を与える</span></button>',
+                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+4(生存はHPも+4)・防御+2</span></button>',
+                        6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さ+2・攻撃+1</span></button>',
+                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合成功率+0.3%(上限80%)</span></button>'
                     };
                     let mBtns = (currentMerchantItems || [1, 2]).map(id => merchantDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -4732,28 +4777,28 @@
                             '<span style="color:#c2410c;">※3体すべて倒すと、倒した3体の中から好きな1体を仲間にできます！負けてもペナルティなし！</span>' +
                         '</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<br><span style="font-size:10px;">(No.1〜50 / Lv.1〜50)</span></button>' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<br><span style="font-size:10px;">(No.51〜100 / Lv.' + maxPartyLv + ')</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<span class="item-desc-mini">(No.1〜50 / Lv.1〜50)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<span class="item-desc-mini">(No.51〜100 / Lv.' + maxPartyLv + ')</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#475569);border-bottom:3px solid #334155;" onclick="startArenaBattle(\'back\')">🔙 戻る</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "kingdom_shop") {
                     const shopDefs = {
-                        1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<br><span style="font-size:10px;">【効果】ボックス上限+1体 (最大200)</span></button>',
-                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<br><span style="font-size:10px;">【効果】永続 配合+0.5% (上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<br><span style="font-size:10px;">【効果】永続 野生加入率+0.5%</span></button>',
-                        4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<br><span style="font-size:10px;">【効果】永続 獲得EXP+10%</span></button>',
-                        5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<br><span style="font-size:10px;">【効果】戦闘中・死亡中 30%でLv上限+1</span></button>',
-                        6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<br><span style="font-size:10px;">【効果】戦闘中HP全回復・EXP+25</span></button>',
-                        7:  '<button class="btn-event" style="background:linear-gradient(180deg,#f43f5e,#e11d48);border-bottom:3px solid #9f1239;" onclick="pickKingdomShopItem(7)">🍬 ほのかな飴玉<br><span style="font-size:10px;">【効果】戦闘中全員 最大HP+2・攻撃+1</span></button>',
-                        8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<br><span style="font-size:10px;">【効果】戦闘中全員 防御+1</span></button>',
-                        9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<br><span style="font-size:10px;">【効果】戦闘中全員 素早さ+1</span></button>',
-                        10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<br><span style="font-size:10px;">【効果】控え全員 EXP+15</span></button>',
-                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<br><span style="font-size:10px;">【効果】永続 配合+0.2% (上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<br><span style="font-size:10px;">【効果】永続 野生加入率+0.2%</span></button>',
-                        13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<br><span style="font-size:10px;">【効果】永続 獲得EXP+3%</span></button>',
-                        14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<br><span style="font-size:10px;">【効果】戦闘1番手 Lv+1</span></button>',
-                        15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<br><span style="font-size:10px;">【効果】控えランダム1体 Lv+2</span></button>'
+                        1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
+                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.5%アップする</span></button>',
+                        4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
+                        5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
+                        6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員の<br>HP全回復＆EXP+25</span></button>',
+                        7:  '<button class="btn-event" style="background:linear-gradient(180deg,#f43f5e,#e11d48);border-bottom:3px solid #9f1239;" onclick="pickKingdomShopItem(7)">🍬 ほのかな飴玉<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+2(生存はHPも+2)・攻撃+1</span></button>',
+                        8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>防御力を+1する</span></button>',
+                        9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
+                        10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
+                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップする</span></button>',
+                        13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
+                        14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
+                        15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<span class="item-desc-mini">【効果】上限未満の控え1体を<br>ランダムでレベル+2する</span></button>'
                     };
                     let sBtns = (currentShopItems || [1, 2, 3, 4]).map(id => shopDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -4781,7 +4826,7 @@
                     let rewardBtns = "";
                     arenaClearedMonsters.forEach((m, idx) => {
                         const inf = D[m.n];
-                        rewardBtns += '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickArenaReward(' + idx + ')">' + inf.a + ' ' + m.n + (m.isRare ? "✨" : "") + '<br><span style="font-size:10px;">(No.' + inf.no + ' Lv.' + m.fixedLv + ')</span></button>';
+                        rewardBtns += '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickArenaReward(' + idx + ')">' + inf.a + ' ' + m.n + (m.isRare ? "✨" : "") + '<span class="item-desc-mini">(No.' + inf.no + ' Lv.' + m.fixedLv + ')</span></button>';
                     });
                     evPanel.innerHTML =
                         '<div class="event-title">🏆 闘技場（' + (currentArenaGrade === "large" ? "大文字級" : "小文字級") + '）優勝おめでとう！</div>' +
@@ -5549,19 +5594,8 @@
                 if (ally.inParty && partyCount < 3) {
                     partyCount++;
                     if (ally.hp > 0) {
-                        const maxLv = getMaxLv(ally);
-                        ally.ex += gainExp;
-                        while (ally.lv < maxLv && ally.ex >= ally.nx) {
-                            ally.ex -= ally.nx;
-                            ally.lv++;
-                            const b = getMonData(ally.n);
-                            const mult = ally.isRare ? 1.25 : 1;
-                            ally.m += Math.max(1, Math.floor(b.hp * 0.1 * mult));
-                            ally.hp = ally.m;
-                            ally.at += Math.max(1, Math.floor(b.at * 0.1 * mult));
-                            ally.df += Math.max(1, Math.floor(b.df * 0.1 * mult));
-                            ally.sp += Math.max(1, Math.floor(b.sp * 0.1 * mult));
-                            ally.nx = Math.floor(ally.nx * 1.2);
+                        const lvUps = grantExpToSingleMonster(ally, gainExp);
+                        if (lvUps > 0) {
                             logs += "🆙" + ally.n + "はLv." + ally.lv + "に上がった！ ";
                             seLvUp();
                         }
@@ -5946,6 +5980,7 @@
                         if (currentEvent === "arena_reward") {
                             p.forEach(m => { if (m.inParty) m.hp = m.m; });
                         } else if (inDungeon) {
+                            currentEvent = null;
                             inDungeon = false;
                             inKingdom = false;
                             kingdomScene = "";
@@ -5977,6 +6012,7 @@
                                             ? "😢 星辰の大魔神に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
                                             : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）")));
                             showNotice(loseMsg, 5000);
+                            currentEvent = null;
                             inDungeon = false;
                             inKingdom = false;
                             kingdomScene = "";
@@ -5999,6 +6035,7 @@
                         scheduleBattleTimer(() => {
                             seFail();
                             alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
+                            currentEvent = null;
                             inDungeon = false;
                             inKingdom = false;
                             kingdomScene = "";
