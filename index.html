@@ -207,24 +207,6 @@
             line-height: 1.4;
             box-shadow: 0 1px 4px rgba(239, 68, 68, 0.45);
         }
-        .tab-all-btn {
-            width: 100% !important;
-            margin: 6px 0 0 !important;
-            padding: 5px 8px !important;
-            font-size: 10.5px !important;
-            border-radius: 10px !important;
-            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%) !important;
-            color: #475569 !important;
-            border: 1px solid #cbd5e1 !important;
-            border-bottom: 2px solid #94a3b8 !important;
-            box-shadow: none !important;
-        }
-        .tab-all-btn.active {
-            background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%) !important;
-            color: #ffffff !important;
-            border: 1px solid #8b5cf6 !important;
-            border-bottom: 2px solid #5b21b6 !important;
-        }
         .tab-panel.tab-hidden {
             display: none !important;
         }
@@ -741,7 +723,6 @@
             background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
             border: 3px solid #f43f5e;
         }
-
         .side {
             width: 49%;
             min-width: 0;
@@ -1305,29 +1286,34 @@
             </button>
         </div>
         <div id="guidePanel" class="guide-panel">
-            <b>🔰 初心者向け：最初にやること順番ガイド</b>
+            <b>🔰 はじめての遊び方・順番ガイド</b>
             <div class="guide-step">
-                <b>① まずは「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
-                毎日0時にリセットされる「☀️毎日ログインクエスト」は、ログインするだけで受け取れます。最初に受け取って有利に進めよう！
+                <b>①「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
+                毎日0時に更新される「☀️毎日ログインクエスト」は、開いて「🎁受取」を押すだけで特典がもらえます。まずはここを受け取ってから冒険を始めましょう！
             </div>
             <div class="guide-step">
-                <b>②「📦 ボックス」タブでパーティを確認しよう！</b><br>
-                最初は「プニシズク」3体が戦闘メンバーに参加中です。新しい仲間が増えたら「⚔️戦闘に出す」で最大3体まで入れ替えられます（何番手に選ばれたかも表示されます）。
+                <b>②「📦 ボックス」タブでパーティを確認・編成しよう！</b><br>
+                最初は「プニシズク」3体が戦闘メンバーに参加中です。強い仲間が増えたら「🛡️戻す」で控えに戻し、「⚔️戦闘に出す」で最大3体まで入れ替えられます（選んだ順に1〜3番手として戦います）。
             </div>
             <div class="guide-step">
                 <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
-                オート戦闘がONなので自動で戦います！経験値がたまってLvが上がり、確率で敵が仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめ！
+                「オート戦闘」がONなので、突入するだけで自動で戦います！経験値がたまってLvが上がり、倒した敵が確率で仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめです。
             </div>
             <div class="guide-step">
-                <b>④ 仲間が5体以上になったら「🧬 配合」タブを試そう！</b><br>
-                ボックスから「🛡️戻す」で控えにした鍵なしの2匹を選んで配合すると、レベル合計の強い新種が誕生します！迷ったら「✨配合アシスト」を使おう。
+                <b>④ 仲間が5体以上増えたら「🧬 配合」を試そう！</b><br>
+                ボックスで「🛡️戻す」にして鍵を外した2匹を選んで配合すると、2匹のLvを合計した強いモンスターが生まれます！（※失敗すると選んだ2匹は消えるので注意）迷ったら「✨配合アシスト」を使うと作れる組み合わせがすぐ分かります。
             </div>
             <div class="guide-step">
                 <b>⑤「📖 図鑑」でヒントを見て1000階を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると出現階層や配合レシピのヒントが見られます！50階ごとのボス撃破や、レアな✨色違い(能力1.25倍)・遭遇イベントも楽しもう！
+                図鑑の「❓・シルエット」をタップすると出現階層や配合のヒントが見られます！50階ごとのボス撃破や、能力1.25倍の「✨色違い」、道中の遭遇イベントも楽しみましょう。
+            </div>
+            <div class="guide-step">
+                <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
+                ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
+                「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もこのタブから行えます。
             </div>
             <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
-                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日はEXP2倍＆配合+10%！
+                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日は獲得EXPが2倍＆配合成功率が+10%になります！
             </div>
         </div>
     </div>
@@ -1341,9 +1327,7 @@
             <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
             <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
         </div>
-        <button class="tab-all-btn" id="tabBtn_all" onclick="switchTab('all')">📋 すべての項目を縦にまとめて表示</button>
     </div>
-
     <div id="panelBattle" class="tab-panel">
         <div class="box" id="battleBox" style="padding-top: 12px;">
             <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
@@ -1544,6 +1528,15 @@
                     <button style="background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); border-bottom: 3px solid #c2410c;" onclick="importData()">
                         📥 データをインポートして復元
                     </button>
+                </div>
+
+                <div style="border-top: 1.5px dashed #bae6fd; margin-top: 12px; padding-top: 10px;">
+                    <h4 style="margin: 0 0 6px; color: #7c3aed; font-size: 13.5px;">🎁 プレゼントコード入力</h4>
+                    <input type="text" id="presentCodeField" placeholder="プレゼントコードを入力" style="width: 90%;">
+                    <button style="background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%); border-bottom: 3px solid #5b21b6;" onclick="claimPresentCode()">
+                        🎁 コードを受け取る
+                    </button>
+                    <div id="presentCodeMsg" style="font-size: 11px; font-weight: 800; margin-top: 5px; min-height: 16px;"></div>
                 </div>
             </div>
         </div>
@@ -1784,7 +1777,6 @@
             "-19": { name: "👿混沌の連撃", desc: "【ボス固有】攻撃後に100%で追加攻撃を行い、40%の確率で毒・麻痺を付与する。" },
             "-20": { name: "👾終焉の創世神話", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP15%回復＋25%一撃必殺が発動する最強スキル。" }
         };
-
         const RARE_INNATE_SKILLS = [
             { id: 1, name: "🌈プリズムバースト", desc: "【色違い限定】攻撃後に35%の確率で攻撃力の60%の追加光線ダメージを与え、自分の攻撃力が15%上昇する。" },
             { id: 2, name: "✨オーラリカバー", desc: "【色違い限定】攻撃後に40%の確率で最大HPの12%を回復し、さらに20%の確率で攻撃1回無効バリアを張る。" },
@@ -2146,7 +2138,6 @@
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
         }
-
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2384,7 +2375,7 @@
 
             parts.push('<div class="mission-row daily-quest-row' + (dq.claimed ? ' done' : '') + '">' +
                 '<div><span style="background:#f59e0b; color:#fff; border-radius:4px; padding:0 5px; font-size:9px; font-weight:900; margin-right:4px;">毎日0時リセット</span><b>☀️ 毎日ログインクエスト</b><br>' +
-                '<span style="color:#475569; font-size:10px;">ログインするだけ（本日 ' + dq.date + '）</span><br>' +
+                '<span style="color:#475569; font-size:10px;">ログインする（本日 ' + dq.date + '）</span><br>' +
                 '<span style="color:#b45309; font-weight:900; font-size:10px;">🎁 本日の報酬：' + getDailyRewardText(dq.rewards) + '</span></div>' +
                 '<div>' + dailyRightHtml + '</div></div>');
 
@@ -2470,8 +2461,7 @@
             showNotice(msg, 4500);
             saveGame();
             up(true);
-        }
-
+                                    }
         function getDungeonLockRemainSec() {
             if (!dungeonLockUntil) return 0;
             const diff = Math.ceil((dungeonLockUntil - Date.now()) / 1000);
@@ -2632,6 +2622,7 @@
             updateSortButtonsUI();
             up(true);
         }
+
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -2642,29 +2633,19 @@
                 zukan:  document.getElementById("panelZukan"),
                 save:   document.getElementById("panelSave")
             };
-            const allBtn = document.getElementById("tabBtn_all");
             Object.keys(panels).forEach(key => {
                 const pEl = panels[key];
                 const bEl = document.getElementById("tabBtn_" + key);
-                if (tabName === "all") {
-                    if (pEl) pEl.classList.remove("tab-hidden");
-                    if (bEl) bEl.classList.remove("active");
-                } else {
-                    if (pEl) {
-                        if (key === tabName) pEl.classList.remove("tab-hidden");
-                        else pEl.classList.add("tab-hidden");
-                    }
-                    if (bEl) {
-                        if (key === tabName) bEl.classList.add("active");
-                        else bEl.classList.remove("active");
-                    }
+                if (pEl) {
+                    if (key === tabName) pEl.classList.remove("tab-hidden");
+                    else pEl.classList.add("tab-hidden");
+                }
+                if (bEl) {
+                    if (key === tabName) bEl.classList.add("active");
+                    else bEl.classList.remove("active");
                 }
             });
-            if (allBtn) {
-                if (tabName === "all") allBtn.classList.add("active");
-                else allBtn.classList.remove("active");
-            }
-            if (tabName === "battle" || tabName === "all") {
+            if (tabName === "battle") {
                 try { initBattleCanvas(); } catch (e) {}
             }
         }
@@ -2904,8 +2885,7 @@
                     "<br><span style='color:#dc2626; font-size:11px;'>※一度お別れすると元に戻せません。</span>";
                 modal.style.display = "flex";
             }
-        }
-
+                           }
         function getSelectedMixIndices() {
             const cbs = document.querySelectorAll(".cb:checked");
             const arr = [];
@@ -3442,8 +3422,7 @@
                 bgmInterval = null;
             }
             currentBgmMode = "";
-        }
-
+                    }
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -3912,6 +3891,7 @@
                 }, 420);
             }
         }
+
         function enter(){
             if (isDungeonLocked()) {
                 return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
@@ -4071,8 +4051,7 @@
                 initBattleState(enemyMon);
                 eg.push(enemyMon);
             }
-        }
-
+                                    }
         function advanceStageAfterEvent(shortMsg, noticeAlreadyShown = false) {
             clearAllBattleTimers();
             clearBattleVisualEffects();
@@ -4823,8 +4802,7 @@
 
         function showGodEntityHint() {
             alert("【🌌 超特別遭遇情報】\nNo.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）");
-        }
-
+                                                   }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5232,6 +5210,7 @@
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
         }
+
         function up(forceAll = true) {
             p.sort((a, b) => {
                 if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
@@ -5515,6 +5494,61 @@
             }
         }
 
+        function claimPresentCode() {
+            const field = document.getElementById("presentCodeField");
+            const msgEl = document.getElementById("presentCodeMsg");
+            if (!field) return;
+            const code = field.value.trim();
+
+            function setPresentMsg(text, color) {
+                if (msgEl) {
+                    msgEl.style.color = color || "#475569";
+                    msgEl.innerText = text;
+                }
+            }
+
+            if (!code) {
+                seFail();
+                setPresentMsg("⚠️ コードを入力してください。", "#dc2626");
+                return;
+            }
+
+            if (code === "01234567890") {
+                if (p.length + 3 > boxLimit) {
+                    seFail();
+                    const needSpace = (p.length + 3) - boxLimit;
+                    const errText = "⚠️ ボックスに3体分の空きがありません！（現在 " + p.length + "/" + boxLimit + "体／あと" + needSpace + "体空けてください）";
+                    setPresentMsg(errText, "#dc2626");
+                    alert(errText);
+                    return;
+                }
+                const gd = SPECIAL_D["星辰の神龍"];
+                const st100 = calcStatsByLevel(gd, 100, false);
+                for (let i = 0; i < 3; i++) {
+                    const newAlly = {
+                        n: "星辰の神龍", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m,
+                        at: st100.at, df: st100.df, sp: st100.sp,
+                        ex: 0, nx: st100.nx, inParty: false, partyOrder: 0, locked: false,
+                        isRare: false, isGodEntity: true, skillId: getRandomSkillId()
+                    };
+                    initBattleState(newAlly);
+                    p.push(newAlly);
+                }
+                if (!zk.includes("星辰の神龍")) zk.push("星辰の神龍");
+                field.value = "";
+                seMixSuccess();
+                saveGame();
+                up(true);
+                const okText = "🌌✨ プレゼント受取完了！『星辰の神龍』(Lv.100) が3体ボックスに入りました！";
+                setPresentMsg(okText, "#059669");
+                showNotice(okText, 6000);
+                alert(okText);
+            } else {
+                seFail();
+                setPresentMsg("❌ 無効なプレゼントコードです。", "#dc2626");
+            }
+        }
+
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -5539,8 +5573,7 @@
                     if (fxEl.parentElement) fxEl.remove();
                 }, Math.floor(900 / spdDiv));
             }, Math.floor(delayMs / spdDiv));
-        }
-
+                                             }
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
             const inf = getMonData(attacker.n);
