@@ -80,10 +80,7 @@
         }
         .btn-start {
             position: relative;
-            z-index: 20;
-            cursor: pointer;
-            touch-action: manipulation !important;
-            pointer-events: auto !important;
+            z-index: 10;
             width: 78% !important;
             max-width: 260px;
             padding: 15px 20px !important;
@@ -209,6 +206,24 @@
             margin-left: 3px;
             line-height: 1.4;
             box-shadow: 0 1px 4px rgba(239, 68, 68, 0.45);
+        }
+        .tab-all-btn {
+            width: 100% !important;
+            margin: 6px 0 0 !important;
+            padding: 5px 8px !important;
+            font-size: 10.5px !important;
+            border-radius: 10px !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-bottom: 2px solid #94a3b8 !important;
+            box-shadow: none !important;
+        }
+        .tab-all-btn.active {
+            background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid #8b5cf6 !important;
+            border-bottom: 2px solid #5b21b6 !important;
         }
         .tab-panel.tab-hidden {
             display: none !important;
@@ -1272,7 +1287,7 @@
     <div id="titleScreen">
         <div class="title-bg-blur"></div>
         <img src="file_00000000dacc8209b15b245f2492d89e.png" alt="タイトル画面" class="title-full-img" onerror="this.style.display='none'">
-        <button type="button" class="btn-start" onclick="startGame()">START</button>
+        <button class="btn-start" onclick="startGame()">START</button>
     </div>
 
     <canvas id="bgCanvas"></canvas>
@@ -1290,44 +1305,29 @@
             </button>
         </div>
         <div id="guidePanel" class="guide-panel">
-            <b>🔰 はじめての方へ：ゲームの進め方</b>
+            <b>🔰 初心者向け：最初にやること順番ガイド</b>
             <div class="guide-step">
-                <b>①「🧭 クエスト」で毎日のプレゼントをもらおう！</b><br>
-                「☀️ 毎日ログインクエスト」は、毎日0時に復活します。<br>
-                まずは「🎁 受取」ボタンを押してボーナスをもらってから冒険に出よう！
+                <b>① まずは「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
+                毎日0時にリセットされる「☀️毎日ログインクエスト」は、ログインするだけで受け取れます。最初に受け取って有利に進めよう！
             </div>
             <div class="guide-step">
-                <b>②「📦 ボックス」で戦う仲間（最大3体）をえらぼう！</b><br>
-                最初は「プニシズク」3体がチームに入っています。<br>
-                新しい仲間が増えたら、「⚔️ 戦闘に出す」で入れ替えよう！<br>
-                ※大切な仲間には「🔒 鍵」をつけておくと、うっかり消してしまうのを防げます。
+                <b>②「📦 ボックス」タブでパーティを確認しよう！</b><br>
+                最初は「プニシズク」3体が戦闘メンバーに参加中です。新しい仲間が増えたら「⚔️戦闘に出す」で最大3体まで入れ替えられます（何番手に選ばれたかも表示されます）。
             </div>
             <div class="guide-step">
-                <b>③「⚔️ バトル」で「🏰 ダンジョン突入」を押そう！</b><br>
-                オート戦闘がONなので、見ているだけで自動で戦います！<br>
-                敵をたおすと経験値でレベルが上がり、たまに敵が仲間になります。<br>
-                💡 勝てなくなったら「🔁 同じ階周回」をONにしてレベル上げしよう！
+                <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
+                オート戦闘がONなので自動で戦います！経験値がたまってLvが上がり、確率で敵が仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめ！
             </div>
             <div class="guide-step">
-                <b>④ 仲間が増えたら「🧬 配合」で強いモンスターを作ろう！</b><br>
-                ボックスの仲間が<b>5体以上</b>になったら配合ができます。<br>
-                チームから外した（控えの）2体を選ぶと、レベルが合体した新種が生まれます！<br>
-                💡 組み合わせが分からない時は「✨ 配合アシスト」を押すと自動で探せます。<br>
-                ⚠️ 配合に失敗すると選んだ2体は消えてしまうので注意してね！
+                <b>④ 仲間が5体以上になったら「🧬 配合」タブを試そう！</b><br>
+                ボックスから「🛡️戻す」で控えにした鍵なしの2匹を選んで配合すると、レベル合計の強い新種が誕生します！迷ったら「✨配合アシスト」を使おう。
             </div>
             <div class="guide-step">
-                <b>⑤「📖 図鑑」でヒントを見ながら1000階を目指そう！</b><br>
-                図鑑の「❓」や黒い影をタップすると、どこで出会えるかヒントが見られます。<br>
-                50階ごとのボス戦や、能力1.25倍の「✨ 色違い」、道中のイベントも楽しもう！
-            </div>
-            <div class="guide-step">
-                <b>⑥「💾 保存」で大切なデータをバックアップしよう！</b><br>
-                遊んだデータは自動で保存されますが、スマホの故障や機種変更で消えないように、ときどき「🔑 引き継ぎコードを発行する」を押してコードをメモに保存しておくと安心です。<br>
-                続きを別の端末で遊びたい時は、コードを貼り付けて「📥 データをインポートして復元」を押してね！（プレゼントコードの入力もここでできます）
+                <b>⑤「📖 図鑑」でヒントを見て1000階を目指そう！</b><br>
+                図鑑の「❓・シルエット」をタップすると出現階層や配合レシピのヒントが見られます！50階ごとのボス撃破や、レアな✨色違い(能力1.25倍)・遭遇イベントも楽しもう！
             </div>
             <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
-                💡 土日ボーナス：獲得EXPが2倍 ＆ 配合成功率が+10%アップします！<br>
-                ⚠️ 「🔁 同じ階周回」ON中は、道中の特別イベントは起きません。
+                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日はEXP2倍＆配合+10%！
             </div>
         </div>
     </div>
@@ -1341,6 +1341,7 @@
             <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
             <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
         </div>
+        <button class="tab-all-btn" id="tabBtn_all" onclick="switchTab('all')">📋 すべての項目を縦にまとめて表示</button>
     </div>
 
     <div id="panelBattle" class="tab-panel">
@@ -1542,17 +1543,6 @@
                     <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
                     <button style="background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); border-bottom: 3px solid #c2410c;" onclick="importData()">
                         📥 データをインポートして復元
-                    </button>
-                </div>
-
-                <div style="border-top: 1.5px dashed #bae6fd; margin-top: 12px; padding-top: 10px;">
-                    <h4 style="margin: 0 0 6px; color: #7c3aed; font-size: 13.5px;">🎁 プレゼントコード</h4>
-                    <p style="font-size: 10.5px; color: #64748b; margin: 0 0 6px;">
-                        ※特別なプレゼントコードをお持ちの場合はこちらに入力してください。
-                    </p>
-                    <input type="text" id="presentCodeField" placeholder="プレゼントコードを入力" style="width: 90%;">
-                    <button style="background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-bottom: 3px solid #5b21b6;" onclick="redeemPresentCode()">
-                        🎁 コードを受け取る
                     </button>
                 </div>
             </div>
@@ -1925,8 +1915,7 @@
             chestOpenCount: 0,
             claimedMissions: [],
             extraMissions: [],
-            dailyQuest: null,
-            usedPresentCodes: []
+            dailyQuest: null
         };
         let currentEvent = null;
         let lastFloorWasEvent = false;
@@ -2395,7 +2384,7 @@
 
             parts.push('<div class="mission-row daily-quest-row' + (dq.claimed ? ' done' : '') + '">' +
                 '<div><span style="background:#f59e0b; color:#fff; border-radius:4px; padding:0 5px; font-size:9px; font-weight:900; margin-right:4px;">毎日0時リセット</span><b>☀️ 毎日ログインクエスト</b><br>' +
-                '<span style="color:#475569; font-size:10px;">ログインする（本日 ' + dq.date + '）</span><br>' +
+                '<span style="color:#475569; font-size:10px;">ログインするだけ（本日 ' + dq.date + '）</span><br>' +
                 '<span style="color:#b45309; font-weight:900; font-size:10px;">🎁 本日の報酬：' + getDailyRewardText(dq.rewards) + '</span></div>' +
                 '<div>' + dailyRightHtml + '</div></div>');
 
@@ -2576,10 +2565,8 @@
                     kingdomVisitCount: 0, arenaWinCount: 0,
                     rareGetCount: 0, chestOpenCount: 0,
                     claimedMissions: [], extraMissions: [],
-                    dailyQuest: null,
-                    usedPresentCodes: []
+                    dailyQuest: null
                 }, data.stats);
-                if (!Array.isArray(stats.usedPresentCodes)) stats.usedPresentCodes = [];
                 migrateLegacyMissions();
             }
             ensureDailyQuestCurrent();
@@ -2655,19 +2642,29 @@
                 zukan:  document.getElementById("panelZukan"),
                 save:   document.getElementById("panelSave")
             };
+            const allBtn = document.getElementById("tabBtn_all");
             Object.keys(panels).forEach(key => {
                 const pEl = panels[key];
                 const bEl = document.getElementById("tabBtn_" + key);
-                if (pEl) {
-                    if (key === tabName) pEl.classList.remove("tab-hidden");
-                    else pEl.classList.add("tab-hidden");
-                }
-                if (bEl) {
-                    if (key === tabName) bEl.classList.add("active");
-                    else bEl.classList.remove("active");
+                if (tabName === "all") {
+                    if (pEl) pEl.classList.remove("tab-hidden");
+                    if (bEl) bEl.classList.remove("active");
+                } else {
+                    if (pEl) {
+                        if (key === tabName) pEl.classList.remove("tab-hidden");
+                        else pEl.classList.add("tab-hidden");
+                    }
+                    if (bEl) {
+                        if (key === tabName) bEl.classList.add("active");
+                        else bEl.classList.remove("active");
+                    }
                 }
             });
-            if (tabName === "battle") {
+            if (allBtn) {
+                if (tabName === "all") allBtn.classList.add("active");
+                else allBtn.classList.remove("active");
+            }
+            if (tabName === "battle" || tabName === "all") {
                 try { initBattleCanvas(); } catch (e) {}
             }
         }
@@ -3446,6 +3443,7 @@
             }
             currentBgmMode = "";
         }
+
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -3902,7 +3900,6 @@
             document.body.classList.remove("title-locked");
             const ts = document.getElementById("titleScreen");
             if (ts && !ts.classList.contains("hide")) {
-                ts.style.pointerEvents = "none";
                 try {
                     initAudio();
                     seStageClear();
@@ -4342,6 +4339,7 @@
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
+
         function openMysteryChest(open) {
             if (!inDungeon || currentEvent !== "chest") return;
             if (!open) {
@@ -4825,7 +4823,8 @@
 
         function showGodEntityHint() {
             alert("【🌌 超特別遭遇情報】\nNo.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）");
-                    }
+        }
+
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5232,7 +5231,290 @@
             if (btnMix) btnMix.disabled = inDungeon;
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
-                               }
+        }
+        function up(forceAll = true) {
+            p.sort((a, b) => {
+                if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
+                if (a.inParty !== b.inParty) return b.inParty ? 1 : -1;
+                if (boxSortMode === "lv" && b.lv !== a.lv) return b.lv - a.lv;
+                const infA = getMonData(a.n) || { no: 0 };
+                const infB = getMonData(b.n) || { no: 0 };
+                const noA = infA.no;
+                const noB = infB.no;
+                const sortA = noA === "B" ? 1060 : (noA === "A" ? 1050 : ((typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : (Number(noA) || 0)));
+                const sortB = noB === "B" ? 1060 : (noB === "A" ? 1050 : ((typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : (Number(noB) || 0)));
+                if (boxSortMode === "no" && boxNoDesc) return sortB - sortA;
+                return sortA - sortB;
+            });
+
+            updateSortButtonsUI();
+            upBattleUI();
+            renderMissions(forceAll);
+
+            const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
+            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
+            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
+            if (forceAll || boxSig !== lastRenderedBoxSig) {
+                lastRenderedBoxSig = boxSig;
+
+                const partyOrderList = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
+                const list = document.getElementById("box");
+                if (list) {
+                    let boxParts = [];
+                    const canReleaseBase = p.length > 3;
+                    for (let i = 0; i < p.length; i++) {
+                        let n = p[i];
+                        if (!matchesBoxFilter(n)) continue;
+                        let inf = getMonData(n.n);
+                        if (!inf) continue;
+                        let isZmb = isZombieMon(n);
+                        let isGod = isGodMon(n);
+                        let liClass = "compact-li" + (inDungeon ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
+                        let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
+                        let maxLv = getMaxLv(n);
+                        let capB = n.lvCapBonus || 0;
+                        let expText = n.lv >= maxLv ? "MAX" : n.ex + "/" + n.nx;
+                        let slotIdx = n.inParty ? (partyOrderList.indexOf(n) + 1) : 0;
+                        let partyTag = n.inParty ? (" <span style='color:#059669;font-weight:900;'>[参加中・" + slotIdx + "番手]</span>") : "";
+                        let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
+                        let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
+                        let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
+                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
+                        let rareStar = n.isRare ? "✨" : "";
+                        let emojiHtml = (isZmb || isGod)
+                            ? renderMonEmojiHtml(n, "", "font-size:15px;")
+                            : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
+
+                        let bulkCheckHtml = "";
+                        if (bulkReleaseMode && !inDungeon) {
+                            if (!n.inParty && !n.locked) {
+                                let isChk = bulkSelectedMons.has(n) ? " checked" : "";
+                                bulkCheckHtml = '<label class="bulk-cb-label"><input type="checkbox"' + isChk + ' onchange="toggleBulkSelect(' + i + ', this.checked)">選択</label> ';
+                            } else {
+                                bulkCheckHtml = '<span style="font-size:9.5px; color:#94a3b8; font-weight:800;">[保護]</span> ';
+                            }
+                        }
+
+                        let actionBtns = "";
+                        if (!inDungeon) {
+                            let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
+                            let btnBg = n.inParty ? "background:linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 2px solid #334155;" : "";
+                            let lockBtnText = n.locked ? "🔓 鍵解除" : "🔒 鍵";
+                            let lockBtnBg = n.locked
+                                ? "background:linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 2px solid #b45309;"
+                                : "background:linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 2px solid #475569;";
+                            let canRelease = !n.inParty && !n.locked && canReleaseBase;
+
+                            actionBtns = '<div class="box-btn-row">' +
+                                '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>' +
+                                '<button class="btn-small" style="' + lockBtnBg + '" onclick="toggleLock(' + i + ')">' + lockBtnText + '</button>' +
+                                '<button class="btn-small" style="background:linear-gradient(180deg, #f43f5e 0%, #e11d48 100%); border-bottom: 2px solid #be123c;" onclick="releaseMonster(' + i + ')"' + (canRelease ? '' : ' disabled') + '>👋 お別れ</button>' +
+                                '</div>';
+                        }
+
+                        let skillHtml = "";
+                        if (showBoxSkills) {
+                            let innateList = getInnateSkills(inf.no);
+                            let rareSk = getRareSkillObj(n);
+                            let rSk = getSkillObj(n);
+                            let skParts = ["<div class='skill-panel'>"];
+                            for (let sIdx = 0; sIdx < innateList.length; sIdx++) {
+                                let isk = innateList[sIdx];
+                                skParts.push('<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">固:' + isk.name + '</span>');
+                            }
+                            if (rareSk) {
+                                skParts.push('<span class="skill-badge skill-badge-rare" onclick="showSkillInfo(\'' + rareSk.name + '\', \'' + rareSk.desc + '\')">虹:' + rareSk.name + '</span>');
+                            }
+                            skParts.push('<span class="skill-badge skill-badge-add" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">追:' + rSk.name + '</span></div>');
+                            skillHtml = skParts.join("");
+                        }
+
+                        boxParts.push('<li class="' + liClass + '">' +
+                            '<div class="box-header-row"><span>' + bulkCheckHtml + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + godTag + zmbTag + rareTag + partyTag + lockTag + deadText + '</span><span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span> <span style="font-weight:900; font-size:10px; color:' + (capB > 0 ? '#7c3aed' : '#94a3b8') + ';">(+' + capB + ')</span></span></div>' +
+                            '<span class="status-text">HP:' + n.hp + '/' + n.m + ' 攻:' + n.at + ' 防:' + n.df + ' 素:' + n.sp + ' (EXP:' + expText + ')</span>' +
+                            skillHtml + actionBtns + '</li>');
+                    }
+                    if (boxParts.length === 0) {
+                        boxParts.push('<li class="compact-li" style="text-align:center; color:#64748b;">該当するモンスターがいません</li>');
+                    }
+                    list.innerHTML = boxParts.join("");
+                }
+
+                const mixList = document.getElementById("mixBoxList");
+                if (mixList) {
+                    let mixParts = [];
+                    for (let i = 0; i < p.length; i++) {
+                        let n = p[i];
+                        let inf = getMonData(n.n);
+                        if (!inf) continue;
+                        let isBossOrSpecial = (typeof inf.no === "number" && inf.no < 0) || inf.no === "A" || inf.no === "B";
+                        let isProtected = inDungeon || n.inParty || n.locked || isBossOrSpecial;
+                        let disAttr = isProtected ? "disabled" : "";
+                        let isZmb = isZombieMon(n);
+                        let isGod = isGodMon(n);
+                        let liClass = "compact-mix-li" + (isProtected ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
+                        let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
+                        let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
+                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
+                        let rareStar = n.isRare ? "✨" : "";
+                        let emojiHtml = (isZmb || isGod)
+                            ? renderMonEmojiHtml(n, "", "font-size:14px;")
+                            : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
+                        let tags = "";
+                        if (n.inParty) tags += " <span style='color:#059669;font-weight:900;font-size:10px;'>[参加中]</span>";
+                        if (n.locked) tags += "<span class='lock-badge'>🔒保護</span>";
+                        if (isBossOrSpecial) tags += " <span style='color:#dc2626;font-weight:900;font-size:10px;'>[配合不可]</span>";
+                        mixParts.push('<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" onchange="onMixCbChange(this)" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + godTag + zmbTag + rareTag + tags + '</span></label></li>');
+                    }
+                    mixList.innerHTML = mixParts.join("");
+                }
+
+                if (showMixAssist) renderMixAssist();
+            }
+
+            if (zk.length !== lastRenderedZkCount) {
+                lastRenderedZkCount = zk.length;
+
+                const rtTable = document.getElementById("rt");
+                if (rtTable) {
+                    const recipeEntries = Object.entries(R);
+                    let rowsParts = [];
+                    for (let i = 0; i < recipeEntries.length; i += 2) {
+                        rowsParts.push("<tr>");
+                        for (let j = 0; j < 2; j++) {
+                            if (i + j < recipeEntries.length) {
+                                const [pair, resName] = recipeEntries[i + j];
+                                const [m1Name, m2Name] = pair.split("+");
+                                const m1 = D[m1Name];
+                                const m2 = D[m2Name];
+                                const res = D[resName];
+                                const isDiscovered = zk.includes(resName);
+                                const resEmoji = isDiscovered ? res.a : '<span class="silhouette">' + res.a + '</span>';
+                                const resLabel = isDiscovered ? resName : "？？？";
+                                const noJoinTag = isSynthOnly(resName) ? ' <span style="color:red;font-weight:bold;">(⚠️配合限定)</span>' : "";
+                                rowsParts.push('<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>');
+                            } else {
+                                rowsParts.push("<td></td>");
+                            }
+                        }
+                        rowsParts.push("</tr>");
+                    }
+                    rtTable.innerHTML = rowsParts.join("");
+                }
+
+                const normalFoundCount = Object.keys(D).filter(k => zk.includes(k)).length;
+                const zukanBadge = document.getElementById("zukanCountBadge");
+                if (zukanBadge) zukanBadge.innerText = "(" + normalFoundCount + "/100種)";
+
+                const synthResults = new Set(Object.values(R));
+                const zkDiv = document.getElementById("zk");
+                if (zkDiv) {
+                    let zkParts = [];
+                    Object.keys(D).forEach((k) => {
+                        if(zk.includes(k)){
+                            zkParts.push('<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>');
+                        } else if (synthResults.has(k)) {
+                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#93c5fd;" onclick="showRecipeHint(\'' + k + '\')"><span class="silhouette">' + D[k].a + '</span><br>No.' + D[k].no + '<br>💡配合ヒント</div>');
+                        } else {
+                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#cbd5e1;" onclick="showWildHint(\'' + k + '\')">❓<br>No.' + D[k].no + '<br>📍出現ヒント</div>');
+                        }
+                    });
+                    zkDiv.innerHTML = zkParts.join("");
+                }
+
+                const bossFoundCount = Object.keys(BOSS_D).filter(k => zk.includes(k)).length;
+                const bBadge1 = document.getElementById("bossZukanCountBadge");
+                const bBadge2 = document.getElementById("bossZukanSubBadge");
+                if (bBadge1) bBadge1.innerText = " / 👑ボス(" + bossFoundCount + "/20種)";
+                if (bBadge2) bBadge2.innerText = "(" + bossFoundCount + "/20種)";
+
+                const bossZkDiv = document.getElementById("bossZk");
+                if (bossZkDiv) {
+                    let bParts = [];
+                    Object.keys(BOSS_D).forEach((k) => {
+                        const bInf = BOSS_D[k];
+                        if (zk.includes(k)) {
+                            bParts.push('<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>');
+                        } else {
+                            bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')"><span class="silhouette">' + bInf.a + '</span><br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
+                        }
+                    });
+                    bossZkDiv.innerHTML = bParts.join("");
+                }
+
+                const spA = "廃国のゾンビ絵文字勇者";
+                const spB = "星辰の神龍";
+                const spFound = (zk.includes(spA) ? 1 : 0) + (zk.includes(spB) ? 1 : 0);
+                const spBadge1 = document.getElementById("specialZukanCountBadge");
+                const spBadge2 = document.getElementById("specialZukanSubBadge");
+                if (spBadge1) spBadge1.innerText = " / 💀特別(" + spFound + "/2種)";
+                if (spBadge2) spBadge2.innerText = "(" + spFound + "/2種)";
+
+                const spZkDiv = document.getElementById("specialZk");
+                if (spZkDiv) {
+                    const zh = SPECIAL_D[spA];
+                    const gd = SPECIAL_D[spB];
+                    let spHtml = "";
+                    if (zk.includes(spA)) {
+                        spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
+                    } else {
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()"><span class="silhouette">' + zh.a + '</span><br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
+                    }
+                    if (zk.includes(spB)) {
+                        spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
+                    } else {
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()"><span class="silhouette">' + gd.a + '</span><br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
+                    }
+                    spZkDiv.innerHTML = spHtml;
+                }
+            }
+        }
+
+        function exportData() {
+            const data = {
+                stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
+                baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
+                dungeonLockUntil, stats, p
+            };
+            try {
+                const jsonStr = JSON.stringify(data);
+                const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
+                const field = document.getElementById("passCodeField");
+                field.value = base64Str;
+                field.select();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(base64Str).then(() => {
+                        alert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！");
+                    }).catch(() => {
+                        alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                    });
+                } else {
+                    alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                }
+            } catch(e) { alert("⚠️ コード発行失敗。"); }
+        }
+
+        function importData() {
+            const code = document.getElementById("importCodeField").value.trim();
+            if (!code) return alert("コードを入力してください。");
+            if (confirm("⚠️ セーブデータを上書きしますか？")) {
+                try {
+                    const jsonStr = decodeURIComponent(escape(atob(code)));
+                    const data = JSON.parse(jsonStr);
+                    if (data.p && Array.isArray(data.p)) {
+                        hydrateLoadedData(data);
+                        saveGame();
+                        alert("📥 データの復元に成功しました！");
+                        document.getElementById("importCodeField").value = "";
+                        if (isDungeonLocked()) startDungeonLock(dungeonLockUntil - Date.now());
+                        else updateDungeonLockBanner();
+                        updateSortButtonsUI();
+                        up(true);
+                    } else { alert("⚠️ 無効なコードです。"); }
+                } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
+            }
+        }
+
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -5760,7 +6042,8 @@
                 setDungeonButtonsDisabled(false);
                 return { needsFullUpdate: true, log: "" };
             }
-            }
+        }
+
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
