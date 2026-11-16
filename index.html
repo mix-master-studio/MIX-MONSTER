@@ -1441,7 +1441,6 @@
             <ul id="box" class="toggle-box scroll-box"></ul>
         </div>
     </div>
-
     <div id="panelMix" class="tab-panel tab-hidden">
         <div class="box" id="mixArea" style="border: 1.5px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
@@ -1567,6 +1566,14 @@
                 <button style="background:linear-gradient(180deg,#f43f5e,#e11d48); border-bottom:3px solid #be123c;" onclick="confirmReleaseAction(true)">👋 お別れする</button>
                 <button style="background:linear-gradient(180deg,#94a3b8,#64748b); border-bottom:3px solid #475569;" onclick="confirmReleaseAction(false)">キャンセル</button>
             </div>
+        </div>
+    </div>
+
+    <div id="gameDialogModal" class="confirm-modal" style="z-index: 10050;">
+        <div class="confirm-box">
+            <div class="confirm-title" id="gameDialogTitle">📢 お知らせ</div>
+            <div class="confirm-msg" id="gameDialogMsg" style="white-space: pre-line; max-height: 55vh; overflow-y: auto;"></div>
+            <div class="confirm-btn-row" id="gameDialogBtns"></div>
         </div>
     </div>
     <script>
@@ -1729,7 +1736,6 @@
             }
             return '<span class="' + extraClass + '"' + styleAttr + '>' + emoji + '</span>';
         }
-
         const R = {
             "プニシズク+プニシズク": "ギガジェリー", "キャタピラー+シェルスネイル": "ギガジェリー", "プニシズク+カゲコウモリ": "シルフィードバード",
             "カゲコウモリ+うらめシート": "ホークアイ", "うらめシート+チューマウス": "ナイトオウル", "チューマウス+ソロゾロアント": "ファイアフォックス",
@@ -1877,7 +1883,67 @@
         }
 
         function showSkillInfo(skillName, skillDesc) {
-            alert("【スキル詳細】\n" + skillName + "\n\n" + skillDesc);
+            showGameAlert(skillName + "\n\n" + skillDesc, "📜 スキル詳細");
+        }
+        let dialogQueue = [];
+        let isDialogOpen = false;
+
+        function openNextDialog() {
+            if (isDialogOpen || dialogQueue.length === 0) return;
+            const item = dialogQueue.shift();
+            const modal = document.getElementById("gameDialogModal");
+            const titleEl = document.getElementById("gameDialogTitle");
+            const msgEl = document.getElementById("gameDialogMsg");
+            const btnsEl = document.getElementById("gameDialogBtns");
+            if (!modal || !titleEl || !msgEl || !btnsEl) return;
+
+            isDialogOpen = true;
+            titleEl.innerText = item.title || "📢 お知らせ";
+            msgEl.innerText = item.message || "";
+            btnsEl.innerHTML = "";
+
+            if (item.type === "confirm") {
+                const okBtn = document.createElement("button");
+                okBtn.style.cssText = "background:linear-gradient(180deg,#f97316,#ea580c); border-bottom:3px solid #c2410c;";
+                okBtn.innerText = "OK";
+                okBtn.onclick = () => closeGameDialog(true, item.callback);
+
+                const cancelBtn = document.createElement("button");
+                cancelBtn.style.cssText = "background:linear-gradient(180deg,#94a3b8,#64748b); border-bottom:3px solid #475569;";
+                cancelBtn.innerText = "キャンセル";
+                cancelBtn.onclick = () => closeGameDialog(false, item.callback);
+
+                btnsEl.appendChild(okBtn);
+                btnsEl.appendChild(cancelBtn);
+            } else {
+                const okBtn = document.createElement("button");
+                okBtn.style.cssText = "background:linear-gradient(180deg,#38bdf8,#0284c7); border-bottom:3px solid #0369a1;";
+                okBtn.innerText = "OK";
+                okBtn.onclick = () => closeGameDialog(true, item.callback);
+                btnsEl.appendChild(okBtn);
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function closeGameDialog(result, callback) {
+            const modal = document.getElementById("gameDialogModal");
+            if (modal) modal.style.display = "none";
+            isDialogOpen = false;
+            if (typeof callback === "function") {
+                try { callback(result); } catch (e) { console.error(e); }
+            }
+            openNextDialog();
+        }
+
+        function showGameAlert(message, title = "📢 お知らせ", callback = null) {
+            dialogQueue.push({ type: "alert", title, message, callback });
+            openNextDialog();
+        }
+
+        function showGameConfirm(message, callback, title = "⚠️ 確認") {
+            dialogQueue.push({ type: "confirm", title, message, callback });
+            openNextDialog();
         }
 
         const MAX_BOX_LIMIT = 200;
@@ -2137,7 +2203,7 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-        }
+                }
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2461,7 +2527,7 @@
             showNotice(msg, 4500);
             saveGame();
             up(true);
-                                    }
+        }
         function getDungeonLockRemainSec() {
             if (!dungeonLockUntil) return 0;
             const diff = Math.ceil((dungeonLockUntil - Date.now()) / 1000);
@@ -2885,7 +2951,7 @@
                     "<br><span style='color:#dc2626; font-size:11px;'>※一度お別れすると元に戻せません。</span>";
                 modal.style.display = "flex";
             }
-                           }
+                        }
         function getSelectedMixIndices() {
             const cbs = document.querySelectorAll(".cb:checked");
             const arr = [];
@@ -3088,6 +3154,12 @@
             }, duration);
         }
 
+        function getDungeonEnemyLv(stage) {
+            if (stage <= 1) return 1;
+            if (stage >= 1000) return 100;
+            return Math.min(100, Math.max(1, 1 + Math.floor(((stage - 1) * 99) / 999)));
+        }
+
         function getEnemyPool(stage) {
             let keys = Object.keys(D);
             if (stage <= 10) return keys.filter(k => D[k].no <= 10);
@@ -3102,7 +3174,7 @@
         }
 
         function goFirstStage() {
-            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
+            if (inDungeon) return showGameAlert("ダンジョン内では階層を変更できません！", "⚠️ お知らせ");
             if (stg === 1) return;
             stg = 1;
             saveGame();
@@ -3110,11 +3182,11 @@
         }
 
         function changeStage(val) {
-            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
+            if (inDungeon) return showGameAlert("ダンジョン内では階層を変更できません！", "⚠️ お知らせ");
             let nextVal = stg + val;
             if (nextVal < 1) return;
-            if (nextVal > 1000) return alert("最高ダンジョンは1000階です！");
-            if (nextVal > maxStg) return alert("未到達のダンジョンには進めません！");
+            if (nextVal > 1000) return showGameAlert("最高ダンジョンは1000階です！", "⚠️ お知らせ");
+            if (nextVal > maxStg) return showGameAlert("未到達のダンジョンには進めません！", "⚠️ お知らせ");
             stg = nextVal;
             saveGame();
             upBattleUI();
@@ -3422,7 +3494,7 @@
                 bgmInterval = null;
             }
             currentBgmMode = "";
-                    }
+                                        }
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -3894,11 +3966,11 @@
 
         function enter(){
             if (isDungeonLocked()) {
-                return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
+                return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
             }
             let aliveCount = 0;
             p.forEach(m => { if(m.inParty && m.hp > 0) aliveCount++; });
-            if(aliveCount === 0) return alert("戦闘メンバーの生存モンスターがいません！");
+            if(aliveCount === 0) return showGameAlert("戦闘メンバーの生存モンスターがいません！", "⚠️ お知らせ");
 
             battleSessionId++;
             clearAllBattleTimers();
@@ -3951,6 +4023,7 @@
                     df: Math.ceil(b.df * mult),
                     sp: Math.ceil(b.sp * mult),
                     ex: b.ex * (isRare ? 2 : 1),
+                    fixedLv: getDungeonEnemyLv(stg),
                     isBoss: true,
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
@@ -4044,6 +4117,7 @@
                     df: Math.ceil(rawDf * mult),
                     sp: Math.ceil(rawSp * mult),
                     ex: (baseEx + levelBonusEx) * (isRare ? 2 : 1),
+                    fixedLv: getDungeonEnemyLv(stg),
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
@@ -4051,7 +4125,7 @@
                 initBattleState(enemyMon);
                 eg.push(enemyMon);
             }
-                                    }
+        }
         function advanceStageAfterEvent(shortMsg, noticeAlreadyShown = false) {
             clearAllBattleTimers();
             clearBattleVisualEffects();
@@ -4728,7 +4802,7 @@
             } else {
                 let currentPartyCount = 0;
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
-                if (currentPartyCount >= 3) return alert("戦闘メンバーは3体までです！");
+                if (currentPartyCount >= 3) return showGameAlert("戦闘メンバーは3体までです！", "⚠️ 編成上限");
                 partyOrderCounter++;
                 target.inParty = true;
                 target.partyOrder = partyOrderCounter;
@@ -4766,7 +4840,7 @@
                 const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ("❓No." + D[p2].no + " ？？？");
                 return "・" + s1 + " ＋ " + s2;
             }).join("\n");
-            alert("【💡 配合シルエットヒント】\nシルエットの正体は配合で誕生するモンスターです！\n\n" + hints);
+            showGameAlert("シルエットの正体は配合で誕生するモンスターです！\n\n" + hints, "💡 配合シルエットヒント");
         }
 
         function showWildHint(targetName) {
@@ -4787,22 +4861,22 @@
                 }
             }
             let extra = inf.no <= 75 ? "\n（※🧙謎の旅人のジャンケン勝利でも入手可能！）" : "";
-            alert("【📍 野生出現場所ヒント】\nNo." + inf.no + "（未発見モンスター）\n\n出現ダンジョン：およそ " + minS + "階 〜 " + maxS + "階" + extra);
+            showGameAlert("No." + inf.no + "（未発見モンスター）\n\n出現ダンジョン：およそ " + minS + "階 〜 " + maxS + "階" + extra, "📍 野生出現場所ヒント");
         }
 
         function showBossHint(targetName) {
             const b = BOSS_D[targetName];
             if (!b) return;
-            alert("【👑 ボス出現情報】\nNo." + b.no + "（" + b.stage + "階ボス）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時15%で仲間になります）");
+            showGameAlert("No." + b.no + "（" + b.stage + "階ボス）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時15%で仲間になります）", "👑 ボス出現情報");
         }
 
         function showZombieHeroHint() {
-            alert("【💀 特別遭遇情報】\nNo.A（廃国のゾンビ絵文字勇者）\n\nボス以外の階で0.4%の確率で遭遇！（撃破時0.1%で仲間になります・配合不可）");
+            showGameAlert("No.A（廃国のゾンビ絵文字勇者）\n\nボス以外の階で0.4%の確率で遭遇！（撃破時0.1%で仲間になります・配合不可）", "💀 特別遭遇情報");
         }
 
         function showGodEntityHint() {
-            alert("【🌌 超特別遭遇情報】\nNo.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）");
-                                                   }
+            showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
+        }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -4968,7 +5042,7 @@
                         let eId = " id='eM_slot_" + i + "' ";
                         let eStateHtml = buildStateIcons(m);
                         let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
-                        let dispLv = m.fixedLv ? m.fixedLv : stg;
+                        let dispLv = m.isArenaEnemy ? m.fixedLv : Math.min(100, m.fixedLv ? m.fixedLv : getDungeonEnemyLv(stg));
                         let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b"))));
 
                         let deadClass = isDead ? " monster-dead-coffin" : "";
@@ -5447,8 +5521,7 @@
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-        }
-
+                            }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
@@ -5463,35 +5536,36 @@
                 field.select();
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(base64Str).then(() => {
-                        alert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！");
+                        showGameAlert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！", "💾 コード発行");
                     }).catch(() => {
-                        alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                        showGameAlert("🔑 コードを発行しました。枠内からコピーしてください。", "💾 コード発行");
                     });
                 } else {
-                    alert("🔑 コードを発行しました。枠内からコピーしてください。");
+                    showGameAlert("🔑 コードを発行しました。枠内からコピーしてください。", "💾 コード発行");
                 }
-            } catch(e) { alert("⚠️ コード発行失敗。"); }
+            } catch(e) { showGameAlert("⚠️ コード発行失敗。", "⚠️ エラー"); }
         }
 
         function importData() {
             const code = document.getElementById("importCodeField").value.trim();
-            if (!code) return alert("コードを入力してください。");
-            if (confirm("⚠️ セーブデータを上書きしますか？")) {
+            if (!code) return showGameAlert("コードを入力してください。", "⚠️ エラー");
+            showGameConfirm("⚠️ セーブデータを上書きしますか？", (ok) => {
+                if (!ok) return;
                 try {
                     const jsonStr = decodeURIComponent(escape(atob(code)));
                     const data = JSON.parse(jsonStr);
                     if (data.p && Array.isArray(data.p)) {
                         hydrateLoadedData(data);
                         saveGame();
-                        alert("📥 データの復元に成功しました！");
+                        showGameAlert("📥 データの復元に成功しました！", "💾 復元完了");
                         document.getElementById("importCodeField").value = "";
                         if (isDungeonLocked()) startDungeonLock(dungeonLockUntil - Date.now());
                         else updateDungeonLockBanner();
                         updateSortButtonsUI();
                         up(true);
-                    } else { alert("⚠️ 無効なコードです。"); }
-                } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
-            }
+                    } else { showGameAlert("⚠️ 無効なコードです。", "⚠️ エラー"); }
+                } catch(e) { showGameAlert("⚠️ 復元失敗。コードが壊れています。", "⚠️ エラー"); }
+            }, "📥 データ復元確認");
         }
 
         function claimPresentCode() {
@@ -5519,7 +5593,7 @@
                     const needSpace = (p.length + 3) - boxLimit;
                     const errText = "⚠️ ボックスに3体分の空きがありません！（現在 " + p.length + "/" + boxLimit + "体／あと" + needSpace + "体空けてください）";
                     setPresentMsg(errText, "#dc2626");
-                    alert(errText);
+                    showGameAlert(errText, "🎁 プレゼントコード");
                     return;
                 }
                 const gd = SPECIAL_D["星辰の神龍"];
@@ -5542,7 +5616,7 @@
                 const okText = "🌌✨ プレゼント受取完了！『星辰の神龍』(Lv.100) が3体ボックスに入りました！";
                 setPresentMsg(okText, "#059669");
                 showNotice(okText, 6000);
-                alert(okText);
+                showGameAlert(okText, "🎁 プレゼント受取");
             } else {
                 seFail();
                 setPresentMsg("❌ 無効なプレゼントコードです。", "#dc2626");
@@ -5573,7 +5647,8 @@
                     if (fxEl.parentElement) fxEl.remove();
                 }, Math.floor(900 / spdDiv));
             }, Math.floor(delayMs / spdDiv));
-                                             }
+        }
+
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
             const inf = getMonData(attacker.n);
@@ -6409,10 +6484,10 @@
 
                                             if (clearedStg === 500) {
                                                 showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊", 8000);
-                                                setTimeout(() => { alert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！"); }, 150);
+                                                setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！", "🎊 500階クリア！"); }, 150);
                                             } else if (clearedStg === 1000) {
                                                 showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑", 10000);
-                                                setTimeout(() => { alert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！"); }, 150);
+                                                setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！", "👑 1000階完全制覇！"); }, 150);
                                             }
 
                                             if (stg === maxStg) {
@@ -6488,7 +6563,7 @@
                                     upBattleUI();
                                     scheduleBattleTimer(() => {
                                         seFail();
-                                        alert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。");
+                                        showGameAlert("💀戦闘メンバーが全滅しました！ ダンジョンから強制退出させられます。", "💀 全滅");
                                         currentEvent = null;
                                         inDungeon = false;
                                         inKingdom = false;
@@ -6543,11 +6618,11 @@
             if(inDungeon) return;
 
             if(p.length < 5) {
-                return alert("❌ 手持ちモンスターが少なすぎます！配合に失敗すると2匹消滅するため、最低3体残せるようにボックスに5体以上必要です。");
+                return showGameAlert("❌ 手持ちモンスターが少なすぎます！配合に失敗すると2匹消滅するため、最低3体残せるようにボックスに5体以上必要です。", "🧬 配合できません");
             }
 
             const cbs = document.querySelectorAll(".cb:checked");
-            if(cbs.length !== 2) return alert("配合するにはモンスターを2匹チェックしてください！");
+            if(cbs.length !== 2) return showGameAlert("配合するにはモンスターを2匹チェックしてください！", "🧬 配合");
 
             let idx1 = parseInt(cbs[0].value, 10);
             let idx2 = parseInt(cbs[1].value, 10);
@@ -6557,15 +6632,15 @@
             if (!m1 || !m2) return;
 
             if (m1.inParty || m2.inParty) {
-                return alert("⚠️ 戦闘参加中のモンスターは配合の材料にできません！先に「戻す」を押してください。");
+                return showGameAlert("⚠️ 戦闘参加中のモンスターは配合の材料にできません！先に「戻す」を押してください。", "🧬 配合できません");
             }
             if (m1.locked || m2.locked) {
-                return alert("🔒 鍵がかかっているモンスターは配合の材料にできません！先に鍵を解除してください。");
+                return showGameAlert("🔒 鍵がかかっているモンスターは配合の材料にできません！先に鍵を解除してください。", "🧬 配合できません");
             }
             const no1 = getMonData(m1.n).no;
             const no2 = getMonData(m2.n).no;
             if ((typeof no1 === "number" && no1 < 0) || (typeof no2 === "number" && no2 < 0) || no1 === "A" || no2 === "A" || no1 === "B" || no2 === "B") {
-                return alert("⚠️ ボス・特別モンスターは配合の材料にできません！");
+                return showGameAlert("⚠️ ボス・特別モンスターは配合の材料にできません！", "🧬 配合できません");
             }
 
             let resultName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
