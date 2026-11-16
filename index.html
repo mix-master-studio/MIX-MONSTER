@@ -80,7 +80,10 @@
         }
         .btn-start {
             position: relative;
-            z-index: 10;
+            z-index: 20;
+            cursor: pointer;
+            touch-action: manipulation !important;
+            pointer-events: auto !important;
             width: 78% !important;
             max-width: 260px;
             padding: 15px 20px !important;
@@ -1269,7 +1272,7 @@
     <div id="titleScreen">
         <div class="title-bg-blur"></div>
         <img src="file_00000000dacc8209b15b245f2492d89e.png" alt="タイトル画面" class="title-full-img" onerror="this.style.display='none'">
-        <button class="btn-start" onclick="startGame()">START</button>
+        <button type="button" class="btn-start" onclick="startGame()">START</button>
     </div>
 
     <canvas id="bgCanvas"></canvas>
@@ -1287,33 +1290,44 @@
             </button>
         </div>
         <div id="guidePanel" class="guide-panel">
-            <b>🔰 初心者向け：最初にやること順番ガイド</b>
+            <b>🔰 はじめての方へ：ゲームの進め方</b>
             <div class="guide-step">
-                <b>① まずは「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
-                毎日0時にリセットされる「☀️毎日ログインクエスト」は、ログインするだけで受け取れます。最初に受け取って有利に進めよう！
+                <b>①「🧭 クエスト」で毎日のプレゼントをもらおう！</b><br>
+                「☀️ 毎日ログインクエスト」は、毎日0時に復活します。<br>
+                まずは「🎁 受取」ボタンを押してボーナスをもらってから冒険に出よう！
             </div>
             <div class="guide-step">
-                <b>②「📦 ボックス」タブでパーティを確認しよう！</b><br>
-                最初は「プニシズク」3体が戦闘メンバーに参加中です。新しい仲間が増えたら「⚔️戦闘に出す」で最大3体まで入れ替えられます（何番手に選ばれたかも表示されます）。
+                <b>②「📦 ボックス」で戦う仲間（最大3体）をえらぼう！</b><br>
+                最初は「プニシズク」3体がチームに入っています。<br>
+                新しい仲間が増えたら、「⚔️ 戦闘に出す」で入れ替えよう！<br>
+                ※大切な仲間には「🔒 鍵」をつけておくと、うっかり消してしまうのを防げます。
             </div>
             <div class="guide-step">
-                <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
-                オート戦闘がONなので自動で戦います！経験値がたまってLvが上がり、確率で敵が仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめ！
+                <b>③「⚔️ バトル」で「🏰 ダンジョン突入」を押そう！</b><br>
+                オート戦闘がONなので、見ているだけで自動で戦います！<br>
+                敵をたおすと経験値でレベルが上がり、たまに敵が仲間になります。<br>
+                💡 勝てなくなったら「🔁 同じ階周回」をONにしてレベル上げしよう！
             </div>
             <div class="guide-step">
-                <b>④ 仲間が5体以上になったら「🧬 配合」タブを試そう！</b><br>
-                ボックスから「🛡️戻す」で控えにした鍵なしの2匹を選んで配合すると、レベル合計の強い新種が誕生します！迷ったら「✨配合アシスト」を使おう。
+                <b>④ 仲間が増えたら「🧬 配合」で強いモンスターを作ろう！</b><br>
+                ボックスの仲間が<b>5体以上</b>になったら配合ができます。<br>
+                チームから外した（控えの）2体を選ぶと、レベルが合体した新種が生まれます！<br>
+                💡 組み合わせが分からない時は「✨ 配合アシスト」を押すと自動で探せます。<br>
+                ⚠️ 配合に失敗すると選んだ2体は消えてしまうので注意してね！
             </div>
             <div class="guide-step">
-                <b>⑤「📖 図鑑」でヒントを見て1000階を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると出現階層や配合レシピのヒントが見られます！50階ごとのボス撃破や、レアな✨色違い(能力1.25倍)・遭遇イベントも楽しもう！
+                <b>⑤「📖 図鑑」でヒントを見ながら1000階を目指そう！</b><br>
+                図鑑の「❓」や黒い影をタップすると、どこで出会えるかヒントが見られます。<br>
+                50階ごとのボス戦や、能力1.25倍の「✨ 色違い」、道中のイベントも楽しもう！
             </div>
             <div class="guide-step">
-                <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
-                ゲームデータは自動で保存されますが、端末故障やブラウザ履歴の消去・機種変更に備えて、定期的に「🔑 引き継ぎコードを発行する」でコードを控えておくと安心です。復元したい時や別端末へ移す時は、コードを貼り付けて「📥 データをインポートして復元」を押せば続きから遊べます！（プレゼントコードの入力欄もこのタブにあります）
+                <b>⑥「💾 保存」で大切なデータをバックアップしよう！</b><br>
+                遊んだデータは自動で保存されますが、スマホの故障や機種変更で消えないように、ときどき「🔑 引き継ぎコードを発行する」を押してコードをメモに保存しておくと安心です。<br>
+                続きを別の端末で遊びたい時は、コードを貼り付けて「📥 データをインポートして復元」を押してね！（プレゼントコードの入力もここでできます）
             </div>
             <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
-                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日はEXP2倍＆配合+10%！
+                💡 土日ボーナス：獲得EXPが2倍 ＆ 配合成功率が+10%アップします！<br>
+                ⚠️ 「🔁 同じ階周回」ON中は、道中の特別イベントは起きません。
             </div>
         </div>
     </div>
@@ -2631,6 +2645,807 @@
             updateSortButtonsUI();
             up(true);
         }
+        function switchTab(tabName) {
+            currentTab = tabName;
+            const panels = {
+                battle: document.getElementById("panelBattle"),
+                box:    document.getElementById("panelBox"),
+                mix:    document.getElementById("panelMix"),
+                quest:  document.getElementById("panelQuest"),
+                zukan:  document.getElementById("panelZukan"),
+                save:   document.getElementById("panelSave")
+            };
+            Object.keys(panels).forEach(key => {
+                const pEl = panels[key];
+                const bEl = document.getElementById("tabBtn_" + key);
+                if (pEl) {
+                    if (key === tabName) pEl.classList.remove("tab-hidden");
+                    else pEl.classList.add("tab-hidden");
+                }
+                if (bEl) {
+                    if (key === tabName) bEl.classList.add("active");
+                    else bEl.classList.remove("active");
+                }
+            });
+            if (tabName === "battle") {
+                try { initBattleCanvas(); } catch (e) {}
+            }
+        }
+
+        function updateRepeatButtonUI() {
+            const btn = document.getElementById("btnRepeatToggle");
+            if (!btn) return;
+            if (repeatStageMode) {
+                btn.innerText = "🔁 同じ階周回: ON (" + repeatCount + "/50)";
+                btn.style.background = "linear-gradient(180deg, #10b981 0%, #059669 100%)";
+                btn.style.borderBottom = "3px solid #047857";
+            } else {
+                btn.innerText = "🔁 同じ階周回: OFF";
+                btn.style.background = "linear-gradient(180deg, #64748b 0%, #475569 100%)";
+                btn.style.borderBottom = "3px solid #334155";
+            }
+        }
+
+        function toggleRepeatStage() {
+            repeatStageMode = !repeatStageMode;
+            if (!repeatStageMode) repeatCount = 0;
+            updateRepeatButtonUI();
+        }
+
+        function toggleAutoBattle() {
+            autoBattleEnabled = !autoBattleEnabled;
+            const btn = document.getElementById("btnAutoToggle");
+            if (btn) {
+                btn.innerText = autoBattleEnabled ? "🔄 オート戦闘: ON" : "⏸️ オート戦闘: OFF";
+                btn.style.background = autoBattleEnabled
+                    ? "linear-gradient(180deg, #f59e0b 0%, #d97706 100%)"
+                    : "linear-gradient(180deg, #64748b 0%, #475569 100%)";
+                btn.style.borderBottom = autoBattleEnabled ? "3px solid #b45309" : "3px solid #334155";
+            }
+            if (!autoBattleEnabled && autoAtkTimer) {
+                clearTimeout(autoAtkTimer);
+                autoAtkTimer = null;
+                const btnAtk = document.getElementById("btnAtk");
+                if (btnAtk && inDungeon && !currentEvent && !isTurnRunning) btnAtk.disabled = false;
+            } else if (autoBattleEnabled && inDungeon && !currentEvent && eg.length > 0 && !isTurnRunning) {
+                if (autoAtkTimer) {
+                    clearTimeout(autoAtkTimer);
+                    autoAtkTimer = null;
+                }
+                atk();
+            }
+        }
+
+        function toggleBattleSpeed() {
+            battleSpeed = (battleSpeed === 1) ? 2 : 1;
+            const btn = document.getElementById("btnSpeedToggle");
+            if (btn) {
+                btn.innerText = battleSpeed === 2 ? "⏩ 速度: 2倍" : "⏩ 速度: 1倍";
+                btn.style.background = battleSpeed === 2
+                    ? "linear-gradient(180deg, #ec4899 0%, #db2777 100%)"
+                    : "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                btn.style.borderBottom = battleSpeed === 2 ? "3px solid #9d174d" : "3px solid #0369a1";
+            }
+        }
+
+        function updateSortButtonsUI() {
+            const btnNo = document.getElementById("btnSortNo");
+            const btnLv = document.getElementById("btnSortLv");
+            if (btnNo) {
+                const label = boxNoDesc ? "🔢 図鑑No.大→小" : "🔢 図鑑No.小→大";
+                if (boxSortMode === "no") {
+                    btnNo.innerText = label + " (選択中)";
+                    btnNo.style.background = "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                    btnNo.style.borderBottom = "3px solid #0369a1";
+                } else {
+                    btnNo.innerText = label;
+                    btnNo.style.background = "linear-gradient(180deg, #94a3b8 0%, #64748b 100%)";
+                    btnNo.style.borderBottom = "3px solid #475569";
+                }
+            }
+            if (btnLv) {
+                if (boxSortMode === "lv") {
+                    btnLv.innerText = "⭐ レベル順 (選択中)";
+                    btnLv.style.background = "linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%)";
+                    btnLv.style.borderBottom = "3px solid #0369a1";
+                } else {
+                    btnLv.innerText = "⭐ レベル順";
+                    btnLv.style.background = "linear-gradient(180deg, #94a3b8 0%, #64748b 100%)";
+                    btnLv.style.borderBottom = "3px solid #475569";
+                }
+            }
+        }
+
+        function sortBoxByNo() {
+            if (boxSortMode === "no") {
+                boxNoDesc = !boxNoDesc;
+            } else {
+                boxSortMode = "no";
+            }
+            updateSortButtonsUI();
+            up(true);
+        }
+
+        function sortBoxByLv() {
+            boxSortMode = "lv";
+            updateSortButtonsUI();
+            up(true);
+        }
+
+        function toggleBoxSkills() {
+            showBoxSkills = !showBoxSkills;
+            const btn = document.getElementById("btnSkillVisToggle");
+            if (btn) {
+                btn.innerText = showBoxSkills ? "📜 スキル表示: ON" : "📜 スキル表示: OFF";
+                btn.style.background = showBoxSkills
+                    ? "linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%)"
+                    : "linear-gradient(180deg, #64748b 0%, #475569 100%)";
+                btn.style.borderBottom = showBoxSkills ? "3px solid #5b21b6" : "3px solid #334155";
+            }
+            up(true);
+        }
+
+        function setBoxFilter(mode) {
+            boxFilterMode = mode;
+            const chips = document.querySelectorAll("#boxFilterRow .filter-chip");
+            const modes = ["all", "rare", "unlocked", "reserve", "boss"];
+            chips.forEach((el, idx) => {
+                if (modes[idx] === mode) el.classList.add("active");
+                else el.classList.remove("active");
+            });
+            up(true);
+        }
+
+        function matchesBoxFilter(mon) {
+            if (!mon) return false;
+            if (boxFilterMode === "rare") return Boolean(mon.isRare);
+            if (boxFilterMode === "unlocked") return !mon.locked;
+            if (boxFilterMode === "reserve") return !mon.inParty;
+            if (boxFilterMode === "boss") {
+                const inf = getMonData(mon.n);
+                return inf && ((typeof inf.no === "number" && inf.no < 0) || inf.no === "A" || inf.no === "B");
+            }
+            return true;
+        }
+
+        function showBoxToast(msg, duration = 3500) {
+            const el = document.getElementById("boxActionToast");
+            if (!el) return;
+            el.innerText = msg;
+            el.style.display = "block";
+            if (boxToastTimer) clearTimeout(boxToastTimer);
+            boxToastTimer = setTimeout(() => {
+                el.style.display = "none";
+            }, duration);
+        }
+
+        function toggleBulkReleaseMode() {
+            if (inDungeon) return showNotice("⚠️ ダンジョン内では一括お別れできません！", 2500);
+            bulkReleaseMode = !bulkReleaseMode;
+            bulkSelectedMons.clear();
+            updateBulkBarUI();
+            up(true);
+        }
+
+        function toggleBulkSelect(index, checked) {
+            const mon = p[index];
+            if (!mon || mon.inParty || mon.locked) return;
+            if (checked) {
+                const maxRemovable = Math.max(0, p.length - 3);
+                if (bulkSelectedMons.size >= maxRemovable) {
+                    showNotice("⚠️ 最低3体は手元に残す必要があります！", 2500);
+                    up(true);
+                    return;
+                }
+                bulkSelectedMons.add(mon);
+            } else {
+                bulkSelectedMons.delete(mon);
+            }
+            updateBulkBarUI();
+        }
+
+        function selectAllBulkSafe() {
+            if (inDungeon) return;
+            bulkSelectedMons.clear();
+            const maxRemovable = Math.max(0, p.length - 3);
+            for (let i = 0; i < p.length; i++) {
+                if (bulkSelectedMons.size >= maxRemovable) break;
+                const mon = p[i];
+                if (!mon.inParty && !mon.locked && matchesBoxFilter(mon)) {
+                    bulkSelectedMons.add(mon);
+                }
+            }
+            updateBulkBarUI();
+            up(true);
+        }
+
+        function clearBulkSelection() {
+            bulkSelectedMons.clear();
+            updateBulkBarUI();
+            up(true);
+        }
+
+        function updateBulkBarUI() {
+            const btn = document.getElementById("btnBulkModeToggle");
+            const bar = document.getElementById("bulkBar");
+            const execBtn = document.getElementById("btnBulkReleaseExec");
+            if (btn) {
+                btn.innerText = bulkReleaseMode ? "🗑️ 一括お別れモード: ON（クリックで終了）" : "🗑️ 一括お別れモード: OFF";
+                btn.style.background = bulkReleaseMode
+                    ? "linear-gradient(180deg, #e11d48 0%, #be123c 100%)"
+                    : "linear-gradient(180deg, #fb7185 0%, #e11d48 100%)";
+            }
+            if (bar) bar.style.display = (bulkReleaseMode && !inDungeon) ? "block" : "none";
+            if (execBtn) {
+                let validCount = 0;
+                bulkSelectedMons.forEach(m => {
+                    if (p.includes(m) && !m.inParty && !m.locked) validCount++;
+                });
+                execBtn.innerText = "👋 まとめてお別れ (" + validCount + "体)";
+                execBtn.disabled = validCount === 0;
+            }
+        }
+
+        function executeBulkRelease() {
+            if (inDungeon) return showNotice("⚠️ ダンジョン内ではお別れできません！", 2500);
+            const candidates = p.filter(m => bulkSelectedMons.has(m) && !m.inParty && !m.locked);
+            const maxRemovable = Math.max(0, p.length - 3);
+            const list = candidates.slice(0, maxRemovable);
+            if (list.length === 0) return showNotice("⚠️ お別れできるモンスターが選択されていません。", 2500);
+
+            pendingReleaseList = list;
+            const modal = document.getElementById("confirmModal");
+            const titleEl = document.getElementById("confirmTitle");
+            const msgEl = document.getElementById("confirmMsg");
+            if (modal && msgEl) {
+                if (titleEl) titleEl.innerText = "👋 一括お別れの確認";
+                const rareCount = list.filter(m => m.isRare).length;
+                const preview = list.slice(0, 5).map(m => (getMonData(m.n).a + m.n + "(Lv." + m.lv + ")")).join("、") + (list.length > 5 ? " など" : "");
+                msgEl.innerHTML = "選択した <b>" + list.length + "体</b> と本当にお別れしますか？<br>" +
+                    "<span style='font-size:11px; color:#334155;'>" + preview + "</span>" +
+                    (rareCount > 0 ? "<br><span style='color:#d97706; font-size:11.5px;'>⚠️ ✨色違いが " + rareCount + "体 含まれています！</span>" : "") +
+                    "<br><span style='color:#dc2626; font-size:11px;'>※一度お別れすると元に戻せません。</span>";
+                modal.style.display = "flex";
+            }
+        }
+
+        function getSelectedMixIndices() {
+            const cbs = document.querySelectorAll(".cb:checked");
+            const arr = [];
+            cbs.forEach(cb => {
+                const v = parseInt(cb.value, 10);
+                if (!isNaN(v)) arr.push(v);
+            });
+            return arr;
+        }
+
+        function toggleMixAssist() {
+            showMixAssist = !showMixAssist;
+            const panel = document.getElementById("mixAssistPanel");
+            const btn = document.getElementById("btnMixAssistToggle");
+            if (panel) panel.style.display = showMixAssist ? "block" : "none";
+            if (btn) {
+                btn.innerText = showMixAssist ? "✨ 配合アシスト（閉じる）" : "✨ 配合アシスト（作れる組み合わせを表示）";
+            }
+            if (showMixAssist) renderMixAssist();
+        }
+
+        function renderMixAssist() {
+            const panel = document.getElementById("mixAssistPanel");
+            if (!panel || !showMixAssist) return;
+            if (inDungeon) {
+                panel.innerHTML = "<div style='font-size:11px; color:#64748b; text-align:center;'>⚔️ ダンジョン探索中は利用できません</div>";
+                return;
+            }
+            const selectedIndices = getSelectedMixIndices();
+            const eligible = [];
+            for (let i = 0; i < p.length; i++) {
+                const m = p[i];
+                const inf = getMonData(m.n);
+                if (!m.inParty && !m.locked && inf && typeof inf.no === "number" && inf.no > 0) {
+                    eligible.push({ idx: i, mon: m });
+                }
+            }
+            const bestByPairKey = {};
+            for (let a = 0; a < eligible.length; a++) {
+                for (let b = a + 1; b < eligible.length; b++) {
+                    const m1 = eligible[a];
+                    const m2 = eligible[b];
+                    const resName = R[m1.mon.n + "+" + m2.mon.n] || R[m2.mon.n + "+" + m1.mon.n];
+                    if (!resName) continue;
+                    const pairNames = [m1.mon.n, m2.mon.n].sort().join("+");
+                    const sumLv = m1.mon.lv + m2.mon.lv;
+                    const isExactSel = selectedIndices.length === 2 &&
+                        ((selectedIndices[0] === m1.idx && selectedIndices[1] === m2.idx) ||
+                         (selectedIndices[0] === m2.idx && selectedIndices[1] === m1.idx));
+                    if (!bestByPairKey[pairNames] || isExactSel || (!bestByPairKey[pairNames].isExactSel && sumLv > bestByPairKey[pairNames].sumLv)) {
+                        bestByPairKey[pairNames] = { idx1: m1.idx, idx2: m2.idx, m1: m1.mon, m2: m2.mon, resName: resName, sumLv: sumLv, isExactSel: isExactSel };
+                    }
+                }
+            }
+            const list = Object.values(bestByPairKey);
+            list.sort((x, y) => {
+                const xNew = zk.includes(x.resName) ? 1 : 0;
+                const yNew = zk.includes(y.resName) ? 1 : 0;
+                if (xNew !== yNew) return xNew - yNew;
+                return D[y.resName].no - D[x.resName].no;
+            });
+
+            if (list.length === 0) {
+                panel.innerHTML = "<div style='font-size:11px; color:#475569; text-align:center; padding:4px;'>💡 現在、控え（鍵なし）の中から配合できるレシピはありません。<br>参加中を外すか鍵を解除すると見つかる場合があります！</div>";
+                return;
+            }
+            let html = "<div style='font-size:10.5px; font-weight:900; color:#065f46; margin-bottom:4px;'>✨ 作れる組み合わせ：" + list.length + "件（タップで自動選択）</div>";
+            list.forEach(item => {
+                const i1 = D[item.m1.n];
+                const i2 = D[item.m2.n];
+                const rInf = D[item.resName];
+                const isNew = !zk.includes(item.resName);
+                const newTag = isNew ? "<span class='assist-tag-new'>🆕未発見</span>" : "";
+                const resDisp = isNew ? ("<span class='silhouette'>" + rInf.a + "</span> No." + rInf.no + " ？？？") : (rInf.a + " No." + rInf.no + " " + item.resName);
+                const isSelected = selectedIndices.length === 2 &&
+                    ((selectedIndices[0] === item.idx1 && selectedIndices[1] === item.idx2) ||
+                     (selectedIndices[0] === item.idx2 && selectedIndices[1] === item.idx1));
+                const rowClass = "assist-row" + (isSelected ? " selected" : "");
+                const btnClass = "btn-small btn-assist-pick" + (isSelected ? " selected" : "");
+                const btnText = isSelected ? "✅ 選択中" : "🎯 選択";
+                html += '<div class="' + rowClass + '">' +
+                    '<div>' + newTag + i1.a + item.m1.n + '(Lv.' + item.m1.lv + ') ＋ ' + i2.a + item.m2.n + '(Lv.' + item.m2.lv + ')<br>' +
+                    '➡️ <b>' + resDisp + '</b> <span style="color:#0284c7;">(予想Lv.' + Math.min(100, item.sumLv) + ')</span></div>' +
+                    '<button class="' + btnClass + '" onclick="applyMixAssist(' + item.idx1 + ',' + item.idx2 + ')">' + btnText + '</button>' +
+                    '</div>';
+            });
+            panel.innerHTML = html;
+        }
+
+        function applyMixAssist(idx1, idx2) {
+            if (inDungeon) return;
+            const mixBox = document.getElementById("mixBoxList");
+            if (mixBox && mixBox.style.display === "none") mixBox.style.display = "block";
+            const cbs = document.querySelectorAll(".cb");
+            cbs.forEach(cb => {
+                const v = parseInt(cb.value, 10);
+                cb.checked = (!cb.disabled && (v === idx1 || v === idx2));
+            });
+            if (showMixAssist) renderMixAssist();
+            const m1 = p[idx1];
+            const m2 = p[idx2];
+            if (m1 && m2) {
+                showNotice("🧬 配合アシストで「" + m1.n + "」と「" + m2.n + "」を選択しました！上の「配合実行！」を押してね。", 3500);
+            }
+        }
+
+        function onMixCbChange(cb) {
+            const checked = document.querySelectorAll(".cb:checked");
+            if (checked.length > 2) {
+                cb.checked = false;
+                showNotice("⚠️ 配合に選べるのは2匹までです！", 2200);
+            }
+            if (showMixAssist) renderMixAssist();
+        }
+
+        function toggleLock(index) {
+            if (inDungeon) return showNotice("⚠️ ダンジョン内では鍵を切り替えられません！", 2500);
+            const target = p[index];
+            if (!target) return;
+            target.locked = !target.locked;
+            if (target.locked) bulkSelectedMons.delete(target);
+            document.getElementById("battleLog").innerText = target.locked
+                ? ("🔒 " + target.n + " に鍵をかけました（配合・お別れから保護）。")
+                : ("🔓 " + target.n + " の鍵を解除しました。");
+            saveGame();
+            up(true);
+        }
+
+        function releaseMonster(index) {
+            if (inDungeon) return showNotice("⚠️ ダンジョン内ではお別れできません！", 2500);
+            if (p.length <= 3) return showNotice("⚠️ モンスターが3体以下のため、これ以上お別れできません！", 2500);
+            const target = p[index];
+            if (!target) return;
+            if (target.inParty) return showNotice("⚠️ 戦闘参加中のモンスターはお別れできません！先に「戻す」を押してください。", 3000);
+            if (target.locked) return showNotice("🔒 鍵がかかっているモンスターとはお別れできません！先に鍵を解除してください。", 3000);
+
+            pendingReleaseList = [target];
+            const modal = document.getElementById("confirmModal");
+            const titleEl = document.getElementById("confirmTitle");
+            const msgEl = document.getElementById("confirmMsg");
+            if (modal && msgEl) {
+                if (titleEl) titleEl.innerText = "👋 お別れの確認";
+                const inf = getMonData(target.n);
+                msgEl.innerHTML = inf.a + " <b>「" + target.n + "」(Lv." + target.lv + ")</b> と本当にお別れしますか？<br><span style='color:#dc2626; font-size:11px;'>※一度お別れすると元に戻せません。</span>";
+                modal.style.display = "flex";
+            }
+        }
+
+        function confirmReleaseAction(doRelease) {
+            const modal = document.getElementById("confirmModal");
+            if (modal) modal.style.display = "none";
+            if (doRelease && Array.isArray(pendingReleaseList) && pendingReleaseList.length > 0) {
+                const maxRemovable = Math.max(0, p.length - 3);
+                const toRemove = pendingReleaseList.filter(m => p.includes(m) && !m.inParty && !m.locked).slice(0, maxRemovable);
+                if (toRemove.length > 0) {
+                    const removeSet = new Set(toRemove);
+                    p = p.filter(m => !removeSet.has(m));
+                    toRemove.forEach(m => bulkSelectedMons.delete(m));
+                    document.getElementById("battleLog").innerText = toRemove.length === 1
+                        ? ("🍃 " + toRemove[0].n + " とお別れしました。")
+                        : ("🍃 " + toRemove.length + "体のモンスターと一括お別れしました。");
+                    saveGame();
+                    up(true);
+                }
+            }
+            pendingReleaseList = [];
+        }
+
+        function initBattleState(mon) {
+            mon.buffAt = 0;
+            mon.buffDf = 0;
+            mon.buffSp = 0;
+            mon.nullifyOnce = false;
+            mon.nextAtk15 = false;
+            mon.isPoisoned = false;
+            mon.isParalyzed = false;
+            mon.halfDmgOnce = false;
+        }
+
+        let p = [
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, locked: false, isRare: false, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, locked: false, isRare: false, skillId: getRandomSkillId() }
+        ];
+        p.forEach(m => initBattleState(m));
+
+        function resetStageBuffs() {
+            p.forEach(m => initBattleState(m));
+            eg.forEach(e => initBattleState(e));
+        }
+
+        function showNotice(msg, duration = 4500) {
+            const banner = document.getElementById("noticeBanner");
+            if (!banner) return;
+            banner.innerText = msg;
+            banner.style.display = "block";
+            if (banner.hideTimer) clearTimeout(banner.hideTimer);
+            banner.hideTimer = setTimeout(() => {
+                banner.style.display = "none";
+            }, duration);
+        }
+
+        function getEnemyPool(stage) {
+            let keys = Object.keys(D);
+            if (stage <= 10) return keys.filter(k => D[k].no <= 10);
+            let progress = (stage - 11) / (1000 - 11);
+            let minNo = 1 + Math.floor(progress * 89);
+            let maxNo = 10 + Math.floor(progress * 90);
+            if (maxNo > 100) maxNo = 100;
+            if (minNo > 90) minNo = 90;
+            let pool = keys.filter(k => D[k].no >= minNo && D[k].no <= maxNo);
+            if (pool.length === 0) pool = ["ドラゴンエンペラー"];
+            return pool;
+        }
+
+        function goFirstStage() {
+            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
+            if (stg === 1) return;
+            stg = 1;
+            saveGame();
+            upBattleUI();
+        }
+
+        function changeStage(val) {
+            if (inDungeon) return alert("ダンジョン内では階層を変更できません！");
+            let nextVal = stg + val;
+            if (nextVal < 1) return;
+            if (nextVal > 1000) return alert("最高ダンジョンは1000階です！");
+            if (nextVal > maxStg) return alert("未到達のダンジョンには進めません！");
+            stg = nextVal;
+            saveGame();
+            upBattleUI();
+        }
+
+        let soundEnabled = true;
+        let audioCtx = null;
+        let noiseBuffer = null;
+        let bgmInterval = null;
+        let bgmStep = 0;
+        let currentBgmMode = "";
+
+        function initAudio() {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) audioCtx = new AudioContextClass();
+                }
+                if (audioCtx && audioCtx.state === "suspended") {
+                    audioCtx.resume();
+                }
+                if (audioCtx && !noiseBuffer) {
+                    const len = Math.floor(audioCtx.sampleRate * 0.12);
+                    noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+                    const data = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+                }
+            } catch (e) {}
+        }
+
+        document.addEventListener("click", function(e) {
+            if (e.target && e.target.tagName === "BUTTON") {
+                initAudio();
+                if (soundEnabled && e.target.id !== "btnSoundToggle") {
+                    seButtonTap();
+                }
+                if (soundEnabled && !bgmInterval) {
+                    updateBgmState();
+                }
+            }
+        });
+
+        function toggleSound() {
+            initAudio();
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById("btnSoundToggle");
+            if (btn) {
+                btn.innerText = soundEnabled ? "🔊 サウンド: ON" : "🔇 サウンド: OFF";
+                btn.style.background = soundEnabled
+                    ? "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)"
+                    : "linear-gradient(180deg, #94a3b8 0%, #475569 100%)";
+                btn.style.borderBottom = soundEnabled ? "2px solid #0369a1" : "2px solid #334155";
+            }
+            if (soundEnabled) {
+                playTone(880, "sine", 0, 0.08, 0.10);
+                updateBgmState(true);
+            } else {
+                stopAllBgm();
+            }
+        }
+
+        function playTone(freq, type, delaySec, durationSec, vol = 0.08) {
+            if (!soundEnabled || !freq) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const t = audioCtx.currentTime + delaySec;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, t);
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + durationSec);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(t);
+                osc.stop(t + durationSec);
+            } catch (e) {}
+        }
+
+        function playKick(vol = 0.12) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const t = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(145, t);
+                osc.frequency.exponentialRampToValueAtTime(42, t + 0.09);
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.10);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(t);
+                osc.stop(t + 0.10);
+            } catch (e) {}
+        }
+
+        function playHat(dur = 0.03, vol = 0.03) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx || !noiseBuffer) return;
+                const t = audioCtx.currentTime;
+                const src = audioCtx.createBufferSource();
+                src.buffer = noiseBuffer;
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = "highpass";
+                filter.frequency.value = 5500;
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(vol, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+                src.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                src.start(t);
+                src.stop(t + dur);
+            } catch (e) {}
+        }
+
+        function seButtonTap() {
+            playTone(740, "sine", 0, 0.05, 0.08);
+            playTone(1046, "sine", 0.03, 0.06, 0.06);
+        }
+        function seAttack() {
+            playTone(190, "sawtooth", 0, 0.07, 0.14);
+            playTone(95, "triangle", 0.03, 0.11, 0.18);
+        }
+        function seSkill() {
+            const notes = [523, 659, 784, 1046];
+            notes.forEach((f, i) => playTone(f, "sine", i * 0.045, 0.13, 0.11));
+        }
+        function seJoin() {
+            const notes = [440, 554, 659, 880];
+            notes.forEach((f, i) => playTone(f, "triangle", i * 0.08, 0.22, 0.16));
+        }
+        function seLvUp() {
+            const notes = [523, 523, 523, 523, 415, 466, 523];
+            const times = [0, 0.11, 0.22, 0.33, 0.48, 0.60, 0.74];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 6 ? 0.38 : 0.10, 0.09));
+        }
+        function seStageClear() {
+            const notes = [523, 659, 784, 1046];
+            notes.forEach((f, i) => playTone(f, "square", i * 0.09, i === 3 ? 0.30 : 0.09, 0.09));
+        }
+        function seMixSuccess() {
+            const notes = [392, 523, 659, 784, 659, 1046];
+            const times = [0, 0.09, 0.18, 0.27, 0.40, 0.54];
+            notes.forEach((f, i) => playTone(f, "square", times[i], i === 5 ? 0.45 : 0.11, 0.10));
+        }
+        function seFail() {
+            playTone(180, "sawtooth", 0, 0.18, 0.14);
+            playTone(130, "sawtooth", 0.16, 0.30, 0.14);
+        }
+
+        function isBossStage(stageNum) {
+            return stageNum > 0 && stageNum % 50 === 0;
+        }
+
+        function updateBgmState(forceRestart = false) {
+            if (!soundEnabled) {
+                stopAllBgm();
+                return;
+            }
+            let targetMode = "home";
+            if (inDungeon) {
+                if (inKingdom) {
+                    targetMode = "kingdom";
+                } else if (isBossStage(stg)) {
+                    targetMode = "boss_" + stg;
+                } else {
+                    let areaIdx = Math.min(9, Math.floor((stg - 1) / 100));
+                    targetMode = "area_" + areaIdx;
+                }
+            }
+            if (!forceRestart && currentBgmMode === targetMode && bgmInterval) return;
+
+            stopAllBgm();
+            currentBgmMode = targetMode;
+
+            const homeFantasyLead = [
+                523, 659, 784, 523, 880, 784, 659, 0,
+                698, 784, 880, 698, 784, 659, 587, 0,
+                523, 659, 784, 1046, 988, 880, 784, 659,
+                698, 880, 784, 587, 523, 0, 523, 0
+            ];
+            const homeFantasyBass = [
+                131, 196, 262, 196, 131, 196, 262, 196,
+                175, 220, 262, 220, 196, 247, 294, 196,
+                131, 196, 262, 196, 220, 262, 330, 220,
+                175, 220, 196, 247, 131, 196, 262, 196
+            ];
+            const homeFantasyPad = [
+                330, 0, 392, 0, 330, 0, 392, 0,
+                349, 0, 440, 0, 392, 0, 494, 0,
+                330, 0, 392, 0, 440, 0, 523, 0,
+                349, 0, 392, 0, 330, 0, 392, 0
+            ];
+            const kingdomMarch = [
+                523, 523, 659, 784, 1046, 0, 784, 880,
+                784, 659, 587, 659, 523, 0, 392, 0,
+                587, 587, 698, 880, 988, 0, 880, 784,
+                659, 784, 880, 988, 1046, 0, 1046, 0
+            ];
+            const kingdomBass = [
+                131, 196, 262, 196, 131, 196, 262, 196,
+                147, 196, 247, 196, 131, 196, 262, 196,
+                147, 220, 294, 220, 196, 247, 294, 247,
+                165, 196, 262, 196, 131, 196, 262, 131
+            ];
+
+            const AREA_TRACKS = [
+                { tempo: 185, wave: "square",   lead: [523,0,587,659, 784,0,659,587, 523,659,784,880, 784,0,659,0], bass: [131,131,196,131, 147,147,220,147, 131,131,196,131, 165,147,131,196] },
+                { tempo: 175, wave: "triangle", lead: [440,523,587,0, 659,587,523,440, 494,587,659,0, 784,659,587,523], bass: [110,0,165,110, 147,0,110,147, 123,0,185,123, 165,147,131,110] },
+                { tempo: 195, wave: "sine",     lead: [392,494,587,784, 659,587,494,392, 440,523,659,880, 784,659,587,494], bass: [196,196,147,196, 165,165,131,165, 175,175,131,175, 196,147,196,147] },
+                { tempo: 170, wave: "sawtooth", lead: [440,466,554,466, 440,392,349,392, 440,554,659,587, 554,466,440,0], bass: [110,165,110,165, 117,175,117,175, 110,165,139,165, 110,117,110,165] },
+                { tempo: 185, wave: "sawtooth", lead: [330,349,415,440, 415,349,330,294, 330,392,466,440, 392,349,330,0], bass: [82,123,82,123, 87,131,87,131, 82,123,98,131, 82,92,82,123] },
+                { tempo: 175, wave: "square",   lead: [392,392,466,523, 587,523,466,392, 349,349,440,523, 587,659,587,0], bass: [98,98,147,98, 117,117,175,117, 87,87,131,87, 98,117,131,147] },
+                { tempo: 205, wave: "triangle", lead: [523,659,784,1046, 988,784,659,523, 587,698,880,1046, 988,880,784,659], bass: [131,196,262,196, 123,196,247,196, 147,220,294,220, 196,165,147,131] },
+                { tempo: 150, wave: "sawtooth", lead: [440,440,523,587, 659,587,523,440, 494,587,659,784, 880,784,659,587], bass: [110,110,110,165, 131,131,131,196, 123,123,147,147, 165,165,196,165] },
+                { tempo: 195, wave: "sine",     lead: [784,988,1175,988, 880,784,659,784, 740,880,1175,1046, 988,880,784,659], bass: [196,294,196,294, 165,247,165,247, 147,220,147,220, 196,147,196,247] },
+                { tempo: 150, wave: "square",   lead: [494,587,659,740, 784,740,659,587, 523,659,784,988, 932,784,740,659], bass: [123,123,185,123, 131,131,196,131, 147,147,220,147, 123,147,165,185] }
+            ];
+
+            const BOSS_PATTERNS = [
+                [220,262,330,294, 220,330,392,330, 247,294,370,330, 440,392,330,294],
+                [247,294,370,330, 440,392,370,294, 262,330,392,440, 494,440,392,330],
+                [196,233,294,262, 349,330,294,233, 220,262,330,392, 466,440,392,349],
+                [262,311,392,349, 466,415,392,311, 294,349,440,523, 587,523,466,392],
+                [220,330,440,392, 349,330,294,262, 247,370,494,440, 523,494,440,392]
+            ];
+
+            bgmStep = 0;
+            if (targetMode === "kingdom") {
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== "kingdom") return;
+                    const step = bgmStep % kingdomMarch.length;
+                    const lf = kingdomMarch[step];
+                    const bf = kingdomBass[step];
+                    if (lf > 0) {
+                        playTone(lf, "triangle", 0, 0.19, 0.065);
+                        if (step % 4 === 0) playTone(lf * 0.5, "sine", 0, 0.20, 0.03);
+                    }
+                    if (bf > 0) playTone(bf, "sine", 0, 0.21, 0.055);
+                    if (step % 4 === 0) playKick(0.065);
+                    if (step % 4 === 2) playHat(0.025, 0.018);
+                    bgmStep++;
+                }, 205);
+            } else if (targetMode.indexOf("boss_") === 0) {
+                const bossStage = parseInt(targetMode.replace("boss_", ""), 10) || 50;
+                const bossIdx = Math.max(0, Math.floor(bossStage / 50) - 1);
+                const isSuper = (bossStage === 500 || bossStage === 1000);
+                const pattern = BOSS_PATTERNS[bossIdx % BOSS_PATTERNS.length];
+                const pitchShift = isSuper ? 1.12 : (1 + ((bossIdx % 4) * 0.04));
+                const tempo = bossStage === 1000 ? 120 : (bossStage === 500 ? 130 : (145 - (bossIdx % 3) * 8));
+
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== targetMode) return;
+                    const step = bgmStep % 16;
+                    const leadF = pattern[step] * pitchShift;
+                    const bassF = (pattern[step] / 2) * pitchShift;
+
+                    playTone(leadF * (isSuper && step % 4 === 0 ? 2 : 1), step % 2 === 0 ? "sawtooth" : "square", 0, 0.11, 0.055);
+                    playTone(bassF, "triangle", 0, 0.13, 0.065);
+                    if (step % 4 === 0) playKick(0.11);
+                    if (step % 2 === 1) playHat(0.03, 0.025);
+                    bgmStep++;
+                }, tempo);
+            } else if (targetMode === "home") {
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== "home") return;
+                    const step = bgmStep % homeFantasyLead.length;
+                    const lf = homeFantasyLead[step];
+                    const bf = homeFantasyBass[step];
+                    const pf = homeFantasyPad[step];
+                    if (lf > 0) playTone(lf, "triangle", 0, 0.21, 0.060);
+                    if (pf > 0) playTone(pf, "sine", 0, 0.30, 0.025);
+                    if (bf > 0) playTone(bf, "sine", 0, 0.22, 0.045);
+                    if (step % 4 === 0) playKick(0.050);
+                    if (step % 4 === 2) playHat(0.022, 0.015);
+                    bgmStep++;
+                }, 215);
+            } else {
+                const idx = parseInt(targetMode.replace("area_", ""), 10) || 0;
+                const tr = AREA_TRACKS[idx] || AREA_TRACKS[0];
+                bgmInterval = setInterval(() => {
+                    if (!soundEnabled || currentBgmMode !== targetMode) return;
+                    const step = bgmStep % 16;
+                    const lf = tr.lead[step];
+                    const bf = tr.bass[step];
+                    if (lf > 0) playTone(lf, tr.wave, 0, tr.tempo / 1000 * 0.9, 0.045);
+                    if (bf > 0) playTone(bf, "triangle", 0, tr.tempo / 1000 * 0.95, 0.05);
+                    if (step % 4 === 0) playKick(0.075);
+                    if (step % 4 === 2) playHat(0.025, 0.02);
+                    bgmStep++;
+                }, tr.tempo);
+            }
+        }
+
+        function stopAllBgm() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+            currentBgmMode = "";
+        }
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -3087,6 +3902,7 @@
             document.body.classList.remove("title-locked");
             const ts = document.getElementById("titleScreen");
             if (ts && !ts.classList.contains("hide")) {
+                ts.style.pointerEvents = "none";
                 try {
                     initAudio();
                     seStageClear();
@@ -3525,7 +4341,7 @@
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
-                }
+        }
         function openMysteryChest(open) {
             if (!inDungeon || currentEvent !== "chest") return;
             if (!open) {
@@ -4416,330 +5232,8 @@
             if (btnMix) btnMix.disabled = inDungeon;
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
-                                                              }
-        function up(forceAll = true) {
-            p.sort((a, b) => {
-                if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
-                if (a.inParty !== b.inParty) return b.inParty ? 1 : -1;
-                if (boxSortMode === "lv" && b.lv !== a.lv) return b.lv - a.lv;
-                const infA = getMonData(a.n) || { no: 0 };
-                const infB = getMonData(b.n) || { no: 0 };
-                const noA = infA.no;
-                const noB = infB.no;
-                const sortA = noA === "B" ? 1060 : (noA === "A" ? 1050 : ((typeof noA === "number" && noA < 0) ? (1000 + Math.abs(noA)) : (Number(noA) || 0)));
-                const sortB = noB === "B" ? 1060 : (noB === "A" ? 1050 : ((typeof noB === "number" && noB < 0) ? (1000 + Math.abs(noB)) : (Number(noB) || 0)));
-                if (boxSortMode === "no" && boxNoDesc) return sortB - sortA;
-                return sortA - sortB;
-            });
-
-            updateSortButtonsUI();
-            upBattleUI();
-            renderMissions(forceAll);
-
-            const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
-            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
-            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
-            if (forceAll || boxSig !== lastRenderedBoxSig) {
-                lastRenderedBoxSig = boxSig;
-
-                const partyOrderList = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
-                const list = document.getElementById("box");
-                if (list) {
-                    let boxParts = [];
-                    const canReleaseBase = p.length > 3;
-                    for (let i = 0; i < p.length; i++) {
-                        let n = p[i];
-                        if (!matchesBoxFilter(n)) continue;
-                        let inf = getMonData(n.n);
-                        if (!inf) continue;
-                        let isZmb = isZombieMon(n);
-                        let isGod = isGodMon(n);
-                        let liClass = "compact-li" + (inDungeon ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
-                        let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
-                        let maxLv = getMaxLv(n);
-                        let capB = n.lvCapBonus || 0;
-                        let expText = n.lv >= maxLv ? "MAX" : n.ex + "/" + n.nx;
-                        let slotIdx = n.inParty ? (partyOrderList.indexOf(n) + 1) : 0;
-                        let partyTag = n.inParty ? (" <span style='color:#059669;font-weight:900;'>[参加中・" + slotIdx + "番手]</span>") : "";
-                        let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
-                        let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
-                        let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
-                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
-                        let rareStar = n.isRare ? "✨" : "";
-                        let emojiHtml = (isZmb || isGod)
-                            ? renderMonEmojiHtml(n, "", "font-size:15px;")
-                            : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
-
-                        let bulkCheckHtml = "";
-                        if (bulkReleaseMode && !inDungeon) {
-                            if (!n.inParty && !n.locked) {
-                                let isChk = bulkSelectedMons.has(n) ? " checked" : "";
-                                bulkCheckHtml = '<label class="bulk-cb-label"><input type="checkbox"' + isChk + ' onchange="toggleBulkSelect(' + i + ', this.checked)">選択</label> ';
-                            } else {
-                                bulkCheckHtml = '<span style="font-size:9.5px; color:#94a3b8; font-weight:800;">[保護]</span> ';
-                            }
-                        }
-
-                        let actionBtns = "";
-                        if (!inDungeon) {
-                            let btnText = n.inParty ? "🛡️ 戻す" : "⚔️ 戦闘に出す";
-                            let btnBg = n.inParty ? "background:linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 2px solid #334155;" : "";
-                            let lockBtnText = n.locked ? "🔓 鍵解除" : "🔒 鍵";
-                            let lockBtnBg = n.locked
-                                ? "background:linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 2px solid #b45309;"
-                                : "background:linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 2px solid #475569;";
-                            let canRelease = !n.inParty && !n.locked && canReleaseBase;
-
-                            actionBtns = '<div class="box-btn-row">' +
-                                '<button class="btn-small" style="' + btnBg + '" onclick="toggleParty(' + i + ')">' + btnText + '</button>' +
-                                '<button class="btn-small" style="' + lockBtnBg + '" onclick="toggleLock(' + i + ')">' + lockBtnText + '</button>' +
-                                '<button class="btn-small" style="background:linear-gradient(180deg, #f43f5e 0%, #e11d48 100%); border-bottom: 2px solid #be123c;" onclick="releaseMonster(' + i + ')"' + (canRelease ? '' : ' disabled') + '>👋 お別れ</button>' +
-                                '</div>';
-                        }
-
-                        let skillHtml = "";
-                        if (showBoxSkills) {
-                            let innateList = getInnateSkills(inf.no);
-                            let rareSk = getRareSkillObj(n);
-                            let rSk = getSkillObj(n);
-                            let skParts = ["<div class='skill-panel'>"];
-                            for (let sIdx = 0; sIdx < innateList.length; sIdx++) {
-                                let isk = innateList[sIdx];
-                                skParts.push('<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">固:' + isk.name + '</span>');
-                            }
-                            if (rareSk) {
-                                skParts.push('<span class="skill-badge skill-badge-rare" onclick="showSkillInfo(\'' + rareSk.name + '\', \'' + rareSk.desc + '\')">虹:' + rareSk.name + '</span>');
-                            }
-                            skParts.push('<span class="skill-badge skill-badge-add" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">追:' + rSk.name + '</span></div>');
-                            skillHtml = skParts.join("");
-                        }
-
-                        boxParts.push('<li class="' + liClass + '">' +
-                            '<div class="box-header-row"><span>' + bulkCheckHtml + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b>' + godTag + zmbTag + rareTag + partyTag + lockTag + deadText + '</span><span><span style="font-weight:900; color:#0284c7;">Lv.' + n.lv + '</span> <span style="font-weight:900; font-size:10px; color:' + (capB > 0 ? '#7c3aed' : '#94a3b8') + ';">(+' + capB + ')</span></span></div>' +
-                            '<span class="status-text">HP:' + n.hp + '/' + n.m + ' 攻:' + n.at + ' 防:' + n.df + ' 素:' + n.sp + ' (EXP:' + expText + ')</span>' +
-                            skillHtml + actionBtns + '</li>');
-                    }
-                    if (boxParts.length === 0) {
-                        boxParts.push('<li class="compact-li" style="text-align:center; color:#64748b;">該当するモンスターがいません</li>');
-                    }
-                    list.innerHTML = boxParts.join("");
-                }
-
-                const mixList = document.getElementById("mixBoxList");
-                if (mixList) {
-                    let mixParts = [];
-                    for (let i = 0; i < p.length; i++) {
-                        let n = p[i];
-                        let inf = getMonData(n.n);
-                        if (!inf) continue;
-                        let isBossOrSpecial = (typeof inf.no === "number" && inf.no < 0) || inf.no === "A" || inf.no === "B";
-                        let isProtected = inDungeon || n.inParty || n.locked || isBossOrSpecial;
-                        let disAttr = isProtected ? "disabled" : "";
-                        let isZmb = isZombieMon(n);
-                        let isGod = isGodMon(n);
-                        let liClass = "compact-mix-li" + (isProtected ? " locked" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (n.isRare ? " rare-card" : "")));
-                        let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
-                        let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
-                        let godTag = isGod ? "<span class='god-badge'>🌌星辰</span>" : "";
-                        let rareStar = n.isRare ? "✨" : "";
-                        let emojiHtml = (isZmb || isGod)
-                            ? renderMonEmojiHtml(n, "", "font-size:14px;")
-                            : (n.isRare ? ("<span class='rare-shiny-inline'>" + inf.a + "</span>") : inf.a);
-                        let tags = "";
-                        if (n.inParty) tags += " <span style='color:#059669;font-weight:900;font-size:10px;'>[参加中]</span>";
-                        if (n.locked) tags += "<span class='lock-badge'>🔒保護</span>";
-                        if (isBossOrSpecial) tags += " <span style='color:#dc2626;font-weight:900;font-size:10px;'>[配合不可]</span>";
-                        mixParts.push('<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" onchange="onMixCbChange(this)" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + godTag + zmbTag + rareTag + tags + '</span></label></li>');
-                    }
-                    mixList.innerHTML = mixParts.join("");
-                }
-
-                if (showMixAssist) renderMixAssist();
-            }
-
-            if (zk.length !== lastRenderedZkCount) {
-                lastRenderedZkCount = zk.length;
-
-                const rtTable = document.getElementById("rt");
-                if (rtTable) {
-                    const recipeEntries = Object.entries(R);
-                    let rowsParts = [];
-                    for (let i = 0; i < recipeEntries.length; i += 2) {
-                        rowsParts.push("<tr>");
-                        for (let j = 0; j < 2; j++) {
-                            if (i + j < recipeEntries.length) {
-                                const [pair, resName] = recipeEntries[i + j];
-                                const [m1Name, m2Name] = pair.split("+");
-                                const m1 = D[m1Name];
-                                const m2 = D[m2Name];
-                                const res = D[resName];
-                                const isDiscovered = zk.includes(resName);
-                                const resEmoji = isDiscovered ? res.a : '<span class="silhouette">' + res.a + '</span>';
-                                const resLabel = isDiscovered ? resName : "？？？";
-                                const noJoinTag = isSynthOnly(resName) ? ' <span style="color:red;font-weight:bold;">(⚠️配合限定)</span>' : "";
-                                rowsParts.push('<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>');
-                            } else {
-                                rowsParts.push("<td></td>");
-                            }
-                        }
-                        rowsParts.push("</tr>");
-                    }
-                    rtTable.innerHTML = rowsParts.join("");
-                }
-
-                const normalFoundCount = Object.keys(D).filter(k => zk.includes(k)).length;
-                const zukanBadge = document.getElementById("zukanCountBadge");
-                if (zukanBadge) zukanBadge.innerText = "(" + normalFoundCount + "/100種)";
-
-                const synthResults = new Set(Object.values(R));
-                const zkDiv = document.getElementById("zk");
-                if (zkDiv) {
-                    let zkParts = [];
-                    Object.keys(D).forEach((k) => {
-                        if(zk.includes(k)){
-                            zkParts.push('<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>');
-                        } else if (synthResults.has(k)) {
-                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#93c5fd;" onclick="showRecipeHint(\'' + k + '\')"><span class="silhouette">' + D[k].a + '</span><br>No.' + D[k].no + '<br>💡配合ヒント</div>');
-                        } else {
-                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#cbd5e1;" onclick="showWildHint(\'' + k + '\')">❓<br>No.' + D[k].no + '<br>📍出現ヒント</div>');
-                        }
-                    });
-                    zkDiv.innerHTML = zkParts.join("");
-                }
-
-                const bossFoundCount = Object.keys(BOSS_D).filter(k => zk.includes(k)).length;
-                const bBadge1 = document.getElementById("bossZukanCountBadge");
-                const bBadge2 = document.getElementById("bossZukanSubBadge");
-                if (bBadge1) bBadge1.innerText = " / 👑ボス(" + bossFoundCount + "/20種)";
-                if (bBadge2) bBadge2.innerText = "(" + bossFoundCount + "/20種)";
-
-                const bossZkDiv = document.getElementById("bossZk");
-                if (bossZkDiv) {
-                    let bParts = [];
-                    Object.keys(BOSS_D).forEach((k) => {
-                        const bInf = BOSS_D[k];
-                        if (zk.includes(k)) {
-                            bParts.push('<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>');
-                        } else {
-                            bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')"><span class="silhouette">' + bInf.a + '</span><br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
-                        }
-                    });
-                    bossZkDiv.innerHTML = bParts.join("");
-                }
-
-                const spA = "廃国のゾンビ絵文字勇者";
-                const spB = "星辰の神龍";
-                const spFound = (zk.includes(spA) ? 1 : 0) + (zk.includes(spB) ? 1 : 0);
-                const spBadge1 = document.getElementById("specialZukanCountBadge");
-                const spBadge2 = document.getElementById("specialZukanSubBadge");
-                if (spBadge1) spBadge1.innerText = " / 💀特別(" + spFound + "/2種)";
-                if (spBadge2) spBadge2.innerText = "(" + spFound + "/2種)";
-
-                const spZkDiv = document.getElementById("specialZk");
-                if (spZkDiv) {
-                    const zh = SPECIAL_D[spA];
-                    const gd = SPECIAL_D[spB];
-                    let spHtml = "";
-                    if (zk.includes(spA)) {
-                        spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
-                    } else {
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()"><span class="silhouette">' + zh.a + '</span><br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
-                    }
-                    if (zk.includes(spB)) {
-                        spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
-                    } else {
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()"><span class="silhouette">' + gd.a + '</span><br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
-                    }
-                    spZkDiv.innerHTML = spHtml;
-                }
-            }
-        }
-
-        function exportData() {
-            const data = {
-                stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
-                baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
-                dungeonLockUntil, stats, p
-            };
-            try {
-                const jsonStr = JSON.stringify(data);
-                const base64Str = btoa(unescape(encodeURIComponent(jsonStr)));
-                const field = document.getElementById("passCodeField");
-                field.value = base64Str;
-                field.select();
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(base64Str).then(() => {
-                        alert("🔑 『みっくすえもじ』の引き継ぎコードを発行・コピーしました！");
-                    }).catch(() => {
-                        alert("🔑 コードを発行しました。枠内からコピーしてください。");
-                    });
-                } else {
-                    alert("🔑 コードを発行しました。枠内からコピーしてください。");
-                }
-            } catch(e) { alert("⚠️ コード発行失敗。"); }
-        }
-
-        function importData() {
-            const code = document.getElementById("importCodeField").value.trim();
-            if (!code) return alert("コードを入力してください。");
-            if (confirm("⚠️ セーブデータを上書きしますか？")) {
-                try {
-                    const jsonStr = decodeURIComponent(escape(atob(code)));
-                    const data = JSON.parse(jsonStr);
-                    if (data.p && Array.isArray(data.p)) {
-                        hydrateLoadedData(data);
-                        saveGame();
-                        alert("📥 データの復元に成功しました！");
-                        document.getElementById("importCodeField").value = "";
-                        if (isDungeonLocked()) startDungeonLock(dungeonLockUntil - Date.now());
-                        else updateDungeonLockBanner();
-                        updateSortButtonsUI();
-                        up(true);
-                    } else { alert("⚠️ 無効なコードです。"); }
-                } catch(e) { alert("⚠️ 復元失敗。コードが壊れています。"); }
-            }
-        }
-
-        function redeemPresentCode() {
-            const field = document.getElementById("presentCodeField");
-            if (!field) return;
-            const code = field.value.trim();
-            if (!code) return alert("プレゼントコードを入力してください。");
-
-            if (!Array.isArray(stats.usedPresentCodes)) stats.usedPresentCodes = [];
-            if (stats.usedPresentCodes.includes(code)) {
-                seFail();
-                return alert("⚠️ このプレゼントコードはすでに使用済みです。");
-            }
-
-            if (code === "01234567890") {
-                if (p.length + 3 > boxLimit) {
-                    seFail();
-                    return alert("⚠️ ボックスに3体分の空きがありません！\n（現在 " + p.length + "/" + boxLimit + "体）\nボックスを整理してから再度入力してください。");
-                }
-                const gd = SPECIAL_D["星辰の神龍"];
-                const st100 = calcStatsByLevel(gd, 100, false);
-                for (let i = 0; i < 3; i++) {
-                    let newAlly = {
-                        n: "星辰の神龍", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m, at: st100.at, df: st100.df, sp: st100.sp,
-                        ex: 0, nx: st100.nx, inParty: false, partyOrder: 0, locked: false,
-                        isRare: false, isGodEntity: true, skillId: getRandomSkillId()
-                    };
-                    initBattleState(newAlly);
-                    p.push(newAlly);
-                }
-                if (!zk.includes("星辰の神龍")) zk.push("星辰の神龍");
-                stats.usedPresentCodes.push(code);
-                field.value = "";
-                seMixSuccess();
-                saveGame();
-                up(true);
-                alert("🎁 プレゼントを受け取りました！\n「🌌 星辰の神龍 (Lv.100)」が3体ボックスに加わりました！");
-            } else {
-                seFail();
-                alert("❌ 無効なプレゼントコードです。");
-            }
-            function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
+                               }
+        function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
             const isEnemySide = !isPlayerAttack;
@@ -5266,8 +5760,8 @@
                 setDungeonButtonsDisabled(false);
                 return { needsFullUpdate: true, log: "" };
             }
-                    }
-            function atk(){
+            }
+        function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
             if (autoAtkTimer) {
@@ -5834,5 +6328,3 @@
     </script>
 </body>
 </html>
-
-                                                     }
