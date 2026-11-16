@@ -923,27 +923,6 @@
             text-shadow: none;
             box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
         }
-        .stg-ctrl-row {
-            display: grid;
-            grid-template-columns: 1.24fr 1fr 0.86fr 0.92fr 0.92fr 0.86fr 1fr 1.24fr;
-            gap: 3px;
-            width: 100%;
-            margin-top: 2px;
-        }
-        .stg-ctrl-row .btn-tiny {
-            width: 100% !important;
-            padding: 5px 1px !important;
-            font-size: 9.5px !important;
-            line-height: 1.2 !important;
-            white-space: nowrap !important;
-            letter-spacing: -0.3px;
-            border-radius: 8px !important;
-        }
-        @media (max-width: 360px) {
-            .stg-ctrl-row .btn-tiny {
-                font-size: 8.5px !important;
-            }
-        }
         .btn-tiny-jump {
             background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
             color: #ffffff;
@@ -1456,7 +1435,7 @@
             </div>
         </div>
     </div>
-</div>
+
     <div class="tab-nav-wrap" id="mainTabBar">
         <div class="tab-grid">
             <button class="tab-btn active" id="tabBtn_battle" onclick="switchTab('battle')">⚔️ バトル</button>
@@ -1465,7 +1444,6 @@
             <button class="tab-btn" id="tabBtn_quest" onclick="switchTab('quest')">🧭 クエスト<span id="questTabDot" class="tab-dot" style="display:none;"></span></button>
             <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
             <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
-        </div>
         </div>
     </div>
     <div id="panelBattle" class="tab-panel">
@@ -1478,7 +1456,8 @@
                         <span class="stage-stat-pill">🏆 最高クリア: <span id="dispClearStg">0</span>階</span>
                         <span class="stage-stat-pill">🚩 最高到達: <span id="maxStg">1</span>階</span>
                     </div>
-            　　　　 <div class="stg-ctrl-row">　
+                </div>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
                     <button class="btn-tiny btn-tiny-jump stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
                     <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
                     <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
@@ -1488,6 +1467,7 @@
                     <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(100)">+100</button>
                     <button class="btn-tiny btn-tiny-jump stg-ctrl-btn" onclick="goMaxStage()">⏭最高</button>
                 </div>
+            </div>
 
             <div class="battle-field bg-base" id="battleField">
                 <canvas id="battleCanvas"></canvas>
