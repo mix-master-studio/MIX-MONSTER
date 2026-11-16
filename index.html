@@ -146,18 +146,87 @@
             padding: 10px 8px !important;
             font-size: 12.5px !important;
         }
-        .title-header, .box {
+        .title-header, .box, .tab-nav-wrap {
             position: relative;
             z-index: 1;
         }
         .title-header {
             max-width: 430px;
-            margin: 0 auto 14px;
+            margin: 0 auto 10px;
             padding: 14px 16px;
             background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(240,249,255,0.94) 100%);
             border-radius: 22px;
             border: 2px solid #bae6fd;
             box-shadow: 0 10px 26px rgba(2, 132, 199, 0.16), inset 0 2px 0 rgba(255,255,255,0.95);
+        }
+        .tab-nav-wrap {
+            max-width: 430px;
+            margin: 0 auto 12px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 18px;
+            border: 1.5px solid #bae6fd;
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.10);
+        }
+        .tab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .tab-btn {
+            position: relative;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 4px !important;
+            font-size: 11.5px !important;
+            font-weight: 900 !important;
+            border-radius: 12px !important;
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-bottom: 3px solid #94a3b8 !important;
+            box-shadow: none !important;
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid #0ea5e9 !important;
+            border-bottom: 3px solid #0369a1 !important;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25) !important;
+        }
+        .tab-dot {
+            display: inline-block;
+            background: #ef4444;
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 0 5px;
+            border-radius: 999px;
+            margin-left: 3px;
+            line-height: 1.4;
+            box-shadow: 0 1px 4px rgba(239, 68, 68, 0.45);
+        }
+        .tab-all-btn {
+            width: 100% !important;
+            margin: 6px 0 0 !important;
+            padding: 5px 8px !important;
+            font-size: 10.5px !important;
+            border-radius: 10px !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-bottom: 2px solid #94a3b8 !important;
+            box-shadow: none !important;
+        }
+        .tab-all-btn.active {
+            background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid #8b5cf6 !important;
+            border-bottom: 2px solid #5b21b6 !important;
+        }
+        .tab-panel.tab-hidden {
+            display: none !important;
         }
         .title-sub {
             font-size: 10px;
@@ -249,6 +318,10 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
+        }
+        #battleHeaderBar::before {
+            content: none !important;
+            display: none !important;
         }
         .battle-field {
             display: flex;
@@ -1170,7 +1243,7 @@
             width: 85%; padding: 9px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
     </style>
-    </head>
+</head>
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur"></div>
@@ -1194,217 +1267,241 @@
         </div>
         <div id="guidePanel" class="guide-panel">
             <b>📖『みっくすえもじ』の遊び方</b><br>
-            1️⃣ <b>パーティ編成</b>：下のボックスから最大3体「⚔️戦闘に出す」で登録！<br>
-            2️⃣ <b>ダンジョン冒険</b>：「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
-            3️⃣ <b>モンスター配合</b>：2匹を配合して新種を生み出そう！レベルは2匹の合計になります（配合アシストで作成可能な組み合わせを自動検索できます）。<br>
+            1️⃣ <b>パーティ編成</b>：「📦ボックス」タブから最大3体「⚔️戦闘に出す」で登録！<br>
+            2️⃣ <b>ダンジョン冒険</b>：「⚔️バトル」タブで「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
+            3️⃣ <b>モンスター配合</b>：「🧬配合」タブで2匹を配合して新種を生み出そう！レベルは2匹の合計になります（配合アシストで作成可能な組み合わせを自動検索できます）。<br>
             4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・星辰の神龍(No.B)・迷子の国王・知らない王国（闘技場「小文字級/大文字級」・商店15種・ギルド25種）・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
             ⚠️ <b>注意</b>：「🔁同じ階周回」がONの間は、すべての遭遇イベントは発生しません。またイベントは2回連続で発生しません。土日はEXP2倍＆配合+10%！
         </div>
     </div>
 
-    <div class="box">
-        <span class="section-badge">📜 SYNTHESIS GUIDE</span><br>
-        <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
-            📜 配合レシピ表の表示切替
-        </button>
-        <table id="rt" class="recipe"></table>
+    <div class="tab-nav-wrap" id="mainTabBar">
+        <div class="tab-grid">
+            <button class="tab-btn active" id="tabBtn_battle" onclick="switchTab('battle')">⚔️ バトル</button>
+            <button class="tab-btn" id="tabBtn_box" onclick="switchTab('box')">📦 ボックス</button>
+            <button class="tab-btn" id="tabBtn_mix" onclick="switchTab('mix')">🧬 配合</button>
+            <button class="tab-btn" id="tabBtn_quest" onclick="switchTab('quest')">🧭 クエスト<span id="questTabDot" class="tab-dot" style="display:none;"></span></button>
+            <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
+            <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
+        </div>
+        <button class="tab-all-btn" id="tabBtn_all" onclick="switchTab('all')">📋 すべての項目を縦にまとめて表示</button>
     </div>
 
-    <div class="box" id="battleBox" style="padding-top: 12px;">
-        <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
-        <div class="battle-header-bar" id="battleHeaderBar">
-            <div style="font-size: 13.5px; font-weight: 900; color: #1e293b;">
-                ダンジョン: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
-                <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
-            </div>
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
-                <button class="btn-tiny stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
-                <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
-                <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
-                <button class="btn-tiny stg-ctrl-btn" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
-                <button class="btn-tiny stg-ctrl-btn" id="btnNextStg" onclick="changeStage(1)">次▶</button>
-                <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(10)">+10</button>
-                <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(100)">+100</button>
-            </div>
-        </div>
-
-        <div class="battle-field" id="battleField">
-            <canvas id="battleCanvas"></canvas>
-            <div id="fxLayer"></div>
-            <div class="side" id="mySide"><b>【味方】</b></div>
-            <div class="side" id="eSide"><b>【敵】</b></div>
-        </div>
-
-        <div id="dungeonLockBanner" style="display:none; background:#fee2e2; border:1.5px solid #f87171; color:#b91c1c; border-radius:10px; padding:6px 10px; margin:7px auto 2px; font-size:11.5px; font-weight:900;"></div>
-        <div id="eventPanel" class="event-panel"></div>
-        <div class="notice-banner" id="noticeBanner"></div>
-        <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
-
-        <div class="btn-battle-group">
-            <button class="btn-compact" style="background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); border-bottom: 3px solid #991b1b;" id="btnAtk" onclick="atk()">
-                ⚔️ 攻撃する！
-            </button>
-            <button class="btn-compact" style="background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); border-bottom: 3px solid #b45309;" id="btnAutoToggle" onclick="toggleAutoBattle()">
-                🔄 オート戦闘: ON
-            </button>
-        </div>
-        <div class="btn-battle-group">
-            <button class="btn-compact-3" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;" id="btnSpeedToggle" onclick="toggleBattleSpeed()">
-                ⏩ 速度: 1倍
-            </button>
-            <button class="btn-compact-3" style="background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); border-bottom: 3px solid #3730a3;" id="btnEnterBtm" onclick="enter()">
-                🏰 ダンジョン突入
-            </button>
-            <button class="btn-compact-3" style="background: linear-gradient(180deg, #94a3b8 0%, #475569 100%); border-bottom: 3px solid #334155;" onclick="leaveDungeon()">
-                🏃 拠点へ戻る
-            </button>
-        </div>
-        <div class="btn-battle-group">
-            <button class="btn-compact" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;" id="btnRepeatToggle" onclick="toggleRepeatStage()">
-                🔁 同じ階周回: OFF
-            </button>
-        </div>
-        <div class="repeat-note">
-            ⚠️ <b>同じ階周回 ON中</b> は、すべての遭遇イベントは発生しません。（通常探索中もイベントは2回連続で発生しません）
-        </div>
-    </div>
-
-    <div class="box" style="border: 1.5px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
-        <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
-        <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
-        <div class="limit-hint">※クエスト数：初期5件 ／ 王国ギルドの追加を含め上限20件まで</div>
-        <button onclick="let m=document.getElementById('missionWrapper'); m.style.display=m.style.display==='none'?'block':'none'" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 3px solid #b45309;">
-            📜 クエスト一覧の表示切替
-        </button>
-        <div id="missionWrapper" style="display: none; margin-top: 8px;">
-            <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
-            <div id="missionList" class="scroll-box" style="max-height: 250px; border-color: #fde68a; background: #fffbeb;"></div>
-        </div>
-    </div>
-
-    <div class="box">
-        <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
-        <h3 style="margin: 2px 0 2px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/50体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
-        <div class="limit-hint">※ボックス上限：初期50匹 ／ イベント・アイテムで最大200匹まで拡張可（Lv上限は🔮水晶で最大+20）</div>
-        <div class="box-ctrl-grid">
-            <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
-                📦 表示切替
-            </button>
-            <button id="btnSkillVisToggle" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
-                📜 スキル: ON
-            </button>
-            <button id="btnSortNo" onclick="sortBoxByNo()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
-                🔢 図鑑No.小→大 (選択中)
-            </button>
-            <button id="btnSortLv" onclick="sortBoxByLv()" style="background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 3px solid #475569;">
-                ⭐ レベル順
-            </button>
-        </div>
-        <div class="filter-row" id="boxFilterRow">
-            <button class="filter-chip active" onclick="setBoxFilter('all')">すべて</button>
-            <button class="filter-chip" onclick="setBoxFilter('rare')">✨色違い</button>
-            <button class="filter-chip" onclick="setBoxFilter('unlocked')">🔓鍵なし</button>
-            <button class="filter-chip" onclick="setBoxFilter('reserve')">🛡️控えのみ</button>
-            <button class="filter-chip" onclick="setBoxFilter('boss')">👑ボス・No.A/B</button>
-        </div>
-        <button id="btnBulkModeToggle" onclick="toggleBulkReleaseMode()" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%); border-bottom: 3px solid #be123c; padding: 7px 10px; font-size: 11.5px; margin-bottom: 6px;">
-            🗑️ 一括お別れモード: OFF
-        </button>
-        <div id="bulkBar" class="bulk-bar">
-            <div style="font-size: 10.5px; font-weight: 800; color: #be123c; margin-bottom: 5px;">
-                ※参加中・🔒保護・合計3体以下になる分は自動で守られます（現在の表示中から選択）
-            </div>
-            <div class="bulk-bar-row">
-                <button onclick="selectAllBulkSafe()" style="background:linear-gradient(180deg,#fb923c,#ea580c); border-bottom:2.5px solid #9a3412;">☑️ 安全分を全選択</button>
-                <button onclick="clearBulkSelection()" style="background:linear-gradient(180deg,#94a3b8,#64748b); border-bottom:2.5px solid #475569;">🧹 選択解除</button>
-                <button id="btnBulkReleaseExec" onclick="executeBulkRelease()" style="background:linear-gradient(180deg,#f43f5e,#e11d48); border-bottom:2.5px solid #be123c;">👋 まとめてお別れ (0体)</button>
-            </div>
-        </div>
-        <ul id="box" class="toggle-box scroll-box"></ul>
-    </div>
-
-    <div class="box" id="mixArea" style="border: 1.5px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
-        <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
-        <h2 style="margin: 2px 0 4px; font-size: 17px; color: #065f46;">🧬 モンスター配合</h2>
-        <p style="font-size: 11px; color: #475569; margin: 0 0 4px; font-weight: bold;">
-            ※下の配合用ボックスから2匹選んでね。（レベルは2匹の合計になります）
-        </p>
-        <div class="limit-hint">※配合成功率：初期25% ／ イベント・アイテムでの上昇上限80%まで</div>
-        <div style="background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; font-size: 11px; font-weight: 900; padding: 6px 8px; border-radius: 10px; margin-bottom: 6px;">
-            ⚠️ 配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.A/Bは保護）
-        </div>
-        <button style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-bottom: 3px solid #047857;" id="btnMix" onclick="mix()">
-            🧬 配合実行！（成功率<span id="btnMixRateText">25</span>%）
-        </button>
-        <button id="btnMixAssistToggle" onclick="toggleMixAssist()" style="background: linear-gradient(180deg, #10b981 0%, #0d9488 100%); border-bottom: 3px solid #0f766e; margin-top:6px;">
-            ✨ 配合アシスト（作れる組み合わせを表示）
-        </button>
-        <div id="mixAssistPanel" class="assist-panel"></div>
-        <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-top:6px;">
-            🧬 配合用ボックスの表示切替
-        </button>
-        <ul id="mixBoxList" class="toggle-box scroll-box-mix"></ul>
-    </div>
-
-    <div class="box">
-        <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
-        <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">
-            📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span>
-            <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
-            <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
-        </h3>
-        <button onclick="let t=document.getElementById('zukanWrapper'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
-            📖 図鑑の表示切替（通常・ボス・特別図鑑）
-        </button>
-        <div id="zukanWrapper" style="display: none;">
-            <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
-                💡 未発見（❓・シルエット）をタップすると出現場所や配合ヒントが見られます！
-            </div>
-            <div id="zk" class="grid"></div>
-
-            <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fca5a5;">
-                <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 14px;">
-                    👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
-                </h4>
-                <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
-                    ※50階ごとのボス戦にのみ出現！配合不可・野生加入（15%）限定モンスター
-                </p>
-                <div id="bossZk" class="grid"></div>
+    <div id="panelBattle" class="tab-panel">
+        <div class="box" id="battleBox" style="padding-top: 12px;">
+            <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
+            <div class="battle-header-bar" id="battleHeaderBar">
+                <div style="font-size: 13.5px; font-weight: 900; color: #1e293b;">
+                    ダンジョン: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
+                    <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
+                </div>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
+                    <button class="btn-tiny stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
+                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
+                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
+                    <button class="btn-tiny stg-ctrl-btn" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
+                    <button class="btn-tiny stg-ctrl-btn" id="btnNextStg" onclick="changeStage(1)">次▶</button>
+                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(10)">+10</button>
+                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(100)">+100</button>
+                </div>
             </div>
 
-            <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #86efac;">
-                <h4 style="margin: 0 0 6px; color: #14532d; font-size: 14px;">
-                    💀 特別遭遇図鑑 <span id="specialZukanSubBadge" style="font-size:12px;">(0/2種)</span>
-                </h4>
-                <p style="font-size: 10.5px; color: #166534; margin: 0 0 8px; font-weight: bold;">
-                    ※ボス以外の階で超低確率出現（No.A: 0.4%・撃破時0.1%加入 / No.B: 0.01%・撃破時100%加入）！配合不可
-                </p>
-                <div id="specialZk" class="grid"></div>
+            <div class="battle-field" id="battleField">
+                <canvas id="battleCanvas"></canvas>
+                <div id="fxLayer"></div>
+                <div class="side" id="mySide"><b>【味方】</b></div>
+                <div class="side" id="eSide"><b>【敵】</b></div>
             </div>
-        </div>
-    </div>
 
-    <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1.5px solid #7dd3fc;">
-        <span class="section-badge">💾 SAVE & TRANSFER</span>
-        <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
-        <button onclick="let t=document.getElementById('transferArea'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1; margin-bottom: 6px;">
-            🔑 引き継ぎ機能の表示切替
-        </button>
+            <div id="dungeonLockBanner" style="display:none; background:#fee2e2; border:1.5px solid #f87171; color:#b91c1c; border-radius:10px; padding:6px 10px; margin:7px auto 2px; font-size:11.5px; font-weight:900;"></div>
+            <div id="eventPanel" class="event-panel"></div>
+            <div class="notice-banner" id="noticeBanner"></div>
+            <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
 
-        <div id="transferArea" style="display: none; margin-top: 8px; padding-top: 8px; border-top: 1.5px dashed #bae6fd;">
-            <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
-                ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
-            </p>
-            <button style="background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%); border-bottom: 3px solid #312e81;" onclick="exportData()">
-                🔑 引き継ぎコードを発行する
-            </button>
-            <input type="text" id="passCodeField" readonly placeholder="ここにコードが発行されます" style="width: 90%; margin: 5px 0;">
-            
-            <div style="border-top: 1.5px dashed #bae6fd; margin-top: 10px; padding-top: 10px;">
-                <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
-                <button style="background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); border-bottom: 3px solid #c2410c;" onclick="importData()">
-                    📥 データをインポートして復元
+            <div class="btn-battle-group">
+                <button class="btn-compact" style="background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); border-bottom: 3px solid #991b1b;" id="btnAtk" onclick="atk()">
+                    ⚔️ 攻撃する！
                 </button>
+                <button class="btn-compact" style="background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); border-bottom: 3px solid #b45309;" id="btnAutoToggle" onclick="toggleAutoBattle()">
+                    🔄 オート戦闘: ON
+                </button>
+            </div>
+            <div class="btn-battle-group">
+                <button class="btn-compact-3" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;" id="btnSpeedToggle" onclick="toggleBattleSpeed()">
+                    ⏩ 速度: 1倍
+                </button>
+                <button class="btn-compact-3" style="background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); border-bottom: 3px solid #3730a3;" id="btnEnterBtm" onclick="enter()">
+                    🏰 ダンジョン突入
+                </button>
+                <button class="btn-compact-3" style="background: linear-gradient(180deg, #94a3b8 0%, #475569 100%); border-bottom: 3px solid #334155;" onclick="leaveDungeon()">
+                    🏃 拠点へ戻る
+                </button>
+            </div>
+            <div class="btn-battle-group">
+                <button class="btn-compact" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;" id="btnRepeatToggle" onclick="toggleRepeatStage()">
+                    🔁 同じ階周回: OFF
+                </button>
+            </div>
+            <div class="repeat-note">
+                ⚠️ <b>同じ階周回 ON中</b> は、すべての遭遇イベントは発生しません。（通常探索中もイベントは2回連続で発生しません）
+            </div>
+        </div>
+    </div>
+
+    <div id="panelQuest" class="tab-panel tab-hidden">
+        <div class="box" style="border: 1.5px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
+            <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
+            <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
+            <div class="limit-hint">※クエスト数：初期5件 ／ 王国ギルドの追加を含め上限20件まで</div>
+            <button onclick="let m=document.getElementById('missionWrapper'); m.style.display=m.style.display==='none'?'block':'none'" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 3px solid #b45309;">
+                📜 クエスト一覧の表示切替
+            </button>
+            <div id="missionWrapper" style="display: block; margin-top: 8px;">
+                <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
+                <div id="missionList" class="scroll-box" style="max-height: 250px; border-color: #fde68a; background: #fffbeb;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="panelBox" class="tab-panel tab-hidden">
+        <div class="box">
+            <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
+            <h3 style="margin: 2px 0 2px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/50体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
+            <div class="limit-hint">※ボックス上限：初期50匹 ／ イベント・アイテムで最大200匹まで拡張可（Lv上限は🔮水晶で最大+20）</div>
+            <div class="box-ctrl-grid">
+                <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
+                    📦 表示切替
+                </button>
+                <button id="btnSkillVisToggle" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
+                    📜 スキル: ON
+                </button>
+                <button id="btnSortNo" onclick="sortBoxByNo()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
+                    🔢 図鑑No.小→大 (選択中)
+                </button>
+                <button id="btnSortLv" onclick="sortBoxByLv()" style="background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-bottom: 3px solid #475569;">
+                    ⭐ レベル順
+                </button>
+            </div>
+            <div class="filter-row" id="boxFilterRow">
+                <button class="filter-chip active" onclick="setBoxFilter('all')">すべて</button>
+                <button class="filter-chip" onclick="setBoxFilter('rare')">✨色違い</button>
+                <button class="filter-chip" onclick="setBoxFilter('unlocked')">🔓鍵なし</button>
+                <button class="filter-chip" onclick="setBoxFilter('reserve')">🛡️控えのみ</button>
+                <button class="filter-chip" onclick="setBoxFilter('boss')">👑ボス・No.A/B</button>
+            </div>
+            <button id="btnBulkModeToggle" onclick="toggleBulkReleaseMode()" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%); border-bottom: 3px solid #be123c; padding: 7px 10px; font-size: 11.5px; margin-bottom: 6px;">
+                🗑️ 一括お別れモード: OFF
+            </button>
+            <div id="bulkBar" class="bulk-bar">
+                <div style="font-size: 10.5px; font-weight: 800; color: #be123c; margin-bottom: 5px;">
+                    ※参加中・🔒保護・合計3体以下になる分は自動で守られます（現在の表示中から選択）
+                </div>
+                <div class="bulk-bar-row">
+                    <button onclick="selectAllBulkSafe()" style="background:linear-gradient(180deg,#fb923c,#ea580c); border-bottom:2.5px solid #9a3412;">☑️ 安全分を全選択</button>
+                    <button onclick="clearBulkSelection()" style="background:linear-gradient(180deg,#94a3b8,#64748b); border-bottom:2.5px solid #475569;">🧹 選択解除</button>
+                    <button id="btnBulkReleaseExec" onclick="executeBulkRelease()" style="background:linear-gradient(180deg,#f43f5e,#e11d48); border-bottom:2.5px solid #be123c;">👋 まとめてお別れ (0体)</button>
+                </div>
+            </div>
+            <ul id="box" class="toggle-box scroll-box"></ul>
+        </div>
+    </div>
+
+    <div id="panelMix" class="tab-panel tab-hidden">
+        <div class="box" id="mixArea" style="border: 1.5px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
+            <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
+            <h2 style="margin: 2px 0 4px; font-size: 17px; color: #065f46;">🧬 モンスター配合</h2>
+            <p style="font-size: 11px; color: #475569; margin: 0 0 4px; font-weight: bold;">
+                ※下の配合用ボックスから2匹選んでね。（レベルは2匹の合計になります）
+            </p>
+            <div class="limit-hint">※配合成功率：初期25% ／ イベント・アイテムでの上昇上限80%まで</div>
+            <div style="background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; font-size: 11px; font-weight: 900; padding: 6px 8px; border-radius: 10px; margin-bottom: 6px;">
+                ⚠️ 配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.A/Bは保護）
+            </div>
+            <button style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-bottom: 3px solid #047857;" id="btnMix" onclick="mix()">
+                🧬 配合実行！（成功率<span id="btnMixRateText">25</span>%）
+            </button>
+            <button id="btnMixAssistToggle" onclick="toggleMixAssist()" style="background: linear-gradient(180deg, #10b981 0%, #0d9488 100%); border-bottom: 3px solid #0f766e; margin-top:6px;">
+                ✨ 配合アシスト（作れる組み合わせを表示）
+            </button>
+            <div id="mixAssistPanel" class="assist-panel"></div>
+            <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-top:6px;">
+                🧬 配合用ボックスの表示切替
+            </button>
+            <ul id="mixBoxList" class="toggle-box scroll-box-mix"></ul>
+        </div>
+
+        <div class="box">
+            <span class="section-badge">📜 SYNTHESIS GUIDE</span><br>
+            <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
+                📜 配合レシピ表の表示切替
+            </button>
+            <table id="rt" class="recipe"></table>
+        </div>
+    </div>
+
+    <div id="panelZukan" class="tab-panel tab-hidden">
+        <div class="box">
+            <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
+            <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">
+                📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span>
+                <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
+                <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
+            </h3>
+            <button onclick="let t=document.getElementById('zukanWrapper'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
+                📖 図鑑の表示切替（通常・ボス・特別図鑑）
+            </button>
+            <div id="zukanWrapper" style="display: block;">
+                <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
+                    💡 未発見（❓・シルエット）をタップすると出現場所や配合ヒントが見られます！
+                </div>
+                <div id="zk" class="grid"></div>
+
+                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fca5a5;">
+                    <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 14px;">
+                        👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
+                    </h4>
+                    <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
+                        ※50階ごとのボス戦にのみ出現！配合不可・野生加入（15%）限定モンスター
+                    </p>
+                    <div id="bossZk" class="grid"></div>
+                </div>
+
+                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #86efac;">
+                    <h4 style="margin: 0 0 6px; color: #14532d; font-size: 14px;">
+                        💀 特別遭遇図鑑 <span id="specialZukanSubBadge" style="font-size:12px;">(0/2種)</span>
+                    </h4>
+                    <p style="font-size: 10.5px; color: #166534; margin: 0 0 8px; font-weight: bold;">
+                        ※ボス以外の階で超低確率出現（No.A: 0.4%・撃破時0.1%加入 / No.B: 0.01%・撃破時100%加入）！配合不可
+                    </p>
+                    <div id="specialZk" class="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="panelSave" class="tab-panel tab-hidden">
+        <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1.5px solid #7dd3fc;">
+            <span class="section-badge">💾 SAVE & TRANSFER</span>
+            <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
+            <button onclick="let t=document.getElementById('transferArea'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1; margin-bottom: 6px;">
+                🔑 引き継ぎ機能の表示切替
+            </button>
+
+            <div id="transferArea" style="display: block; margin-top: 8px; padding-top: 8px; border-top: 1.5px dashed #bae6fd;">
+                <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
+                    ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
+                </p>
+                <button style="background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%); border-bottom: 3px solid #312e81;" onclick="exportData()">
+                    🔑 引き継ぎコードを発行する
+                </button>
+                <input type="text" id="passCodeField" readonly placeholder="ここにコードが発行されます" style="width: 90%; margin: 5px 0;">
+                
+                <div style="border-top: 1.5px dashed #bae6fd; margin-top: 10px; padding-top: 10px;">
+                    <input type="text" id="importCodeField" placeholder="ここに引き継ぎコードを貼り付け" style="width: 90%;">
+                    <button style="background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); border-bottom: 3px solid #c2410c;" onclick="importData()">
+                        📥 データをインポートして復元
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1539,7 +1636,6 @@
             "アースワーム": { no: 99, a: "🪱", hp: 410, at: 210, df: 165, sp: 88, ex: 15 },
             "ドラゴンエンペラー": { no: 100, a: "🐲", hp: 480, at: 245, df: 200, sp: 100, ex: 18 }
         };
-
         const BOSS_D = {
             "草原の覇王バッファロー": { no: -1, stage: 50, a: "🐃", hp: 140, at: 45, df: 35, sp: 24, ex: 15 },
             "草原の精霊フェアリー": { no: -2, stage: 100, a: "🧚", hp: 220, at: 68, df: 52, sp: 36, ex: 25 },
@@ -1733,6 +1829,12 @@
             if (mon && mon.isSpecialSage) {
                 return { id: 0, name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" };
             }
+            if (mon && mon.isZombieHero && !mon.skillId) {
+                return { id: 0, name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" };
+            }
+            if (mon && mon.isGodEntity && !mon.skillId) {
+                return { id: 0, name: "🐉星辰龍閃・メテオブレス", desc: "【No.B特別スキル】攻撃後に70%の確率で攻撃力100%の防御無視龍息追撃＋最大HP20%回復＋相手を毒＆麻痺にし、自分の全能力20%UP＆次回1.5倍＆1回無効バリア展開。" };
+            }
             if (!mon.skillId || mon.skillId < 1 || mon.skillId > SKILLS.length) {
                 mon.skillId = getRandomSkillId();
             }
@@ -1805,6 +1907,7 @@
         let lastRenderedZkCount = -1;
         let lastRenderedMissionSig = "";
         let lastRenderedBoxSig = "";
+        let currentTab = "battle";
 
         function scheduleBattleTimer(fn, delayMs) {
             const sid = battleSessionId;
@@ -1996,8 +2099,7 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-        }
-
+                }
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },    checkType: "stg",   val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 }, checkType: "mix",   val: 1 },
@@ -2188,6 +2290,15 @@
             if (badge) {
                 badge.innerText = "(" + claimedCount + "/" + allMissions.length + "達成)" + (claimableCount > 0 ? (" 🔔受取可" + claimableCount + "件!") : "");
             }
+            const qDot = document.getElementById("questTabDot");
+            if (qDot) {
+                if (claimableCount > 0) {
+                    qDot.style.display = "inline-block";
+                    qDot.innerText = claimableCount;
+                } else {
+                    qDot.style.display = "none";
+                }
+            }
             if (bonusBar) {
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
@@ -2368,6 +2479,44 @@
             updateSortButtonsUI();
             up(true);
         }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            const panels = {
+                battle: document.getElementById("panelBattle"),
+                box:    document.getElementById("panelBox"),
+                mix:    document.getElementById("panelMix"),
+                quest:  document.getElementById("panelQuest"),
+                zukan:  document.getElementById("panelZukan"),
+                save:   document.getElementById("panelSave")
+            };
+            const allBtn = document.getElementById("tabBtn_all");
+            Object.keys(panels).forEach(key => {
+                const pEl = panels[key];
+                const bEl = document.getElementById("tabBtn_" + key);
+                if (tabName === "all") {
+                    if (pEl) pEl.classList.remove("tab-hidden");
+                    if (bEl) bEl.classList.remove("active");
+                } else {
+                    if (pEl) {
+                        if (key === tabName) pEl.classList.remove("tab-hidden");
+                        else pEl.classList.add("tab-hidden");
+                    }
+                    if (bEl) {
+                        if (key === tabName) bEl.classList.add("active");
+                        else bEl.classList.remove("active");
+                    }
+                }
+            });
+            if (allBtn) {
+                if (tabName === "all") allBtn.classList.add("active");
+                else allBtn.classList.remove("active");
+            }
+            if (tabName === "battle" || tabName === "all") {
+                try { initBattleCanvas(); } catch (e) {}
+            }
+        }
+
         function updateRepeatButtonUI() {
             const btn = document.getElementById("btnRepeatToggle");
             if (!btn) return;
@@ -2503,7 +2652,6 @@
             }
             return true;
         }
-
         function toggleBulkReleaseMode() {
             if (inDungeon) return showNotice("⚠️ ダンジョン内では一括お別れできません！", 2500);
             bulkReleaseMode = !bulkReleaseMode;
@@ -3364,7 +3512,6 @@
             if (stg <= 900) return { color: "#ffffff", vx: -0.25, vy: 0.85 };
             return { color: "#818cf8", vx: 0, vy: -0.65 };
         }
-
         function initBattleCanvas() {
             try {
                 const canvas = document.getElementById("battleCanvas");
@@ -3599,6 +3746,7 @@
                 }, 420);
             }
         }
+
         function enter(){
             if (isDungeonLocked()) {
                 return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
@@ -3906,7 +4054,7 @@
                     }
                 });
                 seStageClear();
-                msg = "👳 旅商人から『🧣旅人のマント』を受け取った！【効果】戦闘中の味方全員の最大HP+4(生存はHPも+4)・防御+2された。";
+                msg = "👳 旅商人から『🧣旅人のマント』を受け取った！【効果】戦闘中の味方全員の最大HP+4・防御+2された。";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty) { m.sp += 2; m.at += 1; } });
                 seStageClear();
@@ -3921,7 +4069,6 @@
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
         }
-
         function chooseHeroAction(fight) {
             if (!inDungeon || currentEvent !== "hero") return;
 
@@ -4392,8 +4539,7 @@
 
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
-        }
-
+                                                       }
         function leaveDungeon() {
             battleSessionId++;
             clearAllBattleTimers();
@@ -4703,7 +4849,7 @@
                         2: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickMerchantItem(2)">🧪 奇跡のエキス<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)の<br>レベルを+10する</span></button>',
                         3: '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickMerchantItem(3)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
                         4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員に<br>EXP+40を与える</span></button>',
-                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+4(生存はHPも+4)・防御+2</span></button>',
+                        5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+4・防御+2</span></button>',
                         6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さ+2・攻撃+1</span></button>',
                         7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合成功率+0.3%(上限80%)</span></button>'
                     };
@@ -4918,7 +5064,8 @@
             renderMissions(forceAll);
 
             const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
-            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum].join("_");
+            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + "|", "");
+            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
             if (forceAll || boxSig !== lastRenderedBoxSig) {
                 lastRenderedBoxSig = boxSig;
 
@@ -5203,7 +5350,6 @@
                 }, Math.floor(900 / spdDiv));
             }, Math.floor(delayMs / spdDiv));
         }
-
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
             const inf = getMonData(attacker.n);
@@ -5657,10 +5803,18 @@
             return logs;
         }
 
-        function handleFloorProgressAfterClear() {
+        function handleFloorProgressAfterClear(isMutualKO = false) {
             if (repeatStageMode) {
                 repeatCount++;
                 updateRepeatButtonUI();
+                if (isMutualKO) {
+                    if (repeatCount >= 50) {
+                        repeatStageMode = false;
+                        repeatCount = 0;
+                        updateRepeatButtonUI();
+                    }
+                    return { needsFullUpdate: true, log: "" };
+                }
                 if (repeatCount >= 50) {
                     showNotice("🏁 同じ階（" + stg + "階）の50回周回が完了したため、一度停止しました！", 6500);
                     repeatStageMode = false;
@@ -5681,6 +5835,9 @@
                 }
             } else if (stg < 1000) {
                 stg++;
+                if (isMutualKO) {
+                    return { needsFullUpdate: true, log: "" };
+                }
                 resetStageBuffs();
                 try { updateBgmState(true); } catch (e) {}
                 generateEnemies();
@@ -5694,8 +5851,7 @@
                 setDungeonButtonsDisabled(false);
                 return { needsFullUpdate: true, log: "" };
             }
-        }
-
+                }
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
@@ -5862,6 +6018,7 @@
                                 let stageJustCleared = false;
 
                                 if (currentEnemy.hp === 0) {
+                                    const isPartyDeadNow = !p.some(m => m.inParty && m.hp > 0);
                                     spawnBattleBurstAtMonster(currentEnemy, true, "#fbbf24", 20);
                                     if (currentEnemy.isSpecialHero) {
                                         turnLog += "🏆王国の絵文字勇者に勝利した！ ";
@@ -5876,7 +6033,7 @@
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
                                         if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                                        const prog = handleFloorProgressAfterClear();
+                                        const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
                                     } else if (currentEnemy.isSpecialSage) {
@@ -5896,7 +6053,7 @@
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
                                         if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                                        const prog = handleFloorProgressAfterClear();
+                                        const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
                                     } else if (currentEnemy.isZombieHero) {
@@ -5930,7 +6087,7 @@
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
                                         if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                                        const prog = handleFloorProgressAfterClear();
+                                        const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
                                     } else if (currentEnemy.isGodEntity) {
@@ -5962,7 +6119,7 @@
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
                                         if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
-                                        const prog = handleFloorProgressAfterClear();
+                                        const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
                                     } else if (currentEnemy.isArenaEnemy) {
@@ -6037,7 +6194,7 @@
                                                 maxStg = Math.min(1000, maxStg + 1);
                                                 turnLog += "🏰新しい階層が解放された！ ";
                                             }
-                                            const prog = handleFloorProgressAfterClear();
+                                            const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                             if (prog.needsFullUpdate) needsFullUpdate = true;
                                             turnLog += prog.log;
                                         }
@@ -6140,7 +6297,7 @@
                                 isTurnRunning = false;
 
                                 if (needsFullUpdate) up(true);
-                                else { upBattleUI(); renderMissions(false); }
+                                else up(false);
 
                                 if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
                                     autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(600 / spdDiv));
@@ -6163,8 +6320,8 @@
         function mix() {
             if(inDungeon) return;
 
-            if(p.length < 4) {
-                return alert("❌ 手持ちモンスターが少なすぎます！ボックスに4体以上いないと配合できません。");
+            if(p.length < 5) {
+                return alert("❌ 手持ちモンスターが少なすぎます！配合に失敗すると2匹消滅するため、最低3体残せるようにボックスに5体以上必要です。");
             }
 
             const cbs = document.querySelectorAll(".cb:checked");
