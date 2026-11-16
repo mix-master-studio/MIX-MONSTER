@@ -278,6 +278,17 @@
             line-height: 1.55;
             color: #334155;
         }
+        .guide-step {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #0284c7;
+            border-radius: 8px;
+            padding: 6px 8px;
+            margin: 5px 0;
+        }
+        .guide-step b {
+            color: #0369a1;
+        }
         .limit-hint {
             font-size: 9.5px;
             color: #64748b;
@@ -307,6 +318,19 @@
             margin-bottom: 8px;
             border: 1px solid #7dd3fc;
             box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+        }
+        .box-toast {
+            display: none;
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 1.5px solid #22c55e;
+            color: #166534;
+            border-radius: 10px;
+            padding: 7px 10px;
+            margin: 6px 0 8px;
+            font-size: 11.5px;
+            font-weight: 900;
+            box-shadow: 0 3px 10px rgba(34, 197, 94, 0.2);
+            animation: popIn 0.25s ease-out;
         }
         .battle-header-bar {
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -472,6 +496,8 @@
             pointer-events: none;
             white-space: nowrap;
         }
+        .bg-base { border-color: #f59e0b !important; background: linear-gradient(180deg, #fefce8 0%, #ffedd5 52%, #dcfce7 100%) !important; box-shadow: inset 0 -18px 30px rgba(245, 158, 11, 0.14); }
+        .bg-base::before { content: "🏡"; opacity: 0.24; }
         .bg-grass { border-color: #22c55e !important; background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); } .bg-grass::before { content: "🌿"; }
         .bg-jungle { border-color: #16a34a !important; background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%); } .bg-jungle::before { content: "🌴"; }
         .bg-ocean { border-color: #0ea5e9 !important; background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); } .bg-ocean::before { content: "🌊"; }
@@ -1049,6 +1075,9 @@
             border-radius: 11px !important;
             white-space: nowrap;
         }
+        .box-ctrl-span2 {
+            grid-column: span 2;
+        }
         .box-btn-row {
             display: flex;
             gap: 5px;
@@ -1205,6 +1234,16 @@
             font-size: 11px;
         }
         .mission-row.done { background: #f0fdf4; border-color: #86efac; }
+        .daily-quest-row {
+            background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.16);
+        }
+        .daily-quest-row.done {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #22c55e;
+            box-shadow: none;
+        }
         .status-text {
             font-size: 10.5px;
             color: #334155;
@@ -1262,16 +1301,34 @@
                 🔊 サウンド: ON
             </button>
             <button onclick="let g=document.getElementById('guidePanel'); g.style.display=g.style.display==='block'?'none':'block'" style="width: auto; padding: 6px 12px; font-size: 11px; margin: 0; background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-bottom: 2px solid #5b21b6;">
-                ❓ 遊び方ガイド
+                ❓ 初心者ガイド・遊び方
             </button>
         </div>
         <div id="guidePanel" class="guide-panel">
-            <b>📖『みっくすえもじ』の遊び方</b><br>
-            1️⃣ <b>パーティ編成</b>：「📦ボックス」タブから最大3体「⚔️戦闘に出す」で登録！<br>
-            2️⃣ <b>ダンジョン冒険</b>：「⚔️バトル」タブで「🏰ダンジョン突入」を押して1000階を目指そう！（50階ごとに強力なボスが出現。「🔁同じ階周回」で同じ階を最大50回連続周回できます！）<br>
-            3️⃣ <b>モンスター配合</b>：「🧬配合」タブで2匹を配合して新種を生み出そう！レベルは2匹の合計になります（配合アシストで作成可能な組み合わせを自動検索できます）。<br>
-            4️⃣ <b>レア＆遭遇イベント</b>：虹色の<b>✨色違い(能力1.25倍＋限定スキル)</b>や、王国の絵文字勇者・王国の配合賢者・廃国のゾンビ絵文字勇者(No.A)・星辰の神龍(No.B)・迷子の国王・知らない王国（闘技場「小文字級/大文字級」・商店15種・ギルド25種）・🔮ダンジョンの水晶など特殊イベントも多数出現！<br>
-            ⚠️ <b>注意</b>：「🔁同じ階周回」がONの間は、すべての遭遇イベントは発生しません。またイベントは2回連続で発生しません。土日はEXP2倍＆配合+10%！
+            <b>🔰 初心者向け：最初にやること順番ガイド</b>
+            <div class="guide-step">
+                <b>① まずは「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
+                毎日0時にリセットされる「☀️毎日ログインクエスト」は、ログインするだけで受け取れます。最初に受け取って有利に進めよう！
+            </div>
+            <div class="guide-step">
+                <b>②「📦 ボックス」タブでパーティを確認しよう！</b><br>
+                最初は「プニシズク」3体が戦闘メンバーに参加中です。新しい仲間が増えたら「⚔️戦闘に出す」で最大3体まで入れ替えられます（何番手に選ばれたかも表示されます）。
+            </div>
+            <div class="guide-step">
+                <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
+                オート戦闘がONなので自動で戦います！経験値がたまってLvが上がり、確率で敵が仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめ！
+            </div>
+            <div class="guide-step">
+                <b>④ 仲間が5体以上になったら「🧬 配合」タブを試そう！</b><br>
+                ボックスから「🛡️戻す」で控えにした鍵なしの2匹を選んで配合すると、レベル合計の強い新種が誕生します！迷ったら「✨配合アシスト」を使おう。
+            </div>
+            <div class="guide-step">
+                <b>⑤「📖 図鑑」でヒントを見て1000階を目指そう！</b><br>
+                図鑑の「❓・シルエット」をタップすると出現階層や配合レシピのヒントが見られます！50階ごとのボス撃破や、レアな✨色違い(能力1.25倍)・遭遇イベントも楽しもう！
+            </div>
+            <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
+                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日はEXP2倍＆配合+10%！
+            </div>
         </div>
     </div>
 
@@ -1291,8 +1348,8 @@
         <div class="box" id="battleBox" style="padding-top: 12px;">
             <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
             <div class="battle-header-bar" id="battleHeaderBar">
-                <div style="font-size: 13.5px; font-weight: 900; color: #1e293b;">
-                    ダンジョン: <span id="stg" style="color: #0284c7;">1階 [🌿草原]</span>
+                <div style="font-size: 13px; font-weight: 900; color: #1e293b;">
+                    <span id="stg" style="color: #0284c7;">🏡 冒険者の拠点（出発先: 1階 [🌿草原]）</span>
                     <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-top: 2px;">最高クリア: <span id="dispClearStg">0</span>階 ／ 最高到達: <span id="maxStg">1</span>階</div>
                 </div>
                 <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
@@ -1306,20 +1363,20 @@
                 </div>
             </div>
 
-            <div class="battle-field" id="battleField">
+            <div class="battle-field bg-base" id="battleField">
                 <canvas id="battleCanvas"></canvas>
                 <div id="fxLayer"></div>
-                <div class="side" id="mySide"><b>【味方】</b></div>
-                <div class="side" id="eSide"><b>【敵】</b></div>
+                <div class="side" id="mySide"><b>【🏡 拠点で休息中】</b></div>
+                <div class="side" id="eSide"><b>【🏡 冒険者の拠点】</b></div>
             </div>
 
             <div id="dungeonLockBanner" style="display:none; background:#fee2e2; border:1.5px solid #f87171; color:#b91c1c; border-radius:10px; padding:6px 10px; margin:7px auto 2px; font-size:11.5px; font-weight:900;"></div>
             <div id="eventPanel" class="event-panel"></div>
             <div class="notice-banner" id="noticeBanner"></div>
-            <div class="battle-log" id="battleLog">⚔️ 探索を開始してください。</div>
+            <div class="battle-log" id="battleLog">🏡 ここは冒険者の拠点です！まずは「🧭 クエスト」で毎日報酬を受け取るか、「🏰 ダンジョン突入」で冒険を始めよう！</div>
 
             <div class="btn-battle-group">
-                <button class="btn-compact" style="background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); border-bottom: 3px solid #991b1b;" id="btnAtk" onclick="atk()">
+                <button class="btn-compact" style="background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); border-bottom: 3px solid #991b1b;" id="btnAtk" onclick="atk()" disabled>
                     ⚔️ 攻撃する！
                 </button>
                 <button class="btn-compact" style="background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); border-bottom: 3px solid #b45309;" id="btnAutoToggle" onclick="toggleAutoBattle()">
@@ -1352,13 +1409,10 @@
         <div class="box" style="border: 1.5px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
             <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
-            <div class="limit-hint">※クエスト数：初期5件 ／ 王国ギルドの追加を含め上限20件まで</div>
-            <button onclick="let m=document.getElementById('missionWrapper'); m.style.display=m.style.display==='none'?'block':'none'" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-bottom: 3px solid #b45309;">
-                📜 クエスト一覧の表示切替
-            </button>
+            <div class="limit-hint">※毎日クエストは毎日0時にリセット！通常クエストは初期5件／王国ギルド含め上限20件</div>
             <div id="missionWrapper" style="display: block; margin-top: 8px;">
                 <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
-                <div id="missionList" class="scroll-box" style="max-height: 250px; border-color: #fde68a; background: #fffbeb;"></div>
+                <div id="missionList" class="scroll-box" style="max-height: 290px; border-color: #fde68a; background: #fffbeb;"></div>
             </div>
         </div>
     </div>
@@ -1368,12 +1422,10 @@
             <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
             <h3 style="margin: 2px 0 2px; color: #1e293b; font-size: 16px;">📦 ボックス <span id="boxCountBadge" style="font-size:12px; color:#059669;">(3/50体)</span> <span id="partyCountBadge" style="font-size:12px; color:#0284c7;">(戦闘中: 3/3体)</span></h3>
             <div class="limit-hint">※ボックス上限：初期50匹 ／ イベント・アイテムで最大200匹まで拡張可（Lv上限は🔮水晶で最大+20）</div>
+            <div id="boxActionToast" class="box-toast"></div>
             <div class="box-ctrl-grid">
-                <button onclick="let t=document.getElementById('box'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155;">
-                    📦 表示切替
-                </button>
-                <button id="btnSkillVisToggle" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
-                    📜 スキル: ON
+                <button id="btnSkillVisToggle" class="box-ctrl-span2" onclick="toggleBoxSkills()" style="background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%); border-bottom: 3px solid #5b21b6;">
+                    📜 スキル表示: ON
                 </button>
                 <button id="btnSortNo" onclick="sortBoxByNo()" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1;">
                     🔢 図鑑No.小→大 (選択中)
@@ -1424,10 +1476,7 @@
                 ✨ 配合アシスト（作れる組み合わせを表示）
             </button>
             <div id="mixAssistPanel" class="assist-panel"></div>
-            <button onclick="let t=document.getElementById('mixBoxList'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-top:6px;">
-                🧬 配合用ボックスの表示切替
-            </button>
-            <ul id="mixBoxList" class="toggle-box scroll-box-mix"></ul>
+            <ul id="mixBoxList" class="toggle-box scroll-box-mix" style="margin-top:8px;"></ul>
         </div>
 
         <div class="box">
@@ -1447,9 +1496,6 @@
                 <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
                 <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
             </h3>
-            <button onclick="let t=document.getElementById('zukanWrapper'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #64748b 0%, #475569 100%); border-bottom: 3px solid #334155; margin-bottom:8px;">
-                📖 図鑑の表示切替（通常・ボス・特別図鑑）
-            </button>
             <div id="zukanWrapper" style="display: block;">
                 <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
                     💡 未発見（❓・シルエット）をタップすると出現場所や配合ヒントが見られます！
@@ -1483,11 +1529,8 @@
         <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1.5px solid #7dd3fc;">
             <span class="section-badge">💾 SAVE & TRANSFER</span>
             <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
-            <button onclick="let t=document.getElementById('transferArea'); t.style.display==='none'?t.style.display='block':t.style.display='none'" style="background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); border-bottom: 3px solid #0369a1; margin-bottom: 6px;">
-                🔑 引き継ぎ機能の表示切替
-            </button>
 
-            <div id="transferArea" style="display: block; margin-top: 8px; padding-top: 8px; border-top: 1.5px dashed #bae6fd;">
+            <div id="transferArea" style="display: block; margin-top: 6px; padding-top: 6px;">
                 <p style="font-size: 11px; color: #64748b; margin: 0 0 8px;">
                     ※データは自動保存されます。端末故障や紛失に備えて引き継ぎコードを控えてください。
                 </p>
@@ -1871,7 +1914,8 @@
             rareGetCount: 0,
             chestOpenCount: 0,
             claimedMissions: [],
-            extraMissions: []
+            extraMissions: [],
+            dailyQuest: null
         };
         let currentEvent = null;
         let lastFloorWasEvent = false;
@@ -1908,6 +1952,8 @@
         let lastRenderedMissionSig = "";
         let lastRenderedBoxSig = "";
         let currentTab = "battle";
+        let boxToastTimer = null;
+        let questToastTimer = null;
 
         function scheduleBattleTimer(fn, delayMs) {
             const sid = battleSessionId;
@@ -2099,7 +2145,73 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-                }
+        }
+
+        const DAILY_REWARD_POOL = [
+            { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
+            { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
+            { key: "exp",  label: "💎EXP+1%",    val: 0.01  }
+        ];
+
+        function getTodayDateStr() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, "0");
+            const d = String(now.getDate()).padStart(2, "0");
+            return y + "-" + m + "-" + d;
+        }
+
+        function rollDailyRewards() {
+            const picked = pickRandomSubset(DAILY_REWARD_POOL, 2);
+            return picked.map(x => x.key);
+        }
+
+        function ensureDailyQuestCurrent() {
+            const today = getTodayDateStr();
+            const validKeys = new Set(DAILY_REWARD_POOL.map(x => x.key));
+            if (!stats.dailyQuest || typeof stats.dailyQuest !== "object" || stats.dailyQuest.date !== today) {
+                stats.dailyQuest = {
+                    date: today,
+                    claimed: false,
+                    rewards: rollDailyRewards()
+                };
+                return true;
+            }
+            if (!Array.isArray(stats.dailyQuest.rewards) || stats.dailyQuest.rewards.length !== 2 ||
+                !stats.dailyQuest.rewards.every(k => validKeys.has(k)) ||
+                stats.dailyQuest.rewards[0] === stats.dailyQuest.rewards[1]) {
+                stats.dailyQuest.rewards = rollDailyRewards();
+                return true;
+            }
+            return false;
+        }
+
+        function getDailyRewardText(keys) {
+            return (keys || []).map(k => {
+                const f = DAILY_REWARD_POOL.find(x => x.key === k);
+                return f ? f.label : "";
+            }).filter(Boolean).join(" ＆ ");
+        }
+
+        function showQuestToast(msg) {
+            const wrap = document.getElementById("missionWrapper");
+            if (!wrap) return;
+            let toast = document.getElementById("questToast");
+            if (!toast) {
+                toast = document.createElement("div");
+                toast.id = "questToast";
+                toast.className = "box-toast";
+                toast.style.margin = "0 0 6px";
+                wrap.insertBefore(toast, wrap.firstChild);
+            }
+            toast.innerText = msg;
+            toast.style.display = "block";
+            if (questToastTimer) clearTimeout(questToastTimer);
+            questToastTimer = setTimeout(() => {
+                toast.style.display = "none";
+            }, 4000);
+        }
+
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },    checkType: "stg",   val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 }, checkType: "mix",   val: 1 },
@@ -2232,8 +2344,13 @@
             const listEl = document.getElementById("missionList");
             if (!listEl) return;
 
+            const dailyReset = ensureDailyQuestCurrent();
+            const dq = stats.dailyQuest;
             const allMissions = getAllMissions();
             const sig = [
+                dq.date,
+                dq.claimed ? 1 : 0,
+                dq.rewards.join(","),
                 allMissions.length,
                 stats.claimedMissions.length,
                 maxClearStg,
@@ -2253,13 +2370,23 @@
                 Math.round(expBonusRate * 100)
             ].join("_");
 
-            if (!force && sig === lastRenderedMissionSig) return;
+            if (!force && !dailyReset && sig === lastRenderedMissionSig) return;
             lastRenderedMissionSig = sig;
 
             let claimedCount = 0;
-            let claimableCount = 0;
+            let claimableCount = dq.claimed ? 0 : 1;
             let boxBonusTotal = 0;
             let parts = [];
+
+            const dailyRightHtml = dq.claimed
+                ? "<span style='color:#059669; font-weight:900; font-size:10.5px; white-space:nowrap;'>✅ 本日受取済</span>"
+                : '<button class="btn-small" style="margin:0; padding:6px 10px; font-size:11px; background:linear-gradient(180deg,#f59e0b,#d97706); border-bottom:2px solid #b45309; white-space:nowrap;" onclick="claimDailyQuest()">🎁 受取</button>';
+
+            parts.push('<div class="mission-row daily-quest-row' + (dq.claimed ? ' done' : '') + '">' +
+                '<div><span style="background:#f59e0b; color:#fff; border-radius:4px; padding:0 5px; font-size:9px; font-weight:900; margin-right:4px;">毎日0時リセット</span><b>☀️ 毎日ログインクエスト</b><br>' +
+                '<span style="color:#475569; font-size:10px;">ログインするだけ（本日 ' + dq.date + '）</span><br>' +
+                '<span style="color:#b45309; font-weight:900; font-size:10px;">🎁 本日の報酬：' + getDailyRewardText(dq.rewards) + '</span></div>' +
+                '<div>' + dailyRightHtml + '</div></div>');
 
             allMissions.forEach(m => {
                 const isClaimed = stats.claimedMissions.includes(m.id);
@@ -2306,6 +2433,27 @@
             }
         }
 
+        function claimDailyQuest() {
+            ensureDailyQuestCurrent();
+            const dq = stats.dailyQuest;
+            if (!dq || dq.claimed) return;
+
+            dq.claimed = true;
+            dq.rewards.forEach(k => {
+                if (k === "mix") addMixBonusCapped(0.001);
+                else if (k === "wild") wildJoinBonus = Math.round((wildJoinBonus + 0.001) * 10000) / 10000;
+                else if (k === "exp") expBonusRate = Math.round((expBonusRate + 0.01) * 1000) / 1000;
+            });
+
+            seStageClear();
+            const rewardStr = getDailyRewardText(dq.rewards);
+            const msg = "☀️ 毎日ログインクエスト報酬（" + rewardStr + "）を獲得しました！";
+            showQuestToast(msg);
+            showNotice(msg, 4500);
+            saveGame();
+            up(true);
+        }
+
         function claimMission(id) {
             const m = getAllMissions().find(x => x.id === id);
             if (!m || stats.claimedMissions.includes(id) || !evalMissionCheck(m)) return;
@@ -2313,11 +2461,12 @@
             stats.claimedMissions.push(id);
             if (m.reward.box) boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + m.reward.box);
             if (m.reward.mix) addMixBonusCapped(m.reward.mix);
-            if (m.reward.exp) expBonusRate += m.reward.exp;
-            if (m.reward.wild) wildJoinBonus += m.reward.wild;
+            if (m.reward.exp) expBonusRate = Math.round((expBonusRate + m.reward.exp) * 1000) / 1000;
+            if (m.reward.wild) wildJoinBonus = Math.round((wildJoinBonus + m.reward.wild) * 10000) / 10000;
 
             seStageClear();
             const msg = "🧭 クエスト「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
+            showQuestToast(msg);
             showNotice(msg, 4500);
             saveGame();
             up(true);
@@ -2415,10 +2564,13 @@
                     heroWinCount: 0, sageWinCount: 0, kingHelpCount: 0,
                     kingdomVisitCount: 0, arenaWinCount: 0,
                     rareGetCount: 0, chestOpenCount: 0,
-                    claimedMissions: [], extraMissions: []
+                    claimedMissions: [], extraMissions: [],
+                    dailyQuest: null
                 }, data.stats);
                 migrateLegacyMissions();
             }
+            ensureDailyQuestCurrent();
+
             if (Array.isArray(data.p)) {
                 data.p.forEach(m => {
                     if (m && m.n === "星辰の大魔神") m.n = "星辰の神龍";
@@ -2470,6 +2622,7 @@
                     }
                 } catch (e) { console.error("ロード失敗", e); }
             }
+            ensureDailyQuestCurrent();
             if (isDungeonLocked()) {
                 startDungeonLock(dungeonLockUntil - Date.now());
             } else {
@@ -2479,7 +2632,6 @@
             updateSortButtonsUI();
             up(true);
         }
-
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -2621,7 +2773,7 @@
             showBoxSkills = !showBoxSkills;
             const btn = document.getElementById("btnSkillVisToggle");
             if (btn) {
-                btn.innerText = showBoxSkills ? "📜 スキル: ON" : "📜 スキル: OFF";
+                btn.innerText = showBoxSkills ? "📜 スキル表示: ON" : "📜 スキル表示: OFF";
                 btn.style.background = showBoxSkills
                     ? "linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%)"
                     : "linear-gradient(180deg, #64748b 0%, #475569 100%)";
@@ -2652,6 +2804,18 @@
             }
             return true;
         }
+
+        function showBoxToast(msg, duration = 3500) {
+            const el = document.getElementById("boxActionToast");
+            if (!el) return;
+            el.innerText = msg;
+            el.style.display = "block";
+            if (boxToastTimer) clearTimeout(boxToastTimer);
+            boxToastTimer = setTimeout(() => {
+                el.style.display = "none";
+            }, duration);
+        }
+
         function toggleBulkReleaseMode() {
             if (inDungeon) return showNotice("⚠️ ダンジョン内では一括お別れできません！", 2500);
             bulkReleaseMode = !bulkReleaseMode;
@@ -3497,10 +3661,11 @@
         }
 
         function getAreaParticleTheme() {
-            if (inDungeon && (currentEvent === "god_entity" || eg.some(e => e.isGodEntity))) return { color: "#fde047", vx: 0.1, vy: -0.95 };
-            if (inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero))) return { color: "#4ade80", vx: 0, vy: -0.85 };
-            if (inDungeon && inKingdom) return { color: "#facc15", vx: 0.15, vy: -0.55 };
-            if (inDungeon && isBossStage(stg)) return { color: "#ef4444", vx: 0, vy: -0.9 };
+            if (!inDungeon) return { color: "#fbbf24", vx: 0.12, vy: -0.32 };
+            if (currentEvent === "god_entity" || eg.some(e => e.isGodEntity)) return { color: "#fde047", vx: 0.1, vy: -0.95 };
+            if (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero)) return { color: "#4ade80", vx: 0, vy: -0.85 };
+            if (inKingdom) return { color: "#facc15", vx: 0.15, vy: -0.55 };
+            if (isBossStage(stg)) return { color: "#ef4444", vx: 0, vy: -0.9 };
             if (stg <= 100) return { color: "#4ade80", vx: 0.2, vy: -0.35 };
             if (stg <= 200) return { color: "#a3e635", vx: 0.3, vy: -0.45 };
             if (stg <= 300) return { color: "#38bdf8", vx: 0.1, vy: -0.7 };
@@ -3512,6 +3677,7 @@
             if (stg <= 900) return { color: "#ffffff", vx: -0.25, vy: 0.85 };
             return { color: "#818cf8", vx: 0, vy: -0.65 };
         }
+
         function initBattleCanvas() {
             try {
                 const canvas = document.getElementById("battleCanvas");
@@ -3746,7 +3912,6 @@
                 }, 420);
             }
         }
-
         function enter(){
             if (isDungeonLocked()) {
                 return alert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。");
@@ -4069,6 +4234,7 @@
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
         }
+
         function chooseHeroAction(fight) {
             if (!inDungeon || currentEvent !== "hero") return;
 
@@ -4268,8 +4434,6 @@
 
             try { updateBgmState(true); } catch (e) {}
             setDungeonButtonsDisabled(false);
-            const btnA = document.getElementById("btnAtk");
-            if (btnA) btnA.disabled = false;
 
             startDungeonLock(60000);
             showNotice(msg, 6500);
@@ -4539,7 +4703,8 @@
 
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
-                                                       }
+        }
+
         function leaveDungeon() {
             battleSessionId++;
             clearAllBattleTimers();
@@ -4564,8 +4729,6 @@
             if (banner) banner.style.display = "none";
 
             setDungeonButtonsDisabled(false);
-            const btnA = document.getElementById("btnAtk");
-            if (btnA) btnA.disabled = false;
 
             const logEl = document.getElementById("battleLog");
             if (logEl) logEl.innerText = "🏡 拠点に戻った。仲間が全員全回復した！";
@@ -4580,7 +4743,9 @@
             if (target.inParty) {
                 target.inParty = false;
                 target.partyOrder = 0;
-                document.getElementById("battleLog").innerText = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
+                const msg = "🛡️ " + target.n + " を戦闘メンバーから外しました。";
+                document.getElementById("battleLog").innerText = msg;
+                showBoxToast(msg);
             } else {
                 let currentPartyCount = 0;
                 p.forEach(m => { if(m.inParty) currentPartyCount++; });
@@ -4589,7 +4754,12 @@
                 target.inParty = true;
                 target.partyOrder = partyOrderCounter;
                 bulkSelectedMons.delete(target);
-                document.getElementById("battleLog").innerText = "⚔️ " + target.n + " を戦闘メンバーに登録しました！";
+
+                const partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
+                const slotNum = partyMembers.indexOf(target) + 1;
+                const msg = "⚔️ " + target.n + " を【" + slotNum + "番手】に選出しました！";
+                document.getElementById("battleLog").innerText = msg;
+                showBoxToast(msg);
             }
             saveGame();
             up(true);
@@ -4665,14 +4835,28 @@
             if (wkBanner) wkBanner.style.display = weekend ? "block" : "none";
             if (wkMixTag) wkMixTag.innerText = weekend ? " (🎉土日+10%込!)" : "";
 
-            let envName = "", envEmoji = "", envClass = "";
+            let areaName = "", areaEmoji = "", areaClass = "";
+            if (stg <= 100) { areaName = "草原"; areaEmoji = "🌿"; areaClass = "bg-grass"; }
+            else if (stg <= 200) { areaName = "ジャングル"; areaEmoji = "🌴"; areaClass = "bg-jungle"; }
+            else if (stg <= 300) { areaName = "海"; areaEmoji = "🌊"; areaClass = "bg-ocean"; }
+            else if (stg <= 400) { areaName = "砂漠"; areaEmoji = "🏜️"; areaClass = "bg-desert"; }
+            else if (stg <= 500) { areaName = "毒沼"; areaEmoji = "☣️"; areaClass = "bg-poison"; }
+            else if (stg <= 600) { areaName = "鉱山"; areaEmoji = "⛏️"; areaClass = "bg-mine"; }
+            else if (stg <= 700) { areaName = "神殿"; areaEmoji = "🏛️"; areaClass = "bg-shrine"; }
+            else if (stg <= 800) { areaName = "火山地帯"; areaEmoji = "🌋"; areaClass = "bg-volcano"; }
+            else if (stg <= 900) { areaName = "氷の世界"; areaEmoji = "❄️"; areaClass = "bg-ice"; }
+            else { areaName = "魔王城"; areaEmoji = "🏯"; areaClass = "bg-castle"; }
+
+            let envName = areaName, envEmoji = areaEmoji, envClass = areaClass;
             const isBossNow = inDungeon && !inKingdom && isBossStage(stg);
             const isZombieNow = inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero));
             const isGodNow = inDungeon && (currentEvent === "god_entity" || eg.some(e => e.isGodEntity));
 
-            if (isGodNow) { envName = "星辰の聖域"; envEmoji = "🌌"; envClass = "bg-god"; }
+            if (!inDungeon) {
+                envClass = "bg-base";
+            } else if (isGodNow) { envName = "星辰の聖域"; envEmoji = "🌌"; envClass = "bg-god"; }
             else if (isZombieNow) { envName = "廃国の決戦"; envEmoji = "🏚️"; envClass = "bg-zombie"; }
-            else if (inDungeon && inKingdom) {
+            else if (inKingdom) {
                 envName = "知らない王国"; envEmoji = "🏰";
                 if (kingdomScene === "arena" || kingdomScene === "arena_menu") envClass = "bg-arena";
                 else if (kingdomScene === "shop") envClass = "bg-shop";
@@ -4682,23 +4866,20 @@
                 envName = "ボス戦";
                 if (stg === 500 || stg === 1000) { envEmoji = "🕋"; envClass = "bg-superboss"; }
                 else { envEmoji = "🏴‍☠️"; envClass = "bg-boss"; }
-            } else {
-                if (stg <= 100) { envName = "草原"; envEmoji = "🌿"; envClass = "bg-grass"; }
-                else if (stg <= 200) { envName = "ジャングル"; envEmoji = "🌴"; envClass = "bg-jungle"; }
-                else if (stg <= 300) { envName = "海"; envEmoji = "🌊"; envClass = "bg-ocean"; }
-                else if (stg <= 400) { envName = "砂漠"; envEmoji = "🏜️"; envClass = "bg-desert"; }
-                else if (stg <= 500) { envName = "毒沼"; envEmoji = "☣️"; envClass = "bg-poison"; }
-                else if (stg <= 600) { envName = "鉱山"; envEmoji = "⛏️"; envClass = "bg-mine"; }
-                else if (stg <= 700) { envName = "神殿"; envEmoji = "🏛️"; envClass = "bg-shrine"; }
-                else if (stg <= 800) { envName = "火山地帯"; envEmoji = "🌋"; envClass = "bg-volcano"; }
-                else if (stg <= 900) { envName = "氷の世界"; envEmoji = "❄️"; envClass = "bg-ice"; }
-                else { envName = "魔王城"; envEmoji = "🏯"; envClass = "bg-castle"; }
             }
 
             const stgEl = document.getElementById("stg");
             const maxStgEl = document.getElementById("maxStg");
             const clearStgEl = document.getElementById("dispClearStg");
-            if (stgEl) stgEl.innerText = (inDungeon && inKingdom) ? "知らない王国 [🏰]" : (stg + "階 [" + envEmoji + envName + "]");
+            if (stgEl) {
+                if (!inDungeon) {
+                    stgEl.innerText = "🏡 冒険者の拠点（出発先: " + stg + "階 [" + areaEmoji + areaName + "]）";
+                } else if (inKingdom) {
+                    stgEl.innerText = "知らない王国 [🏰]";
+                } else {
+                    stgEl.innerText = stg + "階 [" + envEmoji + envName + "]";
+                }
+            }
             if (maxStgEl) maxStgEl.innerText = maxStg;
             if (clearStgEl) clearStgEl.innerText = maxClearStg;
 
@@ -4726,7 +4907,10 @@
             if (bHeader) bHeader.className = "battle-header-bar " + envClass;
 
             if (mS) {
-                let mHtml = ["<b style='font-size:12px;'>【味方】</b>"];
+                let mHtml = [inDungeon
+                    ? "<b style='font-size:12px;'>【味方】</b>"
+                    : "<b style='font-size:12px; color:#b45309;'>【🏡 拠点で休息中】</b>"
+                ];
                 let partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).slice(0, 3);
                 partyMembers.forEach((m, idx) => {
                     let isDead = m.hp <= 0;
@@ -4785,6 +4969,14 @@
                     } else if (currentEvent === "arena_reward") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間にしよう！</span>";
                     }
+                } else if (!inDungeon || eg.length === 0) {
+                    eS.innerHTML =
+                        "<b style='font-size:12px; color:#059669;'>【🏡 冒険者の拠点】</b>" +
+                        "<br><div class='monster-container'><span class='battle-monster' style='font-size:44px;'>🏕️</span><div class='monster-shadow' style='width:34px;'></div></div>" +
+                        "<b style='font-size:12px; color:#b45309;'>平和なキャンプ地</b>" +
+                        "<br><span style='font-size:10.5px; color:#475569; line-height:1.45; display:inline-block; margin-top:3px;'>仲間たちは焚き火の前で休んでいます🔥<br>準備ができたら「🏰 ダンジョン突入」を押そう！</span>";
+                    const bEnterBtm = document.getElementById("btnEnterBtm");
+                    if (bEnterBtm && !isDungeonLocked()) bEnterBtm.disabled = false;
                 } else {
                     const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
                     const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
@@ -4792,38 +4984,32 @@
                     const isGodBattle = inDungeon && eg.some(m => m.isGodEntity);
                     const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
                     let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の神龍】" : "【敵】")))))) + "</b>"];
-                    if (!inDungeon || eg.length === 0) {
-                        eHtml.push("<br><span style='font-size:11px; color:#64748b;'>平和に満ちています</span>");
-                        const bEnterBtm = document.getElementById("btnEnterBtm");
-                        if (bEnterBtm && !isDungeonLocked()) bEnterBtm.disabled = false;
-                    } else {
-                        eg.forEach((m, i) => {
-                            let isDead = m.hp <= 0;
-                            let inf = getMonData(m.n);
-                            let eId = " id='eM_slot_" + i + "' ";
-                            let eStateHtml = buildStateIcons(m);
-                            let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
-                            let dispLv = m.fixedLv ? m.fixedLv : stg;
-                            let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b"))));
+                    eg.forEach((m, i) => {
+                        let isDead = m.hp <= 0;
+                        let inf = getMonData(m.n);
+                        let eId = " id='eM_slot_" + i + "' ";
+                        let eStateHtml = buildStateIcons(m);
+                        let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
+                        let dispLv = m.fixedLv ? m.fixedLv : stg;
+                        let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b"))));
 
-                            let deadClass = isDead ? " monster-dead-coffin" : "";
-                            let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
-                            let rareStar = m.isRare ? "✨" : "";
-                            let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:34px;'></div>";
-                            let enemyBody = isDead
-                                ? "<span class='battle-monster monster-dead-coffin' style='font-size:" + sizePx + ";'>⚰️</span>"
-                                : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:" + sizePx + ";");
+                        let deadClass = isDead ? " monster-dead-coffin" : "";
+                        let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
+                        let rareStar = m.isRare ? "✨" : "";
+                        let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:34px;'></div>";
+                        let enemyBody = isDead
+                            ? "<span class='battle-monster monster-dead-coffin' style='font-size:" + sizePx + ";'>⚰️</span>"
+                            : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:" + sizePx + ";");
 
-                            eHtml.push("<br><div class='monster-container'" + eId + ">" + enemyBody + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>");
-                            if (m.isSpecialHero) eHtml.push("<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>");
-                            if (m.isSpecialSage) eHtml.push("<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>");
-                            if (m.isZombieHero) eHtml.push("<br><span class='skill-badge' style='background:#090d16; color:#bef264; border-color:#166534;'>💀廃国の呪剣・黒蝕</span>");
-                            if (m.isGodEntity) eHtml.push("<br><span class='skill-badge' style='background:#fefce8; color:#b45309; border-color:#f59e0b;'>🐉星辰龍閃・メテオブレス</span>");
-                            if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
-                            eHtml.push("<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml);
-                            eHtml.push('<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
-                        });
-                    }
+                        eHtml.push("<br><div class='monster-container'" + eId + ">" + enemyBody + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>");
+                        if (m.isSpecialHero) eHtml.push("<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>");
+                        if (m.isSpecialSage) eHtml.push("<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>");
+                        if (m.isZombieHero) eHtml.push("<br><span class='skill-badge' style='background:#090d16; color:#bef264; border-color:#166534;'>💀廃国の呪剣・黒蝕</span>");
+                        if (m.isGodEntity) eHtml.push("<br><span class='skill-badge' style='background:#fefce8; color:#b45309; border-color:#f59e0b;'>🐉星辰龍閃・メテオブレス</span>");
+                        if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
+                        eHtml.push("<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml);
+                        eHtml.push('<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
+                    });
                     eS.innerHTML = eHtml.join("");
                 }
             }
@@ -5034,7 +5220,9 @@
                 } else {
                     evPanel.style.display = "none";
                     evPanel.innerHTML = "";
-                    if (btnAtk && inDungeon && !isTurnRunning) btnAtk.disabled = false;
+                    if (btnAtk) {
+                        btnAtk.disabled = !inDungeon || isTurnRunning;
+                    }
                 }
             }
 
@@ -5064,11 +5252,12 @@
             renderMissions(forceAll);
 
             const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
-            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + "|", "");
+            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
             const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
             if (forceAll || boxSig !== lastRenderedBoxSig) {
                 lastRenderedBoxSig = boxSig;
 
+                const partyOrderList = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
                 const list = document.getElementById("box");
                 if (list) {
                     let boxParts = [];
@@ -5085,7 +5274,8 @@
                         let maxLv = getMaxLv(n);
                         let capB = n.lvCapBonus || 0;
                         let expText = n.lv >= maxLv ? "MAX" : n.ex + "/" + n.nx;
-                        let partyTag = n.inParty ? " <span style='color:#059669;font-weight:900;'>[参加中]</span>" : "";
+                        let slotIdx = n.inParty ? (partyOrderList.indexOf(n) + 1) : 0;
+                        let partyTag = n.inParty ? (" <span style='color:#059669;font-weight:900;'>[参加中・" + slotIdx + "番手]</span>") : "";
                         let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
                         let rareTag = n.isRare ? "<span class='rare-badge'>✨色違い</span>" : "";
                         let zmbTag = isZmb ? "<span class='zombie-badge'>💀廃国</span>" : "";
@@ -5350,6 +5540,7 @@
                 }, Math.floor(900 / spdDiv));
             }, Math.floor(delayMs / spdDiv));
         }
+
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
             const inf = getMonData(attacker.n);
@@ -5851,7 +6042,8 @@
                 setDungeonButtonsDisabled(false);
                 return { needsFullUpdate: true, log: "" };
             }
-                }
+        }
+
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
@@ -6222,7 +6414,6 @@
                                         resetStageBuffs();
                                         p.forEach(m => { m.hp = m.m; });
                                         setDungeonButtonsDisabled(false);
-                                        if (btnAtk) btnAtk.disabled = false;
                                         showNotice("💥 相討ちで撃破！クリア扱いとなり、体力を回復して拠点へ戻ります。", 5000);
                                         turnLog += " 🏡 拠点へ戻りました。";
                                         needsFullUpdate = true;
@@ -6254,7 +6445,6 @@
                                         eg = [];
                                         resetStageBuffs();
                                         setDungeonButtonsDisabled(false);
-                                        if (btnAtk) btnAtk.disabled = false;
                                         if (logBox) logBox.innerText = "🏡 拠点へ戻りました。";
                                         saveGame();
                                         up(true);
@@ -6281,7 +6471,6 @@
                                         p.forEach(m => { m.hp = m.m; });
                                         if (logBox) logBox.innerText = "🏡 拠点へ強制送還された。仲間たちは全員全回復した。";
                                         setDungeonButtonsDisabled(false);
-                                        if (btnAtk) btnAtk.disabled = false;
                                         saveGame();
                                         up(true);
                                     }, Math.floor(350 / spdDiv));
@@ -6301,7 +6490,7 @@
 
                                 if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
                                     autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(600 / spdDiv));
-                                } else if (btnAtk && !currentEvent) {
+                                } else if (btnAtk && inDungeon && !currentEvent) {
                                     btnAtk.disabled = false;
                                 }
                             } catch (err) {
@@ -6406,6 +6595,12 @@
             try { loadGame(); } catch (e) { console.error(e); }
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
+            setInterval(() => {
+                if (ensureDailyQuestCurrent()) {
+                    saveGame();
+                    renderMissions(true);
+                }
+            }, 15000);
         }
 
         window.addEventListener("DOMContentLoaded", initGame);
