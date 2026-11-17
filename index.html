@@ -489,6 +489,16 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+        .event-btn-row-rps {
+            flex-wrap: nowrap !important;
+        }
+        .event-btn-row-rps .btn-event {
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
+            padding: 9px 4px !important;
+            font-size: 11.5px !important;
+            white-space: nowrap !important;
+        }
         .btn-event {
             flex: 1 1 45%;
             min-width: 110px;
@@ -1358,8 +1368,8 @@
             border: 1px solid #e2e8f0;
         }
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .recipe { width: 100%; font-size: 10.5px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
-        .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; }
+        .recipe { width: 100%; table-layout: fixed; word-break: break-word; font-size: 10px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
+        .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; vertical-align: middle; line-height: 1.4; }
         .zukan-item {
             background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
             border: 1.5px solid #bae6fd;
@@ -1621,7 +1631,7 @@
             </h3>
             <div id="zukanWrapper" style="display: block;">
                 <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
-                    💡 未発見（❓・シルエット）をタップすると出現場所や配合ヒントが見られます！
+                    💡 未発見（❓）は出会うとシルエットに！タップすると出現場所や配合ヒントが見られます！
                 </div>
                 <div id="zk" class="grid"></div>
 
@@ -1891,7 +1901,6 @@
             "アルパカマスター+エルクカイザー": "ポイズンスカンク", "リヴァイアサン+スカイジラフ": "疾風ホース", "ポイズンスカンク+疾風ホース": "デザートキャメル",
             "デザートキャメル+ホーンラム": "アクアフィッシュ", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー"
         };
-
         const INNATE_SKILLS = {
             quick:  { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
             power:  { name: "🔥パワーチャージ(固有)", desc: "攻撃後に25%の確率で攻撃力（中）上昇（+30%）。次のダンジョンへ進むと上昇効果は消える。" },
@@ -2103,6 +2112,7 @@
         let maxStg = 1;
         let maxClearStg = 0;
         let zk = ["プニシズク"];
+        let seen = ["プニシズク"];
         let boxLimit = 50;
         let baseMixRate = 0.25;
         let mixBonus = 0;
@@ -2154,12 +2164,31 @@
         let partyOrderCounter = 3;
         let gameInitialized = false;
         let pendingReleaseList = [];
-        let lastRenderedZkCount = -1;
+        let lastRenderedZukanSig = "";
         let lastRenderedMissionSig = "";
         let lastRenderedBoxSig = "";
         let currentTab = "battle";
         let boxToastTimer = null;
         let questToastTimer = null;
+
+        function markSeen(name) {
+            if (!name) return false;
+            if (name === "星辰の大魔神") name = "星辰の神龍";
+            if (!D[name] && !BOSS_D[name] && !(SPECIAL_D[name] && SPECIAL_D[name].recruitable)) return false;
+            if (!seen.includes(name)) {
+                seen.push(name);
+                return true;
+            }
+            return false;
+        }
+
+        function markZkAndSeen(name) {
+            if (!name) return;
+            if (name === "星辰の大魔神") name = "星辰の神龍";
+            if (!D[name] && !BOSS_D[name] && !(SPECIAL_D[name] && SPECIAL_D[name].recruitable)) return;
+            markSeen(name);
+            if (!zk.includes(name)) zk.push(name);
+        }
 
         function scheduleBattleTimer(fn, delayMs) {
             const sid = battleSessionId;
@@ -2351,7 +2380,7 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-        }
+            }
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2720,6 +2749,7 @@
                 maxStg: maxStg,
                 maxClearStg: maxClearStg,
                 zk: zk,
+                seen: seen,
                 boxLimit: boxLimit,
                 boxLimitCap200: true,
                 baseMixRate: baseMixRate,
@@ -2741,7 +2771,17 @@
             maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
             zk = data.zk || ["プニシズク"];
             if (Array.isArray(zk)) {
-                zk = Array.from(new Set(zk.map(name => name === "星辰の大魔神" ? "星辰の神龍" : name)));
+                zk = Array.from(new Set(zk.map(name => name === "星辰の大魔神" ? "星辰の神龍" : name)))
+                    .filter(name => D[name] || BOSS_D[name] || (SPECIAL_D[name] && SPECIAL_D[name].recruitable));
+            } else {
+                zk = ["プニシズク"];
+            }
+
+            if (Array.isArray(data.seen)) {
+                seen = Array.from(new Set(data.seen.map(name => name === "星辰の大魔神" ? "星辰の神龍" : name)))
+                    .filter(name => D[name] || BOSS_D[name] || (SPECIAL_D[name] && SPECIAL_D[name].recruitable));
+            } else {
+                seen = zk.slice();
             }
 
             let rawLimit = (typeof data.boxLimit === "number" && data.boxLimit >= 50) ? data.boxLimit : 50;
@@ -2798,6 +2838,7 @@
                 getSkillObj(m);
                 initBattleState(m);
                 m.hp = m.m;
+                markZkAndSeen(m.n);
                 if (m.inParty) {
                     if (typeof m.partyOrder !== "number") {
                         maxOrd++;
@@ -2809,7 +2850,10 @@
                     m.partyOrder = 0;
                 }
             });
+            zk.forEach(name => markSeen(name));
             partyOrderCounter = maxOrd;
+            lastRenderedZukanSig = "";
+            if (battleSpeed === 3 && maxClearStg < 500) battleSpeed = 1;
         }
 
         function loadGame() {
@@ -2834,9 +2878,10 @@
                 updateDungeonLockBanner();
             }
             updateRepeatButtonUI();
+            updateSpeedButtonUI();
             updateSortButtonsUI();
             up(true);
-            }
+        }
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -2911,17 +2956,37 @@
             }
         }
 
-        function toggleBattleSpeed() {
-            battleSpeed = (battleSpeed === 1) ? 2 : 1;
+        function updateSpeedButtonUI() {
+            if (battleSpeed === 3 && maxClearStg < 500) battleSpeed = 1;
             const btn = document.getElementById("btnSpeedToggle");
-            if (btn) {
-                btn.innerText = battleSpeed === 2 ? "⏩ 速度: 2倍" : "⏩ 速度: 1倍";
-                btn.style.background = battleSpeed === 2
-                    ? "linear-gradient(180deg, #f472b6 0%, #db2777 100%)"
-                    : "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
-                btn.style.borderColor = battleSpeed === 2 ? "#f9a8d4" : "#7dd3fc";
-                btn.style.borderBottom = battleSpeed === 2 ? "4px solid #9d174d" : "4px solid #0369a1";
+            if (!btn) return;
+            if (battleSpeed === 3) {
+                btn.innerText = "⏩ 速度: 3倍";
+                btn.style.background = "linear-gradient(180deg, #a855f7 0%, #7e22ce 100%)";
+                btn.style.borderColor = "#d8b4fe";
+                btn.style.borderBottom = "4px solid #581c87";
+            } else if (battleSpeed === 2) {
+                btn.innerText = "⏩ 速度: 2倍";
+                btn.style.background = "linear-gradient(180deg, #f472b6 0%, #db2777 100%)";
+                btn.style.borderColor = "#f9a8d4";
+                btn.style.borderBottom = "4px solid #9d174d";
+            } else {
+                btn.innerText = "⏩ 速度: 1倍";
+                btn.style.background = "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
+                btn.style.borderColor = "#7dd3fc";
+                btn.style.borderBottom = "4px solid #0369a1";
             }
+        }
+
+        function toggleBattleSpeed() {
+            if (battleSpeed === 1) {
+                battleSpeed = 2;
+            } else if (battleSpeed === 2) {
+                battleSpeed = (maxClearStg >= 500) ? 3 : 1;
+            } else {
+                battleSpeed = 1;
+            }
+            updateSpeedButtonUI();
         }
 
         function updateSortButtonsUI() {
@@ -3183,7 +3248,7 @@
                 const rInf = D[item.resName];
                 const isNew = !zk.includes(item.resName);
                 const newTag = isNew ? "<span class='assist-tag-new'>🆕未発見</span>" : "";
-                const resDisp = isNew ? ("<span class='silhouette'>" + rInf.a + "</span> No." + rInf.no + " ？？？") : (rInf.a + " No." + rInf.no + " " + item.resName);
+                const resDisp = isNew ? ((seen.includes(item.resName) ? "<span class='silhouette'>" + rInf.a + "</span>" : "❓") + " No." + rInf.no + " ？？？") : (rInf.a + " No." + rInf.no + " " + item.resName);
                 const isSelected = selectedIndices.length === 2 &&
                     ((selectedIndices[0] === item.idx1 && selectedIndices[1] === item.idx2) ||
                      (selectedIndices[0] === item.idx2 && selectedIndices[1] === item.idx1));
@@ -3932,7 +3997,7 @@
                 x2: to.x,
                 y2: to.y,
                 progress: 0,
-                speed: battleSpeed === 2 ? 0.16 : 0.10,
+                speed: 0.08 * battleSpeed,
                 color: color
             });
         }
@@ -3949,7 +4014,7 @@
             el.style.top = (pos.y - 14) + "px";
             el.innerText = text;
             fxLayer.appendChild(el);
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             setTimeout(() => {
                 if (el.parentElement) el.remove();
             }, Math.floor(820 / spdDiv));
@@ -4240,9 +4305,10 @@
                 document.getElementById("battleLog").innerText = "⚔️ ダンジョンの探索を開始した！";
             }
             generateEnemies();
+            saveGame();
             up(true);
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(550 / spdDiv));
             }
@@ -4275,6 +4341,7 @@
                     skillId: getRandomSkillId()
                 };
                 initBattleState(bossMon);
+                markSeen(bossName);
                 eg.push(bossMon);
                 return;
             }
@@ -4327,12 +4394,14 @@
                 } else if (evRoll < 0.090) {
                     currentEvent = "zombie_hero";
                     lastFloorWasEvent = true;
+                    markSeen("廃国のゾンビ絵文字勇者");
                     seSkill();
                     document.getElementById("battleLog").innerText = "🏚️ 禍々しい気配が立ち込めている…上の枠から選択してください。";
                     return;
                 } else if (evRoll < 0.0901) {
                     currentEvent = "god_entity";
                     lastFloorWasEvent = true;
+                    markSeen("星辰の神龍");
                     seMixSuccess();
                     document.getElementById("battleLog").innerText = "🌌 次元の裂け目から星辰の神龍の気配が溢れている…上の枠から選択してください！";
                     return;
@@ -4374,6 +4443,7 @@
                     skillId: getRandomSkillId()
                 };
                 initBattleState(enemyMon);
+                markSeen(n);
                 eg.push(enemyMon);
             }
         }
@@ -4436,7 +4506,7 @@
             saveGame();
             up(true);
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
             }
@@ -4476,7 +4546,7 @@
                     initBattleState(newAlly);
                     p.push(newAlly);
                     if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
-                    if (!zk.includes(giftName)) zk.push(giftName);
+                    markZkAndSeen(giftName);
                     seJoin();
                     msg = (isRareNew ? "🌈✨ジャンケン大勝利！（相手:" + hands[cpuHand] + "）色違いの" : "🎉ジャンケン勝利！（相手:" + hands[cpuHand] + "）") +
                           "No." + b.no + "「" + giftName + (isRareNew ? "✨" : "") + "」(Lv.1)が仲間に加わった！";
@@ -4560,7 +4630,7 @@
             document.getElementById("battleLog").innerText = "⚔️ 王国の絵文字勇者(Lv.50)との決戦が始まった！";
             upBattleUI();
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -4586,7 +4656,7 @@
             document.getElementById("battleLog").innerText = "🧝‍♂️ 王国の配合賢者(Lv.75)との決戦が始まった！";
             upBattleUI();
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -4612,7 +4682,7 @@
             document.getElementById("battleLog").innerText = "📜 ギルドマスター(Lv.30)との手合わせが始まった！";
             upBattleUI();
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -4634,11 +4704,13 @@
                 ex: zh.ex, isZombieHero: true, fixedLv: 50, skillId: 0
             };
             initBattleState(zombieMon);
+            markSeen("廃国のゾンビ絵文字勇者");
             eg = [zombieMon];
             document.getElementById("battleLog").innerText = "💀 廃国のゾンビ絵文字勇者(Lv.50)との決戦が始まった！";
-            upBattleUI();
+            saveGame();
+            up(true);
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -4661,11 +4733,13 @@
                 ex: g.ex, isGodEntity: true, fixedLv: 100, skillId: 0
             };
             initBattleState(godMon);
+            markSeen("星辰の神龍");
             eg = [godMon];
             document.getElementById("battleLog").innerText = "🐉 星辰の神龍(Lv.100)との超絶決戦が始まった！";
-            upBattleUI();
+            saveGame();
+            up(true);
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -4878,14 +4952,16 @@
                     isArenaEnemy: true
                 };
                 initBattleState(mon);
+                markSeen(name);
                 eg.push(mon);
             }
 
             seSkill();
             document.getElementById("battleLog").innerText = "🏟️ 闘技場【" + gradeLabel + "】開始！ランダムな3体に勝利せよ！";
-            upBattleUI();
+            saveGame();
+            up(true);
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
                 autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
@@ -5027,7 +5103,7 @@
                 initBattleState(newAlly);
                 p.push(newAlly);
                 if (newAlly.isRare) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
-                if (!zk.includes(chosen.n)) zk.push(chosen.n);
+                markZkAndSeen(chosen.n);
                 seJoin();
                 msg = "🏆 闘技場の報酬で「No." + b.no + " " + chosen.n + (newAlly.isRare ? "✨" : "") + "」(Lv." + lv + ")を仲間にした！そして王国を出国した！";
             }
@@ -5114,11 +5190,14 @@
             let hints = entries.map(([pair]) => {
                 const parts = pair.split("+");
                 const p1 = parts[0], p2 = parts[1];
-                const s1 = zk.includes(p1) ? (D[p1].a + "No." + D[p1].no + " " + p1) : ("❓No." + D[p1].no + " ？？？");
-                const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ("❓No." + D[p2].no + " ？？？");
+                const s1 = zk.includes(p1) ? (D[p1].a + "No." + D[p1].no + " " + p1) : ((seen.includes(p1) ? D[p1].a : "❓") + "No." + D[p1].no + " ？？？");
+                const s2 = zk.includes(p2) ? (D[p2].a + "No." + D[p2].no + " " + p2) : ((seen.includes(p2) ? D[p2].a : "❓") + "No." + D[p2].no + " ？？？");
                 return "・" + s1 + " ＋ " + s2;
             }).join("\n");
-            showGameAlert("シルエットの正体は配合で誕生するモンスターです！\n\n" + hints, "💡 配合シルエットヒント");
+            const prefix = seen.includes(targetName)
+                ? "シルエットの正体は配合で誕生するモンスターです！"
+                : "この未発見モンスターは配合で誕生します！";
+            showGameAlert(prefix + "\n\n" + hints, "💡 配合ヒント");
         }
 
         function showWildHint(targetName) {
@@ -5139,7 +5218,7 @@
                 }
             }
             let extra = inf.no <= 75 ? "\n（※🧙謎の旅人のジャンケン勝利でも入手可能！）" : "";
-            showGameAlert("No." + inf.no + "（未発見モンスター）\n\n出現ダンジョン：およそ " + minS + "階 〜 " + maxS + "階" + extra, "📍 野生出現場所ヒント");
+            showGameAlert("No." + inf.no + "（未入手モンスター）\n\n出現ダンジョン：およそ " + minS + "階 〜 " + maxS + "階" + extra, "📍 野生出現場所ヒント");
         }
 
         function showBossHint(targetName) {
@@ -5154,7 +5233,7 @@
 
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
-        }
+                        }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5226,6 +5305,7 @@
 
             updateDungeonLockBanner();
             updateRepeatButtonUI();
+            updateSpeedButtonUI();
 
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
@@ -5356,7 +5436,7 @@
                     evPanel.innerHTML =
                         '<div class="event-title">🧙 謎の旅人「ジャンケンで勝負だ！」</div>' +
                         '<div class="event-sub">勝てばNo.1〜75のモンスター(Lv.1)を1匹プレゼント！<br>負けても残念賞でボックス全員がLv+1！（※満杯時は仲間になりません）</div>' +
-                        '<div class="event-btn-row">' +
+                        '<div class="event-btn-row event-btn-row-rps">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="playTravelerRPS(0)">✊ グー</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="playTravelerRPS(1)">✌️ チョキ</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="playTravelerRPS(2)">✋ パー</button>' +
@@ -5716,8 +5796,9 @@
                 if (showMixAssist) renderMixAssist();
             }
 
-            if (zk.length !== lastRenderedZkCount) {
-                lastRenderedZkCount = zk.length;
+            const zukanSig = zk.slice().sort().join(",") + "|" + seen.slice().sort().join(",");
+            if (forceAll || zukanSig !== lastRenderedZukanSig) {
+                lastRenderedZukanSig = zukanSig;
 
                 const rtTable = document.getElementById("rt");
                 if (rtTable) {
@@ -5733,7 +5814,8 @@
                                 const m2 = D[m2Name];
                                 const res = D[resName];
                                 const isDiscovered = zk.includes(resName);
-                                const resEmoji = isDiscovered ? res.a : '<span class="silhouette">' + res.a + '</span>';
+                                const isSeenRes = seen.includes(resName);
+                                const resEmoji = isDiscovered ? res.a : (isSeenRes ? '<span class="silhouette">' + res.a + '</span>' : '❓');
                                 const resLabel = isDiscovered ? resName : "？？？";
                                 const noJoinTag = isSynthOnly(resName) ? ' <span style="color:red;font-weight:bold;">(⚠️配合限定)</span>' : "";
                                 rowsParts.push('<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>');
@@ -5755,12 +5837,15 @@
                 if (zkDiv) {
                     let zkParts = [];
                     Object.keys(D).forEach((k) => {
-                        if(zk.includes(k)){
+                        if (zk.includes(k)) {
                             zkParts.push('<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>');
-                        } else if (synthResults.has(k)) {
-                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#93c5fd;" onclick="showRecipeHint(\'' + k + '\')"><span class="silhouette">' + D[k].a + '</span><br>No.' + D[k].no + '<br>💡配合ヒント</div>');
                         } else {
-                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#cbd5e1;" onclick="showWildHint(\'' + k + '\')">❓<br>No.' + D[k].no + '<br>📍出現ヒント</div>');
+                            const isSynth = synthResults.has(k);
+                            const clickFn = isSynth ? ('showRecipeHint(\'' + k + '\')') : ('showWildHint(\'' + k + '\')');
+                            const borderCol = isSynth ? '#93c5fd' : '#cbd5e1';
+                            const hintText = isSynth ? '💡配合ヒント' : '📍出現ヒント';
+                            const iconHtml = seen.includes(k) ? ('<span class="silhouette">' + D[k].a + '</span>') : '❓';
+                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:' + borderCol + ';" onclick="' + clickFn + '">' + iconHtml + '<br>No.' + D[k].no + '<br>' + hintText + '</div>');
                         }
                     });
                     zkDiv.innerHTML = zkParts.join("");
@@ -5780,7 +5865,8 @@
                         if (zk.includes(k)) {
                             bParts.push('<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>');
                         } else {
-                            bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')"><span class="silhouette">' + bInf.a + '</span><br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
+                            const bossIconHtml = seen.includes(k) ? ('<span class="silhouette">' + bInf.a + '</span>') : '❓';
+                            bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')">' + bossIconHtml + '<br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
                         }
                     });
                     bossZkDiv.innerHTML = bParts.join("");
@@ -5802,20 +5888,22 @@
                     if (zk.includes(spA)) {
                         spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
                     } else {
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()"><span class="silhouette">' + zh.a + '</span><br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
+                        const zhIconHtml = seen.includes(spA) ? ('<span class="silhouette">' + zh.a + '</span>') : '❓';
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()">' + zhIconHtml + '<br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
                     }
                     if (zk.includes(spB)) {
                         spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
                     } else {
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()"><span class="silhouette">' + gd.a + '</span><br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
+                        const gdIconHtml = seen.includes(spB) ? ('<span class="silhouette">' + gd.a + '</span>') : '❓';
+                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()">' + gdIconHtml + '<br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
                     }
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-        }
+                        }
         function exportData() {
             const data = {
-                stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
+                stg, maxStg, maxClearStg, zk, seen, boxLimit, boxLimitCap200: true,
                 baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
                 dungeonLockUntil, stats, p
             };
@@ -5852,6 +5940,7 @@
                         document.getElementById("importCodeField").value = "";
                         if (isDungeonLocked()) startDungeonLock(dungeonLockUntil - Date.now());
                         else updateDungeonLockBanner();
+                        updateSpeedButtonUI();
                         updateSortButtonsUI();
                         up(true);
                     } else { showGameAlert("⚠️ 無効なコードです。", "⚠️ エラー"); }
@@ -5899,7 +5988,7 @@
                     initBattleState(newAlly);
                     p.push(newAlly);
                 }
-                if (!zk.includes("星辰の神龍")) zk.push("星辰の神龍");
+                markZkAndSeen("星辰の神龍");
                 field.value = "";
                 seMixSuccess();
                 saveGame();
@@ -5915,7 +6004,7 @@
         }
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             const isEnemySide = !isPlayerAttack;
 
             scheduleBattleTimer(() => {
@@ -6469,7 +6558,7 @@
             const btnAtk = document.getElementById("btnAtk");
             if (btnAtk) btnAtk.disabled = true;
 
-            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            const spdDiv = battleSpeed;
             const activeAlly = aliveParty[0];
             const currentEnemy = eg[0];
             const logBox = document.getElementById("battleLog");
@@ -6697,7 +6786,7 @@
                                                 };
                                                 initBattleState(newAlly);
                                                 p.push(newAlly);
-                                                if (!zk.includes("廃国のゾンビ絵文字勇者")) zk.push("廃国のゾンビ絵文字勇者");
+                                                markZkAndSeen("廃国のゾンビ絵文字勇者");
                                                 showNotice("💀✨ 超奇跡(0.1%)！！「廃国のゾンビ絵文字勇者 (No.A)」が仲間になりました！！", 7000);
                                                 needsFullUpdate = true;
                                                 seJoin();
@@ -6732,7 +6821,7 @@
                                             };
                                             initBattleState(newAlly);
                                             p.push(newAlly);
-                                            if (!zk.includes("星辰の神龍")) zk.push("星辰の神龍");
+                                            markZkAndSeen("星辰の神龍");
                                             showNotice("🌌✨ 超絶奇跡(0.01%)！！「星辰の神龍 (No.B)」(Lv.100)が確実に仲間になりました！！", 8000);
                                             needsFullUpdate = true;
                                             seMixSuccess();
@@ -6786,7 +6875,7 @@
                                                 p.push(newAlly);
                                                 if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
                                                 showNotice(isRareNew ? ("🌈✨ 超レア色違いの「" + currentEnemy.n + "✨」が仲間になりました！！") : (targetNo < 0 ? ("👑 伝説のボス「" + currentEnemy.n + "」が仲間になりました！！") : ("✨ 野生の「" + currentEnemy.n + "」が仲間になりました！")));
-                                                if (!zk.includes(currentEnemy.n)) zk.push(currentEnemy.n);
+                                                markZkAndSeen(currentEnemy.n);
                                                 needsFullUpdate = true;
                                                 seJoin();
                                             }
@@ -6803,11 +6892,12 @@
                                             turnLog += "🎉ダンジョンクリア！ ";
                                             seStageClear();
                                             let clearedStg = stg;
+                                            const wasFirst500Clear = (clearedStg === 500 && maxClearStg < 500);
                                             if (clearedStg > maxClearStg) maxClearStg = clearedStg;
 
                                             if (clearedStg === 500) {
-                                                showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊", 8000);
-                                                setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！", "🎊 500階クリア！"); }, 150);
+                                                showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
+                                                setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
                                             } else if (clearedStg === 1000) {
                                                 showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑", 10000);
                                                 setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の真のマスターです！", "👑 1000階完全制覇！"); }, 150);
@@ -7002,7 +7092,7 @@
                 p.push(newMon);
                 stats.mixSuccessCount = (stats.mixSuccessCount || 0) + 1;
                 if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
-                if(!zk.includes(resultName)) zk.push(resultName);
+                markZkAndSeen(resultName);
                 let sk = getSkillObj(newMon);
                 let rSk = getRareSkillObj(newMon);
                 seMixSuccess();
