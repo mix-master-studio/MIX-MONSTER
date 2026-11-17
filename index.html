@@ -371,11 +371,11 @@
             border: 2px solid #bae6fd;
             border-bottom: 1.5px solid #e0f2fe;
             border-radius: 18px 18px 0 0;
-            padding: 9px 8px;
+            padding: 6px 6px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 2px;
             box-shadow: inset 0 2px 0 #ffffff;
         }
         #battleHeaderBar::before {
@@ -387,7 +387,7 @@
             justify-content: center;
             gap: 6px;
             flex-wrap: wrap;
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .stage-stat-pill {
             display: inline-block;
@@ -399,6 +399,25 @@
             font-weight: 800;
             color: #475569;
             box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+        .stg-ctrl-row {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(0, 1fr));
+            gap: 2px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .stg-ctrl-btn {
+            width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 5px 1px !important;
+            font-size: clamp(8.5px, 2.3vw, 10px) !important;
+            letter-spacing: 0 !important;
+            line-height: 1.15 !important;
+            white-space: nowrap !important;
+            border-radius: 7px !important;
         }
         .battle-field {
             display: flex;
@@ -1454,10 +1473,9 @@
                     <span id="stg" style="color: #0284c7;">🏡 冒険者の拠点（出発先: 1階 [🌿草原]）</span>
                     <div class="stage-stat-row">
                         <span class="stage-stat-pill">🏆 最高クリア: <span id="dispClearStg">0</span>階</span>
-                        <span class="stage-stat-pill">🚩 最高到達: <span id="maxStg">1</span>階</span>
                     </div>
                 </div>
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-top: 2px;">
+                <div class="stg-ctrl-row">
                     <button class="btn-tiny btn-tiny-jump stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
                     <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
                     <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
@@ -1826,6 +1844,7 @@
         const SPECIAL_D = {
             "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
             "王国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 560, at: 170, df: 125, sp: 95, ex: 0, isSpecialSage: true },
+            "ギルドマスター": { no: "EX3", a: "🧔", hp: 180, at: 60, df: 48, sp: 40, ex: 0, isSpecialGuildMaster: true },
             "廃国のゾンビ絵文字勇者": { no: "A", a: "🤺", hp: 460, at: 145, df: 105, sp: 82, ex: 45, isZombieHero: true, recruitable: true },
             "星辰の神龍": { no: "B", a: "🐉", hp: 360, at: 60, df: 45, sp: 22, ex: 1000, isGodEntity: true, recruitable: true }
         };
@@ -1933,6 +1952,10 @@
                 list.push({ name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" });
                 return list;
             }
+            if (no === "EX3") {
+                list.push({ name: "📜ギルドマスターの指揮", desc: "【ギルドマスター特別スキル】攻撃後に30%の確率で攻撃・防御・素早さ10%上昇＆HP5%回復。" });
+                return list;
+            }
             if (no === "A") {
                 list.push({ name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" });
                 return list;
@@ -1991,6 +2014,9 @@
             }
             if (mon && mon.isSpecialSage) {
                 return { id: 0, name: "🔮賢者の秘術・真理錬成", desc: "【配合賢者特別スキル】攻撃後に45%の確率で攻撃力65%の魔力追撃＋HP12%回復＋全能力15%上昇＆1回無効バリア。" };
+            }
+            if (mon && mon.isSpecialGuildMaster) {
+                return { id: 0, name: "📜ギルドマスターの指揮", desc: "【ギルドマスター特別スキル】攻撃後に30%の確率で攻撃・防御・素早さ10%上昇＆HP5%回復。" };
             }
             if (mon && mon.isZombieHero && !mon.skillId) {
                 return { id: 0, name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" };
@@ -2068,7 +2094,6 @@
         function showSkillInfo(skillName, skillDesc) {
             showGameAlert(skillName + "\n\n" + skillDesc, "📜 スキル詳細");
         }
-
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
         const MAX_LV_CAP_BONUS = 20;
@@ -2326,7 +2351,7 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-                }
+        }
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2811,7 +2836,7 @@
             updateRepeatButtonUI();
             updateSortButtonsUI();
             up(true);
-                }
+            }
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -3981,7 +4006,7 @@
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                     const theme = getAreaParticleTheme();
-                    if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "zombie_hero" || currentEvent === "god_entity" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isZombieHero || e.isGodEntity))) {
+                    if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "zombie_hero" || currentEvent === "god_entity" || currentEvent === "guild_master" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isSpecialGuildMaster || e.isZombieHero || e.isGodEntity))) {
                         battleMagicAngle += 0.012;
                         const mColor = (eg.some(e => e.isGodEntity) || currentEvent === "god_entity")
                             ? "#facc15"
@@ -4181,7 +4206,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-        }
+                    }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -4233,6 +4258,8 @@
                 let b = BOSS_D[bossName];
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
+                let bossLv = getDungeonEnemyLv(stg);
+                let bossEx = Math.max(b.ex, Math.floor(b.ex * (0.4 + Math.pow(bossLv, 1.15) * 0.18)));
                 let bossMon = {
                     n: bossName,
                     m: Math.ceil(b.hp * mult),
@@ -4240,8 +4267,8 @@
                     at: Math.ceil(b.at * mult),
                     df: Math.ceil(b.df * mult),
                     sp: Math.ceil(b.sp * mult),
-                    ex: b.ex * (isRare ? 2 : 1),
-                    fixedLv: getDungeonEnemyLv(stg),
+                    ex: bossEx * (isRare ? 2 : 1),
+                    fixedLv: bossLv,
                     isBoss: true,
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
@@ -4309,18 +4336,24 @@
                     seMixSuccess();
                     document.getElementById("battleLog").innerText = "🌌 次元の裂け目から星辰の神龍の気配が溢れている…上の枠から選択してください！";
                     return;
+                } else if (evRoll < 0.0981) {
+                    currentEvent = "guild_master";
+                    lastFloorWasEvent = true;
+                    seSkill();
+                    document.getElementById("battleLog").innerText = "📜 ギルドマスターと遭遇した！上の枠から選択してください。";
+                    return;
                 }
             }
 
             lastFloorWasEvent = false;
             let pool = getEnemyPool(stg);
             let c = stg === 1 ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1;
+            let enemyLv = getDungeonEnemyLv(stg);
             for(let i = 0; i < c; i++){
                 let n = pool[Math.floor(Math.random() * pool.length)];
                 let b = D[n];
                 let stageBonus = stg - 1;
-                let baseEx = (b.ex || 1) * 3;
-                let levelBonusEx = Math.floor(stageBonus * 2.5);
+                let rawEx = Math.max(1, Math.floor(((b.ex || 1) * 0.6 + 0.5) * Math.pow(enemyLv, 1.45)));
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
                 let rawHp = b.hp + Math.floor(stageBonus * 4.5);
@@ -4334,8 +4367,8 @@
                     at: Math.ceil(rawAt * mult),
                     df: Math.ceil(rawDf * mult),
                     sp: Math.ceil(rawSp * mult),
-                    ex: (baseEx + levelBonusEx) * (isRare ? 2 : 1),
-                    fixedLv: getDungeonEnemyLv(stg),
+                    ex: rawEx * (isRare ? 2 : 1),
+                    fixedLv: enemyLv,
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
@@ -4551,6 +4584,32 @@
             initBattleState(sageMon);
             eg = [sageMon];
             document.getElementById("battleLog").innerText = "🧝‍♂️ 王国の配合賢者(Lv.75)との決戦が始まった！";
+            upBattleUI();
+
+            const spdDiv = (battleSpeed === 2) ? 2 : 1;
+            if (autoBattleEnabled) {
+                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+            }
+        }
+
+        function chooseGuildMasterAction(fight) {
+            if (!inDungeon || currentEvent !== "guild_master") return;
+
+            if (!fight) {
+                showNotice("💨 ギルドマスターの前から立ち去った！", 3500);
+                advanceStageAfterEvent("", true);
+                return;
+            }
+
+            currentEvent = null;
+            const gm = SPECIAL_D["ギルドマスター"];
+            let gmMon = {
+                n: "ギルドマスター", m: gm.hp, hp: gm.hp, at: gm.at, df: gm.df, sp: gm.sp,
+                ex: 0, isSpecialGuildMaster: true, fixedLv: 30, skillId: 0
+            };
+            initBattleState(gmMon);
+            eg = [gmMon];
+            document.getElementById("battleLog").innerText = "📜 ギルドマスター(Lv.30)との手合わせが始まった！";
             upBattleUI();
 
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -4811,7 +4870,7 @@
                 const st = calcStatsByLevel(b, targetLv, isRare);
                 const mon = {
                     n: name, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
-                    ex: (b.ex || 1) * targetLv,
+                    ex: Math.max(1, Math.floor(((b.ex || 1) * 0.5 + 0.5) * Math.pow(targetLv, 1.35))),
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId(),
@@ -5095,7 +5154,7 @@
 
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
-            }
+        }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5140,7 +5199,6 @@
             }
 
             const stgEl = document.getElementById("stg");
-            const maxStgEl = document.getElementById("maxStg");
             const clearStgEl = document.getElementById("dispClearStg");
             if (stgEl) {
                 if (!inDungeon) {
@@ -5151,7 +5209,6 @@
                     stgEl.innerText = stg + "階 [" + envEmoji + envName + "]";
                 }
             }
-            if (maxStgEl) maxStgEl.innerText = maxStg;
             if (clearStgEl) clearStgEl.innerText = maxClearStg;
 
             let partyNow = 0;
@@ -5219,6 +5276,8 @@
                         eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>👳</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>旅商人</b><br><span style='font-size:10.5px; color:#475569;'>特別な品をプレゼント！</span>";
                     } else if (currentEvent === "hero") {
                         eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>王国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
+                    } else if (currentEvent === "guild_master") {
+                        eS.innerHTML = "<b style='font-size:12px;'>【📜特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧔</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>ギルドマスター</b> <span style='font-size:10px;'>(Lv.30)</span><br><span style='font-size:10.5px; color:#475569;'>手合わせを申し込んできた！</span>";
                     } else if (currentEvent === "zombie_hero") {
                         eS.innerHTML = "<b style='font-size:12px; color:#14532d;'>【💀特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("廃国のゾンビ絵文字勇者", "battle-monster", "font-size:46px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#15803d;'>廃国のゾンビ絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#334155;'>黒きオーラを纏い立ち塞がった！</span>";
                     } else if (currentEvent === "god_entity") {
@@ -5252,18 +5311,19 @@
                 } else {
                     const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
                     const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
+                    const isGuildMasterBattle = inDungeon && eg.some(m => m.isSpecialGuildMaster);
                     const isZombieBattle = inDungeon && eg.some(m => m.isZombieHero);
                     const isGodBattle = inDungeon && eg.some(m => m.isGodEntity);
                     const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
-                    let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の神龍】" : "【敵】")))))) + "</b>"];
+                    let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isGuildMasterBattle ? "【📜ギルドマスター】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の神龍】" : "【敵】"))))))) + "</b>"];
                     eg.forEach((m, i) => {
                         let isDead = m.hp <= 0;
                         let inf = getMonData(m.n);
                         let eId = " id='eM_slot_" + i + "' ";
                         let eStateHtml = buildStateIcons(m);
-                        let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
+                        let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isSpecialGuildMaster || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
                         let dispLv = m.isArenaEnemy ? m.fixedLv : Math.min(100, m.fixedLv ? m.fixedLv : getDungeonEnemyLv(stg));
-                        let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b"))));
+                        let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isSpecialGuildMaster ? "#b45309" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b")))));
 
                         let deadClass = isDead ? " monster-dead-coffin" : "";
                         let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
@@ -5276,6 +5336,7 @@
                         eHtml.push("<br><div class='monster-container'" + eId + ">" + enemyBody + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>");
                         if (m.isSpecialHero) eHtml.push("<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>");
                         if (m.isSpecialSage) eHtml.push("<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>");
+                        if (m.isSpecialGuildMaster) eHtml.push("<br><span class='skill-badge' style='background:#fef3c7; color:#b45309; border-color:#fcd34d;'>📜ギルドマスターの指揮</span>");
                         if (m.isZombieHero) eHtml.push("<br><span class='skill-badge' style='background:#090d16; color:#bef264; border-color:#166534;'>💀廃国の呪剣・黒蝕</span>");
                         if (m.isGodEntity) eHtml.push("<br><span class='skill-badge' style='background:#fefce8; color:#b45309; border-color:#f59e0b;'>🐉星辰龍閃・メテオブレス</span>");
                         if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
@@ -5326,6 +5387,16 @@
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="chooseHeroAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="chooseHeroAction(false)">💨 逃げる</button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "guild_master") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title">🧔 ギルドマスター(Lv.30)が現れた！</div>' +
+                        '<div class="event-sub">特別スキル「📜ギルドマスターの指揮」を持つ熟練の冒険者！（仲間・配合・図鑑対象外）<br>勝利すると<b>50%の確率で毎日ログインクエストがリセット</b>される！負けてもペナルティなし！</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#f59e0b,#d97706);border-bottom:3px solid #b45309;" onclick="chooseGuildMasterAction(true)">⚔️ 戦う！</button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="chooseGuildMasterAction(false)">💨 逃げる</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "zombie_hero") {
@@ -5741,7 +5812,7 @@
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-                               }
+        }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, boxLimit, boxLimitCap200: true,
@@ -5842,7 +5913,6 @@
                 setPresentMsg("❌ 無効なプレゼントコードです。", "#dc2626");
             }
         }
-
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = (battleSpeed === 2) ? 2 : 1;
@@ -5912,6 +5982,18 @@
                 showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
                 buffSelf = true;
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+            }
+
+            if (inf && inf.isSpecialGuildMaster && Math.random() < 0.30) {
+                let h = Math.max(1, Math.floor(attacker.m * 0.05));
+                attacker.hp = Math.min(attacker.m, attacker.hp + h);
+                attacker.buffAt = (attacker.buffAt || 0) + Math.max(1, Math.floor(attacker.at * 0.10));
+                attacker.buffDf = (attacker.buffDf || 0) + Math.max(1, Math.floor(attacker.df * 0.10));
+                attacker.buffSp = (attacker.buffSp || 0) + Math.max(1, Math.floor(attacker.sp * 0.10));
+                skillLogs += "📜" + attacker.n + "のギルドマスターの指揮！HP " + h + " 回復＆全能力UP！ ";
+                fxQueue.push("📜✨");
+                showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false);
+                buffSelf = true;
             }
 
             if (no === "A" && Math.random() < 0.55) {
@@ -6531,6 +6613,7 @@
                             try {
                                 const wasHeroBattle = eg.some(e => e.isSpecialHero);
                                 const wasSageBattle = eg.some(e => e.isSpecialSage);
+                                const wasGuildMasterBattle = eg.some(e => e.isSpecialGuildMaster);
                                 const wasZombieBattle = eg.some(e => e.isZombieHero);
                                 const wasGodBattle = eg.some(e => e.isGodEntity);
                                 const wasArenaBattle = inKingdom && kingdomScene === "arena";
@@ -6569,6 +6652,26 @@
                                                 : ("🏆 王国の配合賢者に勝利！（配合確率は強化上限80%に達しています／現在" + effPct + "%）戦闘メンバー全員がLv+5された！！"),
                                             6500
                                         );
+                                        eg.shift();
+                                        stageJustCleared = true;
+                                        if (stg > maxClearStg) maxClearStg = stg;
+                                        if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
+                                        const prog = handleFloorProgressAfterClear(isPartyDeadNow);
+                                        if (prog.needsFullUpdate) needsFullUpdate = true;
+                                        turnLog += prog.log;
+                                    } else if (currentEnemy.isSpecialGuildMaster) {
+                                        turnLog += "🏆ギルドマスターに勝利した！ ";
+                                        if (Math.random() < 0.50) {
+                                            ensureDailyQuestCurrent();
+                                            stats.dailyQuest.claimed = false;
+                                            stats.dailyQuest.rewards = rollDailyRewards();
+                                            needsFullUpdate = true;
+                                            seMixSuccess();
+                                            showNotice("🏆✨ ギルドマスターに勝利！50%の抽選に当たり、毎日ログインクエストがリセットされました！！（「🧭 クエスト」タブから受取可能）", 6500);
+                                        } else {
+                                            seStageClear();
+                                            showNotice("🏆 ギルドマスターに勝利した！しかし今回は毎日ログインクエストはリセットされなかった…（50%抽選外れ）", 5500);
+                                        }
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
@@ -6747,18 +6850,20 @@
                                         needsFullUpdate = true;
                                     }
                                 } else if (partyDead) {
-                                    if (wasHeroBattle || wasSageBattle || wasZombieBattle || wasGodBattle || wasArenaBattle) {
+                                    if (wasHeroBattle || wasSageBattle || wasGuildMasterBattle || wasZombieBattle || wasGodBattle || wasArenaBattle) {
                                         seFail();
                                         p.forEach(m => { if (m.inParty) m.hp = m.m; });
                                         const loseMsg = wasHeroBattle
                                             ? "😢 王国の絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
                                             : (wasSageBattle
                                                 ? "😢 王国の配合賢者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
-                                                : (wasZombieBattle
-                                                    ? "😢 廃国のゾンビ絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
-                                                    : (wasGodBattle
-                                                        ? "😢 星辰の神龍に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
-                                                        : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）")));
+                                                : (wasGuildMasterBattle
+                                                    ? "😢 ギルドマスターに敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                                    : (wasZombieBattle
+                                                        ? "😢 廃国のゾンビ絵文字勇者に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                                        : (wasGodBattle
+                                                            ? "😢 星辰の神龍に敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"
+                                                            : "😢 王国の闘技場で敗北した…（ペナルティなしで体力を全回復し、拠点へ戻ります）"))));
                                         showNotice(loseMsg, 5000);
                                         currentEvent = null;
                                         inDungeon = false;
