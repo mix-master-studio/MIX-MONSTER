@@ -88,12 +88,14 @@
             font-size: 20px !important;
             letter-spacing: 5px;
             border-radius: 20px !important;
-            background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
-            border: 2px solid #a7f3d0 !important;
-            border-bottom: 5px solid #047857 !important;
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.58) 0%, rgba(5, 150, 105, 0.65) 100%) !important;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 2px solid rgba(167, 243, 208, 0.82) !important;
+            border-bottom: 5px solid rgba(4, 120, 87, 0.82) !important;
             color: #ffffff !important;
-            text-shadow: 0 2px 6px rgba(4, 120, 87, 0.75);
-            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.55) !important;
+            text-shadow: 0 2px 6px rgba(4, 120, 87, 0.85);
+            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.32), inset 0 2px 0 rgba(255, 255, 255, 0.55) !important;
             animation: startPulse 1.8s infinite ease-in-out;
         }
         @keyframes startPulse {
@@ -1079,12 +1081,12 @@
         .battle-log {
             background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
             color: #0369a1;
-            padding: 10px 12px;
+            padding: 8px 12px;
             border-radius: 14px;
             margin: 10px auto 6px;
-            min-height: 48px;
-            max-height: 78px;
+            height: 68px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             text-align: left;
             font-family: 'Courier New', Courier, monospace;
             font-size: 11px;
@@ -1751,7 +1753,7 @@
             "スノーペンギン": { no: 21, a: "🐧", hp: 14, at: 5, df: 5, sp: 6, ex: 1 },
             "ゴールデンワン": { no: 22, a: "🐕", hp: 15, at: 6, df: 5, sp: 8, ex: 1 },
             "シャドウネコ": { no: 23, a: "🐈‍⬛", hp: 13, at: 8, df: 4, sp: 11, ex: 1 },
-            "モグラッパー": { no: 24, a: "🦫", hp: 16, at: 6, df: 7, sp: 5, ex: 1 },
+            "ウッドビーバー": { no: 24, a: "🦫", hp: 16, at: 6, df: 7, sp: 5, ex: 1 },
             "ギガジェリー": { no: 25, a: "🪼", hp: 30, at: 15, df: 12, sp: 10, ex: 2 },
             "シルフィードバード": { no: 26, a: "🕊️", hp: 25, at: 18, df: 10, sp: 16, ex: 2 },
             "ホークアイ": { no: 27, a: "🦅", hp: 28, at: 20, df: 11, sp: 17, ex: 2 },
@@ -1764,9 +1766,9 @@
             "デススコーピオン": { no: 34, a: "🦂", hp: 28, at: 21, df: 13, sp: 13, ex: 2 },
             "フォレストディア": { no: 35, a: "🦌", hp: 30, at: 17, df: 12, sp: 15, ex: 2 },
             "バウンスルー": { no: 36, a: "🦘", hp: 29, at: 19, df: 11, sp: 16, ex: 2 },
-            "シャドウハウンド": { no: 37, a: "🐕‍🦺", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
+            "サイバーロボ": { no: 37, a: "🤖", hp: 31, at: 20, df: 12, sp: 15, ex: 2 },
             "フロストグリズリー": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 9, ex: 2 },
-            "ブラックパンサー": { no: 39, a: "🐆", hp: 29, at: 22, df: 10, sp: 18, ex: 2 },
+            "ゴールデンレオパード": { no: 39, a: "🐆", hp: 29, at: 22, df: 10, sp: 18, ex: 2 },
             "ボアキング": { no: 40, a: "🐗", hp: 35, at: 21, df: 14, sp: 11, ex: 2 },
             "ブレイブオックス": { no: 41, a: "🐂", hp: 36, at: 23, df: 15, sp: 9, ex: 2 },
             "キラータイガー": { no: 42, a: "🐯", hp: 32, at: 24, df: 11, sp: 17, ex: 2 },
@@ -1775,7 +1777,7 @@
             "ハリセンボンバー": { no: 45, a: "🐡", hp: 44, at: 32, df: 18, sp: 19, ex: 3 },
             "アイアンマンモス": { no: 46, a: "🦣", hp: 55, at: 26, df: 32, sp: 8, ex: 3 },
             "ギガローチ": { no: 47, a: "🪳", hp: 48, at: 30, df: 22, sp: 12, ex: 3 },
-            "ビッグフット": { no: 48, a: "🦧", hp: 52, at: 29, df: 21, sp: 11, ex: 3 },
+            "フォレストウータン": { no: 48, a: "🦧", hp: 52, at: 29, df: 21, sp: 11, ex: 3 },
             "ヴェノムゲッコー": { no: 49, a: "🦎", hp: 46, at: 27, df: 20, sp: 14, ex: 3 },
             "ブラッドモスキート": { no: 50, a: "🦟", hp: 42, at: 31, df: 17, sp: 20, ex: 3 },
             "エンペラーエレファント": { no: 51, a: "🐘", hp: 85, at: 50, df: 48, sp: 14, ex: 5 },
@@ -1793,7 +1795,7 @@
             "ストライプゼブラ": { no: 63, a: "🦓", hp: 105, at: 72, df: 50, sp: 35, ex: 6 },
             "マーメイドクイーン": { no: 64, a: "🧜‍♀️", hp: 120, at: 74, df: 56, sp: 28, ex: 7 },
             "ヘラクレスビートル": { no: 65, a: "🪲", hp: 125, at: 78, df: 54, sp: 29, ex: 7 },
-            "メガタウロス": { no: 66, a: "🐄", hp: 130, at: 80, df: 60, sp: 32, ex: 7 },
+            "メガホルスタイン": { no: 66, a: "🐄", hp: 130, at: 80, df: 60, sp: 32, ex: 7 },
             "スカイジラフ": { no: 67, a: "🦒", hp: 150, at: 82, df: 70, sp: 25, ex: 8 },
             "エルクカイザー": { no: 68, a: "🫎", hp: 145, at: 86, df: 68, sp: 30, ex: 8 },
             "ホーンラム": { no: 69, a: "🐏", hp: 165, at: 95, df: 75, sp: 40, ex: 9 },
@@ -1801,7 +1803,7 @@
             "アルパカマスター": { no: 71, a: "🦙", hp: 200, at: 110, df: 88, sp: 48, ex: 10 },
             "ガイアパンダ": { no: 72, a: "🐼", hp: 140, at: 88, df: 64, sp: 28, ex: 7 },
             "ブレイズコック": { no: 73, a: "🐓", hp: 135, at: 92, df: 62, sp: 42, ex: 7 },
-            "フレイムハウンド": { no: 74, a: "🦮", hp: 145, at: 94, df: 60, sp: 44, ex: 8 },
+            "カオスピエロ": { no: 74, a: "🤡", hp: 145, at: 94, df: 60, sp: 44, ex: 8 },
             "ポイズンスカンク": { no: 75, a: "🦨", hp: 160, at: 96, df: 72, sp: 34, ex: 8 },
             "マウンテンゴート": { no: 76, a: "🐐", hp: 155, at: 102, df: 68, sp: 38, ex: 8 },
             "アストラルキャット": { no: 77, a: "🐈", hp: 160, at: 100, df: 70, sp: 45, ex: 8 },
@@ -1814,7 +1816,7 @@
             "タイタンモンキー": { no: 84, a: "🐒", hp: 230, at: 116, df: 98, sp: 30, ex: 10 },
             "デザートキャメル": { no: 85, a: "🐫", hp: 220, at: 128, df: 92, sp: 54, ex: 10 },
             "クリムゾンパロット": { no: 86, a: "🦜", hp: 215, at: 134, df: 88, sp: 58, ex: 10 },
-            "シャドウマンティス": { no: 87, a: "🦗", hp: 200, at: 140, df: 82, sp: 62, ex: 10 },
+            "シャドウホッパー": { no: 87, a: "🦗", hp: 200, at: 140, df: 82, sp: 62, ex: 10 },
             "サンドキャメル": { no: 88, a: "🐪", hp: 240, at: 136, df: 96, sp: 48, ex: 11 },
             "クリスタルシュリンプ": { no: 89, a: "🦐", hp: 235, at: 142, df: 94, sp: 55, ex: 11 },
             "アクアフィッシュ": { no: 90, a: "🐠", hp: 265, at: 148, df: 108, sp: 60, ex: 11 },
@@ -1838,8 +1840,8 @@
             "深海の覇者メガロドン": { no: -6, stage: 300, a: "🦈", hp: 640, at: 168, df: 125, sp: 64, ex: 68 },
             "砂漠の呪霊ゾンビロード": { no: -7, stage: 350, a: "🧟", hp: 780, at: 192, df: 155, sp: 52, ex: 80 },
             "砂漠の獅子王レオン": { no: -8, stage: 400, a: "🦁", hp: 910, at: 220, df: 172, sp: 74, ex: 95 },
-            "毒沼の邪竜バハムート": { no: -9, stage: 450, a: "🐉", hp: 1050, at: 252, df: 190, sp: 86, ex: 110 },
-            "毒沼の大魔王ルシファー": { no: -10, stage: 500, a: "😈", hp: 1300, at: 295, df: 225, sp: 98, ex: 140 },
+            "毒沼の瘴気王ベノム": { no: -9, stage: 450, a: "🤢", hp: 1050, at: 252, df: 190, sp: 86, ex: 110 },
+            "毒沼の大魔王ルシファー": { no: -10, stage: 500, a: "🤵", hp: 1300, at: 295, df: 225, sp: 98, ex: 140 },
             "鉱山の鋼鉄王ライノス": { no: -11, stage: 550, a: "🦏", hp: 1480, at: 320, df: 270, sp: 82, ex: 155 },
             "鉱山の鬼神オーガキング": { no: -12, stage: 600, a: "👹", hp: 1680, at: 355, df: 290, sp: 95, ex: 175 },
             "神殿の聖獣ユニコーン": { no: -13, stage: 650, a: "🦄", hp: 1880, at: 390, df: 315, sp: 112, ex: 195 },
@@ -1892,12 +1894,12 @@
             "カゲコウモリ+うらめシート": "ホークアイ", "うらめシート+チューマウス": "ナイトオウル", "チューマウス+ソロゾロアント": "ファイアフォックス",
             "ソロゾロアント+ポイズンフロッグ": "マスクラクーン", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
             "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+ヴェノムスパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
-            "ニードルホッグ+バウンスルー": "アイアンマンモス", "バイパー+シャドウハウンド": "ギガローチ",
+            "ニードルホッグ+バウンスルー": "アイアンマンモス", "バイパー+サイバーロボ": "ギガローチ",
             "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "ハリセンボンバー",
             "ギガジェリー+ナイトオウル": "スロウロス", "ホークアイ+シルフィードバード": "プリズムピーコック", "シルバーゴリラ+ハリセンボンバー": "エンペラーエレファント",
-            "ブレイブスタリオン+ヌマクロコダイル": "メガタウロス", "エメラルドブラキオ+ギガヒポポ": "スカイジラフ", "フラミンゴクイーン+シャドウバジャー": "ホーンラム",
+            "ブレイブスタリオン+ヌマクロコダイル": "メガホルスタイン", "エメラルドブラキオ+ギガヒポポ": "スカイジラフ", "フラミンゴクイーン+シャドウバジャー": "ホーンラム",
             "クリムゾンタイガー+クラーケンロード": "リヴァイアサン", "グランドバイソン+ストライプゼブラ": "アルパカマスター", "マーメイドクイーン+ヘラクレスビートル": "アルパカマスター",
-            "メガタウロス+スカイジラフ": "エルクカイザー", "ホーンラム+クリムゾンタイガー": "アルパカマスター", "スロウロス+プリズムピーコック": "メガタウロス",
+            "メガホルスタイン+スカイジラフ": "エルクカイザー", "ホーンラム+クリムゾンタイガー": "アルパカマスター", "スロウロス+プリズムピーコック": "メガホルスタイン",
             "アルパカマスター+エルクカイザー": "ポイズンスカンク", "リヴァイアサン+スカイジラフ": "疾風ホース", "ポイズンスカンク+疾風ホース": "デザートキャメル",
             "デザートキャメル+ホーンラム": "アクアフィッシュ", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー"
         };
@@ -1920,8 +1922,8 @@
             "-6":  { name: "🦈海神の加護", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃を1回無効化するバリアを張る。" },
             "-7":  { name: "🧟金剛の城壁", desc: "【ボス固有】攻撃後に60%の確率で防御力が40%上昇する。" },
             "-8":  { name: "🦁王家の呪縛", desc: "【ボス固有】攻撃後に35%の確率で相手を麻痺状態にする。" },
-            "-9":  { name: "🐉猛毒のブレス", desc: "【ボス固有】攻撃後に45%の確率で相手を毒状態と麻痺状態にする。" },
-            "-10": { name: "😈魔界の覇気", desc: "【ボス固有】攻撃後に60%の確率で攻撃・防御・素早さが20%上昇する。" },
+            "-9":  { name: "🤢猛毒の瘴気", desc: "【ボス固有】攻撃後に50%の確率で相手を毒状態と麻痺状態にし、自分の攻撃力・防御力が15%上昇する。" },
+            "-10": { name: "🤵魔界の覇気", desc: "【ボス固有】攻撃後に60%の確率で攻撃・防御・素早さが20%上昇する。" },
             "-11": { name: "🦏超硬質装甲", desc: "【ボス固有】攻撃後に50%の確率で次に受けるダメージを半分にする。" },
             "-12": { name: "👹神鍛の鉄槌", desc: "【ボス固有】攻撃後に40%の確率で次の攻撃が1回だけ1.5倍になる。" },
             "-13": { name: "🦄聖域の光", desc: "【ボス固有】攻撃後に60%の確率で最大HPの15%回復し、防御力が20%上昇する。" },
@@ -2171,9 +2173,25 @@
         let boxToastTimer = null;
         let questToastTimer = null;
 
+        const RENAME_MAP = {
+            "モグラッパー": "ウッドビーバー",
+            "シャドウマンティス": "シャドウホッパー",
+            "ビッグフット": "フォレストウータン",
+            "ブラックパンサー": "ゴールデンレオパード",
+            "シャドウハウンド": "サイバーロボ",
+            "フレイムハウンド": "カオスピエロ",
+            "メガタウロス": "メガホルスタイン",
+            "毒沼の邪竜バハムート": "毒沼の瘴気王ベノム",
+            "星辰の大魔神": "星辰の神龍"
+        };
+
+        function normalizeMonName(name) {
+            return RENAME_MAP[name] || name;
+        }
+
         function markSeen(name) {
             if (!name) return false;
-            if (name === "星辰の大魔神") name = "星辰の神龍";
+            name = normalizeMonName(name);
             if (!D[name] && !BOSS_D[name] && !(SPECIAL_D[name] && SPECIAL_D[name].recruitable)) return false;
             if (!seen.includes(name)) {
                 seen.push(name);
@@ -2184,7 +2202,7 @@
 
         function markZkAndSeen(name) {
             if (!name) return;
-            if (name === "星辰の大魔神") name = "星辰の神龍";
+            name = normalizeMonName(name);
             if (!D[name] && !BOSS_D[name] && !(SPECIAL_D[name] && SPECIAL_D[name].recruitable)) return;
             markSeen(name);
             if (!zk.includes(name)) zk.push(name);
@@ -2380,7 +2398,7 @@
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-            }
+                }
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2459,7 +2477,7 @@
             { id: "gm_2",  title: "🧝‍♂️賢者への挑戦",       condText: "王国の配合賢者に1回勝利する",     rewardText: "配合成功率+2%",         reward: { mix: 0.02 },            checkType: "sage",       val: 1 },
             { id: "gm_3",  title: "🏟️闘技場の覇者",       condText: "王国の闘技場で1回勝利する",       rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "arena",      val: 1 },
             { id: "gm_4",  title: "🤴慈悲の心",           condText: "迷子の国王を1回助ける",           rewardText: "野生加入率+0.5%",       reward: { wild: 0.005 },          checkType: "king",       val: 1 },
-            { id: "gm_5",  title: "🧰トレジャーハンター", condText: "謎の宝箱を1回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 1 },
+            { id: "gm_5",  title: "🪎トレジャーハンター", condText: "謎の宝箱を1回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 1 },
             { id: "gm_6",  title: "🌈虹の輝き",           condText: "✨色違いを1体手に入れる",         rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "rare",       val: 1 },
             { id: "gm_7",  title: "⚔️王国の好敵手",       condText: "王国の絵文字勇者に勝利する",       rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "hero",       val: 1 },
             { id: "gm_8",  title: "📖図鑑マイスター",     condText: "通常図鑑を50種埋める",            rewardText: "配合成功率+5%",         reward: { mix: 0.05 },            checkType: "zukan",      val: 50 },
@@ -2476,7 +2494,7 @@
             { id: "gm_19", title: "🌋火山の挑戦者",       condText: "800階ボスをクリアする",           rewardText: "ボックス上限+10",       reward: { box: 10 },              checkType: "stg",        val: 800 },
             { id: "gm_20", title: "🧬配合研究者",         condText: "配合を合計20回実行する",          rewardText: "配合成功率+3%",         reward: { mix: 0.03 },            checkType: "mixAttempt", val: 20 },
             { id: "gm_21", title: "✌️じゃんけん達人",     condText: "謎の旅人に3回勝つ",               rewardText: "野生加入率+0.5%",       reward: { wild: 0.005 },          checkType: "rps",        val: 3 },
-            { id: "gm_22", title: "🧰お宝ハンター",       condText: "謎の宝箱を3回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 3 },
+            { id: "gm_22", title: "🪎お宝ハンター",       condText: "謎の宝箱を3回開ける",             rewardText: "戦闘EXP+10%",           reward: { exp: 0.10 },            checkType: "chest",      val: 3 },
             { id: "gm_23", title: "🏰王国の常連客",       condText: "知らない王国に3回入国する",       rewardText: "ボックス上限+5",        reward: { box: 5 },               checkType: "kingdom",    val: 3 },
             { id: "gm_24", title: "🏟️闘技場の常勝王",     condText: "王国の闘技場で3回勝利する",       rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "arena",      val: 3 },
             { id: "gm_25", title: "📖図鑑コンプへの道",   condText: "通常図鑑を90種埋める",            rewardText: "配合+5% & 上限+10",     reward: { mix: 0.05, box: 10 },   checkType: "zukan",      val: 90 }
@@ -2771,14 +2789,14 @@
             maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
             zk = data.zk || ["プニシズク"];
             if (Array.isArray(zk)) {
-                zk = Array.from(new Set(zk.map(name => name === "星辰の大魔神" ? "星辰の神龍" : name)))
+                zk = Array.from(new Set(zk.map(name => normalizeMonName(name))))
                     .filter(name => D[name] || BOSS_D[name] || (SPECIAL_D[name] && SPECIAL_D[name].recruitable));
             } else {
                 zk = ["プニシズク"];
             }
 
             if (Array.isArray(data.seen)) {
-                seen = Array.from(new Set(data.seen.map(name => name === "星辰の大魔神" ? "星辰の神龍" : name)))
+                seen = Array.from(new Set(data.seen.map(name => normalizeMonName(name))))
                     .filter(name => D[name] || BOSS_D[name] || (SPECIAL_D[name] && SPECIAL_D[name].recruitable));
             } else {
                 seen = zk.slice();
@@ -2818,7 +2836,7 @@
 
             if (Array.isArray(data.p)) {
                 data.p.forEach(m => {
-                    if (m && m.n === "星辰の大魔神") m.n = "星辰の神龍";
+                    if (m && m.n) m.n = normalizeMonName(m.n);
                 });
                 p = data.p.filter(m => m && (D[m.n] || BOSS_D[m.n] || (SPECIAL_D[m.n] && SPECIAL_D[m.n].recruitable)));
             } else {
@@ -2906,6 +2924,7 @@
             });
             if (tabName === "battle") {
                 try { initBattleCanvas(); } catch (e) {}
+                upBattleUI();
             }
         }
 
@@ -4271,7 +4290,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-                    }
+        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -5233,7 +5252,7 @@
 
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
-                        }
+                }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5363,7 +5382,7 @@
                     } else if (currentEvent === "god_entity") {
                         eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【🌌超特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("星辰の神龍", "battle-monster", "font-size:48px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#7c3aed;'>星辰の神龍</b> <span style='font-size:10px;'>(Lv.100)</span><br><span style='font-size:10.5px; color:#334155;'>宇宙の理を司る伝説の神龍が降臨した！</span>";
                     } else if (currentEvent === "chest") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🧰宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
+                        eS.innerHTML = "<b style='font-size:12px;'>【🪎宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪎</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
                     } else if (currentEvent === "sage") {
                         eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
                     } else if (currentEvent === "king" || currentEvent === "king_skill") {
@@ -5502,7 +5521,7 @@
                 } else if (inDungeon && currentEvent === "chest") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
-                        '<div class="event-title">🧰 謎の宝箱を発見した！</div>' +
+                        '<div class="event-title">🪎 謎の宝箱を発見した！</div>' +
                         '<div class="event-sub">開けると「お宝（戦闘メンバー全員EXP大量獲得）」か「罠（ダメージ）」が出るぞ！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="openMysteryChest(true)">🔓 宝箱を開ける！</button>' +
@@ -5900,7 +5919,7 @@
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-                        }
+        }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, seen, boxLimit, boxLimitCap200: true,
@@ -6206,17 +6225,23 @@
                     skillLogs += "🦁" + attacker.n + "の王家の呪縛！" + defender.n + "は麻痺状態になった！ ";
                     fxQueue.push("⚡💫"); hitDefender = true;
                 }
-                if (no === -9 && defender.hp > 0 && Math.random() < 0.45) {
-                    if (defSk.id !== 5) defender.isPoisoned = true;
-                    if (defSk.id !== 7) defender.isParalyzed = true;
-                    skillLogs += "🐉" + attacker.n + "の猛毒のブレス！毒と麻痺を付与！ ";
-                    fxQueue.push("☠️🔥"); hitDefender = true;
+                if (no === -9 && Math.random() < 0.50) {
+                    if (defender.hp > 0) {
+                        if (defSk.id !== 5) defender.isPoisoned = true;
+                        if (defSk.id !== 7) defender.isParalyzed = true;
+                        hitDefender = true;
+                    }
+                    attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.15));
+                    attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.15));
+                    skillLogs += "🤢" + attacker.n + "の猛毒の瘴気！毒・麻痺付与＆攻防UP！ ";
+                    fxQueue.push("🤢☠️");
+                    buffSelf = true;
                 }
                 if (no === -10 && Math.random() < 0.60) {
                     attacker.buffAt = (attacker.buffAt || 0) + Math.max(2, Math.floor(attacker.at * 0.20));
                     attacker.buffDf = (attacker.buffDf || 0) + Math.max(2, Math.floor(attacker.df * 0.20));
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.20));
-                    skillLogs += "😈" + attacker.n + "の魔界の覇気！全能力UP！ ";
+                    skillLogs += "🤵" + attacker.n + "の魔界の覇気！全能力UP！ ";
                     fxQueue.push("🌟🪄"); buffSelf = true;
                 }
                 if (no === -11 && Math.random() < 0.50) {
@@ -6478,8 +6503,9 @@
         function grantExpToParty(gainExp) {
             let logs = "";
             let partyCount = 0;
-            p.forEach(ally => {
-                if (ally.inParty && partyCount < 3) {
+            const partyList = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0));
+            partyList.forEach(ally => {
+                if (partyCount < 3) {
                     partyCount++;
                     if (ally.hp > 0) {
                         const lvUps = grantExpToSingleMonster(ally, gainExp);
@@ -6708,6 +6734,7 @@
                                 const wasArenaBattle = inKingdom && kingdomScene === "arena";
                                 let needsFullUpdate = false;
                                 let stageJustCleared = false;
+                                const lvSumBefore = p.reduce((acc, m) => acc + m.lv, 0);
 
                                 if (currentEnemy.hp === 0) {
                                     const isPartyDeadNow = !p.some(m => m.inParty && m.hp > 0);
@@ -6913,6 +6940,9 @@
                                         }
                                     }
                                 }
+
+                                const lvSumAfter = p.reduce((acc, m) => acc + m.lv, 0);
+                                if (lvSumAfter !== lvSumBefore) needsFullUpdate = true;
 
                                 let partyDead = true;
                                 p.forEach(m => { if (m.inParty && m.hp > 0) partyDead = false; });
