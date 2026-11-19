@@ -6,7 +6,8 @@
     <title>みっくすえもじ</title>
     <link rel="icon" type="image/jpeg" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
     <link rel="apple-touch-icon" href="IMG_391105fb-6a29-458c-a0da-067ee5933fc8.jpg">
-    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    <link rel="preload" as="image" href="file_00000000edac8209a263ab1404bd03cf.png" fetchpriority="high">
+    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous" defer onload="if(typeof initEmojiObserver==='function' && !emojiObserver) initEmojiObserver();"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -70,6 +71,7 @@
             opacity: 0.72;
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
         .title-full-img {
             position: absolute;
@@ -703,8 +705,7 @@
             font-weight: 900;
             margin-left: 3px;
             border: 1px solid #f59e0b;
-        }
-
+                                }
         @keyframes shinyRainbow {
             0%   { filter: hue-rotate(120deg) saturate(1.7) drop-shadow(0 0 6px #f472b6); }
             25%  { filter: hue-rotate(200deg) saturate(1.8) drop-shadow(0 0 8px #38bdf8); }
@@ -1409,7 +1410,7 @@
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur"></div>
-        <img src="file_00000000edac8209a263ab1404bd03cf.png" alt="タイトル画面" class="title-full-img" onerror="this.style.display='none'">
+        <img src="file_00000000edac8209a263ab1404bd03cf.png" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
         <button class="btn-start" onclick="startGame()">START</button>
     </div>
 
@@ -1551,7 +1552,6 @@
             </div>
         </div>
     </div>
-
     <div id="panelQuest" class="tab-panel tab-hidden">
         <div class="box" style="border: 2px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
@@ -2362,14 +2362,15 @@
         }
 
         function grantExpToSingleMonster(mon, gainExp) {
-            if (!mon || gainExp <= 0) return 0;
+            if (!mon || gainExp < 0) return 0;
             const b = getMonData(mon.n);
             if (!b) return 0;
             const maxLv = getMaxLv(mon);
-            if (mon.lv >= maxLv) return 0;
             const mult = mon.isRare ? 1.25 : 1;
             let lvUps = 0;
-            mon.ex += gainExp;
+            if (gainExp > 0) {
+                mon.ex = (mon.ex || 0) + gainExp;
+            }
             while (mon.lv < maxLv && mon.ex >= mon.nx) {
                 mon.ex -= mon.nx;
                 mon.lv++;
@@ -2381,7 +2382,10 @@
                 mon.nx = Math.floor(mon.nx * 1.2);
                 lvUps++;
             }
-            if (mon.lv >= maxLv) mon.ex = 0;
+            if (mon.lv >= maxLv) {
+                const maxBank = mon.nx * 30;
+                if (mon.ex > maxBank) mon.ex = maxBank;
+            }
             return lvUps;
         }
 
@@ -2396,7 +2400,9 @@
                     alreadyMaxCount++;
                 } else if (Math.random() < 0.30) {
                     mon.lvCapBonus = curBonus + 1;
-                    upNames.push(mon.n + "(上限Lv." + getMaxLv(mon) + " / +" + mon.lvCapBonus + ")");
+                    const lvUps = grantExpToSingleMonster(mon, 0);
+                    const lvTag = lvUps > 0 ? ("・Lv." + mon.lv + "へUP!") : "";
+                    upNames.push(mon.n + "(上限Lv." + getMaxLv(mon) + " / +" + mon.lvCapBonus + lvTag + ")");
                 }
             });
 
@@ -3286,9 +3292,12 @@
                 const rowClass = "assist-row" + (isSelected ? " selected" : "");
                 const btnClass = "btn-small btn-assist-pick" + (isSelected ? " selected" : "");
                 const btnText = isSelected ? "✅ 選択中" : "🎯 選択";
+                const estCapBonus = Math.min(MAX_LV_CAP_BONUS, (item.m1.lvCapBonus || 0) + (item.m2.lvCapBonus || 0));
+                const estLv = Math.min(100 + estCapBonus, item.sumLv);
+                const estCapTag = estCapBonus > 0 ? (" (+" + estCapBonus + ")") : "";
                 html += '<div class="' + rowClass + '">' +
                     '<div>' + newTag + i1.a + item.m1.n + '(Lv.' + item.m1.lv + ') ＋ ' + i2.a + item.m2.n + '(Lv.' + item.m2.lv + ')<br>' +
-                    '➡️ <b>' + resDisp + '</b> <span style="color:#0284c7;">(予想Lv.' + Math.min(100, item.sumLv) + ')</span></div>' +
+                    '➡️ <b>' + resDisp + '</b> <span style="color:#0284c7;">(予想Lv.' + estLv + estCapTag + ')</span></div>' +
                     '<button class="' + btnClass + '" onclick="applyMixAssist(' + item.idx1 + ',' + item.idx2 + ')">' + btnText + '</button>' +
                     '</div>';
             });
@@ -3373,7 +3382,6 @@
             }
             pendingReleaseList = [];
         }
-
         function initBattleState(mon) {
             mon.buffAt = 0;
             mon.buffDf = 0;
@@ -4303,7 +4311,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-            }
+        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -5265,7 +5273,7 @@
 
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
-        }
+                }
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5395,8 +5403,8 @@
                     let allyId = " id='myM_slot_" + idx + "' ";
                     let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:30px;'></div>";
                     let maxLv = getMaxLv(m);
-                    let expPct = m.lv >= maxLv ? 100 : (m.ex / m.nx) * 100;
-                    let nextText = m.lv >= maxLv ? "MAX" : "NEXT: " + (m.nx - m.ex);
+                    let expPct = m.lv >= maxLv ? 100 : Math.min(100, Math.max(0, (m.ex / m.nx) * 100));
+                    let nextText = m.lv >= maxLv ? (m.ex > 0 ? ("MAX (+" + m.ex + ")") : "MAX") : ("NEXT: " + Math.max(0, m.nx - m.ex));
                     let capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? (" <span style='color:#7c3aed;font-weight:900;'>(+" + m.lvCapBonus + ")</span>") : "";
                     let monBody = isDead
                         ? "<span class='battle-monster monster-dead-coffin' style='font-size:36px;'>⚰️</span>"
@@ -5761,7 +5769,7 @@
                         let deadText = n.hp <= 0 ? " <span style='color:red;font-weight:bold;'>[戦闘不能]</span>" : "";
                         let maxLv = getMaxLv(n);
                         let capB = n.lvCapBonus || 0;
-                        let expText = n.lv >= maxLv ? "MAX" : n.ex + "/" + n.nx;
+                        let expText = n.lv >= maxLv ? (n.ex > 0 ? ("MAX(+" + n.ex + ")") : "MAX") : (n.ex + "/" + n.nx);
                         let slotIdx = n.inParty ? (partyOrderList.indexOf(n) + 1) : 0;
                         let partyTag = n.inParty ? (" <span style='color:#059669;font-weight:900;'>[参加中・" + slotIdx + "番手]</span>") : "";
                         let lockTag = n.locked ? "<span class='lock-badge'>🔒保護</span>" : "";
@@ -5964,7 +5972,7 @@
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-                }
+        }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, seen, boxLimit, boxLimitCap200: true,
@@ -6061,12 +6069,24 @@
                 setPresentMsg(okText, "#059669");
                 showNotice(okText, 6000);
                 showGameAlert(okText, "🎁 プレゼント受取");
+            } else if (code === "01234567891") {
+                maxClearStg = 1000;
+                maxStg = 1000;
+                if (!inDungeon) stg = 1000;
+                field.value = "";
+                seMixSuccess();
+                updateSpeedButtonUI();
+                saveGame();
+                up(true);
+                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放）";
+                setPresentMsg(okText, "#059669");
+                showNotice(okText, 6000);
+                showGameAlert(okText, "🎁 プレゼント受取");
             } else {
                 seFail();
                 setPresentMsg("❌ 無効なプレゼントコードです。", "#dc2626");
             }
         }
-
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = battleSpeed;
@@ -7151,11 +7171,13 @@
                 );
             } else {
                 const b = D[resultName];
-                let sumLv = Math.min(100, m1.lv + m2.lv);
+                let sumCapBonus = Math.min(MAX_LV_CAP_BONUS, (m1.lvCapBonus || 0) + (m2.lvCapBonus || 0));
+                let maxResultLv = 100 + sumCapBonus;
+                let sumLv = Math.min(maxResultLv, m1.lv + m2.lv);
                 let isRareNew = Math.random() < 0.03;
                 let statsData = calcStatsByLevel(b, sumLv, isRareNew);
                 let newMon = {
-                    n: resultName, lv: sumLv, lvCapBonus: 0, m: statsData.m, hp: statsData.m,
+                    n: resultName, lv: sumLv, lvCapBonus: sumCapBonus, m: statsData.m, hp: statsData.m,
                     at: statsData.at, df: statsData.df, sp: statsData.sp,
                     ex: 0, nx: statsData.nx, inParty: false, partyOrder: 0, locked: false,
                     isRare: isRareNew, rareSkillId: isRareNew ? getRandomRareSkillId() : 0,
@@ -7175,7 +7197,7 @@
                     "<div style='font-size:56px;' class='" + (isRareNew ? "rare-shiny-inline" : "") + "'>" + b.a + "</div>" +
                     "<div style='font-size:15px; font-weight:900; color:" + (isRareNew ? "#d97706" : "#059669") + "; margin:4px 0;'>" + (isRareNew ? "🌈✨ 奇跡の色違い誕生！" : "✨ 配合大成功！") + "</div>" +
                     "<div style='font-size:15px; font-weight:900; color:#1e293b;'>No." + b.no + " " + resultName + (isRareNew ? "✨" : "") + "</div>" +
-                    "<div style='font-size:11.5px; color:#0284c7; font-weight:800; margin:2px 0 6px;'>Lv." + sumLv + "（成功率" + mixPctStr + "%突破！）</div>" +
+                    "<div style='font-size:11.5px; color:#0284c7; font-weight:800; margin:2px 0 6px;'>Lv." + sumLv + (sumCapBonus > 0 ? " (+" + sumCapBonus + ")" : "") + "（成功率" + mixPctStr + "%突破！）</div>" +
                     "<div style='font-size:10.5px; background:rgba(255,255,255,0.85); padding:6px; border-radius:8px; border:1px solid #cbd5e1; line-height:1.45;'>" +
                         (rSk ? ("🌈 " + rSk.name + "<br>") : "") +
                         "🎲 " + sk.name +
