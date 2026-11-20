@@ -152,6 +152,68 @@
             padding: 10px 8px !important;
             font-size: 12.5px !important;
         }
+        .congrats-confetti-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .confetti-piece {
+            position: absolute;
+            top: -16px;
+            width: 10px;
+            height: 14px;
+            border-radius: 2px;
+            opacity: 0.92;
+            animation: confettiFall linear infinite;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(540deg); opacity: 0.25; }
+        }
+        .congrats-box-grand {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 365px;
+            background: linear-gradient(155deg, #fffbeb 0%, #fef08a 28%, #fff1f2 62%, #e0f2fe 100%);
+            border: 3px solid #f59e0b;
+            border-radius: 28px;
+            padding: 22px 18px 20px;
+            box-shadow: 0 0 42px rgba(250, 204, 21, 0.72), 0 22px 54px rgba(180, 83, 9, 0.45), inset 0 2px 0 #ffffff;
+            animation: popIn 0.38s ease-out, congratsGlow 2.4s ease-in-out infinite alternate;
+            text-align: center;
+            overflow: hidden;
+        }
+        @keyframes congratsGlow {
+            0%   { box-shadow: 0 0 26px rgba(250, 204, 21, 0.55), 0 20px 48px rgba(180, 83, 9, 0.40), inset 0 2px 0 #ffffff; }
+            100% { box-shadow: 0 0 48px rgba(244, 114, 182, 0.65), 0 22px 56px rgba(124, 58, 237, 0.35), inset 0 2px 0 #ffffff; }
+        }
+        .congrats-ribbon {
+            display: inline-block;
+            background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #0284c7);
+            color: #ffffff;
+            font-size: 10.5px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            padding: 4px 14px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
+        }
+        .congrats-stats-box {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1.5px solid #fcd34d;
+            border-radius: 14px;
+            padding: 9px 10px;
+            margin: 10px 0 14px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #334155;
+            line-height: 1.65;
+            box-shadow: inset 0 1px 0 #ffffff;
+        }
         .title-header, .box, .tab-nav-wrap {
             position: relative;
             z-index: 1;
@@ -604,6 +666,7 @@
         .bg-arena { border-color: #ea580c !important; background: linear-gradient(180deg, #fff7ed 0%, #fed7aa 55%, #fef08a 100%) !important; box-shadow: 0 0 22px rgba(234, 88, 12, 0.28); }
         .bg-shop { border-color: #10b981 !important; background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 55%, #fef9c3 100%) !important; box-shadow: 0 0 20px rgba(16, 185, 129, 0.24); }
         .bg-guild { border-color: #8b5cf6 !important; background: linear-gradient(180deg, #f5f3ff 0%, #ddd6fe 55%, #fef3c7 100%) !important; box-shadow: 0 0 20px rgba(139, 92, 246, 0.25); }
+        .bg-captain { border-color: #0284c7 !important; background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 52%, #fef9c3 100%) !important; box-shadow: 0 0 22px rgba(2, 132, 199, 0.28); }
         .bg-zombie { border-color: #14532d !important; background: linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #14532d 100%) !important; box-shadow: 0 0 26px rgba(0, 0, 0, 0.45); }
         .bg-god { border-color: #eab308 !important; background: linear-gradient(180deg, #1e1b4b 0%, #312e81 55%, #581c87 100%) !important; box-shadow: 0 0 28px rgba(250, 204, 21, 0.48); }
         .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
@@ -721,7 +784,7 @@
             text-align: center;
         }
         .congrats-crown {
-            font-size: 60px;
+            font-size: 62px;
             display: inline-block;
             animation: floatBob2D 1.4s ease-in-out infinite alternate;
             filter: drop-shadow(0 6px 14px rgba(245, 158, 11, 0.5));
@@ -1484,7 +1547,7 @@
             </div>
             <div class="guide-step">
                 <b>⑤「📖 図鑑」でヒントを見て1000階、さらにその先へ！</b><br>
-                図鑑の「❓・シルエット」をタップすると出現階層や配合のヒントが見られます！1000階クリア後は全遭遇イベント率が+1%され、201〜299階（250階除く）に「🔱海底神殿」、さらにその先に「☁️天空城」が登場します！
+                図鑑の「❓・シルエット」をタップすると出現階層や配合のヒントが見られます！1000階クリア後は全遭遇イベント率が+1%され、1〜999階に海底神殿のヒントをくれる「🧑‍✈️元船長」が登場し、201〜299階（250階除く）に「🔱海底神殿」、さらにその先に「☁️天空城」が登場します！（※海底神殿・天空城の図鑑も1000階クリア後に解放されます）
             </div>
             <div class="guide-step">
                 <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
@@ -1658,8 +1721,8 @@
         <div class="box">
             <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
             <h3 style="margin: 2px 0 8px; color: #1e293b; font-size: 16px;">
-                📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/120種)</span>
-                <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/22種)</span>
+                📖 みつけた図鑑 <span id="zukanCountBadge" style="font-size:12px; color:#4f46e5;">(1/100種)</span>
+                <span id="bossZukanCountBadge" style="font-size:11px; color:#dc2626; font-weight:900;"> / 👑ボス(0/20種)</span>
                 <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
             </h3>
             <div id="zukanWrapper" style="display: block;">
@@ -1670,7 +1733,7 @@
 
                 <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fca5a5;">
                     <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 14px;">
-                        👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/22種)</span>
+                        👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
                         ※50階ごとのボス戦にのみ出現！配合不可・野生加入（15%）限定モンスター
@@ -1761,17 +1824,24 @@
     </div>
 
     <div id="congratsModal" class="confirm-modal" style="z-index: 10060;">
-        <div class="congrats-box">
-            <div class="congrats-crown">👑</div>
-            <div style="font-size: 19px; font-weight: 900; color: #b45309; margin: 6px 0 4px;">🎊 天空城 1100階 完全制覇！！ 🎊</div>
-            <div style="font-size: 12px; font-weight: 800; color: #475569; line-height: 1.65; margin-bottom: 14px;" id="congratsMsg">
-                おめでとうございます！！<br>
-                海底神殿、そして天空城の頂点に君臨する<br>
-                <b>「天空城の天帝ゼウス」</b>を打ち倒しました！<br>
-                あなたは『みっくすえもじ』の真の伝説です！！
+        <div id="congratsConfetti" class="congrats-confetti-layer"></div>
+        <div class="congrats-box-grand">
+            <div class="congrats-ribbon">✨ GRAND CHAMPION ✨</div><br>
+            <div class="congrats-crown">👑🌞🏆</div>
+            <div style="font-size: 18px; font-weight: 900; color: #b45309; margin: 6px 0 4px; text-shadow: 0 1px 0 #ffffff;">
+                🎊 天空城 1100階 完全制覇！！ 🎊
             </div>
-            <button style="width: 85%; background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-color: #fde68a; border-bottom: 4px solid #b45309;" onclick="closeCongratsModal()">
-                🎉 おめでとう！（閉じる）
+            <div style="font-size: 12px; font-weight: 800; color: #334155; line-height: 1.65;" id="congratsMsg">
+                <b>本当におめでとうございます！！</b><br>
+                果てなき1000階の試練、深淵の🔱海底神殿、<br>
+                そして雲の上の☁️天空城の頂点に君臨する<br>
+                <b style="color:#d97706;">🌞「天空城の天帝ゼウス」</b>を見事打ち倒しました！<br>
+                数多の絵文字モンスターと絆を結んだあなたは、<br>
+                まさに『みっくすえもじ』<b style="color:#7c3aed;">真の伝説・永遠の覇者</b>です！！
+            </div>
+            <div id="congratsStats" class="congrats-stats-box"></div>
+            <button style="width: 88%; background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-color: #fde68a; border-bottom: 4px solid #b45309; font-size: 14px;" onclick="closeCongratsModal()">
+                🎉 栄光を胸に冒険を続ける！（閉じる）
             </button>
         </div>
     </div>
@@ -1919,8 +1989,8 @@
             "氷世界の死神スカル": { no: -18, stage: 900, a: "💀", hp: 3200, at: 615, df: 480, sp: 170, ex: 340 },
             "魔王城の混沌魔デビル": { no: -19, stage: 950, a: "👿", hp: 3550, at: 670, df: 525, sp: 185, ex: 380 },
             "魔王城の真祖ドラキュラ": { no: -20, stage: 1000, a: "🧛", hp: 4200, at: 750, df: 600, sp: 210, ex: 500 },
-            "海底神殿の海皇ポセイドン": { no: -21, stage: 1050, a: "🔱", hp: 5000, at: 860, df: 680, sp: 240, ex: 650 },
-            "天空城の天帝ゼウス": { no: -22, stage: 1100, a: "👑", hp: 6200, at: 1020, df: 800, sp: 280, ex: 1000 }
+            "海底神殿の海皇ポセイドン": { no: -21, stage: 1050, a: "🥶", hp: 5000, at: 860, df: 680, sp: 240, ex: 650 },
+            "天空城の天帝ゼウス": { no: -22, stage: 1100, a: "🌞", hp: 6200, at: 1020, df: 800, sp: 280, ex: 1000 }
         };
         const SPECIAL_D = {
             "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 320, at: 105, df: 75, sp: 65, ex: 0, isSpecialHero: true },
@@ -1984,6 +2054,11 @@
             celestial: { name: "✨天界の光輝", desc: "【天空城固有】攻撃後に45%の確率で次回攻撃1.5倍＆全能力15%上昇し、さらに30%で攻撃1回無効バリアを張る。" }
         };
 
+        const DEATH_IMMUNE_SKILL = {
+            name: "🛡️即死耐性",
+            desc: "【ボス・No.A/B固有】デスエンドなどの一撃必殺効果を無効化する。"
+        };
+
         const BOSS_INNATE_SKILLS = {
             "-1":  { name: "🐃大地の咆哮", desc: "【ボス固有】攻撃後に50%の確率で攻撃力が35%上昇する。" },
             "-2":  { name: "🧚神風の舞", desc: "【ボス固有】攻撃後に50%の確率で素早さが45%上昇する。" },
@@ -2005,8 +2080,8 @@
             "-18": { name: "💀神槍グングニル", desc: "【ボス固有】攻撃後に20%の確率で目の前の敵のHPを0にする一撃必殺。" },
             "-19": { name: "👿混沌の連撃", desc: "【ボス固有】攻撃後に100%で追加攻撃を行い、40%の確率で毒・麻痺を付与する。" },
             "-20": { name: "🧛終焉の真祖血宴", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP15%回復＋25%一撃必殺が発動する最強スキル。" },
-            "-21": { name: "🔱海皇の大津波", desc: "【ボス固有】攻撃後に100%追加攻撃＋50%で相手を麻痺＆HP15%回復＋攻撃・防御25%上昇。" },
-            "-22": { name: "👑天帝の創世裁定", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP20%回復＋全能力20%UP＋35%で1回無効バリア＋25%一撃必殺。" }
+            "-21": { name: "🥶海皇の大津波", desc: "【ボス固有】攻撃後に100%追加攻撃＋50%で相手を麻痺＆HP15%回復＋攻撃・防御25%上昇。" },
+            "-22": { name: "🌞天帝の創世裁定", desc: "【ボス固有】攻撃後に100%追加攻撃＋HP20%回復＋全能力20%UP＋35%で1回無効バリア＋25%一撃必殺。" }
         };
         const RARE_INNATE_SKILLS = [
             { id: 1, name: "🌈プリズムバースト", desc: "【色違い限定】攻撃後に35%の確率で攻撃力の60%の追加光線ダメージを与え、自分の攻撃力が15%上昇する。" },
@@ -2026,6 +2101,13 @@
             return RARE_INNATE_SKILLS[mon.rareSkillId - 1];
         }
 
+        function isDeathImmuneMon(mon) {
+            if (!mon) return false;
+            const inf = getMonData(mon.n);
+            const no = inf ? inf.no : 0;
+            return (typeof no === "number" && no < 0) || no === "A" || no === "B";
+        }
+
         function getInnateSkills(no) {
             let list = [];
             if (no === "EX") {
@@ -2042,15 +2124,18 @@
             }
             if (no === "A") {
                 list.push({ name: "💀廃国の呪剣・黒蝕", desc: "【廃国ゾンビ勇者特別スキル】攻撃後に55%の確率で次回1.5倍＋攻撃力50%の黒蝕吸収追撃＋相手を毒＆麻痺にし、自分の全能力15%上昇＆1回無効バリア展開。" });
+                list.push(DEATH_IMMUNE_SKILL);
                 return list;
             }
             if (no === "B") {
                 list.push({ name: "🐉星辰龍閃・メテオブレス", desc: "【No.B特別スキル】攻撃後に70%の確率で攻撃力100%の防御無視龍息追撃＋最大HP20%回復＋相手を毒＆麻痺にし、自分の全能力20%UP＆次回1.5倍＆1回無効バリア展開。" });
+                list.push(DEATH_IMMUNE_SKILL);
                 return list;
             }
             if (typeof no === "number" && no < 0) {
                 const bSk = BOSS_INNATE_SKILLS[String(no)];
                 if (bSk) list.push(bSk);
+                list.push(DEATH_IMMUNE_SKILL);
                 return list;
             }
             if (typeof no === "number") {
@@ -2213,7 +2298,8 @@
             chestOpenCount: 0,
             claimedMissions: [],
             extraMissions: [],
-            dailyQuest: null
+            dailyQuest: null,
+            claimedPresentCodes: []
         };
         let currentEvent = null;
         let lastFloorWasEvent = false;
@@ -2459,7 +2545,7 @@
             return lvUps;
         }
 
-        function useDungeonCrystal() {
+        function useDungeonCrystal(chance = 0.30) {
             const targets = p.filter(m => m.inParty || m.hp <= 0);
             let upNames = [];
             let alreadyMaxCount = 0;
@@ -2468,7 +2554,7 @@
                 const curBonus = mon.lvCapBonus || 0;
                 if (curBonus >= MAX_LV_CAP_BONUS) {
                     alreadyMaxCount++;
-                } else if (Math.random() < 0.30) {
+                } else if (Math.random() < chance) {
                     mon.lvCapBonus = curBonus + 1;
                     const lvUps = grantExpToSingleMonster(mon, 0);
                     const lvTag = lvUps > 0 ? ("・Lv." + mon.lv + "へUP!") : "";
@@ -2484,9 +2570,9 @@
             if (targets.length > 0 && alreadyMaxCount === targets.length) {
                 return "【効果】対象モンスターは全員すでにLv上限+20に達しているため上がらなかった！";
             }
-            return "【効果】今回は光が届かず上限Lvは上がらなかった…（30%抽選外れ）";
-        }
-
+            const pct = Math.round(chance * 100);
+            return "【効果】今回は光が届かず上限Lvは上がらなかった…（" + pct + "%抽選外れ）";
+                }
         const DAILY_REWARD_POOL = [
             { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
@@ -2873,11 +2959,20 @@
         }
 
         function hydrateLoadedData(data) {
-            maxStg = Math.min(1000, Math.max(1, data.maxStg || 1));
-            maxClearStg = (typeof data.maxClearStg === "number") ? data.maxClearStg : Math.max(0, maxStg - 1);
-            returnStg = (typeof data.returnStg === "number" && data.returnStg >= 1 && data.returnStg <= 1000) ? data.returnStg : Math.min(1000, Math.max(1, data.stg || 1));
-            stg = data.stg || 1;
-            if (stg > 1000) stg = returnStg;
+            let loadedMaxStg = Math.min(1100, Math.max(1, data.maxStg || 1));
+            maxClearStg = (typeof data.maxClearStg === "number")
+                ? Math.min(1100, Math.max(0, data.maxClearStg))
+                : Math.max(0, loadedMaxStg - 1);
+            if (maxClearStg >= 1001) {
+                const unlockTarget = (maxClearStg === 1050) ? 1050 : Math.min(1100, maxClearStg + 1);
+                loadedMaxStg = Math.max(loadedMaxStg, unlockTarget);
+            }
+            maxStg = Math.min(1100, loadedMaxStg);
+            returnStg = (typeof data.returnStg === "number" && data.returnStg >= 1 && data.returnStg <= 1000)
+                ? data.returnStg
+                : Math.min(1000, Math.max(1, data.stg || 1));
+            stg = Math.min(1100, Math.max(1, data.stg || 1));
+            if (stg > maxStg) stg = maxStg;
             zk = data.zk || ["プニシズク"];
             if (Array.isArray(zk)) {
                 zk = Array.from(new Set(zk.map(name => normalizeMonName(name))))
@@ -2919,8 +3014,10 @@
                     kingdomVisitCount: 0, arenaWinCount: 0,
                     rareGetCount: 0, chestOpenCount: 0,
                     claimedMissions: [], extraMissions: [],
-                    dailyQuest: null
+                    dailyQuest: null,
+                    claimedPresentCodes: []
                 }, data.stats);
+                if (!Array.isArray(stats.claimedPresentCodes)) stats.claimedPresentCodes = [];
                 migrateLegacyMissions();
             }
             ensureDailyQuestCurrent();
@@ -2990,7 +3087,7 @@
             updateSpeedButtonUI();
             updateSortButtonsUI();
             up(true);
-        }
+             }
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -3521,7 +3618,7 @@
 
         function goMaxStage() {
             if (inDungeon) return showGameAlert("ダンジョン内では階層を変更できません！", "⚠️ お知らせ");
-            const target = Math.min(1000, Math.max(1, maxStg));
+            const target = Math.min(1100, Math.max(1, maxStg));
             if (stg === target) return;
             stg = target;
             saveGame();
@@ -3532,13 +3629,12 @@
             if (inDungeon) return showGameAlert("ダンジョン内では階層を変更できません！", "⚠️ お知らせ");
             let nextVal = stg + val;
             if (nextVal < 1) return;
-            if (nextVal > 1000) return showGameAlert("最高ダンジョンは1000階です！", "⚠️ お知らせ");
             if (nextVal > maxStg) return showGameAlert("未到達のダンジョンには進めません！", "⚠️ お知らせ");
+            if (nextVal > 1100) return showGameAlert("最高ダンジョンは1100階です！", "⚠️ お知らせ");
             stg = nextVal;
             saveGame();
             upBattleUI();
-        }
-
+                           }
         let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
@@ -3762,6 +3858,14 @@
             const notes = [392, 523, 659, 784, 659, 1046];
             const times = [0, 0.09, 0.18, 0.27, 0.40, 0.54];
             notes.forEach((f, i) => playTone(f, "square", times[i], i === 5 ? 0.45 : 0.11, 0.10, "se"));
+        }
+        function seGrandClear() {
+            const notes = [523, 659, 784, 1046, 784, 1046, 1319, 1568];
+            const times = [0, 0.10, 0.20, 0.30, 0.46, 0.58, 0.72, 0.88];
+            notes.forEach((f, i) => {
+                playTone(f, "triangle", times[i], i === 7 ? 0.75 : 0.14, 0.14, "se");
+                playTone(f * 0.5, "sine", times[i], i === 7 ? 0.75 : 0.14, 0.10, "se");
+            });
         }
         function seFail() {
             playTone(180, "sawtooth", 0, 0.18, 0.14, "se");
@@ -4171,6 +4275,7 @@
             if (!inDungeon) return { color: "#fbbf24", vx: 0.12, vy: -0.32 };
             if (currentEvent === "god_entity" || eg.some(e => e.isGodEntity)) return { color: "#fde047", vx: 0.1, vy: -0.95 };
             if (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero)) return { color: "#4ade80", vx: 0, vy: -0.85 };
+            if (currentEvent === "captain") return { color: "#38bdf8", vx: 0.25, vy: -0.45 };
             if (inKingdom) return { color: "#facc15", vx: 0.15, vy: -0.55 };
             if (stg >= 1001 && stg <= 1050) return { color: "#67e8f9", vx: 0.12, vy: -0.65 };
             if (stg >= 1051 && stg <= 1100) return { color: "#fde047", vx: 0.18, vy: -0.55 };
@@ -4424,7 +4529,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-             }
+        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -4437,8 +4542,7 @@
             clearAllBattleTimers();
             clearBattleVisualEffects();
 
-            if (stg > 1000) stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
-            returnStg = stg;
+            if (stg <= 1000) returnStg = stg;
 
             inDungeon = true;
             inKingdom = false;
@@ -4503,7 +4607,7 @@
             }
 
             if (stg >= 1001 && stg <= 1049) {
-                if (!lastFloorWasEvent) {
+                if (!repeatStageMode && !lastFloorWasEvent) {
                     const uRoll = Math.random();
                     if (uRoll < 0.05) {
                         currentEvent = "undersea_spring";
@@ -4520,7 +4624,7 @@
                     }
                 }
             } else if (stg >= 1051 && stg <= 1099) {
-                if (!lastFloorWasEvent) {
+                if (!repeatStageMode && !lastFloorWasEvent) {
                     const sRoll = Math.random();
                     if (sRoll < 0.05) {
                         currentEvent = "sky_altar";
@@ -4540,6 +4644,7 @@
                 const evRoll = Math.random();
                 const b = (maxClearStg >= 1000) ? 0.01 : 0;
                 const canUndersea = (maxClearStg >= 1000) && ((stg >= 201 && stg <= 249) || (stg >= 251 && stg <= 299));
+                const canCaptain = (maxClearStg >= 1000) && (stg >= 1 && stg <= 999) && !isBossStage(stg);
                 let cum = 0;
 
                 if (evRoll < (cum += 0.010 + b)) {
@@ -4605,6 +4710,12 @@
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 ギルドマスターと遭遇した！上の枠から選択してください。";
                     return;
+                } else if (canCaptain && evRoll < (cum += 0.015 + b)) {
+                    currentEvent = "captain";
+                    lastFloorWasEvent = true;
+                    seSkill();
+                    document.getElementById("battleLog").innerText = "⚓ 海の男「元船長」と遭遇した！上の枠から話を聞こう。";
+                    return;
                 } else if (canUndersea && evRoll < (cum += 0.030)) {
                     currentEvent = "undersea_gate";
                     lastFloorWasEvent = true;
@@ -4659,9 +4770,15 @@
 
             let clearedStg = stg;
             if (clearedStg > maxClearStg) maxClearStg = clearedStg;
-            if (stg <= 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
+            if (stg < 1000 && stg === maxStg) {
+                maxStg = Math.min(1000, maxStg + 1);
+            } else if (stg >= 1001 && stg < 1050) {
+                maxStg = Math.max(maxStg, Math.min(1050, stg + 1));
+            } else if (stg >= 1051 && stg < 1100) {
+                maxStg = Math.max(maxStg, Math.min(1100, stg + 1));
+            }
 
-            if (repeatStageMode && stg <= 1000) {
+            if (repeatStageMode) {
                 repeatCount++;
                 updateRepeatButtonUI();
                 if (repeatCount >= 50) {
@@ -4695,7 +4812,6 @@
                         : ((shortMsg ? shortMsg + " " : "") + "➡️ " + stg + "階へ進みました！");
                 }
             } else {
-                if (stg > 1000) stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
                 inDungeon = false;
                 try { updateBgmState(true); } catch (e) {}
                 resetStageBuffs();
@@ -4727,6 +4843,7 @@
             currentEvent = null;
             lastFloorWasEvent = false;
             stg = 1001;
+            maxStg = Math.max(maxStg, 1001);
             resetStageBuffs();
             try { updateBgmState(true); } catch (e) {}
             generateEnemies();
@@ -4755,7 +4872,7 @@
                 seLvUp();
                 msg = "🔱 ポセイドンの聖泉で癒やされた！戦闘メンバー全員のHPが全回復＆Lv+3された！";
             } else {
-                msg = "🔱 深海の秘宝に触れた！" + useDungeonCrystal();
+                msg = "🔱 深海の秘宝に触れた！" + useDungeonCrystal(0.35);
             }
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
@@ -4802,6 +4919,7 @@
             currentEvent = null;
             lastFloorWasEvent = false;
             stg = 1051;
+            maxStg = Math.max(maxStg, 1051);
             resetStageBuffs();
             try { updateBgmState(true); } catch (e) {}
             generateEnemies();
@@ -4879,6 +4997,13 @@
             advanceStageAfterEvent("", true);
         }
 
+        function acknowledgeCaptainHint() {
+            if (!inDungeon || currentEvent !== "captain") return;
+            seJoin();
+            showNotice("🧑‍✈️ 元船長『201階〜299階（250階除く）の海のエリアで3%の確率で「🔱海底神殿」への入口に出会えるぞ！迷わず目指してみるのじゃ！』", 6500);
+            advanceStageAfterEvent("", true);
+        }
+
         function playTravelerRPS(playerHand) {
             if (!inDungeon || currentEvent !== "traveler") return;
             const hands = ["✊グー", "✌️チョキ", "✋パー"];
@@ -4947,7 +5072,7 @@
                     ? ("👳 旅商人から『🧪奇跡のエキス』を受け取った！【効果】控えモンスター" + count + "体のLvが+10された。")
                     : ("👳 旅商人から『🧪奇跡のエキス』を受け取った！【効果】育てられる控えモンスターがいなかった。");
             } else if (choice === 3) {
-                msg = "👳 旅商人から『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal();
+                msg = "👳 旅商人から『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal(0.30);
             } else if (choice === 4) {
                 const lvLogs = grantExpToParty(40);
                 seLvUp();
@@ -5185,7 +5310,7 @@
             }
 
             stats.kingHelpCount = (stats.kingHelpCount || 0) + 1;
-            if (stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
+            if (stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
             if (stg < 1000) stg++;
 
             msg += " ➡️ 次のダンジョン(" + stg + "階)へ進み、お城まで護衛しています（⏳1分間ダンジョンに入れません）。";
@@ -5378,7 +5503,7 @@
                 seStageClear();
                 msg = "🏪 商店で『🔖祝福のしおり』を受け取った！【効果】永続で獲得EXPが+10%された。そして出国した！";
             } else if (choice === 5) {
-                msg = "🏪 商店で『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal() + " そして出国した！";
+                msg = "🏪 商店で『🔮ダンジョンの水晶』を受け取った！" + useDungeonCrystal(0.30) + " そして出国した！";
             } else if (choice === 6) {
                 p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
                 const lvLogs = grantExpToParty(25);
@@ -5477,16 +5602,12 @@
 
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
-        }
-
+                                           }
         function leaveDungeon() {
             battleSessionId++;
             clearAllBattleTimers();
             clearBattleVisualEffects();
 
-            if (stg > 1000) {
-                stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
-            }
             isTurnRunning = false;
             currentEvent = null;
             lastFloorWasEvent = false;
@@ -5613,6 +5734,7 @@
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
         }
+
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -5641,11 +5763,13 @@
             const isBossNow = inDungeon && !inKingdom && isBossStage(stg);
             const isZombieNow = inDungeon && (currentEvent === "zombie_hero" || eg.some(e => e.isZombieHero));
             const isGodNow = inDungeon && (currentEvent === "god_entity" || eg.some(e => e.isGodEntity));
+            const isCaptainNow = inDungeon && (currentEvent === "captain");
 
             if (!inDungeon) {
                 envClass = "bg-base";
             } else if (isGodNow) { envName = "星辰の聖域"; envEmoji = "🌌"; envClass = "bg-god"; }
             else if (isZombieNow) { envName = "廃国の決戦"; envEmoji = "🏚️"; envClass = "bg-zombie"; }
+            else if (isCaptainNow) { envName = "海辺の桟橋"; envEmoji = "⚓"; envClass = "bg-captain"; }
             else if (inKingdom) {
                 envName = "知らない王国"; envEmoji = "🏰";
                 if (kingdomScene === "arena" || kingdomScene === "arena_menu") envClass = "bg-arena";
@@ -5721,6 +5845,7 @@
                 "bg-arena":     { e: "🏟️", op: 0.32 },
                 "bg-shop":      { e: "🏪", op: 0.30 },
                 "bg-guild":     { e: "📜", op: 0.28 },
+                "bg-captain":   { e: "⚓", op: 0.26 },
                 "bg-zombie":    { e: "🏚️", op: 0.26 },
                 "bg-god":       { e: "🌌", op: 0.34 }
             };
@@ -5783,6 +5908,8 @@
                         eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪽</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>天使の祝福祭壇</b><br><span style='font-size:10.5px; color:#475569;'>神々しい光の祭壇が現れた！</span>";
                     } else if (currentEvent === "sky_summon") {
                         eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🌟</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>星屑の召喚陣</b><br><span style='font-size:10.5px; color:#475569;'>星々の魔力が渦巻いている！</span>";
+                    } else if (currentEvent === "captain") {
+                        eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【⚓海辺の出会い】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧑‍✈️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>元船長</b><br><span style='font-size:10.5px; color:#475569;'>海の秘宝の噂を知っているようだ！</span>";
                     } else if (currentEvent === "traveler") {
                         eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧙</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>謎の旅人</b><br><span style='font-size:10.5px; color:#475569;'>ジャンケン勝負を挑まれた！</span>";
                     } else if (currentEvent === "merchant") {
@@ -5922,6 +6049,18 @@
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickSkySummon(1)">🌟 星に祈る<span class="item-desc-mini">天空城(No.111〜120)ランダム1体Lv.10(色違い率10%)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickSkySummon(2)">✨ 星屑を吸収<span class="item-desc-mini">ボックスにいるモンスター全員がLv+2</span></button>' +
+                        '</div>';
+                    if (btnAtk) btnAtk.disabled = true;
+                } else if (inDungeon && currentEvent === "captain") {
+                    evPanel.style.display = "block";
+                    evPanel.innerHTML =
+                        '<div class="event-title" style="color:#0369a1;">🧑‍✈️ 元船長「ほう、1000階を制覇した冒険者か！」</div>' +
+                        '<div class="event-sub" style="text-align:left; background:rgba(255,255,255,0.88); padding:7px 9px; border-radius:9px; border:1px solid #bae6fd; color:#1e293b;">' +
+                            '「かつてわしが大海原を旅したとき、<b>【201階〜299階（250階を除く）】</b>の海のエリアで、<b>3%の確率</b>で伝説の<b>『🔱海底神殿』</b>の入口に辿り着いたことがあるんじゃ！<br>' +
+                            '中は1001階〜1050階、すべての敵がLv.100の未知の領域じゃが、おぬしならきっと攻略できるはずじゃぞ！」' +
+                        '</div>' +
+                        '<div class="event-btn-row">' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="acknowledgeCaptainHint()">⚓ なるほど！（次の階へ進む）</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "traveler") {
@@ -6289,7 +6428,8 @@
                 if (showMixAssist) renderMixAssist();
             }
 
-            const zukanSig = zk.slice().sort().join(",") + "|" + seen.slice().sort().join(",");
+            const postGameUnlocked = (maxClearStg >= 1000);
+            const zukanSig = (postGameUnlocked ? "1" : "0") + "|" + zk.slice().sort().join(",") + "|" + seen.slice().sort().join(",");
             if (forceAll || zukanSig !== lastRenderedZukanSig) {
                 lastRenderedZukanSig = zukanSig;
 
@@ -6321,7 +6461,7 @@
                     rtTable.innerHTML = rowsParts.join("");
                 }
 
-                const normalKeys = Object.keys(D);
+                const normalKeys = Object.keys(D).filter(k => postGameUnlocked || D[k].no <= 100);
                 const normalFoundCount = normalKeys.filter(k => zk.includes(k)).length;
                 const zukanBadge = document.getElementById("zukanCountBadge");
                 if (zukanBadge) zukanBadge.innerText = "(" + normalFoundCount + "/" + normalKeys.length + "種)";
@@ -6345,7 +6485,7 @@
                     zkDiv.innerHTML = zkParts.join("");
                 }
 
-                const bossKeys = Object.keys(BOSS_D);
+                const bossKeys = Object.keys(BOSS_D).filter(k => postGameUnlocked || BOSS_D[k].stage <= 1000);
                 const bossFoundCount = bossKeys.filter(k => zk.includes(k)).length;
                 const bBadge1 = document.getElementById("bossZukanCountBadge");
                 const bBadge2 = document.getElementById("bossZukanSubBadge");
@@ -6462,6 +6602,18 @@
                 return;
             }
 
+            if (!Array.isArray(stats.claimedPresentCodes)) stats.claimedPresentCodes = [];
+
+            if (code === "01234567890" || code === "01234567891") {
+                if (stats.claimedPresentCodes.includes(code)) {
+                    seFail();
+                    const errText = "⚠️ このプレゼントコードはすでに受け取り済みです！（1データにつき1回限り）";
+                    setPresentMsg(errText, "#dc2626");
+                    showGameAlert(errText, "🎁 プレゼントコード");
+                    return;
+                }
+            }
+
             if (code === "01234567890") {
                 if (p.length + 3 > boxLimit) {
                     seFail();
@@ -6483,6 +6635,7 @@
                     initBattleState(newAlly);
                     p.push(newAlly);
                 }
+                stats.claimedPresentCodes.push(code);
                 markZkAndSeen("星辰の神龍");
                 field.value = "";
                 seMixSuccess();
@@ -6493,15 +6646,16 @@
                 showNotice(okText, 6000);
                 showGameAlert(okText, "🎁 プレゼント受取");
             } else if (code === "01234567891") {
+                stats.claimedPresentCodes.push(code);
                 maxClearStg = Math.max(maxClearStg, 1000);
-                maxStg = 1000;
-                if (!inDungeon) stg = 1000;
+                maxStg = Math.max(maxStg, 1000);
+                if (!inDungeon && stg < 1000) stg = 1000;
                 field.value = "";
                 seMixSuccess();
                 updateSpeedButtonUI();
                 saveGame();
                 up(true);
-                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント解放＆全遭遇確率+1%）";
+                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント＆🧑‍✈️元船長＆図鑑解放＆全遭遇確率+1%）";
                 setPresentMsg(okText, "#059669");
                 showNotice(okText, 6000);
                 showGameAlert(okText, "🎁 プレゼント受取");
@@ -6510,6 +6664,7 @@
                 setPresentMsg("❌ 無効なプレゼントコードです。", "#dc2626");
             }
         }
+
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
             if (!attacker || attacker.hp <= 0) return;
             const spdDiv = battleSpeed;
@@ -6778,9 +6933,14 @@
                     fxQueue.push("❄️💫"); buffSelf = true;
                 }
                 if (no === -18 && defender.hp > 0 && Math.random() < 0.20) {
-                    defender.hp = 0;
-                    skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ ";
-                    fxQueue.push("☄️💀"); showDamagePop(defender, isPlayerAttack, "即死!", "#7c3aed", true); hitDefender = true;
+                    if (isDeathImmuneMon(defender)) {
+                        skillLogs += "💀" + attacker.n + "の神槍グングニル！…しかし🛡️" + defender.n + "は即死耐性で防いだ！ ";
+                        fxQueue.push("🛡️✨"); showDamagePop(defender, isPlayerAttack, "即死無効!", "#0284c7", false); hitDefender = true;
+                    } else {
+                        defender.hp = 0;
+                        skillLogs += "💀" + attacker.n + "の神槍グングニル！一撃必殺！ ";
+                        fxQueue.push("☄️💀"); showDamagePop(defender, isPlayerAttack, "即死!", "#7c3aed", true); hitDefender = true;
+                    }
                 }
                 if (no === -19 && defender.hp > 0) {
                     let atkVal = attacker.at + (attacker.buffAt || 0);
@@ -6809,9 +6969,14 @@
                     skillLogs += "HP " + h + " 回復！ ";
                     fxQueue.push("🔆🌟"); showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false); buffSelf = true;
                     if (defender.hp > 0 && Math.random() < 0.25) {
-                        defender.hp = 0;
-                        skillLogs += "💀真祖の一撃必殺発動！ ";
-                        fxQueue.push("🪄💀"); showDamagePop(defender, isPlayerAttack, "終焉!", "#7c3aed", true); hitDefender = true;
+                        if (isDeathImmuneMon(defender)) {
+                            skillLogs += "🛡️" + defender.n + "は即死耐性で一撃必殺を防いだ！ ";
+                            fxQueue.push("🛡️✨"); showDamagePop(defender, isPlayerAttack, "即死無効!", "#0284c7", false); hitDefender = true;
+                        } else {
+                            defender.hp = 0;
+                            skillLogs += "💀真祖の一撃必殺発動！ ";
+                            fxQueue.push("🪄💀"); showDamagePop(defender, isPlayerAttack, "終焉!", "#7c3aed", true); hitDefender = true;
+                        }
                     }
                 }
                 if (no === -21) {
@@ -6820,8 +6985,8 @@
                         let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                         let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
                         defender.hp = Math.max(0, defender.hp - dmg);
-                        skillLogs += "🔱" + attacker.n + "の海皇の大津波！追撃 " + dmg + " ダメージ！ ";
-                        fxQueue.push("🌊🔱"); showDamagePop(defender, isPlayerAttack, "-" + dmg, "#06b6d4", false); hitDefender = true;
+                        skillLogs += "🥶" + attacker.n + "の海皇の大津波！追撃 " + dmg + " ダメージ！ ";
+                        fxQueue.push("🌊🥶"); showDamagePop(defender, isPlayerAttack, "-" + dmg, "#06b6d4", false); hitDefender = true;
                     }
                     if (Math.random() < 0.50) {
                         if (defender.hp > 0 && defSk.id !== 7) {
@@ -6843,8 +7008,8 @@
                         let defVal = Math.max(0, defender.df + (defender.buffDf || 0));
                         let dmg = Math.max(2, Math.floor(atkVal - defVal / 2));
                         defender.hp = Math.max(0, defender.hp - dmg);
-                        skillLogs += "👑" + attacker.n + "の天帝の創世裁定！追撃 " + dmg + " ダメージ！ ";
-                        fxQueue.push("⚡👑"); showDamagePop(defender, isPlayerAttack, "-" + dmg, "#eab308", false); hitDefender = true;
+                        skillLogs += "🌞" + attacker.n + "の天帝の創世裁定！追撃 " + dmg + " ダメージ！ ";
+                        fxQueue.push("⚡🌞"); showDamagePop(defender, isPlayerAttack, "-" + dmg, "#eab308", false); hitDefender = true;
                     }
                     let h = Math.max(1, Math.floor(attacker.m * 0.20));
                     attacker.hp = Math.min(attacker.m, attacker.hp + h);
@@ -6858,9 +7023,14 @@
                     skillLogs += "HP " + h + " 回復＆全能力UP！ ";
                     fxQueue.push("🌟✨"); showDamagePop(attacker, !isPlayerAttack, "+" + h, "#10b981", false); buffSelf = true;
                     if (defender.hp > 0 && Math.random() < 0.25) {
-                        defender.hp = 0;
-                        skillLogs += "⚡天帝の一撃必殺発動！ ";
-                        fxQueue.push("☄️👑"); showDamagePop(defender, isPlayerAttack, "神罰!", "#d97706", true); hitDefender = true;
+                        if (isDeathImmuneMon(defender)) {
+                            skillLogs += "🛡️" + defender.n + "は即死耐性で一撃必殺を防いだ！ ";
+                            fxQueue.push("🛡️✨"); showDamagePop(defender, isPlayerAttack, "即死無効!", "#0284c7", false); hitDefender = true;
+                        } else {
+                            defender.hp = 0;
+                            skillLogs += "⚡天帝の一撃必殺発動！ ";
+                            fxQueue.push("☄️🌞"); showDamagePop(defender, isPlayerAttack, "神罰!", "#d97706", true); hitDefender = true;
+                        }
                     }
                 }
                 if (!isPlayerAttack && defender.hp === 0) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
@@ -6903,10 +7073,15 @@
                     fxQueue.push("🌪️⚡"); buffSelf = true;
                 }
                 if (((no >= 95 && no <= 100) || (no >= 115 && no <= 120)) && defender.hp > 0 && Math.random() < 0.25) {
-                    defender.hp = 0;
-                    skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
-                    fxQueue.push("☄️💀"); showDamagePop(defender, isPlayerAttack, "必殺!", "#7c3aed", true); hitDefender = true;
-                    if (!isPlayerAttack) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                    if (isDeathImmuneMon(defender)) {
+                        skillLogs += "💀" + attacker.n + "のデスエンド！…しかし🛡️" + defender.n + "は即死耐性で無効化した！ ";
+                        fxQueue.push("🛡️✨"); showDamagePop(defender, isPlayerAttack, "即死無効!", "#0284c7", false); hitDefender = true;
+                    } else {
+                        defender.hp = 0;
+                        skillLogs += "💀" + attacker.n + "のデスエンド発動！一撃必殺！ ";
+                        fxQueue.push("☄️💀"); showDamagePop(defender, isPlayerAttack, "必殺!", "#7c3aed", true); hitDefender = true;
+                        if (!isPlayerAttack) skillLogs += "🔴" + defender.n + "が戦闘不能！ ";
+                    }
                 }
                 if (no >= 101 && no <= 110 && Math.random() < 0.40) {
                     let healVal = Math.max(1, Math.floor(attacker.m * 0.12));
@@ -7075,7 +7250,7 @@
         }
 
         function handleFloorProgressAfterClear(isMutualKO = false) {
-            if (repeatStageMode && stg <= 1000) {
+            if (repeatStageMode) {
                 repeatCount++;
                 updateRepeatButtonUI();
                 if (isMutualKO) {
@@ -7106,6 +7281,13 @@
                 }
             } else if ((stg < 1000) || (stg >= 1001 && stg < 1050) || (stg >= 1051 && stg < 1100)) {
                 stg++;
+                if (stg <= 1000) {
+                    maxStg = Math.max(maxStg, Math.min(1000, stg));
+                } else if (stg <= 1050) {
+                    maxStg = Math.max(maxStg, Math.min(1050, stg));
+                } else {
+                    maxStg = Math.max(maxStg, Math.min(1100, stg));
+                }
                 if (isMutualKO) {
                     return { needsFullUpdate: true, log: "" };
                 }
@@ -7114,7 +7296,6 @@
                 generateEnemies();
                 return { needsFullUpdate: false, log: (!currentEvent ? ("➡️自動で " + stg + " 階に進みます。") : "") };
             } else {
-                if (stg > 1000) stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
                 inDungeon = false;
                 clearBattleVisualEffects();
                 try { updateBgmState(true); } catch (e) {}
@@ -7123,7 +7304,7 @@
                 setDungeonButtonsDisabled(false);
                 return { needsFullUpdate: true, log: "" };
             }
-            }
+                                  }
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
@@ -7306,7 +7487,7 @@
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
-                                        if (stg <= 1000 && stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
+                                        if (stg < 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
@@ -7326,7 +7507,7 @@
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
-                                        if (stg <= 1000 && stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
+                                        if (stg < 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
@@ -7346,7 +7527,7 @@
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
-                                        if (stg <= 1000 && stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
+                                        if (stg < 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
@@ -7380,7 +7561,7 @@
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
-                                        if (stg <= 1000 && stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
+                                        if (stg < 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
@@ -7412,7 +7593,7 @@
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
-                                        if (stg <= 1000 && stg === maxStg && maxStg < 1000) maxStg = Math.min(1000, maxStg + 1);
+                                        if (stg < 1000 && stg === maxStg) maxStg = Math.min(1000, maxStg + 1);
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
@@ -7482,18 +7663,20 @@
                                                 showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
                                                 setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
                                             } else if (clearedStg === 1000) {
+                                                needsFullUpdate = true;
                                                 seMixSuccess();
-                                                showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿解放＆全遭遇イベント確率+1%！" : ""), 10000);
-                                                setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆201〜299階(250階除く)で「海底神殿」に遭遇できるようになりました！" : "\n（🔱 海底神殿＆全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
+                                                showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
+                                                setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
                                             } else if (clearedStg === 1100) {
-                                                seMixSuccess();
-                                                showNotice("👑 天空城1100階完全制覇！！おめでとうございます！！ 👑", 10000);
+                                                needsFullUpdate = true;
+                                                showNotice("👑🌞 天空城1100階 完全制覇！！おめでとうございます！！ 🌞👑", 12000);
                                                 setTimeout(() => { showCongratsModal(); }, 180);
                                             } else {
                                                 seStageClear();
                                             }
 
-                                            if (clearedStg === 1050) {
+                                            if (clearedStg === 1050 && !repeatStageMode) {
+                                                maxStg = Math.max(maxStg, 1050);
                                                 currentEvent = "transfer_gate";
                                                 lastFloorWasEvent = true;
                                                 needsFullUpdate = true;
@@ -7501,9 +7684,13 @@
                                                 showNotice("🔱 海底神殿1050階制覇！天空へと続く『転移魔法陣』が現れた！！", 7000);
                                                 turnLog += "✨ 転移魔法陣が出現した！上の枠から選択してください！";
                                             } else {
-                                                if (stg <= 1000 && stg === maxStg && maxStg < 1000) {
+                                                if (stg < 1000 && stg === maxStg) {
                                                     maxStg = Math.min(1000, maxStg + 1);
                                                     turnLog += "🏰新しい階層が解放された！ ";
+                                                } else if (stg >= 1001 && stg < 1050) {
+                                                    maxStg = Math.max(maxStg, Math.min(1050, stg + 1));
+                                                } else if (stg >= 1051 && stg < 1100) {
+                                                    maxStg = Math.max(maxStg, Math.min(1100, stg + 1));
                                                 }
                                                 const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                                 if (prog.needsFullUpdate) needsFullUpdate = true;
@@ -7532,7 +7719,6 @@
                                         isTurnRunning = false;
                                         clearAllBattleTimers();
                                         clearBattleVisualEffects();
-                                        if (stg > 1000) stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
                                         try { updateBgmState(true); } catch (e) {}
                                         eg = [];
                                         resetStageBuffs();
@@ -7591,7 +7777,6 @@
                                         isTurnRunning = false;
                                         clearAllBattleTimers();
                                         clearBattleVisualEffects();
-                                        if (stg > 1000) stg = (returnStg >= 1 && returnStg <= 1000) ? returnStg : 1;
                                         try { updateBgmState(true); } catch (e) {}
                                         eg = [];
                                         resetStageBuffs();
@@ -7720,11 +7905,38 @@
 
         function showCongratsModal() {
             const modal = document.getElementById("congratsModal");
+            const statsEl = document.getElementById("congratsStats");
+            const confettiEl = document.getElementById("congratsConfetti");
+            if (statsEl) {
+                const normalFound = Object.keys(D).filter(k => zk.includes(k)).length;
+                const bossFound = Object.keys(BOSS_D).filter(k => zk.includes(k)).length;
+                const rareOwned = p.filter(m => m.isRare).length;
+                statsEl.innerHTML =
+                    "🏅 <b>あなたの制覇記録</b><br>" +
+                    "🏰 最高クリア階層：<b>" + maxClearStg + "階</b> ／ 📖 通常図鑑：<b>" + normalFound + "/120種</b><br>" +
+                    "👑 ボス図鑑：<b>" + bossFound + "/22種</b> ／ 🧬 配合成功：<b>" + (stats.mixSuccessCount || 0) + "回</b><br>" +
+                    "📦 仲間の数：<b>" + p.length + "体</b>（✨色違い所持：<b>" + rareOwned + "体</b>）";
+            }
+            if (confettiEl) {
+                const colors = ["#facc15", "#f472b6", "#38bdf8", "#a78bfa", "#34d399", "#fb923c"];
+                let pieces = [];
+                for (let i = 0; i < 38; i++) {
+                    const left = (Math.random() * 100).toFixed(1);
+                    const dur = (2.4 + Math.random() * 2.4).toFixed(2);
+                    const delay = (Math.random() * 1.8).toFixed(2);
+                    const col = colors[i % colors.length];
+                    pieces.push('<div class="confetti-piece" style="left:' + left + '%; background:' + col + '; animation-duration:' + dur + 's; animation-delay:' + delay + 's;"></div>');
+                }
+                confettiEl.innerHTML = pieces.join("");
+            }
+            seGrandClear();
             if (modal) modal.style.display = "flex";
         }
 
         function closeCongratsModal() {
             const modal = document.getElementById("congratsModal");
+            const confettiEl = document.getElementById("congratsConfetti");
+            if (confettiEl) confettiEl.innerHTML = "";
             if (modal) modal.style.display = "none";
         }
 
