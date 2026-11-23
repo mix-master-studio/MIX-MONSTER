@@ -6,7 +6,7 @@
     <title>みっくすえもじ</title>
     <link rel="icon" type="image/png" href="file_00000000b3e48211bce6a50c57a72164.png">
     <link rel="apple-touch-icon" href="file_00000000b3e48211bce6a50c57a72164.png">
-    <link rel="preload" as="image" href="file_00000000964c82128957e85e09f3fd88.png" fetchpriority="high">
+    <link rel="preload" as="image" href="1000041415.png" fetchpriority="high">
     <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous" defer onload="if(typeof initEmojiObserver==='function' && !emojiObserver) initEmojiObserver();"></script>
     <style>
         * {
@@ -66,7 +66,7 @@
         .title-bg-blur {
             position: absolute;
             inset: -20px;
-            background: url('file_00000000964c82128957e85e09f3fd88.png') center center / cover no-repeat;
+            background: url('1000041415.png') center center / cover no-repeat;
             filter: blur(16px) brightness(0.95) saturate(1.15);
             opacity: 0.72;
             z-index: 0;
@@ -1489,11 +1489,11 @@
             -webkit-text-fill-color: initial;
         }
     </style>
-</head>
+    </head>
 <body class="title-locked">
     <div id="titleScreen">
-        <div class="title-bg-blur"></div>
-        <img src="file_00000000964c82128957e85e09f3fd88.png" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
+        <div class="title-bg-blur" id="titleBgBlur"></div>
+        <img src="1000041415.png" id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
         <button class="btn-start" onclick="startGame()">START</button>
     </div>
 
@@ -2221,7 +2221,6 @@
             }
             return SKILLS[mon.skillId - 1];
         }
-
         let dialogQueue = [];
         let isDialogOpen = false;
 
@@ -2959,6 +2958,17 @@
             dungeonLockInterval = setInterval(updateDungeonLockBanner, 500);
         }
 
+        function updateTitleBg() {
+            const imgFile = (maxClearStg >= 1000) ? "1000041649 (1).png" : "1000041415.png";
+            const blurEl = document.getElementById("titleBgBlur");
+            const imgEl = document.getElementById("titleFullImg");
+            if (blurEl) blurEl.style.backgroundImage = "url('" + imgFile + "')";
+            if (imgEl && imgEl.getAttribute("src") !== imgFile) {
+                imgEl.style.display = "";
+                imgEl.src = imgFile;
+            }
+        }
+
         function saveGame() {
             const data = {
                 stg: stg,
@@ -3078,6 +3088,19 @@
                             m.sp = expected.sp;
                             m.nx = expected.nx;
                             m.bossQuarterApplied = true;
+                        } else {
+                            if ((m.m || 0) < expected.m) m.m = expected.m;
+                            if ((m.at || 0) < expected.at) m.at = expected.at;
+                            if ((m.df || 0) < expected.df) m.df = expected.df;
+                            if ((m.sp || 0) < expected.sp) m.sp = expected.sp;
+                            if (!m.nx || m.nx < expected.nx) m.nx = expected.nx;
+                            if (m.m > expected.m * 3) {
+                                m.m = expected.m;
+                                m.at = expected.at;
+                                m.df = expected.df;
+                                m.sp = expected.sp;
+                                m.nx = expected.nx;
+                            }
                         }
                     } else {
                         if ((m.m || 0) < expected.m) m.m = expected.m;
@@ -3126,6 +3149,7 @@
                 } catch (e) { console.error("ロード失敗", e); }
             }
             ensureDailyQuestCurrent();
+            updateTitleBg();
             if (isDungeonLocked()) {
                 startDungeonLock(dungeonLockUntil - Date.now());
             } else {
@@ -3687,7 +3711,7 @@
             stg = nextVal;
             saveGame();
             upBattleUI();
-        }
+                    }
         let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
@@ -4639,14 +4663,15 @@
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
                 let bossLv = getDungeonEnemyLv(stg);
+                let bossScale = 1 + (bossLv / 35);
                 let bossEx = Math.max(b.ex, Math.floor(b.ex * (0.4 + Math.pow(bossLv, 1.15) * 0.18)));
                 let bossMon = {
                     n: bossName,
-                    m: Math.ceil(b.hp * mult),
-                    hp: Math.ceil(b.hp * mult),
-                    at: Math.ceil(b.at * mult),
-                    df: Math.ceil(b.df * mult),
-                    sp: Math.ceil(b.sp * mult),
+                    m: Math.ceil(b.hp * mult * bossScale),
+                    hp: Math.ceil(b.hp * mult * bossScale),
+                    at: Math.ceil(b.at * mult * bossScale),
+                    df: Math.ceil(b.df * mult * bossScale),
+                    sp: Math.ceil(b.sp * mult * bossScale),
                     ex: bossEx * (isRare ? 2 : 1),
                     fixedLv: bossLv,
                     isBoss: true,
@@ -4808,17 +4833,18 @@
                 let rawEx = Math.max(1, Math.floor(((b.ex || 1) * 0.6 + 0.5) * Math.pow(enemyLv, 1.45)));
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
-                let rawHp = b.hp + Math.floor(stageBonus * hpMult);
-                let rawAt = b.at + Math.floor(stageBonus * atMult);
-                let rawDf = b.df + Math.floor(stageBonus * dfMult);
-                let rawSp = b.sp + Math.floor(stageBonus * spMult);
+                let lvStats = calcStatsByLevel(b, enemyLv, isRare);
+                let rawHp = Math.max(lvStats.m, Math.ceil((b.hp + Math.floor(stageBonus * hpMult)) * mult));
+                let rawAt = Math.max(lvStats.at, Math.ceil((b.at + Math.floor(stageBonus * atMult)) * mult));
+                let rawDf = Math.max(lvStats.df, Math.ceil((b.df + Math.floor(stageBonus * dfMult)) * mult));
+                let rawSp = Math.max(lvStats.sp, Math.ceil((b.sp + Math.floor(stageBonus * spMult)) * mult));
                 let enemyMon = {
                     n: n,
-                    m: Math.ceil(rawHp * mult),
-                    hp: Math.ceil(rawHp * mult),
-                    at: Math.ceil(rawAt * mult),
-                    df: Math.ceil(rawDf * mult),
-                    sp: Math.ceil(rawSp * mult),
+                    m: rawHp,
+                    hp: rawHp,
+                    at: rawAt,
+                    df: rawDf,
+                    sp: rawSp,
                     ex: rawEx * (isRare ? 2 : 1),
                     fixedLv: enemyLv,
                     isRare: isRare,
@@ -5411,7 +5437,7 @@
             document.getElementById("battleLog").innerText = "🏡 拠点へ戻りました（⏳国王護衛中）。";
             saveGame();
             up(true);
-                }
+        }
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
@@ -5808,7 +5834,6 @@
         function showGodEntityHint() {
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
         }
-
         function upBattleUI() {
             if (!inDungeon) {
                 clearBattleVisualEffects();
@@ -6130,7 +6155,7 @@
                     evPanel.innerHTML =
                         '<div class="event-title" style="color:#0369a1;">🧑‍✈️ 元船長「ほう、1000階を制覇した冒険者か！」</div>' +
                         '<div class="event-sub" style="text-align:left; background:rgba(255,255,255,0.88); padding:7px 9px; border-radius:9px; border:1px solid #bae6fd; color:#1e293b;">' +
-                            '「かつてわしが大海原を旅したとき、<b>【201階〜299階（250階を除く）】</b>の海のエリアで、<b>3%の確率</b>で伝説の<b>『🔱海底神殿』</b>の入口に辿り着いたことがあるんじゃ！<br>' +
+                            '「かつてわしが大海原を旅したとき、<b>【201階〜299階（250階除く）】</b>の海のエリアで、<b>3%の確率</b>で伝説の<b>『🔱海底神殿』</b>の入口に辿り着いたことがあるんじゃ！<br>' +
                             '中は1001階〜1050階、すべての敵がLv.100の未知の領域じゃが、おぬしならきっと攻略できるはずじゃぞ！」' +
                         '</div>' +
                         '<div class="event-btn-row">' +
@@ -6671,6 +6696,7 @@
                         bulkReleaseMode = false;
                         bulkSelectedMons.clear();
                         hydrateLoadedData(data);
+                        updateTitleBg();
                         saveGame();
                         try { updateBgmState(true); } catch (e) {}
                         showGameAlert("📥 データの復元に成功しました！", "💾 復元完了");
@@ -6754,6 +6780,7 @@
                 maxClearStg = Math.max(maxClearStg, 1000);
                 maxStg = Math.max(maxStg, 1000);
                 if (!inDungeon && stg < 1000) stg = 1000;
+                updateTitleBg();
                 field.value = "";
                 seMixSuccess();
                 updateSpeedButtonUI();
@@ -7770,6 +7797,7 @@
                                                 showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
                                                 setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
                                             } else if (clearedStg === 1000) {
+                                                updateTitleBg();
                                                 needsFullUpdate = true;
                                                 seMixSuccess();
                                                 showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
@@ -7924,7 +7952,6 @@
                 recoverFromTurnError(err);
             }
         }
-
         function mix() {
             if(inDungeon) return;
 
