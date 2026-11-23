@@ -1736,7 +1736,7 @@
                         👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
-                        ※50階ごとのボス戦にのみ出現！配合不可・野生加入（1%）限定モンスター（仲間になるとステータスは1/4(切り上げ)になります）
+                        ※50階ごとのボス戦にのみ出現！配合不可・野生加入（1%）限定モンスター（仲間になるとステータスは1/7(切り上げ)になります）
                     </p>
                     <div id="bossZk" class="grid"></div>
                 </div>
@@ -2011,10 +2011,10 @@
                 return {
                     no: b.no,
                     a: b.a,
-                    hp: Math.ceil(b.hp / 4),
-                    at: Math.ceil(b.at / 4),
-                    df: Math.ceil(b.df / 4),
-                    sp: Math.ceil(b.sp / 4),
+                    hp: Math.ceil(b.hp / 7),
+                    at: Math.ceil(b.at / 7),
+                    df: Math.ceil(b.df / 7),
+                    sp: Math.ceil(b.sp / 7),
                     ex: b.ex
                 };
             }
