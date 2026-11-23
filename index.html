@@ -6,7 +6,26 @@
     <title>みっくすえもじ</title>
     <link rel="icon" type="image/png" href="file_00000000b3e48211bce6a50c57a72164.png">
     <link rel="apple-touch-icon" href="file_00000000b3e48211bce6a50c57a72164.png">
-    <link rel="preload" as="image" href="1000041415.png" fetchpriority="high">
+    <script>
+        (function() {
+            var isCleared1000 = false;
+            try {
+                var raw = localStorage.getItem("mix_emoji_save_v9") || localStorage.getItem("mix_emoji_save_v8") || localStorage.getItem("mix_emoji_save_v7");
+                if (raw) {
+                    var d = JSON.parse(raw);
+                    var cs = (typeof d.maxClearStg === "number") ? d.maxClearStg : Math.max(0, (d.maxStg || 1) - 1);
+                    if (cs >= 1000) isCleared1000 = true;
+                }
+            } catch (e) {}
+            window.__INIT_CLEARED_1000__ = isCleared1000;
+            if (isCleared1000) document.documentElement.classList.add("cleared-1000");
+            var pl = document.createElement("link");
+            pl.rel = "preload";
+            pl.as = "image";
+            pl.href = isCleared1000 ? "1000041649 (1).png" : "1000041415.png";
+            (document.head || document.getElementsByTagName("head")[0]).appendChild(pl);
+        })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous" defer onload="if(typeof initEmojiObserver==='function' && !emojiObserver) initEmojiObserver();"></script>
     <style>
         * {
@@ -72,6 +91,9 @@
             z-index: 0;
             pointer-events: none;
             will-change: transform;
+        }
+        html.cleared-1000 .title-bg-blur {
+            background-image: url('1000041649 (1).png');
         }
         .title-full-img {
             position: absolute;
@@ -1493,7 +1515,13 @@
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
-        <img src="1000041415.png" id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
+        <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
+        <script>
+            (function() {
+                var img = document.getElementById("titleFullImg");
+                if (img) img.src = window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png";
+            })();
+        </script>
         <button class="btn-start" onclick="startGame()">START</button>
     </div>
 
@@ -2959,7 +2987,9 @@
         }
 
         function updateTitleBg() {
-            const imgFile = (maxClearStg >= 1000) ? "1000041649 (1).png" : "1000041415.png";
+            const isCleared = (maxClearStg >= 1000);
+            document.documentElement.classList.toggle("cleared-1000", isCleared);
+            const imgFile = isCleared ? "1000041649 (1).png" : "1000041415.png";
             const blurEl = document.getElementById("titleBgBlur");
             const imgEl = document.getElementById("titleFullImg");
             if (blurEl) blurEl.style.backgroundImage = "url('" + imgFile + "')";
@@ -3711,7 +3741,7 @@
             stg = nextVal;
             saveGame();
             upBattleUI();
-                    }
+        }
         let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
@@ -4607,7 +4637,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-        }
+                        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -5437,7 +5467,7 @@
             document.getElementById("battleLog").innerText = "🏡 拠点へ戻りました（⏳国王護衛中）。";
             saveGame();
             up(true);
-        }
+                }
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
