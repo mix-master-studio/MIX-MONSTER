@@ -5798,7 +5798,7 @@
             const b = BOSS_D[targetName];
             if (!b) return;
             let areaNote = b.stage === 1050 ? "（海底神殿）" : (b.stage === 1100 ? "（天空城）" : "");
-            showGameAlert("No." + b.no + "（" + b.stage + "階ボス" + areaNote + "）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時1%で仲間になり、仲間時はステータスが1/4(切り上げ)になります）", "👑 ボス出現情報");
+            showGameAlert("No." + b.no + "（" + b.stage + "階ボス" + areaNote + "）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時1%で仲間になり、仲間時はステータスが1/7(切り上げ)になります）", "👑 ボス出現情報");
         }
 
         function showZombieHeroHint() {
