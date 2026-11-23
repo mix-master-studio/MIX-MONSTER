@@ -1736,7 +1736,7 @@
                         👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
-                        ※50階ごとのボス戦にのみ出現！配合不可・野生加入（1%）限定モンスター
+                        ※50階ごとのボス戦にのみ出現！配合不可・野生加入（1%）限定モンスター（仲間になるとステータスは1/4(切り上げ)になります）
                     </p>
                     <div id="bossZk" class="grid"></div>
                 </div>
@@ -2004,6 +2004,23 @@
             return D[name] || BOSS_D[name] || SPECIAL_D[name];
         }
 
+        function getAllyBaseStats(name) {
+            const b = getMonData(name);
+            if (!b) return null;
+            if (typeof b.no === "number" && b.no < 0) {
+                return {
+                    no: b.no,
+                    a: b.a,
+                    hp: Math.ceil(b.hp / 4),
+                    at: Math.ceil(b.at / 4),
+                    df: Math.ceil(b.df / 4),
+                    sp: Math.ceil(b.sp / 4),
+                    ex: b.ex
+                };
+            }
+            return b;
+        }
+
         function isZombieMon(nameOrMon) {
             if (!nameOrMon) return false;
             if (typeof nameOrMon === "string") return nameOrMon === "廃国のゾンビ絵文字勇者";
@@ -2268,7 +2285,7 @@
 
         function showSkillInfo(skillName, skillDesc) {
             showGameAlert(skillName + "\n\n" + skillDesc, "📜 スキル詳細");
-                }
+        }
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
         const MAX_LV_CAP_BONUS = 20;
@@ -2497,7 +2514,7 @@
         }
 
         function levelUpMonster(mon, addLevels) {
-            const b = getMonData(mon.n);
+            const b = getAllyBaseStats(mon.n);
             if (!b) return 0;
             const mult = mon.isRare ? 1.25 : 1;
             const maxLv = getMaxLv(mon);
@@ -2519,7 +2536,7 @@
 
         function grantExpToSingleMonster(mon, gainExp) {
             if (!mon || gainExp < 0) return 0;
-            const b = getMonData(mon.n);
+            const b = getAllyBaseStats(mon.n);
             if (!b) return 0;
             const maxLv = getMaxLv(mon);
             const mult = mon.isRare ? 1.25 : 1;
@@ -2575,9 +2592,12 @@
         }
 
         const DAILY_REWARD_POOL = [
-            { key: "mix",  label: "🧬配合+0.1%", val: 0.001 },
-            { key: "wild", label: "🧲加入+0.1%", val: 0.001 },
-            { key: "exp",  label: "💎EXP+1%",    val: 0.01  }
+            { key: "mix",    label: "🧬配合+0.1%", val: 0.001 },
+            { key: "wild",   label: "🧲加入+0.1%", val: 0.001 },
+            { key: "exp05",  label: "💎EXP+0.5%",  val: 0.005 },
+            { key: "exp",    label: "💎EXP+1%",    val: 0.01  },
+            { key: "exp15",  label: "💎EXP+1.5%",  val: 0.015 },
+            { key: "exp2",   label: "💎EXP+2%",    val: 0.02  }
         ];
 
         function getTodayDateStr() {
@@ -2794,7 +2814,7 @@
                 stats.kingHelpCount,
                 Math.round(mixBonus * 1000),
                 Math.round(wildJoinBonus * 1000),
-                Math.round(expBonusRate * 100)
+                Math.round(expBonusRate * 1000)
             ].join("_");
 
             if (!force && !dailyReset && sig === lastRenderedMissionSig) return;
@@ -2856,7 +2876,8 @@
             if (bonusBar) {
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + Math.round(expBonusRate * 100) + "%";
+                const expPct = Math.round(expBonusRate * 1000) / 10;
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + expPct + "%";
             }
         }
 
@@ -2867,9 +2888,11 @@
 
             dq.claimed = true;
             dq.rewards.forEach(k => {
-                if (k === "mix") addMixBonusCapped(0.001);
-                else if (k === "wild") wildJoinBonus = Math.round((wildJoinBonus + 0.001) * 10000) / 10000;
-                else if (k === "exp") expBonusRate = Math.round((expBonusRate + 0.01) * 1000) / 1000;
+                const item = DAILY_REWARD_POOL.find(x => x.key === k);
+                if (!item) return;
+                if (k === "mix") addMixBonusCapped(item.val);
+                else if (k === "wild") wildJoinBonus = Math.round((wildJoinBonus + item.val) * 10000) / 10000;
+                else if (k.indexOf("exp") === 0) expBonusRate = Math.round((expBonusRate + item.val) * 1000) / 1000;
             });
 
             seStageClear();
@@ -3043,6 +3066,28 @@
                 m.lvCapBonus = (typeof m.lvCapBonus === "number") ? Math.min(MAX_LV_CAP_BONUS, Math.max(0, Math.floor(m.lvCapBonus))) : 0;
                 if (m.isRare) getRareSkillObj(m);
                 getSkillObj(m);
+
+                const allyBase = getAllyBaseStats(m.n);
+                if (allyBase) {
+                    const expected = calcStatsByLevel(allyBase, m.lv || 1, m.isRare);
+                    if (typeof allyBase.no === "number" && allyBase.no < 0) {
+                        if (!m.bossQuarterApplied) {
+                            m.m = expected.m;
+                            m.at = expected.at;
+                            m.df = expected.df;
+                            m.sp = expected.sp;
+                            m.nx = expected.nx;
+                            m.bossQuarterApplied = true;
+                        }
+                    } else {
+                        if ((m.m || 0) < expected.m) m.m = expected.m;
+                        if ((m.at || 0) < expected.at) m.at = expected.at;
+                        if ((m.df || 0) < expected.df) m.df = expected.df;
+                        if ((m.sp || 0) < expected.sp) m.sp = expected.sp;
+                        if (!m.nx || m.nx < expected.nx) m.nx = expected.nx;
+                    }
+                }
+
                 initBattleState(m);
                 m.hp = m.m;
                 markZkAndSeen(m.n);
@@ -3076,6 +3121,7 @@
                     const data = JSON.parse(saved);
                     if (data.p && data.p.length > 0) {
                         hydrateLoadedData(data);
+                        saveGame();
                     }
                 } catch (e) { console.error("ロード失敗", e); }
             }
@@ -3641,7 +3687,7 @@
             stg = nextVal;
             saveGame();
             upBattleUI();
-                }
+        }
         let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
@@ -4537,7 +4583,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-                         }
+        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -5365,7 +5411,7 @@
             document.getElementById("battleLog").innerText = "🏡 拠点へ戻りました（⏳国王護衛中）。";
             saveGame();
             up(true);
-                        }
+                }
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
@@ -5522,9 +5568,9 @@
                     ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】永続で配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 3) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.005) * 10000) / 10000;
+                wildJoinBonus = Math.round((wildJoinBonus + 0.002) * 10000) / 10000;
                 seStageClear();
-                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.5%された。そして出国した！";
+                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！";
             } else if (choice === 4) {
                 expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
                 seStageClear();
@@ -5568,9 +5614,9 @@
                     ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】永続で配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 12) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.002) * 10000) / 10000;
+                wildJoinBonus = Math.round((wildJoinBonus + 0.001) * 10000) / 10000;
                 seStageClear();
-                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！";
+                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された。そして出国した！";
             } else if (choice === 13) {
                 expBonusRate = Math.round((expBonusRate + 0.03) * 1000) / 1000;
                 seStageClear();
@@ -5580,7 +5626,7 @@
                 const g = top ? levelUpMonster(top, 1) : 0;
                 seLvUp();
                 msg = g > 0
-                    ? ("🏪 商店で『🍀四つ葉のしおり』を受け取った！【効果】戦闘1番手「" + top.n + "」のLvが+1された（Lv." + top.lv + "）。そして出国した！")
+                    ? ("🏪 商店で『🍀四つ葉のしおり』を受け取った！【効果】戦闘1番手(先頭)の「" + top.n + "」のLvが+1された（Lv." + top.lv + "）。そして出国した！")
                     : ("🏪 商店で『🍀四つ葉のしおり』を受け取った！【効果】戦闘1番手が上限Lvのため上がらなかった。そして出国した！");
             } else {
                 const reserves = p.filter(m => !m.inParty && m.lv < getMaxLv(m));
@@ -5752,7 +5798,7 @@
             const b = BOSS_D[targetName];
             if (!b) return;
             let areaNote = b.stage === 1050 ? "（海底神殿）" : (b.stage === 1100 ? "（天空城）" : "");
-            showGameAlert("No." + b.no + "（" + b.stage + "階ボス" + areaNote + "）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時1%で仲間になります）", "👑 ボス出現情報");
+            showGameAlert("No." + b.no + "（" + b.stage + "階ボス" + areaNote + "）\n\n" + b.stage + "階のボス戦にのみ出現します！（撃破時1%で仲間になり、仲間時はステータスが1/4(切り上げ)になります）", "👑 ボス出現情報");
         }
 
         function showZombieHeroHint() {
@@ -6253,7 +6299,7 @@
                     const shopDefs = {
                         1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
                         2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.5%アップする</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップする</span></button>',
                         4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
                         5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
                         6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員の<br>HP全回復＆EXP+25</span></button>',
@@ -6262,7 +6308,7 @@
                         9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
                         10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
                         11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップする</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップする</span></button>',
                         13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
                         14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
                         15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<span class="item-desc-mini">【効果】上限未満の控え1体を<br>ランダムでレベル+2する</span></button>'
@@ -7597,7 +7643,7 @@
                                             if (p.length >= boxLimit) {
                                                 turnLog += "📦ボックス上限(" + boxLimit + "体)のため廃国のゾンビ絵文字勇者は仲間にならなかった… ";
                                             } else {
-                                                const zh = SPECIAL_D["廃国のゾンビ絵文字勇者"];
+                                                const zh = getAllyBaseStats("廃国のゾンビ絵文字勇者");
                                                 const joinLv = currentEnemy.fixedLv || 50;
                                                 const stJoin = calcStatsByLevel(zh, joinLv, false);
                                                 let newAlly = {
@@ -7633,7 +7679,7 @@
                                             showNotice("⚠️ ボックスが上限(" + boxLimit + "体)のため「星辰の神龍 (No.B)」が仲間にならなかった…", 7000);
                                             turnLog += "📦ボックス上限(" + boxLimit + "体)のため星辰の神龍は仲間にならなかった… ";
                                         } else {
-                                            const gd = SPECIAL_D["星辰の神龍"];
+                                            const gd = getAllyBaseStats("星辰の神龍");
                                             const st100 = calcStatsByLevel(gd, 100, false);
                                             let newAlly = {
                                                 n: "星辰の神龍", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m, at: st100.at, df: st100.df, sp: st100.sp,
@@ -7683,13 +7729,15 @@
                                             if (p.length >= boxLimit) {
                                                 turnLog += "📦ボックス上限(" + boxLimit + "体)のため" + currentEnemy.n + "は仲間にならなかった… ";
                                             } else {
-                                                const b = getMonData(currentEnemy.n);
+                                                const b = getAllyBaseStats(currentEnemy.n);
+                                                const isBossUnit = (typeof b.no === "number" && b.no < 0);
                                                 const isRareNew = Boolean(currentEnemy.isRare);
                                                 const joinLv = Math.min(100, currentEnemy.fixedLv ? currentEnemy.fixedLv : getDungeonEnemyLv(stg));
                                                 const stJoin = calcStatsByLevel(b, joinLv, isRareNew);
                                                 let newAlly = {
                                                     n: currentEnemy.n, lv: joinLv, lvCapBonus: 0, m: stJoin.m, hp: stJoin.m, at: stJoin.at, df: stJoin.df, sp: stJoin.sp,
                                                     ex: 0, nx: stJoin.nx, inParty: false, partyOrder: 0, locked: false,
+                                                    bossQuarterApplied: isBossUnit,
                                                     isRare: isRareNew, rareSkillId: isRareNew ? (currentEnemy.rareSkillId || getRandomRareSkillId()) : 0,
                                                     skillId: getRandomSkillId()
                                                 };
