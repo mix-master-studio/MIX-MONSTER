@@ -19,11 +19,30 @@
             } catch (e) {}
             window.__INIT_CLEARED_1000__ = isCleared1000;
             if (isCleared1000) document.documentElement.classList.add("cleared-1000");
+            var titleImgFile = isCleared1000 ? "1000041649 (1).png" : "1000041415.png";
+            window.__TITLE_IMG_FILE__ = titleImgFile;
             var pl = document.createElement("link");
             pl.rel = "preload";
             pl.as = "image";
-            pl.href = isCleared1000 ? "1000041649 (1).png" : "1000041415.png";
+            pl.fetchPriority = "high";
+            pl.href = titleImgFile;
             (document.head || document.getElementsByTagName("head")[0]).appendChild(pl);
+            var preImg = new Image();
+            preImg.decoding = "async";
+            preImg.src = titleImgFile;
+            window.__PRELOAD_TITLE_IMG__ = preImg;
+
+            window.__START_REQUESTED__ = false;
+            window.startGame = function() {
+                window.__START_REQUESTED__ = true;
+                var ts = document.getElementById("titleScreen");
+                if (ts) {
+                    ts.style.pointerEvents = "none";
+                    ts.classList.add("hide");
+                }
+                document.documentElement.classList.remove("title-locked");
+                if (document.body) document.body.classList.remove("title-locked");
+            };
         })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous" defer onload="if(typeof initEmojiObserver==='function' && !emojiObserver) initEmojiObserver();"></script>
@@ -39,7 +58,7 @@
             width: 100% !important;
             position: fixed !important;
             inset: 0 !important;
-            touch-action: none !important;
+            touch-action: manipulation !important;
             overscroll-behavior: none !important;
         }
         body {
@@ -74,26 +93,28 @@
             justify-content: flex-end;
             padding: 20px 20px 60px;
             overflow: hidden;
-            touch-action: none;
+            touch-action: manipulation;
             overscroll-behavior: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.35s ease;
         }
         #titleScreen.hide {
             opacity: 0;
-            pointer-events: none;
+            pointer-events: none !important;
         }
         .title-bg-blur {
             position: absolute;
-            inset: -20px;
-            background: url('1000041415.png') center center / cover no-repeat;
-            filter: blur(16px) brightness(0.95) saturate(1.15);
-            opacity: 0.72;
+            inset: -16px;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: blur(10px) brightness(0.95) saturate(1.1);
+            opacity: 0;
             z-index: 0;
-            pointer-events: none;
-            will-change: transform;
+            pointer-events: none !important;
+            transition: opacity 0.3s ease;
         }
-        html.cleared-1000 .title-bg-blur {
-            background-image: url('1000041649 (1).png');
+        .title-bg-blur.ready {
+            opacity: 0.65;
         }
         .title-full-img {
             position: absolute;
@@ -102,25 +123,26 @@
             height: 100%;
             object-fit: contain;
             z-index: 1;
-            pointer-events: none;
+            pointer-events: none !important;
         }
         .btn-start {
             position: relative;
-            z-index: 10;
+            z-index: 30;
+            pointer-events: auto !important;
+            touch-action: manipulation !important;
+            cursor: pointer;
             width: 78% !important;
             max-width: 265px;
             padding: 15px 22px !important;
             font-size: 20px !important;
             letter-spacing: 5px;
             border-radius: 20px !important;
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.58) 0%, rgba(5, 150, 105, 0.65) 100%) !important;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 2px solid rgba(167, 243, 208, 0.82) !important;
-            border-bottom: 5px solid rgba(4, 120, 87, 0.82) !important;
+            background: linear-gradient(180deg, rgba(52, 211, 153, 0.84) 0%, rgba(5, 150, 105, 0.90) 100%) !important;
+            border: 2px solid rgba(167, 243, 208, 0.92) !important;
+            border-bottom: 5px solid rgba(4, 120, 87, 0.92) !important;
             color: #ffffff !important;
             text-shadow: 0 2px 6px rgba(4, 120, 87, 0.85);
-            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.32), inset 0 2px 0 rgba(255, 255, 255, 0.55) !important;
+            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.36), inset 0 2px 0 rgba(255, 255, 255, 0.55) !important;
             animation: startPulse 1.8s infinite ease-in-out;
         }
         @keyframes startPulse {
@@ -692,7 +714,6 @@
         .bg-zombie { border-color: #14532d !important; background: linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #14532d 100%) !important; box-shadow: 0 0 26px rgba(0, 0, 0, 0.45); }
         .bg-god { border-color: #eab308 !important; background: linear-gradient(180deg, #1e1b4b 0%, #312e81 55%, #581c87 100%) !important; box-shadow: 0 0 28px rgba(250, 204, 21, 0.48); }
         .silhouette { filter: brightness(0) opacity(0.35); display: inline-block; }
-
         .zombie-aura-wrap {
             position: relative;
             display: inline-block;
@@ -1069,7 +1090,7 @@
             border-radius: 8px;
             display: flex;
             flex-wrap: wrap;
-            gap: 3px;
+            gap: 4px;
             align-items: center;
         }
         .skill-badge {
@@ -1078,11 +1099,14 @@
             color: #0369a1;
             border: 1px solid #7dd3fc;
             border-radius: 6px;
-            padding: 1px 5px;
-            font-size: 9px;
+            padding: 3px 6px;
+            font-size: 9.5px;
             font-weight: 800;
             cursor: pointer;
             line-height: 1.35;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .skill-badge-rare {
             background: linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%);
@@ -1511,18 +1535,36 @@
             -webkit-text-fill-color: initial;
         }
     </style>
-    </head>
+</head>
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
-        <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
+        <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
         <script>
             (function() {
+                var imgFile = window.__TITLE_IMG_FILE__ || (window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png");
                 var img = document.getElementById("titleFullImg");
-                if (img) img.src = window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png";
+                var blurEl = document.getElementById("titleBgBlur");
+                if (img) {
+                    img.onload = function() {
+                        img.style.display = "";
+                        if (blurEl) {
+                            blurEl.style.backgroundImage = "url('" + imgFile + "')";
+                            blurEl.classList.add("ready");
+                        }
+                    };
+                    img.onerror = function() {
+                        img.style.display = "none";
+                    };
+                    img.src = imgFile;
+                    if (img.complete && img.naturalWidth > 0 && blurEl) {
+                        blurEl.style.backgroundImage = "url('" + imgFile + "')";
+                        blurEl.classList.add("ready");
+                    }
+                }
             })();
         </script>
-        <button class="btn-start" onclick="startGame()">START</button>
+        <button type="button" class="btn-start" onclick="startGame()">START</button>
     </div>
 
     <canvas id="bgCanvas"></canvas>
@@ -2252,6 +2294,20 @@
         let dialogQueue = [];
         let isDialogOpen = false;
 
+        function escapeHtml(str) {
+            return String(str == null ? "" : str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function renderSkillBadge(extraClass, prefix, skillName, skillDesc) {
+            const cls = extraClass ? ("skill-badge " + extraClass) : "skill-badge";
+            return '<span class="' + cls + '" role="button" tabindex="0" data-skill-name="' + escapeHtml(skillName) + '" data-skill-desc="' + escapeHtml(skillDesc) + '">' + escapeHtml(prefix + skillName) + '</span>';
+        }
+
         function openNextDialog() {
             if (isDialogOpen || dialogQueue.length === 0) return;
             const item = dialogQueue.shift();
@@ -2313,6 +2369,30 @@
         function showSkillInfo(skillName, skillDesc) {
             showGameAlert(skillName + "\n\n" + skillDesc, "📜 スキル詳細");
         }
+
+        document.addEventListener("click", function(e) {
+            const badge = (e.target && e.target.closest) ? e.target.closest(".skill-badge") : null;
+            if (!badge) return;
+            const sName = badge.getAttribute("data-skill-name");
+            const sDesc = badge.getAttribute("data-skill-desc");
+            if (!sName || sDesc === null) return;
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof initAudio === "function") initAudio();
+            if (typeof soundEnabled !== "undefined" && soundEnabled && typeof seButtonTap === "function") seButtonTap();
+            showSkillInfo(sName, sDesc);
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key !== "Enter" && e.key !== " ") return;
+            const badge = (e.target && e.target.closest) ? e.target.closest(".skill-badge") : null;
+            if (!badge) return;
+            const sName = badge.getAttribute("data-skill-name");
+            const sDesc = badge.getAttribute("data-skill-desc");
+            if (!sName || sDesc === null) return;
+            e.preventDefault();
+            showSkillInfo(sName, sDesc);
+        });
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
         const MAX_LV_CAP_BONUS = 20;
@@ -2379,6 +2459,8 @@
         let lastRenderedZukanSig = "";
         let lastRenderedMissionSig = "";
         let lastRenderedBoxSig = "";
+        let lastRenderedMyBattleSig = "";
+        let lastRenderedEBattleSig = "";
         let currentTab = "battle";
         let boxToastTimer = null;
         let questToastTimer = null;
@@ -2948,7 +3030,6 @@
             saveGame();
             up(true);
         }
-
         function getDungeonLockRemainSec() {
             if (!dungeonLockUntil) return 0;
             const diff = Math.ceil((dungeonLockUntil - Date.now()) / 1000);
@@ -2990,12 +3071,23 @@
             const isCleared = (maxClearStg >= 1000);
             document.documentElement.classList.toggle("cleared-1000", isCleared);
             const imgFile = isCleared ? "1000041649 (1).png" : "1000041415.png";
+            window.__TITLE_IMG_FILE__ = imgFile;
             const blurEl = document.getElementById("titleBgBlur");
             const imgEl = document.getElementById("titleFullImg");
-            if (blurEl) blurEl.style.backgroundImage = "url('" + imgFile + "')";
             if (imgEl && imgEl.getAttribute("src") !== imgFile) {
+                if (blurEl) blurEl.classList.remove("ready");
+                imgEl.onload = function() {
+                    imgEl.style.display = "";
+                    if (blurEl) {
+                        blurEl.style.backgroundImage = "url('" + imgFile + "')";
+                        blurEl.classList.add("ready");
+                    }
+                };
                 imgEl.style.display = "";
                 imgEl.src = imgFile;
+            } else if (blurEl && imgEl && imgEl.complete && imgEl.naturalWidth > 0) {
+                blurEl.style.backgroundImage = "url('" + imgFile + "')";
+                blurEl.classList.add("ready");
             }
         }
 
@@ -3159,6 +3251,8 @@
             partyOrderCounter = maxOrd;
             lastRenderedZukanSig = "";
             lastRenderedBoxSig = "";
+            lastRenderedMyBattleSig = "";
+            lastRenderedEBattleSig = "";
             if (battleSpeed === 3 && maxClearStg < 500) battleSpeed = 1;
         }
 
@@ -4180,11 +4274,11 @@
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 bgParticles = [];
-                for (let i = 0; i < 36; i++) {
+                for (let i = 0; i < 28; i++) {
                     bgParticles.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        r: 1.8 + Math.random() * 3.5,
+                        r: 1.8 + Math.random() * 3.2,
                         vx: (Math.random() - 0.5) * 0.35,
                         vy: -0.25 - Math.random() * 0.45,
                         phase: Math.random() * Math.PI * 2,
@@ -4196,31 +4290,34 @@
         }
 
         function startBgCanvasLoop() {
+            let bgFrameToggle = 0;
             function bgLoop() {
-                const canvas = document.getElementById("bgCanvas");
-                if (canvas) {
-                    if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-                        canvas.width = window.innerWidth;
-                        canvas.height = window.innerHeight;
-                    }
-                    const ctx = canvas.getContext("2d");
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    for (let i = 0; i < bgParticles.length; i++) {
-                        const pt = bgParticles[i];
-                        pt.phase += 0.025;
-                        pt.x += pt.vx + Math.sin(pt.phase) * 0.2;
-                        pt.y += pt.vy;
-                        if (pt.y < -10) { pt.y = canvas.height + 10; pt.x = Math.random() * canvas.width; }
-                        if (pt.x < -10) pt.x = canvas.width + 10;
-                        if (pt.x > canvas.width + 10) pt.x = -10;
+                bgFrameToggle = (bgFrameToggle + 1) & 1;
+                if (!document.hidden && !document.documentElement.classList.contains("title-locked") && bgFrameToggle === 0) {
+                    const canvas = document.getElementById("bgCanvas");
+                    if (canvas) {
+                        if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                            canvas.width = window.innerWidth;
+                            canvas.height = window.innerHeight;
+                        }
+                        const ctx = canvas.getContext("2d");
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        for (let i = 0; i < bgParticles.length; i++) {
+                            const pt = bgParticles[i];
+                            pt.phase += 0.04;
+                            pt.x += (pt.vx + Math.sin(pt.phase) * 0.2) * 1.5;
+                            pt.y += pt.vy * 1.5;
+                            if (pt.y < -10) { pt.y = canvas.height + 10; pt.x = Math.random() * canvas.width; }
+                            if (pt.x < -10) pt.x = canvas.width + 10;
+                            if (pt.x > canvas.width + 10) pt.x = -10;
 
-                        ctx.save();
-                        ctx.globalAlpha = 0.24 + Math.sin(pt.phase) * 0.14;
-                        ctx.fillStyle = pt.hue;
-                        ctx.beginPath();
-                        ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.restore();
+                            ctx.globalAlpha = 0.24 + Math.sin(pt.phase) * 0.14;
+                            ctx.fillStyle = pt.hue;
+                            ctx.beginPath();
+                            ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        ctx.globalAlpha = 1;
                     }
                 }
                 bgCanvasRaf = requestAnimationFrame(bgLoop);
@@ -4319,16 +4416,19 @@
             const cx = pos ? pos.x : (isEnemyTarget ? canvas.width * 0.75 : canvas.width * 0.25);
             const cy = pos ? pos.y : (canvas.height * 0.35);
 
-            battleRings.push({
-                x: cx,
-                y: cy,
-                r: 5,
-                maxR: count >= 14 ? 46 : 32,
-                life: 1,
-                color: color
-            });
+            if (battleRings.length < 16) {
+                battleRings.push({
+                    x: cx,
+                    y: cy,
+                    r: 5,
+                    maxR: count >= 14 ? 44 : 30,
+                    life: 1,
+                    color: color
+                });
+            }
 
-            for (let i = 0; i < count; i++) {
+            const cappedCount = Math.min(count, Math.max(0, 72 - battleBursts.length));
+            for (let i = 0; i < cappedCount; i++) {
                 const ang = Math.random() * Math.PI * 2;
                 const spd = 1.4 + Math.random() * 3.8;
                 battleBursts.push({
@@ -4338,15 +4438,16 @@
                     py: cy,
                     vx: Math.cos(ang) * spd,
                     vy: Math.sin(ang) * spd,
-                    r: 2.2 + Math.random() * 3.2,
+                    r: 2.2 + Math.random() * 3.0,
                     life: 1,
-                    decay: 0.025 + Math.random() * 0.02,
+                    decay: 0.032 + Math.random() * 0.02,
                     color: color
                 });
             }
         }
 
         function spawnBattleBeam(attackerMon, isAttackerEnemy, defenderMon, isDefenderEnemy, color) {
+            if (battleBeams.length >= 12) return;
             const from = getMonsterCenterInField(attackerMon, isAttackerEnemy);
             const to = getMonsterCenterInField(defenderMon, isDefenderEnemy);
             if (!from || !to) return;
@@ -4364,6 +4465,9 @@
         function showDamagePop(targetMon, isEnemyTarget, text, color, isCrit) {
             const fxLayer = document.getElementById("fxLayer");
             if (!fxLayer) return;
+            while (fxLayer.childElementCount >= 14 && fxLayer.firstChild) {
+                fxLayer.firstChild.remove();
+            }
             const pos = getMonsterCenterInField(targetMon, isEnemyTarget);
             if (!pos) return;
             const el = document.createElement("span");
@@ -4408,11 +4512,11 @@
                 canvas.width = field.clientWidth || 380;
                 canvas.height = field.clientHeight || 180;
                 battleParticles = [];
-                for (let i = 0; i < 24; i++) {
+                for (let i = 0; i < 18; i++) {
                     battleParticles.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        r: 1.5 + Math.random() * 2.5,
+                        r: 1.5 + Math.random() * 2.4,
                         phase: Math.random() * Math.PI * 2
                     });
                 }
@@ -4421,126 +4525,129 @@
         }
 
         function startBattleCanvasLoop() {
+            let idleSkip = 0;
             function loop() {
-                const canvas = document.getElementById("battleCanvas");
-                const field = document.getElementById("battleField");
-                if (canvas && field) {
-                    if (field.clientWidth > 0 && (canvas.width !== field.clientWidth || canvas.height !== field.clientHeight)) {
-                        canvas.width = field.clientWidth;
-                        canvas.height = field.clientHeight;
-                    }
-                    const ctx = canvas.getContext("2d");
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const isBattleVisible = !document.hidden && currentTab === "battle" && !document.documentElement.classList.contains("title-locked");
+                if (isBattleVisible) {
+                    const hasActiveFx = battleBeams.length > 0 || battleRings.length > 0 || battleBursts.length > 0;
+                    idleSkip = (idleSkip + 1) & 1;
+                    if (hasActiveFx || idleSkip === 0) {
+                        const canvas = document.getElementById("battleCanvas");
+                        const field = document.getElementById("battleField");
+                        if (canvas && field) {
+                            if (canvas.width === 0 || (field.clientWidth > 0 && Math.abs(canvas.width - field.clientWidth) > 2)) {
+                                canvas.width = field.clientWidth;
+                                canvas.height = field.clientHeight;
+                            }
+                            const ctx = canvas.getContext("2d");
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    const theme = getAreaParticleTheme();
-                    if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "transfer_gate" || currentEvent === "zombie_hero" || currentEvent === "god_entity" || currentEvent === "guild_master" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isSpecialGuildMaster || e.isZombieHero || e.isGodEntity))) {
-                        battleMagicAngle += 0.012;
-                        const mColor = (eg.some(e => e.isGodEntity) || currentEvent === "god_entity")
-                            ? "#facc15"
-                            : ((eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero")
-                                ? "#22c55e"
-                                : (currentEvent === "transfer_gate" || stg === 1100
-                                    ? "#f59e0b"
-                                    : (stg === 1050
-                                        ? "#06b6d4"
-                                        : (inKingdom ? "#eab308" : ((stg === 500 || stg === 1000) ? "#9333ea" : (isBossStage(stg) ? "#dc2626" : "#4f46e5"))))));
-                        drawMagicCircle(ctx, canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.42, battleMagicAngle, mColor, 0.16);
-                    }
+                            const theme = getAreaParticleTheme();
+                            if (inDungeon && (isBossStage(stg) || inKingdom || currentEvent === "transfer_gate" || currentEvent === "zombie_hero" || currentEvent === "god_entity" || currentEvent === "guild_master" || eg.some(e => e.isSpecialHero || e.isSpecialSage || e.isSpecialGuildMaster || e.isZombieHero || e.isGodEntity))) {
+                                battleMagicAngle += hasActiveFx ? 0.012 : 0.022;
+                                const mColor = (eg.some(e => e.isGodEntity) || currentEvent === "god_entity")
+                                    ? "#facc15"
+                                    : ((eg.some(e => e.isZombieHero) || currentEvent === "zombie_hero")
+                                        ? "#22c55e"
+                                        : (currentEvent === "transfer_gate" || stg === 1100
+                                            ? "#f59e0b"
+                                            : (stg === 1050
+                                                ? "#06b6d4"
+                                                : (inKingdom ? "#eab308" : ((stg === 500 || stg === 1000) ? "#9333ea" : (isBossStage(stg) ? "#dc2626" : "#4f46e5"))))));
+                                drawMagicCircle(ctx, canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.42, battleMagicAngle, mColor, 0.16);
+                            }
 
-                    for (let i = 0; i < battleParticles.length; i++) {
-                        const pt = battleParticles[i];
-                        pt.phase += 0.04;
-                        pt.x += theme.vx + Math.sin(pt.phase) * 0.25;
-                        pt.y += theme.vy;
-                        if (pt.x > canvas.width + 6) pt.x = -6;
-                        if (pt.x < -6) pt.x = canvas.width + 6;
-                        if (pt.y > canvas.height + 6) pt.y = -6;
-                        if (pt.y < -6) pt.y = canvas.height + 6;
+                            const pStep = hasActiveFx ? 1 : 1.8;
+                            ctx.fillStyle = theme.color;
+                            for (let i = 0; i < battleParticles.length; i++) {
+                                const pt = battleParticles[i];
+                                pt.phase += 0.04 * pStep;
+                                pt.x += (theme.vx + Math.sin(pt.phase) * 0.25) * pStep;
+                                pt.y += theme.vy * pStep;
+                                if (pt.x > canvas.width + 6) pt.x = -6;
+                                if (pt.x < -6) pt.x = canvas.width + 6;
+                                if (pt.y > canvas.height + 6) pt.y = -6;
+                                if (pt.y < -6) pt.y = canvas.height + 6;
 
-                        ctx.save();
-                        ctx.globalAlpha = 0.40 + Math.sin(pt.phase) * 0.20;
-                        ctx.fillStyle = theme.color;
-                        ctx.beginPath();
-                        ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.restore();
-                    }
+                                ctx.globalAlpha = 0.40 + Math.sin(pt.phase) * 0.20;
+                                ctx.beginPath();
+                                ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+                            ctx.globalAlpha = 1;
 
-                    for (let i = battleBeams.length - 1; i >= 0; i--) {
-                        const bm = battleBeams[i];
-                        bm.progress += bm.speed;
-                        if (bm.progress >= 1) {
-                            battleBeams.splice(i, 1);
-                            continue;
+                            for (let i = battleBeams.length - 1; i >= 0; i--) {
+                                const bm = battleBeams[i];
+                                bm.progress += bm.speed;
+                                if (bm.progress >= 1) {
+                                    battleBeams.splice(i, 1);
+                                    continue;
+                                }
+                                const cx = bm.x1 + (bm.x2 - bm.x1) * bm.progress;
+                                const cy = bm.y1 + (bm.y2 - bm.y1) * bm.progress - Math.sin(bm.progress * Math.PI) * 18;
+                                const tx = bm.x1 + (bm.x2 - bm.x1) * Math.max(0, bm.progress - 0.18);
+                                const ty = bm.y1 + (bm.y2 - bm.y1) * Math.max(0, bm.progress - 0.18) - Math.sin(Math.max(0, bm.progress - 0.18) * Math.PI) * 18;
+
+                                ctx.globalAlpha = 1 - bm.progress * 0.25;
+                                ctx.strokeStyle = bm.color;
+                                ctx.lineWidth = 4;
+                                ctx.lineCap = "round";
+                                ctx.beginPath();
+                                ctx.moveTo(tx, ty);
+                                ctx.lineTo(cx, cy);
+                                ctx.stroke();
+
+                                ctx.fillStyle = "#ffffff";
+                                ctx.beginPath();
+                                ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+
+                            for (let i = battleRings.length - 1; i >= 0; i--) {
+                                const rg = battleRings[i];
+                                rg.r += (rg.maxR - rg.r) * 0.18 + 1.2;
+                                rg.life -= 0.055;
+                                if (rg.life <= 0) {
+                                    battleRings.splice(i, 1);
+                                    continue;
+                                }
+                                ctx.globalAlpha = rg.life * 0.85;
+                                ctx.strokeStyle = rg.color;
+                                ctx.lineWidth = 2.6;
+                                ctx.beginPath();
+                                ctx.arc(rg.x, rg.y, rg.r, 0, Math.PI * 2);
+                                ctx.stroke();
+                            }
+
+                            for (let i = battleBursts.length - 1; i >= 0; i--) {
+                                const b = battleBursts[i];
+                                b.px = b.x;
+                                b.py = b.y;
+                                b.x += b.vx;
+                                b.y += b.vy;
+                                b.vx *= 0.96;
+                                b.vy *= 0.96;
+                                b.life -= b.decay;
+                                if (b.life <= 0) {
+                                    battleBursts.splice(i, 1);
+                                    continue;
+                                }
+                                ctx.globalAlpha = b.life;
+                                ctx.strokeStyle = b.color;
+                                ctx.lineWidth = b.r * 0.9;
+                                ctx.lineCap = "round";
+                                ctx.beginPath();
+                                ctx.moveTo(b.px, b.py);
+                                ctx.lineTo(b.x, b.y);
+                                ctx.stroke();
+
+                                ctx.fillStyle = "#ffffff";
+                                ctx.beginPath();
+                                ctx.arc(b.x, b.y, b.r * 0.65, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+                            ctx.globalAlpha = 1;
                         }
-                        const cx = bm.x1 + (bm.x2 - bm.x1) * bm.progress;
-                        const cy = bm.y1 + (bm.y2 - bm.y1) * bm.progress - Math.sin(bm.progress * Math.PI) * 18;
-                        const tx = bm.x1 + (bm.x2 - bm.x1) * Math.max(0, bm.progress - 0.18);
-                        const ty = bm.y1 + (bm.y2 - bm.y1) * Math.max(0, bm.progress - 0.18) - Math.sin(Math.max(0, bm.progress - 0.18) * Math.PI) * 18;
-
-                        ctx.save();
-                        ctx.globalAlpha = 1 - bm.progress * 0.25;
-                        ctx.strokeStyle = bm.color;
-                        ctx.lineWidth = 4;
-                        ctx.lineCap = "round";
-                        ctx.beginPath();
-                        ctx.moveTo(tx, ty);
-                        ctx.lineTo(cx, cy);
-                        ctx.stroke();
-
-                        ctx.fillStyle = "#ffffff";
-                        ctx.beginPath();
-                        ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.restore();
-                    }
-
-                    for (let i = battleRings.length - 1; i >= 0; i--) {
-                        const rg = battleRings[i];
-                        rg.r += (rg.maxR - rg.r) * 0.18 + 1.2;
-                        rg.life -= 0.055;
-                        if (rg.life <= 0) {
-                            battleRings.splice(i, 1);
-                            continue;
-                        }
-                        ctx.save();
-                        ctx.globalAlpha = rg.life * 0.85;
-                        ctx.strokeStyle = rg.color;
-                        ctx.lineWidth = 2.6;
-                        ctx.beginPath();
-                        ctx.arc(rg.x, rg.y, rg.r, 0, Math.PI * 2);
-                        ctx.stroke();
-                        ctx.restore();
-                    }
-
-                    for (let i = battleBursts.length - 1; i >= 0; i--) {
-                        const b = battleBursts[i];
-                        b.px = b.x;
-                        b.py = b.y;
-                        b.x += b.vx;
-                        b.y += b.vy;
-                        b.vx *= 0.96;
-                        b.vy *= 0.96;
-                        b.life -= b.decay;
-                        if (b.life <= 0) {
-                            battleBursts.splice(i, 1);
-                            continue;
-                        }
-                        ctx.save();
-                        ctx.globalAlpha = b.life;
-                        ctx.strokeStyle = b.color;
-                        ctx.lineWidth = b.r * 0.9;
-                        ctx.lineCap = "round";
-                        ctx.beginPath();
-                        ctx.moveTo(b.px, b.py);
-                        ctx.lineTo(b.x, b.y);
-                        ctx.stroke();
-
-                        ctx.fillStyle = "#ffffff";
-                        ctx.beginPath();
-                        ctx.arc(b.x, b.y, b.r * 0.65, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.restore();
                     }
                 }
                 battleCanvasRaf = requestAnimationFrame(loop);
@@ -4622,10 +4729,13 @@
         }
 
         function startGame() {
+            window.__START_REQUESTED__ = false;
             document.documentElement.classList.remove("title-locked");
             document.body.classList.remove("title-locked");
             const ts = document.getElementById("titleScreen");
-            if (ts && !ts.classList.contains("hide")) {
+            if (ts && ts.dataset.started !== "1") {
+                ts.dataset.started = "1";
+                ts.style.pointerEvents = "none";
                 try {
                     initAudio();
                     seStageClear();
@@ -4635,9 +4745,9 @@
                 setTimeout(() => {
                     ts.style.display = "none";
                     initBattleCanvas();
-                }, 420);
+                }, 380);
             }
-                        }
+        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -5467,7 +5577,7 @@
             document.getElementById("battleLog").innerText = "🏡 拠点へ戻りました（⏳国王護衛中）。";
             saveGame();
             up(true);
-                }
+        }
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
@@ -5916,32 +6026,31 @@
             const stgEl = document.getElementById("stg");
             const clearStgEl = document.getElementById("dispClearStg");
             if (stgEl) {
-                if (!inDungeon) {
-                    stgEl.innerText = "🏡 冒険者の拠点（出発先: " + stg + "階 [" + areaEmoji + areaName + "]）";
-                } else if (inKingdom) {
-                    stgEl.innerText = "知らない王国 [🏰]";
-                } else if (stg >= 1051) {
-                    stgEl.innerText = "天空城 " + stg + "階 [" + envEmoji + envName + "]";
-                } else if (stg >= 1001) {
-                    stgEl.innerText = "海底神殿 " + stg + "階 [" + envEmoji + envName + "]";
-                } else {
-                    stgEl.innerText = stg + "階 [" + envEmoji + envName + "]";
-                }
+                const nextStgText = !inDungeon
+                    ? ("🏡 冒険者の拠点（出発先: " + stg + "階 [" + areaEmoji + areaName + "]）")
+                    : (inKingdom
+                        ? "知らない王国 [🏰]"
+                        : (stg >= 1051
+                            ? ("天空城 " + stg + "階 [" + envEmoji + envName + "]")
+                            : (stg >= 1001
+                                ? ("海底神殿 " + stg + "階 [" + envEmoji + envName + "]")
+                                : (stg + "階 [" + envEmoji + envName + "]"))));
+                if (stgEl.textContent !== nextStgText) stgEl.textContent = nextStgText;
             }
-            if (clearStgEl) clearStgEl.innerText = maxClearStg;
+            if (clearStgEl && clearStgEl.textContent !== String(maxClearStg)) clearStgEl.textContent = maxClearStg;
 
             let partyNow = 0;
             for (let i = 0; i < p.length; i++) { if (p[i].inParty) partyNow++; }
             const boxBadgeEl = document.getElementById("boxCountBadge");
             const badgeEl = document.getElementById("partyCountBadge");
-            if (boxBadgeEl) boxBadgeEl.innerText = "(" + p.length + "/" + boxLimit + "体)";
-            if (badgeEl) badgeEl.innerText = "(戦闘中: " + partyNow + "/3体)";
+            if (boxBadgeEl) boxBadgeEl.textContent = "(" + p.length + "/" + boxLimit + "体)";
+            if (badgeEl) badgeEl.textContent = "(戦闘中: " + partyNow + "/3体)";
 
             const mixPctStr = getMixPctText();
             const dispMixRateEl = document.getElementById("dispMixRate");
             const btnMixRateEl = document.getElementById("btnMixRateText");
-            if (dispMixRateEl) dispMixRateEl.innerText = mixPctStr;
-            if (btnMixRateEl) btnMixRateEl.innerText = mixPctStr;
+            if (dispMixRateEl) dispMixRateEl.textContent = mixPctStr;
+            if (btnMixRateEl) btnMixRateEl.textContent = mixPctStr;
 
             updateDungeonLockBanner();
             updateRepeatButtonUI();
@@ -5949,10 +6058,10 @@
 
             const mS = document.getElementById("mySide");
             const eS = document.getElementById("eSide");
-            const bField = document.querySelector(".battle-field");
+            const bField = document.getElementById("battleField");
             const bHeader = document.getElementById("battleHeaderBar");
-            if (bField) bField.className = "battle-field " + envClass;
-            if (bHeader) bHeader.className = "battle-header-bar " + envClass;
+            if (bField && !bField.classList.contains(envClass)) bField.className = "battle-field " + envClass;
+            if (bHeader && !bHeader.classList.contains(envClass)) bHeader.className = "battle-header-bar " + envClass;
 
             const bgEmojiMap = {
                 "bg-base":      { e: "🏡", op: 0.26 },
@@ -5990,129 +6099,191 @@
             }
 
             if (mS) {
-                let mHtml = [inDungeon
-                    ? "<b style='font-size:12px;'>【味方】</b>"
-                    : "<b style='font-size:12px; color:#b45309;'>【🏡 拠点で休息中】</b>"
-                ];
                 let partyMembers = p.filter(m => m.inParty).sort((a, b) => (a.partyOrder || 0) - (b.partyOrder || 0)).slice(0, 3);
-                partyMembers.forEach((m, idx) => {
-                    let isDead = m.hp <= 0;
-                    let inf = getMonData(m.n);
-                    let stateHtml = buildStateIcons(m);
-                    let orderTag = "<span style='font-size:9.5px; color:#0284c7; font-weight:900;'>[" + (idx + 1) + "番手]</span> ";
-                    let deadClass = isDead ? " monster-dead-coffin" : "";
-                    let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
-                    let rareStar = m.isRare ? "✨" : "";
-                    let allyId = " id='myM_slot_" + idx + "' ";
-                    let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:30px;'></div>";
-                    let maxLv = getMaxLv(m);
-                    let expPct = m.lv >= maxLv ? 100 : Math.min(100, Math.max(0, (m.ex / m.nx) * 100));
-                    let nextText = m.lv >= maxLv ? (m.ex > 0 ? ("MAX (+" + m.ex + ")") : "MAX") : ("NEXT: " + Math.max(0, m.nx - m.ex));
-                    let capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? (" <span style='color:#7c3aed;font-weight:900;'>(+" + m.lvCapBonus + ")</span>") : "";
-                    let monBody = isDead
-                        ? "<span class='battle-monster monster-dead-coffin' style='font-size:36px;'>⚰️</span>"
-                        : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:36px;");
+                const myBattleSig = (inDungeon ? "1" : "0") + "|" + partyMembers.map(m => m.n + ":" + (m.hp <= 0 ? "D" : "A") + ":" + (m.isRare ? 1 : 0) + ":" + m.lv + ":" + (m.lvCapBonus || 0) + ":" + (m.partyOrder || 0)).join(",");
+                if (lastRenderedMyBattleSig === myBattleSig && document.getElementById("myM_hptxt_0") && partyMembers.length > 0) {
+                    partyMembers.forEach((m, idx) => {
+                        const hpTxtEl = document.getElementById("myM_hptxt_" + idx);
+                        const stEl = document.getElementById("myM_st_" + idx);
+                        const hpBarEl = document.getElementById("myM_hpbar_" + idx);
+                        const expBarEl = document.getElementById("myM_expbar_" + idx);
+                        const nextEl = document.getElementById("myM_next_" + idx);
+                        if (hpTxtEl) hpTxtEl.textContent = "HP: " + m.hp + "/" + m.m;
+                        if (stEl) {
+                            const sHtml = buildStateIcons(m);
+                            if (stEl.dataset.prev !== sHtml) {
+                                stEl.dataset.prev = sHtml;
+                                stEl.innerHTML = sHtml;
+                            }
+                        }
+                        if (hpBarEl) hpBarEl.style.width = ((m.hp / m.m) * 100) + "%";
+                        let maxLv = getMaxLv(m);
+                        let expPct = m.lv >= maxLv ? 100 : Math.min(100, Math.max(0, (m.ex / m.nx) * 100));
+                        let nextText = m.lv >= maxLv ? (m.ex > 0 ? ("MAX (+" + m.ex + ")") : "MAX") : ("NEXT: " + Math.max(0, m.nx - m.ex));
+                        if (expBarEl) expBarEl.style.width = expPct + "%";
+                        if (nextEl) nextEl.textContent = nextText;
+                    });
+                } else {
+                    lastRenderedMyBattleSig = myBattleSig;
+                    let mHtml = [inDungeon
+                        ? "<b style='font-size:12px;'>【味方】</b>"
+                        : "<b style='font-size:12px; color:#b45309;'>【🏡 拠点で休息中】</b>"
+                    ];
+                    partyMembers.forEach((m, idx) => {
+                        let isDead = m.hp <= 0;
+                        let inf = getMonData(m.n);
+                        let stateHtml = buildStateIcons(m);
+                        let orderTag = "<span style='font-size:9.5px; color:#0284c7; font-weight:900;'>[" + (idx + 1) + "番手]</span> ";
+                        let deadClass = isDead ? " monster-dead-coffin" : "";
+                        let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
+                        let rareStar = m.isRare ? "✨" : "";
+                        let allyId = " id='myM_slot_" + idx + "' ";
+                        let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:30px;'></div>";
+                        let maxLv = getMaxLv(m);
+                        let expPct = m.lv >= maxLv ? 100 : Math.min(100, Math.max(0, (m.ex / m.nx) * 100));
+                        let nextText = m.lv >= maxLv ? (m.ex > 0 ? ("MAX (+" + m.ex + ")") : "MAX") : ("NEXT: " + Math.max(0, m.nx - m.ex));
+                        let capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? (" <span style='color:#7c3aed;font-weight:900;'>(+" + m.lvCapBonus + ")</span>") : "";
+                        let monBody = isDead
+                            ? "<span class='battle-monster monster-dead-coffin' style='font-size:36px;'>⚰️</span>"
+                            : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:36px;");
 
-                    mHtml.push("<br><div class='monster-container'" + allyId + ">" + monBody + shadowHtml + "</div>" + orderTag + "<b style='font-size:11px;'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + m.lv + capTag + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : ""));
-                    mHtml.push("<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + stateHtml);
-                    mHtml.push('<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
-                    mHtml.push('<div class="exp-bg" style="height:4px; margin-top:2px;"><div class="exp-bar" style="width:' + expPct + '%"></div></div>');
-                    mHtml.push('<span class="sub-label" style="font-size:8px; margin-top:1px;">' + nextText + '</span>');
-                });
-                if (partyMembers.length === 0) mHtml.push("<br><span style='color:#94a3b8;font-size:11px;'>メンバー未選択</span>");
-                mS.innerHTML = mHtml.join("");
+                        mHtml.push("<br><div class='monster-container'" + allyId + ">" + monBody + shadowHtml + "</div>" + orderTag + "<b style='font-size:11px;'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + m.lv + capTag + ")</span>" + (isDead ? " <span style='color:red;font-weight:bold;font-size:10px;'>[戦闘不能]</span>" : ""));
+                        mHtml.push("<br><span id='myM_hptxt_" + idx + "' style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span><span id='myM_st_" + idx + "' data-prev='" + escapeHtml(stateHtml) + "'>" + stateHtml + "</span>");
+                        mHtml.push('<div class="hp-bg" style="height:7px;"><div id="myM_hpbar_' + idx + '" class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
+                        mHtml.push('<div class="exp-bg" style="height:4px; margin-top:2px;"><div id="myM_expbar_' + idx + '" class="exp-bar" style="width:' + expPct + '%"></div></div>');
+                        mHtml.push('<span id="myM_next_' + idx + '" class="sub-label" style="font-size:8px; margin-top:1px;">' + nextText + '</span>');
+                    });
+                    if (partyMembers.length === 0) mHtml.push("<br><span style='color:#94a3b8;font-size:11px;'>メンバー未選択</span>");
+                    mS.innerHTML = mHtml.join("");
+                }
             }
 
             if (eS) {
                 if (inDungeon && currentEvent) {
-                    if (currentEvent === "undersea_gate") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿への入口】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🔱</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>海底神殿</b><br><span style='font-size:10.5px; color:#475569;'>深海の奥に伝説の神殿が現れた！</span>";
-                    } else if (currentEvent === "undersea_spring") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>⛲</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0284c7;'>ポセイドンの聖泉</b><br><span style='font-size:10.5px; color:#475569;'>神秘的な光が湧き出している！</span>";
-                    } else if (currentEvent === "undersea_pearl") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🦪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0d9488;'>深海の真珠貝</b><br><span style='font-size:10.5px; color:#475569;'>巨大な真珠貝が輝いている！</span>";
-                    } else if (currentEvent === "transfer_gate") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#7c3aed;'>【✨転移魔法陣】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:48px;'>🌀</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>天空への転移魔法陣</b><br><span style='font-size:10.5px; color:#475569;'>天空城へと続く魔法陣が現れた！</span>";
-                    } else if (currentEvent === "sky_altar") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪽</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>天使の祝福祭壇</b><br><span style='font-size:10.5px; color:#475569;'>神々しい光の祭壇が現れた！</span>";
-                    } else if (currentEvent === "sky_summon") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🌟</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>星屑の召喚陣</b><br><span style='font-size:10.5px; color:#475569;'>星々の魔力が渦巻いている！</span>";
-                    } else if (currentEvent === "captain") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【⚓海辺の出会い】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧑‍✈️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>元船長</b><br><span style='font-size:10.5px; color:#475569;'>海の秘宝の噂を知っているようだ！</span>";
-                    } else if (currentEvent === "traveler") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧙</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>謎の旅人</b><br><span style='font-size:10.5px; color:#475569;'>ジャンケン勝負を挑まれた！</span>";
-                    } else if (currentEvent === "merchant") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>👳</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>旅商人</b><br><span style='font-size:10.5px; color:#475569;'>特別な品をプレゼント！</span>";
-                    } else if (currentEvent === "hero") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>王国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
-                    } else if (currentEvent === "guild_master") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【📜特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧔</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>ギルドマスター</b> <span style='font-size:10px;'>(Lv.30)</span><br><span style='font-size:10.5px; color:#475569;'>手合わせを申し込んできた！</span>";
-                    } else if (currentEvent === "zombie_hero") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#14532d;'>【💀特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("廃国のゾンビ絵文字勇者", "battle-monster", "font-size:46px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#15803d;'>廃国のゾンビ絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#334155;'>黒きオーラを纏い立ち塞がった！</span>";
-                    } else if (currentEvent === "god_entity") {
-                        eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【🌌超特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("星辰の神龍", "battle-monster", "font-size:48px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#7c3aed;'>星辰の神龍</b> <span style='font-size:10px;'>(Lv.100)</span><br><span style='font-size:10.5px; color:#334155;'>宇宙の理を司る伝説の神龍が降臨した！</span>";
-                    } else if (currentEvent === "chest") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🪎宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪎</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
-                    } else if (currentEvent === "sage") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
-                    } else if (currentEvent === "king" || currentEvent === "king_skill") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【👑遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤴</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>迷子の国王</b><br><span style='font-size:10.5px; color:#475569;'>道に迷っているようだ…</span>";
-                    } else if (currentEvent === "kingdom_gate" || currentEvent === "kingdom_menu") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🏰知らない王国】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>知らない王国</b><br><span style='font-size:10.5px; color:#475569;'>未知の都が目の前に広がる！</span>";
-                    } else if (currentEvent === "arena_menu") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🏟️王国の闘技場】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏟️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>王国の闘技場</b><br><span style='font-size:10.5px; color:#475569;'>小文字級・大文字級を選ぼう！</span>";
-                    } else if (currentEvent === "kingdom_shop") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🏪王国の商店】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の商店</b><br><span style='font-size:10.5px; color:#475569;'>特別な品を1つ進呈！</span>";
-                    } else if (currentEvent === "kingdom_guild") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【📜王国のギルド】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>📜</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#6d28d9;'>王国のギルド</b><br><span style='font-size:10.5px; color:#475569;'>2つの中から1つ選ぼう！</span>";
-                    } else if (currentEvent === "arena_reward") {
-                        eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間にしよう！</span>";
+                    const evSig = "EV|" + currentEvent;
+                    if (lastRenderedEBattleSig !== evSig) {
+                        lastRenderedEBattleSig = evSig;
+                        if (currentEvent === "undersea_gate") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿への入口】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🔱</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>海底神殿</b><br><span style='font-size:10.5px; color:#475569;'>深海の奥に伝説の神殿が現れた！</span>";
+                        } else if (currentEvent === "undersea_spring") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>⛲</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0284c7;'>ポセイドンの聖泉</b><br><span style='font-size:10.5px; color:#475569;'>神秘的な光が湧き出している！</span>";
+                        } else if (currentEvent === "undersea_pearl") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#0e7490;'>【🔱海底神殿イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🦪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0d9488;'>深海の真珠貝</b><br><span style='font-size:10.5px; color:#475569;'>巨大な真珠貝が輝いている！</span>";
+                        } else if (currentEvent === "transfer_gate") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#7c3aed;'>【✨転移魔法陣】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:48px;'>🌀</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>天空への転移魔法陣</b><br><span style='font-size:10.5px; color:#475569;'>天空城へと続く魔法陣が現れた！</span>";
+                        } else if (currentEvent === "sky_altar") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪽</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>天使の祝福祭壇</b><br><span style='font-size:10.5px; color:#475569;'>神々しい光の祭壇が現れた！</span>";
+                        } else if (currentEvent === "sky_summon") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【☁️天空城イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🌟</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>星屑の召喚陣</b><br><span style='font-size:10.5px; color:#475569;'>星々の魔力が渦巻いている！</span>";
+                        } else if (currentEvent === "captain") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#0284c7;'>【⚓海辺の出会い】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧑‍✈️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#0369a1;'>元船長</b><br><span style='font-size:10.5px; color:#475569;'>海の秘宝の噂を知っているようだ！</span>";
+                        } else if (currentEvent === "traveler") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧙</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>謎の旅人</b><br><span style='font-size:10.5px; color:#475569;'>ジャンケン勝負を挑まれた！</span>";
+                        } else if (currentEvent === "merchant") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【✨遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>👳</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>旅商人</b><br><span style='font-size:10.5px; color:#475569;'>特別な品をプレゼント！</span>";
+                        } else if (currentEvent === "hero") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【⚔️特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤺</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#4f46e5;'>王国の絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#475569;'>決闘を申し込んできた！</span>";
+                        } else if (currentEvent === "guild_master") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【📜特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧔</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>ギルドマスター</b> <span style='font-size:10px;'>(Lv.30)</span><br><span style='font-size:10.5px; color:#475569;'>手合わせを申し込んできた！</span>";
+                        } else if (currentEvent === "zombie_hero") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#14532d;'>【💀特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("廃国のゾンビ絵文字勇者", "battle-monster", "font-size:46px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#15803d;'>廃国のゾンビ絵文字勇者</b> <span style='font-size:10px;'>(Lv.50)</span><br><span style='font-size:10.5px; color:#334155;'>黒きオーラを纏い立ち塞がった！</span>";
+                        } else if (currentEvent === "god_entity") {
+                            eS.innerHTML = "<b style='font-size:12px; color:#b45309;'>【🌌超特別遭遇】</b><br><div class='monster-container'>" + renderMonEmojiHtml("星辰の神龍", "battle-monster", "font-size:48px;") + "<div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#7c3aed;'>星辰の神龍</b> <span style='font-size:10px;'>(Lv.100)</span><br><span style='font-size:10.5px; color:#334155;'>宇宙の理を司る伝説の神龍が降臨した！</span>";
+                        } else if (currentEvent === "chest") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🪎宝箱発見】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🪎</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>謎の宝箱</b><br><span style='font-size:10.5px; color:#475569;'>お宝か、それとも罠か…？</span>";
+                        } else if (currentEvent === "sage") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🔮特別遭遇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🧝‍♂️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の配合賢者</b> <span style='font-size:10px;'>(Lv.75)</span><br><span style='font-size:10.5px; color:#475569;'>深遠なる秘術の使い手！</span>";
+                        } else if (currentEvent === "king" || currentEvent === "king_skill") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【👑遭遇イベント】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🤴</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#d97706;'>迷子の国王</b><br><span style='font-size:10.5px; color:#475569;'>道に迷っているようだ…</span>";
+                        } else if (currentEvent === "kingdom_gate" || currentEvent === "kingdom_menu") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🏰知らない王国】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏰</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#b45309;'>知らない王国</b><br><span style='font-size:10.5px; color:#475569;'>未知の都が目の前に広がる！</span>";
+                        } else if (currentEvent === "arena_menu") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🏟️王国の闘技場】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏟️</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>王国の闘技場</b><br><span style='font-size:10.5px; color:#475569;'>小文字級・大文字級を選ぼう！</span>";
+                        } else if (currentEvent === "kingdom_shop") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🏪王国の商店】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏪</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#059669;'>王国の商店</b><br><span style='font-size:10.5px; color:#475569;'>特別な品を1つ進呈！</span>";
+                        } else if (currentEvent === "kingdom_guild") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【📜王国のギルド】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>📜</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#6d28d9;'>王国のギルド</b><br><span style='font-size:10.5px; color:#475569;'>2つの中から1つ選ぼう！</span>";
+                        } else if (currentEvent === "arena_reward") {
+                            eS.innerHTML = "<b style='font-size:12px;'>【🏟️闘技場 制覇】</b><br><div class='monster-container'><span class='battle-monster' style='font-size:46px;'>🏆</span><div class='monster-shadow' style='width:34px;'></div></div><b style='font-size:12px; color:#ea580c;'>闘技場チャンピオン！</b><br><span style='font-size:10.5px; color:#475569;'>好きな1体を選んで仲間にしよう！</span>";
+                        }
                     }
                 } else if (!inDungeon || eg.length === 0) {
-                    eS.innerHTML =
-                        "<b style='font-size:12px; color:#059669;'>【🏡 冒険者の拠点】</b>" +
-                        "<br><div class='monster-container'><span class='battle-monster' style='font-size:44px;'>🏕️</span><div class='monster-shadow' style='width:34px;'></div></div>" +
-                        "<b style='font-size:12px; color:#b45309;'>☀️ 平和なキャンプ地</b>" +
-                        "<br><span class='home-camp-pill'>🚩 出発先: " + stg + "階 [" + areaEmoji + areaName + "]</span>" +
-                        "<br><span style='font-size:10px; color:#475569; line-height:1.45; display:inline-block; margin-top:4px;'>仲間たちは焚き火の前で休んでいます🔥<br>「🏰 ダンジョン突入」で冒険へ！</span>";
+                    const homeSig = "HOME|" + stg;
+                    if (lastRenderedEBattleSig !== homeSig) {
+                        lastRenderedEBattleSig = homeSig;
+                        eS.innerHTML =
+                            "<b style='font-size:12px; color:#059669;'>【🏡 冒険者の拠点】</b>" +
+                            "<br><div class='monster-container'><span class='battle-monster' style='font-size:44px;'>🏕️</span><div class='monster-shadow' style='width:34px;'></div></div>" +
+                            "<b style='font-size:12px; color:#b45309;'>☀️ 平和なキャンプ地</b>" +
+                            "<br><span class='home-camp-pill'>🚩 出発先: " + stg + "階 [" + areaEmoji + areaName + "]</span>" +
+                            "<br><span style='font-size:10px; color:#475569; line-height:1.45; display:inline-block; margin-top:4px;'>仲間たちは焚き火の前で休んでいます🔥<br>「🏰 ダンジョン突入」で冒険へ！</span>";
+                    }
                     const bEnterBtm = document.getElementById("btnEnterBtm");
                     if (bEnterBtm && !isDungeonLocked()) bEnterBtm.disabled = false;
                 } else {
-                    const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
-                    const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
-                    const isGuildMasterBattle = inDungeon && eg.some(m => m.isSpecialGuildMaster);
-                    const isZombieBattle = inDungeon && eg.some(m => m.isZombieHero);
-                    const isGodBattle = inDungeon && eg.some(m => m.isGodEntity);
-                    const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
-                    let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isGuildMasterBattle ? "【📜ギルドマスター】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の神龍】" : "【敵】"))))))) + "</b>"];
-                    eg.forEach((m, i) => {
-                        let isDead = m.hp <= 0;
-                        let inf = getMonData(m.n);
-                        let eId = " id='eM_slot_" + i + "' ";
-                        let eStateHtml = buildStateIcons(m);
-                        let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isSpecialGuildMaster || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
-                        let dispLv = m.isArenaEnemy ? m.fixedLv : Math.min(100, m.fixedLv ? m.fixedLv : getDungeonEnemyLv(stg));
-                        let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isSpecialGuildMaster ? "#b45309" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b")))));
+                    const eBattleSig = [
+                        kingdomScene,
+                        isBossNow ? 1 : 0,
+                        stg,
+                        eg.map(m => m.n + ":" + (m.hp <= 0 ? "D" : "A") + ":" + (m.isRare ? 1 : 0) + ":" + (m.fixedLv || 0)).join(",")
+                    ].join("|");
+                    if (lastRenderedEBattleSig === eBattleSig && document.getElementById("eM_hptxt_0")) {
+                        eg.forEach((m, i) => {
+                            const hpTxtEl = document.getElementById("eM_hptxt_" + i);
+                            const stEl = document.getElementById("eM_st_" + i);
+                            const hpBarEl = document.getElementById("eM_hpbar_" + i);
+                            if (hpTxtEl) hpTxtEl.textContent = "HP: " + m.hp + "/" + m.m;
+                            if (stEl) {
+                                const sHtml = buildStateIcons(m);
+                                if (stEl.dataset.prev !== sHtml) {
+                                    stEl.dataset.prev = sHtml;
+                                    stEl.innerHTML = sHtml;
+                                }
+                            }
+                            if (hpBarEl) hpBarEl.style.width = ((m.hp / m.m) * 100) + "%";
+                        });
+                    } else {
+                        lastRenderedEBattleSig = eBattleSig;
+                        const isHeroBattle = inDungeon && eg.some(m => m.isSpecialHero);
+                        const isSageBattle = inDungeon && eg.some(m => m.isSpecialSage);
+                        const isGuildMasterBattle = inDungeon && eg.some(m => m.isSpecialGuildMaster);
+                        const isZombieBattle = inDungeon && eg.some(m => m.isZombieHero);
+                        const isGodBattle = inDungeon && eg.some(m => m.isGodEntity);
+                        const isArenaBattle = inDungeon && inKingdom && kingdomScene === "arena";
+                        let eHtml = ["<b style='font-size:12px;'>" + (isArenaBattle ? "【🏟️闘技場の対戦相手】" : (isBossNow ? "【👑エリア守護ボス】" : (isHeroBattle ? "【⚔️王国の勇者】" : (isSageBattle ? "【🔮王国の配合賢者】" : (isGuildMasterBattle ? "【📜ギルドマスター】" : (isZombieBattle ? "【💀廃国のゾンビ勇者】" : (isGodBattle ? "【🌌星辰の神龍】" : "【敵】"))))))) + "</b>"];
+                        eg.forEach((m, i) => {
+                            let isDead = m.hp <= 0;
+                            let inf = getMonData(m.n);
+                            let eId = " id='eM_slot_" + i + "' ";
+                            let eStateHtml = buildStateIcons(m);
+                            let sizePx = (m.isBoss || m.isSpecialHero || m.isSpecialSage || m.isSpecialGuildMaster || m.isZombieHero || m.isGodEntity) ? "48px" : "36px";
+                            let dispLv = m.isArenaEnemy ? m.fixedLv : Math.min(100, m.fixedLv ? m.fixedLv : getDungeonEnemyLv(stg));
+                            let nameColor = m.isBoss ? "#b91c1c" : (m.isSpecialHero ? "#4f46e5" : (m.isSpecialSage ? "#059669" : (m.isSpecialGuildMaster ? "#b45309" : (m.isZombieHero ? "#15803d" : (m.isGodEntity ? "#7c3aed" : "#1e293b")))));
 
-                        let deadClass = isDead ? " monster-dead-coffin" : "";
-                        let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
-                        let rareStar = m.isRare ? "✨" : "";
-                        let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:34px;'></div>";
-                        let enemyBody = isDead
-                            ? "<span class='battle-monster monster-dead-coffin' style='font-size:" + sizePx + ";'>⚰️</span>"
-                            : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:" + sizePx + ";");
+                            let deadClass = isDead ? " monster-dead-coffin" : "";
+                            let rareClass = (!isDead && m.isRare) ? " rare-shiny" : "";
+                            let rareStar = m.isRare ? "✨" : "";
+                            let shadowHtml = isDead ? "" : "<div class='monster-shadow' style='width:34px;'></div>";
+                            let enemyBody = isDead
+                                ? "<span class='battle-monster monster-dead-coffin' style='font-size:" + sizePx + ";'>⚰️</span>"
+                                : renderMonEmojiHtml(m, "battle-monster" + deadClass + rareClass, "font-size:" + sizePx + ";");
 
-                        eHtml.push("<br><div class='monster-container'" + eId + ">" + enemyBody + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>");
-                        if (m.isSpecialHero) eHtml.push("<br><span class='skill-badge' style='background:#eef2ff; color:#4338ca; border-color:#a5b4fc;'>⚔️王国の剣技・閃光</span>");
-                        if (m.isSpecialSage) eHtml.push("<br><span class='skill-badge' style='background:#ecfdf5; color:#047857; border-color:#6ee7b7;'>🔮賢者の秘術・真理錬成</span>");
-                        if (m.isSpecialGuildMaster) eHtml.push("<br><span class='skill-badge' style='background:#fef3c7; color:#b45309; border-color:#fcd34d;'>📜ギルドマスターの指揮</span>");
-                        if (m.isZombieHero) eHtml.push("<br><span class='skill-badge' style='background:#090d16; color:#bef264; border-color:#166534;'>💀廃国の呪剣・黒蝕</span>");
-                        if (m.isGodEntity) eHtml.push("<br><span class='skill-badge' style='background:#fefce8; color:#b45309; border-color:#f59e0b;'>🐉星辰龍閃・メテオブレス</span>");
-                        if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
-                        eHtml.push("<br><span style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span>" + eStateHtml);
-                        eHtml.push('<div class="hp-bg" style="height:7px;"><div class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
-                    });
-                    eS.innerHTML = eHtml.join("");
+                            eHtml.push("<br><div class='monster-container'" + eId + ">" + enemyBody + shadowHtml + "</div><b style='font-size:11px; color:" + nameColor + ";'>No." + inf.no + " " + m.n + rareStar + "</b> <span style='font-size:10px;'>(Lv." + dispLv + ")</span>");
+                            if (m.isSpecialHero || m.isSpecialSage || m.isSpecialGuildMaster || m.isZombieHero || m.isGodEntity) {
+                                const spSk = getSkillObj(m);
+                                const spStyle = m.isSpecialHero ? "background:#eef2ff; color:#4338ca; border-color:#a5b4fc;"
+                                    : (m.isSpecialSage ? "background:#ecfdf5; color:#047857; border-color:#6ee7b7;"
+                                    : (m.isSpecialGuildMaster ? "background:#fef3c7; color:#b45309; border-color:#fcd34d;"
+                                    : (m.isZombieHero ? "background:#090d16; color:#bef264; border-color:#166534;"
+                                    : "background:#fefce8; color:#b45309; border-color:#f59e0b;")));
+                                eHtml.push('<br><span class="skill-badge" role="button" tabindex="0" style="' + spStyle + '" data-skill-name="' + escapeHtml(spSk.name) + '" data-skill-desc="' + escapeHtml(spSk.desc) + '">' + escapeHtml(spSk.name) + '</span>');
+                            }
+                            if (m.isRare && !isDead) eHtml.push(" <span class='rare-badge'>✨色違い</span>");
+                            eHtml.push("<br><span id='eM_hptxt_" + i + "' style='font-size:11px;'>HP: " + m.hp + "/" + m.m + "</span><span id='eM_st_" + i + "' data-prev='" + escapeHtml(eStateHtml) + "'>" + eStateHtml + "</span>");
+                            eHtml.push('<div class="hp-bg" style="height:7px;"><div id="eM_hpbar_' + i + '" class="hp ' + (isDead ? 'hp-dead' : '') + '" style="width:' + ((m.hp / m.m) * 100) + '%"></div></div>');
+                        });
+                        eS.innerHTML = eHtml.join("");
+                    }
                 }
             }
 
@@ -6402,8 +6573,10 @@
                         '<div class="event-btn-row">' + rewardBtns + '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else {
-                    evPanel.style.display = "none";
-                    evPanel.innerHTML = "";
+                    if (evPanel.style.display !== "none") {
+                        evPanel.style.display = "none";
+                        evPanel.innerHTML = "";
+                    }
                     if (btnAtk) {
                         btnAtk.disabled = !inDungeon || isTurnRunning;
                     }
@@ -6442,7 +6615,7 @@
             }
 
             const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
-            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.locked ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
+            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.skillId || 0) + ":" + (m.locked ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
             const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
             if ((currentTab === "box" || currentTab === "mix") && (forceAll || boxSig !== lastRenderedBoxSig)) {
                 lastRenderedBoxSig = boxSig;
@@ -6510,12 +6683,13 @@
                             let skParts = ["<div class='skill-panel'>"];
                             for (let sIdx = 0; sIdx < innateList.length; sIdx++) {
                                 let isk = innateList[sIdx];
-                                skParts.push('<span class="skill-badge" onclick="showSkillInfo(\'' + isk.name + '\', \'' + isk.desc + '\')">固:' + isk.name + '</span>');
+                                skParts.push(renderSkillBadge("", "固:", isk.name, isk.desc));
                             }
                             if (rareSk) {
-                                skParts.push('<span class="skill-badge skill-badge-rare" onclick="showSkillInfo(\'' + rareSk.name + '\', \'' + rareSk.desc + '\')">虹:' + rareSk.name + '</span>');
+                                skParts.push(renderSkillBadge("skill-badge-rare", "虹:", rareSk.name, rareSk.desc));
                             }
-                            skParts.push('<span class="skill-badge skill-badge-add" onclick="showSkillInfo(\'' + rSk.name + '\', \'' + rSk.desc + '\')">追:' + rSk.name + '</span></div>');
+                            skParts.push(renderSkillBadge("skill-badge-add", "追:", rSk.name, rSk.desc));
+                            skParts.push("</div>");
                             skillHtml = skParts.join("");
                         }
 
@@ -6834,6 +7008,9 @@
                 if (!attacker || attacker.hp <= 0) return;
                 const fxLayer = document.getElementById("fxLayer");
                 if (!fxLayer) return;
+                while (fxLayer.childElementCount >= 14 && fxLayer.firstChild) {
+                    fxLayer.firstChild.remove();
+                }
 
                 const pos = getMonsterCenterInField(attacker, isEnemySide);
                 if (!pos) return;
@@ -7824,18 +8001,28 @@
 
                                             if (clearedStg === 500) {
                                                 seStageClear();
-                                                showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
-                                                setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
+                                                if (!repeatStageMode) {
+                                                    showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
+                                                    setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
+                                                }
                                             } else if (clearedStg === 1000) {
                                                 updateTitleBg();
                                                 needsFullUpdate = true;
-                                                seMixSuccess();
-                                                showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
-                                                setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
+                                                if (!repeatStageMode) {
+                                                    seMixSuccess();
+                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
+                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
+                                                } else {
+                                                    seStageClear();
+                                                }
                                             } else if (clearedStg === 1100) {
                                                 needsFullUpdate = true;
-                                                showNotice("👑🌞 天空城1100階 完全制覇！！おめでとうございます！！ 🌞👑", 12000);
-                                                setTimeout(() => { showCongratsModal(); }, 180);
+                                                if (!repeatStageMode) {
+                                                    showNotice("👑🌞 天空城1100階 完全制覇！！おめでとうございます！！ 🌞👑", 12000);
+                                                    setTimeout(() => { showCongratsModal(); }, 180);
+                                                } else {
+                                                    seStageClear();
+                                                }
                                             } else {
                                                 seStageClear();
                                             }
@@ -8106,6 +8293,8 @@
 
         let emojiObserver = null;
         let isParsingEmoji = false;
+        let pendingEmojiTargets = new Set();
+        let emojiBatchRaf = null;
 
         function applyTwemoji(target) {
             if (typeof twemoji === "undefined" || !target || isParsingEmoji) return;
@@ -8138,6 +8327,16 @@
             isParsingEmoji = false;
         }
 
+        function flushPendingTwemoji() {
+            emojiBatchRaf = null;
+            if (pendingEmojiTargets.size === 0) return;
+            const list = Array.from(pendingEmojiTargets);
+            pendingEmojiTargets.clear();
+            list.forEach(t => {
+                if (t && t.isConnected) applyTwemoji(t);
+            });
+        }
+
         function initEmojiObserver() {
             if (typeof twemoji === "undefined") return;
             const fbStyle = document.createElement("style");
@@ -8148,16 +8347,26 @@
             if (typeof MutationObserver === "undefined") return;
             emojiObserver = new MutationObserver((mutations) => {
                 if (isParsingEmoji) return;
-                const targets = new Set();
                 for (let i = 0; i < mutations.length; i++) {
                     const m = mutations[i];
                     if (m.type === "characterData") {
-                        if (m.target && m.target.parentElement) targets.add(m.target.parentElement);
+                        if (m.target && m.target.parentElement) pendingEmojiTargets.add(m.target.parentElement);
                     } else if (m.type === "childList" && m.addedNodes && m.addedNodes.length > 0 && m.target) {
-                        targets.add(m.target);
+                        if (m.target.id === "fxLayer") {
+                            for (let k = 0; k < m.addedNodes.length; k++) {
+                                const nd = m.addedNodes[k];
+                                if (nd && nd.nodeType === 1 && nd.classList && nd.classList.contains("skill-fx-pop")) {
+                                    pendingEmojiTargets.add(nd);
+                                }
+                            }
+                        } else {
+                            pendingEmojiTargets.add(m.target);
+                        }
                     }
                 }
-                targets.forEach(t => applyTwemoji(t));
+                if (pendingEmojiTargets.size > 0 && !emojiBatchRaf) {
+                    emojiBatchRaf = requestAnimationFrame(flushPendingTwemoji);
+                }
             });
             emojiObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
         }
@@ -8170,6 +8379,9 @@
             try { initEmojiObserver(); } catch (e) {}
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
+            if (window.__START_REQUESTED__) {
+                startGame();
+            }
             setInterval(() => {
                 if (ensureDailyQuestCurrent()) {
                     saveGame();
