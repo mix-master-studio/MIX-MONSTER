@@ -3,12 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>みっくすえもじ｜無料のモンスター配合ブラウザRPG</title>
-    <meta name="description" content="登録不要・無料で今すぐ遊べるモンスター配合ブラウザRPG『みっくすえもじ』！ダンジョンを攻略して絵文字モンスターを集め、配合で最強のモンスターを生み出そう！スマホ・PC対応。">
-    <meta property="og:title" content="みっくすえもじ｜無料のモンスター配合ブラウザRPG">
-    <meta property="og:description" content="登録不要・無料で遊べるモンスター配合ブラウザRPG！絵文字モンスターを集めて配合し、ダンジョン制覇を目指そう。">
+    <title>みっくすえもじ｜登録不要・無料のモンスター配合ブラウザRPG</title>
+    <meta name="description" content="登録不要・ダウンロード不要で今すぐ無料で遊べるモンスター配合ブラウザRPG『みっくすえもじ』！全1100階のダンジョンを攻略して絵文字モンスターを集め、配合で最強のモンスターを生み出そう！スマホ・PC対応・オートバトル搭載。">
+    <meta name="keywords" content="みっくすえもじ,モンスター配合,ブラウザゲーム,無料RPG,ブラウザRPG,絵文字ゲーム,モンスター育成,ダンジョンRPG,スマホ対応,登録不要,オートバトル,放置RPG">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0284c7">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="みっくすえもじ">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="みっくすえもじ｜登録不要・無料のモンスター配合ブラウザRPG">
+    <meta property="og:description" content="登録不要・無料で今すぐ遊べるモンスター配合ブラウザRPG！絵文字モンスターを集めて配合し、全1100階のダンジョン制覇を目指そう。スマホ・PC対応！">
+    <meta property="og:image" content="1000041415.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="みっくすえもじ｜無料のモンスター配合ブラウザRPG">
+    <meta name="twitter:description" content="登録不要・無料で今すぐ遊べるモンスター配合ブラウザRPG！ダンジョンで絵文字モンスターを集めて配合しよう！">
+    <meta name="twitter:image" content="1000041415.png">
     <link rel="icon" type="image/png" href="file_00000000b3e48211bce6a50c57a72164.png">
     <link rel="apple-touch-icon" href="file_00000000b3e48211bce6a50c57a72164.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "みっくすえもじ",
+        "alternateName": "Mix Emoji RPG",
+        "description": "登録不要・無料で今すぐ遊べるモンスター配合ブラウザRPG。ダンジョンを攻略して絵文字モンスターを集め、配合で最強のモンスターを生み出そう！",
+        "genre": ["RPG", "モンスター育成", "ブラウザゲーム"],
+        "gamePlatform": ["Web Browser", "PC", "Smartphone"],
+        "applicationCategory": "Game",
+        "operatingSystem": "All",
+        "inLanguage": "ja",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+        }
+    }
+    </script>
     <script>
         (function() {
             var isCleared1000 = false;
@@ -1165,7 +1195,7 @@
         @keyframes shadowScale2D {
             0%   { transform: scale(1.02); opacity: 0.36; }
             100% { transform: scale(0.76); opacity: 0.16; }
-        }
+                                        }
         .skill-fx-pop {
             position: absolute;
             transform: translate(-50%, -50%) scale(0.3);
@@ -1537,184 +1567,39 @@
         .title-header h1 img.emoji {
             -webkit-text-fill-color: initial;
         }
+        .seo-footer {
+            position: relative;
+            z-index: 1;
+            max-width: 430px;
+            margin: 14px auto 8px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            font-size: 10.5px;
+            color: #64748b;
+            line-height: 1.55;
+            text-align: left;
+        }
+        .ad-footer-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 430px;
+            margin: 8px auto 0;
+            padding: 6px 4px 2px;
+            text-align: center;
+            min-height: 56px;
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="title-locked">
-    <div id="titleScreen">
-        <div class="title-bg-blur" id="titleBgBlur"></div>
-        <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
-        <script>
-            (function() {
-                var imgFile = window.__TITLE_IMG_FILE__ || (window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png");
-                var img = document.getElementById("titleFullImg");
-                var blurEl = document.getElementById("titleBgBlur");
-                if (img) {
-                    img.onload = function() {
-                        img.style.display = "";
-                        if (blurEl) {
-                            blurEl.style.backgroundImage = "url('" + imgFile + "')";
-                            blurEl.classList.add("ready");
-                        }
-                    };
-                    img.onerror = function() {
-                        img.style.display = "none";
-                    };
-                    img.src = imgFile;
-                    if (img.complete && img.naturalWidth > 0 && blurEl) {
-                        blurEl.style.backgroundImage = "url('" + imgFile + "')";
-                        blurEl.classList.add("ready");
-                    }
-                }
-            })();
-        </script>
-        <button type="button" class="btn-start" onclick="startGame()">START</button>
-    </div>
-
-    <canvas id="bgCanvas"></canvas>
-
-    <div class="title-header">
-        <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
-        <h1>👑 みっくすえもじ 👑</h1>
-        <div id="weekendBanner" class="weekend-banner">🎉 土日限定ボーナス発動中！獲得EXP 2倍 ＆ 配合確率 +10%！ 🎉</div>
-        <div class="header-btn-row">
-            <button id="btnSoundToggle" onclick="toggleSound()" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); border-color: #7dd3fc; border-bottom: 3px solid #0369a1;">
-                🔊 サウンド: ON
-            </button>
-            <button id="btnVolumeToggle" onclick="toggleSoundPanel()" style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-color: #6ee7b7; border-bottom: 3px solid #047857;">
-                🎚️ 音量調整
-            </button>
-            <button onclick="let g=document.getElementById('guidePanel'); g.style.display=g.style.display==='block'?'none':'block'" style="background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-color: #c4b5fd; border-bottom: 3px solid #5b21b6;">
-                ❓ 遊び方ガイド
-            </button>
-        </div>
-        <div id="soundPanel" class="sound-panel">
-            <div style="font-size: 11px; font-weight: 900; color: #0284c7; margin-bottom: 4px;">🎚️ 音量バランス設定（自動保存）</div>
-            <div class="sound-row">
-                <span class="sound-row-label">🎵 BGM音量</span>
-                <input type="range" id="bgmVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setBgmVolume(this.value)">
-                <span class="sound-val" id="bgmVolumeVal">100%</span>
-            </div>
-            <div class="sound-row">
-                <span class="sound-row-label">🔔 SE音量</span>
-                <input type="range" id="seVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setSeVolume(this.value)" onchange="playSeTestSample()">
-                <span class="sound-val" id="seVolumeVal">100%</span>
-            </div>
-        </div>
-        <div id="guidePanel" class="guide-panel">
-            <b>🔰 はじめての遊び方・順番ガイド</b>
-            <div class="guide-step">
-                <b>①「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
-                毎日0時に更新される「☀️毎日ログインクエスト」は、開いて「🎁受取」を押すだけで特典がもらえます。まずはここを受け取ってから冒険を始めましょう！
-            </div>
-            <div class="guide-step">
-                <b>②「📦 ボックス」タブでパーティを確認・編成しよう！</b><br>
-                最初は「プニシズク」3体が戦闘メンバーに参加中です。強い仲間が増えたら「🛡️戻す」で控えに戻し、「⚔️戦闘に出す」で最大3体まで入れ替えられます（選んだ順に1〜3番手として戦います）。
-            </div>
-            <div class="guide-step">
-                <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
-                「オート戦闘」がONなので、突入するだけで自動で戦います！経験値がたまってLvが上がり、倒した敵が確率で仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめです。
-            </div>
-            <div class="guide-step">
-                <b>④ 仲間が5体以上増えたら「🧬 配合」を試そう！</b><br>
-                ボックスで「🛡️戻す」にして鍵を外した2匹を選んで配合すると、2匹のLvを合計した強いモンスターが生まれます！（※失敗すると選んだ2匹は消えるので注意）迷ったら「✨配合アシスト」を使うと作れる組み合わせがすぐ分かります。
-            </div>
-            <div class="guide-step">
-                <b>⑤「📖 図鑑」でヒントを見て1000階制覇を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！未発見のモンスターを集めながら、1000階の制覇を目指しましょう！
-            </div>
-            <div class="guide-step">
-                <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
-                ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
-                「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もこのタブから行えます。
-            </div>
-            <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
-                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日は獲得EXPが2倍＆配合成功率が+10%になります！<br>
-                🎨 絵文字画像：Twemoji (CC-BY 4.0)
-            </div>
-        </div>
-    </div>
-
-    <div class="tab-nav-wrap" id="mainTabBar">
-        <div class="tab-grid">
-            <button class="tab-btn active" id="tabBtn_battle" onclick="switchTab('battle')">⚔️ バトル</button>
-            <button class="tab-btn" id="tabBtn_box" onclick="switchTab('box')">📦 ボックス</button>
-            <button class="tab-btn" id="tabBtn_mix" onclick="switchTab('mix')">🧬 配合</button>
-            <button class="tab-btn" id="tabBtn_quest" onclick="switchTab('quest')">🧭 クエスト<span id="questTabDot" class="tab-dot" style="display:none;"></span></button>
-            <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
-            <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
-        </div>
-    </div>
-    <div id="panelBattle" class="tab-panel">
-        <div class="box" id="battleBox" style="padding-top: 12px;">
-            <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
-            <div class="battle-header-bar" id="battleHeaderBar">
-                <div style="font-size: 13px; font-weight: 900; color: #1e293b; width: 100%;">
-                    <span id="stg" style="color: #0284c7;">🏡 冒険者の拠点（出発先: 1階 [🌿草原]）</span>
-                    <div class="stage-stat-row">
-                        <span class="stage-stat-pill">🏆 最高クリア: <span id="dispClearStg">0</span>階</span>
-                    </div>
-                </div>
-                <div class="stg-ctrl-row">
-                    <button class="btn-tiny btn-tiny-jump stg-ctrl-btn" onclick="goFirstStage()">⏮1階</button>
-                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-100)">-100</button>
-                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(-10)">-10</button>
-                    <button class="btn-tiny stg-ctrl-btn" id="btnPrevStg" onclick="changeStage(-1)">◀前</button>
-                    <button class="btn-tiny stg-ctrl-btn" id="btnNextStg" onclick="changeStage(1)">次▶</button>
-                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(10)">+10</button>
-                    <button class="btn-tiny stg-ctrl-btn" onclick="changeStage(100)">+100</button>
-                    <button class="btn-tiny btn-tiny-jump stg-ctrl-btn" onclick="goMaxStage()">⏭最高</button>
-                </div>
-            </div>
-
-            <div class="battle-field bg-base" id="battleField">
-                <div id="battleBgEmoji" class="battle-bg-emoji">🏡</div>
-                <canvas id="battleCanvas"></canvas>
-                <div id="fxLayer"></div>
-                <div class="side" id="mySide"><b>【🏡 拠点で休息中】</b></div>
-                <div class="side" id="eSide"><b>【🏡 冒険者の拠点】</b></div>
-            </div>
-
-            <div id="dungeonLockBanner" style="display:none; background:#fee2e2; border:1.5px solid #f87171; color:#b91c1c; border-radius:10px; padding:6px 10px; margin:7px auto 2px; font-size:11.5px; font-weight:900;"></div>
-            <div id="eventPanel" class="event-panel"></div>
-            <div class="notice-banner" id="noticeBanner"></div>
-            <div class="battle-log" id="battleLog">🏡 ここは冒険者の拠点です！まずは「🧭 クエスト」で毎日報酬を受け取るか、「🏰 ダンジョン突入」で冒険を始めよう！</div>
-
-            <div class="btn-battle-group">
-                <button class="btn-compact" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%); border-color: #fda4af; border-bottom: 4px solid #be123c;" id="btnAtk" onclick="atk()" disabled>
-                    ⚔️ 攻撃する！
-                </button>
-                <button class="btn-compact" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); border-color: #fde68a; border-bottom: 4px solid #b45309;" id="btnAutoToggle" onclick="toggleAutoBattle()">
-                    🔄 オート戦闘: ON
-                </button>
-            </div>
-            <div class="btn-battle-group">
-                <button class="btn-compact-3" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); border-color: #7dd3fc; border-bottom: 4px solid #0369a1;" id="btnSpeedToggle" onclick="toggleBattleSpeed()">
-                    ⏩ 速度: 1倍
-                </button>
-                <button class="btn-compact-3" style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-color: #6ee7b7; border-bottom: 4px solid #047857;" id="btnEnterBtm" onclick="enter()">
-                    🏰 ダンジョン突入
-                </button>
-                <button class="btn-compact-3" style="background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-color: #cbd5e1; border-bottom: 4px solid #475569;" onclick="leaveDungeon()">
-                    🏃 拠点へ戻る
-                </button>
-            </div>
-            <div class="btn-battle-group">
-                <button class="btn-compact" style="background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); border-color: #cbd5e1; border-bottom: 4px solid #475569;" id="btnRepeatToggle" onclick="toggleRepeatStage()">
-                    🔁 同じ階周回: OFF
-                </button>
-            </div>
-            <div class="repeat-note">
-                ⚠️ <b>同じ階周回 ON中</b> は、すべての遭遇イベントは発生しません。（通常探索中もイベントは2回連続で発生しません）
-            </div>
-        </div>
-    </div>
-    <div id="panelQuest" class="tab-panel tab-hidden">
+<div id="panelQuest" class="tab-panel tab-hidden">
         <div class="box" style="border: 2px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
             <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
             <div class="limit-hint">※毎日クエストは毎日0時にリセット！通常クエストは初期5件／王国ギルド含め上限20件</div>
             <div id="missionWrapper" style="display: block; margin-top: 8px;">
-                <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
+                <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 🧲加入+0% (上限20%) ／ 💎EXP+0%</div>
                 <div id="missionList" class="scroll-box" style="max-height: 290px; border-color: #fde68a; background: #fffbeb;"></div>
             </div>
         </div>
@@ -1760,6 +1645,7 @@
             <ul id="box" class="toggle-box scroll-box"></ul>
         </div>
     </div>
+
     <div id="panelMix" class="tab-panel tab-hidden">
         <div class="box" id="mixArea" style="border: 2px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
@@ -1829,7 +1715,7 @@
 
     <div id="panelSave" class="tab-panel tab-hidden">
         <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
-            <span class="section-badge">💾 SAVE & TRANSFER</span>
+            <span class="section-badge">💾 SAVE &amp; TRANSFER</span>
             <h3 style="margin: 2px 0 6px; color: #0284c7; font-size: 15px;">💾 データセーブ・引き継ぎ管理</h3>
 
             <div id="transferArea" style="display: block; margin-top: 6px; padding-top: 6px;">
@@ -1858,6 +1744,17 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <footer class="seo-footer">
+        <b>👑 みっくすえもじ（無料モンスター配合ブラウザRPG）</b><br>
+        登録不要・ダウンロード不要でスマホ・PCのブラウザから今すぐ遊べるモンスター育成＆配合RPGです。全1100階のダンジョンをオートバトルで攻略し、絵文字モンスターの収集・配合・色違い厳選・スキル育成を楽しもう！
+    </footer>
+
+    <div id="adFooter" class="ad-footer-wrap">
+        <!-- admax -->
+        <script src="https://adm.shinobi.jp/s/952441acd9b60ce669a33a435fee277d"></script>
+        <!-- admax -->
     </div>
 
     <div id="mixModal" class="mix-modal">
@@ -2398,6 +2295,7 @@
         });
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
+        const MAX_WILD_JOIN_BONUS = 0.20;
         const MAX_LV_CAP_BONUS = 20;
 
         let eg = [];
@@ -2569,6 +2467,17 @@
             mixBonus = Math.round((mixBonus + delta) * 10000) / 10000;
             clampMixRate();
             return getRawMixRate() > before;
+        }
+
+        function clampWildJoinBonus() {
+            wildJoinBonus = Math.min(MAX_WILD_JOIN_BONUS, Math.max(0, Math.round(wildJoinBonus * 10000) / 10000));
+        }
+
+        function addWildJoinBonusCapped(delta) {
+            const before = wildJoinBonus;
+            wildJoinBonus = Math.round((wildJoinBonus + delta) * 10000) / 10000;
+            clampWildJoinBonus();
+            return wildJoinBonus > before;
         }
 
         function getEffectiveMixRate() {
@@ -2989,7 +2898,7 @@
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 const expPct = Math.round(expBonusRate * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + expPct + "%";
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% (上限20%) ／ 💎EXP+" + expPct + "%";
             }
         }
 
@@ -2999,17 +2908,20 @@
             if (!dq || dq.claimed) return;
 
             dq.claimed = true;
+            let wildCapped = false;
             dq.rewards.forEach(k => {
                 const item = DAILY_REWARD_POOL.find(x => x.key === k);
                 if (!item) return;
                 if (k === "mix") addMixBonusCapped(item.val);
-                else if (k === "wild") wildJoinBonus = Math.round((wildJoinBonus + item.val) * 10000) / 10000;
+                else if (k === "wild") {
+                    if (!addWildJoinBonusCapped(item.val)) wildCapped = true;
+                }
                 else if (k.indexOf("exp") === 0) expBonusRate = Math.round((expBonusRate + item.val) * 1000) / 1000;
             });
 
             seStageClear();
             const rewardStr = getDailyRewardText(dq.rewards);
-            const msg = "☀️ 毎日ログインクエスト報酬（" + rewardStr + "）を獲得しました！";
+            const msg = "☀️ 毎日ログインクエスト報酬（" + rewardStr + "）を獲得しました！" + (wildCapped ? "（※加入+%は上限20%です）" : "");
             showQuestToast(msg);
             showNotice(msg, 4500);
             saveGame();
@@ -3024,10 +2936,11 @@
             if (m.reward.box) boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + m.reward.box);
             if (m.reward.mix) addMixBonusCapped(m.reward.mix);
             if (m.reward.exp) expBonusRate = Math.round((expBonusRate + m.reward.exp) * 1000) / 1000;
-            if (m.reward.wild) wildJoinBonus = Math.round((wildJoinBonus + m.reward.wild) * 10000) / 10000;
+            let wildCapped = false;
+            if (m.reward.wild && !addWildJoinBonusCapped(m.reward.wild)) wildCapped = true;
 
             seStageClear();
-            const msg = "🧭 クエスト「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
+            const msg = "🧭 クエスト「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！" + (wildCapped ? "（※加入+%は上限20%です）" : "");
             showQuestToast(msg);
             showNotice(msg, 4500);
             saveGame();
@@ -3165,6 +3078,7 @@
 
             expBonusRate = (typeof data.expBonusRate === "number") ? data.expBonusRate : 0;
             wildJoinBonus = (typeof data.wildJoinBonus === "number") ? data.wildJoinBonus : 0;
+            clampWildJoinBonus();
             dungeonLockUntil = (typeof data.dungeonLockUntil === "number") ? data.dungeonLockUntil : 0;
             if (data.stats && typeof data.stats === "object") {
                 stats = Object.assign({
@@ -4259,7 +4173,6 @@
             }
             currentBgmMode = "";
         }
-
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -4912,14 +4825,14 @@
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 王国イベント発生！上の枠から選択してください。";
                     return;
-                } else if (evRoll < (cum += 0.004 + b)) {
+                } else if (evRoll < (cum += 0.004)) {
                     currentEvent = "zombie_hero";
                     lastFloorWasEvent = true;
                     markSeen("廃国のゾンビ絵文字勇者");
                     seSkill();
                     document.getElementById("battleLog").innerText = "🏚️ 禍々しい気配が立ち込めている…上の枠から選択してください。";
                     return;
-                } else if (evRoll < (cum += 0.0001 + b)) {
+                } else if (evRoll < (cum += 0.0001)) {
                     currentEvent = "god_entity";
                     lastFloorWasEvent = true;
                     markSeen("星辰の神龍");
@@ -5183,9 +5096,11 @@
             if (choice === 1) {
                 p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
                 const raised = addMixBonusCapped(0.01);
-                wildJoinBonus = Math.round((wildJoinBonus + 0.003) * 10000) / 10000;
+                const raisedWild = addWildJoinBonusCapped(0.003);
                 seStageClear();
-                msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆永続で野生加入率+0.3%" + (raised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限80%に達しています）");
+                const wildText = raisedWild ? "永続で野生加入率+0.3%" : "野生加入率は上限20%に達しています";
+                const mixText = raised ? ("配合成功率+1%（現在" + getMixPctText() + "%）") : "配合成功率は上限80%に達しています";
+                msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆" + wildText + "・" + mixText + "！";
             } else {
                 p.forEach(m => {
                     if (m.inParty) {
@@ -5737,9 +5652,11 @@
                     ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】永続で配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 3) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.002) * 10000) / 10000;
+                const raised = addWildJoinBonusCapped(0.002);
                 seStageClear();
-                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！";
+                msg = raised
+                    ? "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！"
+                    : "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生モンスターの加入率は上限20%に達しているため上がらなかった。そして出国した！";
             } else if (choice === 4) {
                 expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
                 seStageClear();
@@ -5783,9 +5700,11 @@
                     ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】永続で配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 12) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.001) * 10000) / 10000;
+                const raised = addWildJoinBonusCapped(0.001);
                 seStageClear();
-                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された。そして出国した！";
+                msg = raised
+                    ? "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された。そして出国した！"
+                    : "🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生モンスターの加入率は上限20%に達しているため上がらなかった。そして出国した！";
             } else if (choice === 13) {
                 expBonusRate = Math.round((expBonusRate + 0.03) * 1000) / 1000;
                 seStageClear();
@@ -6340,7 +6259,7 @@
                         '<div class="event-title" style="color:#0369a1;">🪽 天使の祝福祭壇を発見した！</div>' +
                         '<div class="event-sub">天空城限定の神聖な祭壇！どちらか1つの加護を選べます。</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickSkyAltar(1)">🪽 祝福を祈る<span class="item-desc-mini">全員HP全回復＆永続で配合+1%・加入+0.3%</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickSkyAltar(1)">🪽 祝福を祈る<span class="item-desc-mini">全員HP全回復＆永続で配合+1%・加入+0.3%(上限20%)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickSkyAltar(2)">⚔️ 天界の鍛錬<span class="item-desc-mini">戦闘中全員の最大HP+10・攻防素+5</span></button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
@@ -6528,7 +6447,7 @@
                     const shopDefs = {
                         1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
                         2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップする</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップ(上限20%)</span></button>',
                         4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
                         5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
                         6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員の<br>HP全回復＆EXP+25</span></button>',
@@ -6537,7 +6456,7 @@
                         9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
                         10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
                         11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップする</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップ(上限20%)</span></button>',
                         13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
                         14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
                         15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<span class="item-desc-mini">【効果】上限未満の控え1体を<br>ランダムでレベル+2する</span></button>'
@@ -6592,7 +6511,6 @@
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
         }
-
         function up(forceAll = true) {
             p.sort((a, b) => {
                 if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
@@ -6993,7 +6911,7 @@
                 updateSpeedButtonUI();
                 saveGame();
                 up(true);
-                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント＆🧑‍✈️元船長＆図鑑解放＆全遭遇確率+1%）";
+                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント＆🧑‍✈️元船長＆図鑑解放＆遭遇確率+1%(No.A・B除く)）";
                 setPresentMsg(okText, "#059669");
                 showNotice(okText, 6000);
                 showGameAlert(okText, "🎁 プレゼント受取");
@@ -7569,7 +7487,6 @@
             }
             return skillLogs;
         }
-
         function grantExpToParty(gainExp) {
             let logs = "";
             let partyCount = 0;
@@ -8013,8 +7930,8 @@
                                                 needsFullUpdate = true;
                                                 if (!repeatStageMode) {
                                                     seMixSuccess();
-                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
-                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
+                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆遭遇+1%(No.A・B除く)！" : ""), 10000);
+                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%（No.A・No.B除く）＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・遭遇+1%(No.A・B除く) 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
                                                 } else {
                                                     seStageClear();
                                                 }
@@ -8299,18 +8216,29 @@
         let pendingEmojiTargets = new Set();
         let emojiBatchRaf = null;
 
+        function isInsideAdFooter(node) {
+            if (!node) return false;
+            let el = (node.nodeType === 1) ? node : node.parentElement;
+            return Boolean(el && el.closest && el.closest("#adFooter"));
+        }
+
         function applyTwemoji(target) {
             if (typeof twemoji === "undefined" || !target || isParsingEmoji) return;
             if (target.nodeType !== 1 && target.nodeType !== 9) return;
+            if (isInsideAdFooter(target)) return;
             isParsingEmoji = true;
             try {
                 if (emojiObserver) emojiObserver.disconnect();
                 twemoji.parse(target, {
                     folder: "svg",
-                    ext: ".svg"
+                    ext: ".svg",
+                    callback: function(icon, options) {
+                        return "".concat(options.base, options.size, "/", icon, options.ext);
+                    }
                 });
                 const imgs = target.querySelectorAll ? target.querySelectorAll("img.emoji:not([data-fb])") : [];
                 imgs.forEach(img => {
+                    if (isInsideAdFooter(img)) return;
                     img.dataset.fb = "1";
                     img.onerror = function() {
                         const alt = this.getAttribute("alt") || "";
@@ -8336,7 +8264,7 @@
             const list = Array.from(pendingEmojiTargets);
             pendingEmojiTargets.clear();
             list.forEach(t => {
-                if (t && t.isConnected) applyTwemoji(t);
+                if (t && t.isConnected && !isInsideAdFooter(t)) applyTwemoji(t);
             });
         }
 
@@ -8346,19 +8274,31 @@
             fbStyle.textContent = ".emoji-fb::before { content: attr(data-emoji-fb); }";
             document.head.appendChild(fbStyle);
 
-            applyTwemoji(document.body);
+            Array.from(document.body.children).forEach(child => {
+                if (child.id !== "adFooter" && child.tagName !== "SCRIPT") {
+                    applyTwemoji(child);
+                }
+            });
             if (typeof MutationObserver === "undefined") return;
             emojiObserver = new MutationObserver((mutations) => {
                 if (isParsingEmoji) return;
                 for (let i = 0; i < mutations.length; i++) {
                     const m = mutations[i];
+                    if (isInsideAdFooter(m.target)) continue;
                     if (m.type === "characterData") {
-                        if (m.target && m.target.parentElement) pendingEmojiTargets.add(m.target.parentElement);
+                        if (m.target && m.target.parentElement && !isInsideAdFooter(m.target.parentElement)) pendingEmojiTargets.add(m.target.parentElement);
                     } else if (m.type === "childList" && m.addedNodes && m.addedNodes.length > 0 && m.target) {
                         if (m.target.id === "fxLayer") {
                             for (let k = 0; k < m.addedNodes.length; k++) {
                                 const nd = m.addedNodes[k];
                                 if (nd && nd.nodeType === 1 && nd.classList && nd.classList.contains("skill-fx-pop")) {
+                                    pendingEmojiTargets.add(nd);
+                                }
+                            }
+                        } else if (m.target === document.body) {
+                            for (let k = 0; k < m.addedNodes.length; k++) {
+                                const nd = m.addedNodes[k];
+                                if (nd && nd.nodeType === 1 && nd.id !== "adFooter" && !isInsideAdFooter(nd)) {
                                     pendingEmojiTargets.add(nd);
                                 }
                             }
