@@ -3,12 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>みっくすえもじ｜無料のモンスター配合ブラウザRPG</title>
-    <meta name="description" content="登録不要・無料で今すぐ遊べるモンスター配合ブラウザRPG『みっくすえもじ』！ダンジョンを攻略して絵文字モンスターを集め、配合で最強のモンスターを生み出そう！スマホ・PC対応。">
+    <title>みっくすえもじ｜無料のモンスター配合ブラウザRPG・1100階ダンジョン＆チャット</title>
+    <meta name="description" content="登録不要・ダウンロード不要で今すぐ遊べる無料モンスター配合ブラウザRPG『みっくすえもじ』！1100階以上のダンジョンをオートバトルで攻略し、絵文字モンスターを集めて配合・図鑑コンプリートを目指そう！プレイヤー同士のチャット機能も搭載。スマホ・PC対応。">
+    <meta name="keywords" content="みっくすえもじ,モンスター配合,ブラウザRPG,無料ゲーム,スマホゲーム,PCゲーム,放置ゲーム,オートバトル,絵文字RPG,絵文字ゲーム,ダンジョンRPG,配合ゲーム,図鑑コンプ,登録不要">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="application-name" content="みっくすえもじ">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="みっくすえもじ">
+    <meta property="og:locale" content="ja_JP">
     <meta property="og:title" content="みっくすえもじ｜無料のモンスター配合ブラウザRPG">
-    <meta property="og:description" content="登録不要・無料で遊べるモンスター配合ブラウザRPG！絵文字モンスターを集めて配合し、ダンジョン制覇を目指そう。">
+    <meta property="og:description" content="登録不要・無料で遊べるモンスター配合ブラウザRPG！絵文字モンスターを集めて配合し、1100階ダンジョン制覇＆図鑑コンプを目指そう。リアルタイムチャット対応！">
+    <meta property="og:image" content="file_00000000b3e48211bce6a50c57a72164.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="みっくすえもじ｜無料のモンスター配合ブラウザRPG">
+    <meta name="twitter:description" content="登録不要・無料で今すぐ遊べる絵文字モンスター配合RPG！オートバトル・図鑑・リアルタイムチャット対応。">
+    <meta name="twitter:image" content="file_00000000b3e48211bce6a50c57a72164.png">
     <link rel="icon" type="image/png" href="file_00000000b3e48211bce6a50c57a72164.png">
     <link rel="apple-touch-icon" href="file_00000000b3e48211bce6a50c57a72164.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "みっくすえもじ",
+        "description": "登録不要・無料で遊べるモンスター配合ブラウザRPG。絵文字モンスターを集めて配合し、1100階のダンジョン攻略と図鑑コンプリートを目指せるスマホ・PC対応ゲーム。",
+        "genre": ["RPG", "モンスター育成", "配合ゲーム", "放置・オートバトル"],
+        "gamePlatform": ["Web Browser", "Mobile Web", "PC"],
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "ja",
+        "isAccessibleForFree": true,
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+        }
+    }
+    </script>
     <script>
         (function() {
             var isCleared1000 = false;
@@ -63,6 +94,9 @@
             inset: 0 !important;
             touch-action: manipulation !important;
             overscroll-behavior: none !important;
+        }
+        body.title-locked .admax-footer-wrap {
+            display: none !important;
         }
         body {
             font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -261,7 +295,7 @@
             line-height: 1.65;
             box-shadow: inset 0 1px 0 #ffffff;
         }
-        .title-header, .box, .tab-nav-wrap {
+        .title-header, .box, .tab-nav-wrap, .seo-footer, .admax-footer-wrap {
             position: relative;
             z-index: 1;
         }
@@ -288,16 +322,18 @@
             box-shadow: 0 8px 22px rgba(2, 132, 199, 0.12), inset 0 2px 0 #ffffff;
         }
         .tab-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
         }
         .tab-btn {
             position: relative;
-            width: 100% !important;
+            flex: 1 1 calc(25% - 5px);
+            min-width: 72px;
+            width: auto !important;
             margin: 0 !important;
-            padding: 9px 4px !important;
-            font-size: 11.5px !important;
+            padding: 9px 3px !important;
+            font-size: 11px !important;
             font-weight: 900 !important;
             border-radius: 13px !important;
             background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
@@ -325,6 +361,17 @@
             margin-left: 3px;
             line-height: 1.45;
             box-shadow: 0 2px 5px rgba(239, 68, 68, 0.45);
+        }
+        .tab-panel {
+            contain: layout style;
+        }
+        #panelBattle {
+            overflow: hidden;
+        }
+        #panelChat {
+            transform: none !important;
+            animation: none !important;
+            contain: layout style;
         }
         .tab-panel.tab-hidden {
             display: none !important;
@@ -454,6 +501,9 @@
             font-size: 13px;
             border: 2px solid rgba(226, 232, 240, 0.95);
             overflow: hidden;
+        }
+        #battleBox {
+            contain: layout;
         }
         .section-badge {
             display: inline-block;
@@ -771,7 +821,6 @@
             margin-left: 3px;
             border: 1px solid #000;
         }
-
         .god-aura-wrap {
             position: relative;
             display: inline-block;
@@ -865,7 +914,6 @@
             font-weight: 900;
             margin-left: 3px;
         }
-
         .mix-modal {
             display: none;
             position: fixed;
@@ -994,7 +1042,6 @@
         .hit-flash {
             animation: hitKnockback 0.38s ease-out !important;
         }
-
         button {
             font-size: 13px;
             padding: 10px 14px;
@@ -1521,6 +1568,203 @@
         input[type="text"] {
             width: 85%; padding: 9px; border-radius: 12px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #1e293b; text-align: center; margin-bottom: 5px; font-family: monospace; font-size: 12px;
         }
+        .chat-profile-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1.5px solid #bae6fd;
+            border-radius: 14px;
+            padding: 9px 10px;
+            margin-bottom: 8px;
+            text-align: left;
+            box-shadow: inset 0 1px 0 #ffffff;
+        }
+        .chat-profile-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 5px 0;
+            flex-wrap: wrap;
+        }
+        .chat-profile-label {
+            font-size: 11px;
+            font-weight: 900;
+            color: #0369a1;
+            min-width: 78px;
+            white-space: nowrap;
+        }
+        .chat-name-input {
+            flex: 1;
+            min-width: 140px;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 6px 9px !important;
+            text-align: left !important;
+            font-family: inherit !important;
+            font-size: 12px !important;
+            font-weight: 700;
+            border-radius: 10px !important;
+            border: 1.5px solid #7dd3fc !important;
+        }
+        .chat-fav-select {
+            flex: 1;
+            min-width: 150px;
+            padding: 6px 8px;
+            border-radius: 10px;
+            border: 1.5px solid #7dd3fc;
+            background: #ffffff;
+            color: #1e293b;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+        .chat-preview-pill {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            background: #ffffff;
+            border: 1px dashed #93c5fd;
+            border-radius: 10px;
+            padding: 5px 8px;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #334155;
+        }
+        .chat-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #475569;
+            margin-bottom: 6px;
+            padding: 4px 8px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .chat-log {
+            height: 260px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f9ff 100%);
+            border: 1.5px solid #bae6fd;
+            border-radius: 14px;
+            padding: 8px;
+            text-align: left;
+            box-shadow: inset 0 2px 6px rgba(2, 132, 199, 0.06);
+            margin-bottom: 8px;
+        }
+        .chat-msg-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 7px 9px;
+            margin-bottom: 6px;
+            box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+            word-break: break-word;
+        }
+        .chat-msg-item.mine {
+            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-color: #7dd3fc;
+        }
+        .chat-msg-head {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+        .chat-sender-name {
+            font-weight: 900;
+            color: #0f172a;
+        }
+        .chat-badge-stg {
+            display: inline-block;
+            background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 0 5px;
+            font-size: 9.5px;
+            font-weight: 900;
+        }
+        .chat-badge-fav {
+            display: inline-block;
+            background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            border-radius: 6px;
+            padding: 0 5px;
+            font-size: 9.5px;
+            font-weight: 800;
+        }
+        .chat-msg-time {
+            margin-left: auto;
+            font-size: 9.5px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .chat-msg-body {
+            font-size: 12px;
+            color: #1e293b;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
+        .chat-send-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .chat-msg-input {
+            flex: 1;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 9px 10px !important;
+            text-align: left !important;
+            font-family: inherit !important;
+            font-size: 12.5px !important;
+            border-radius: 12px !important;
+            border: 1.5px solid #7dd3fc !important;
+        }
+        .chat-send-btn {
+            width: auto !important;
+            margin: 0 !important;
+            padding: 9px 14px !important;
+            font-size: 12px !important;
+            border-radius: 12px !important;
+            white-space: nowrap;
+            background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
+            border-color: #6ee7b7 !important;
+            border-bottom: 3.5px solid #047857 !important;
+        }
+        .seo-footer {
+            max-width: 430px;
+            margin: 12px auto 8px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            font-size: 10.5px;
+            color: #64748b;
+            line-height: 1.55;
+            text-align: left;
+        }
+        .seo-footer h2 {
+            margin: 0 0 4px;
+            font-size: 11.5px;
+            color: #0369a1;
+            font-weight: 900;
+        }
+        .admax-footer-wrap {
+            max-width: 430px;
+            margin: 10px auto 0;
+            padding: 6px 4px;
+            text-align: center;
+            min-height: 55px;
+            overflow: hidden;
+        }
         img.emoji {
             height: 1em;
             width: 1em;
@@ -1542,7 +1786,7 @@
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
-        <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
+        <img id="titleFullImg" alt="みっくすえもじ タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
         <script>
             (function() {
                 var imgFile = window.__TITLE_IMG_FILE__ || (window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png");
@@ -1572,7 +1816,7 @@
 
     <canvas id="bgCanvas"></canvas>
 
-    <div class="title-header">
+    <header class="title-header">
         <div class="title-sub">✨ MONSTER SYNTHESIS RPG ✨</div>
         <h1>👑 みっくすえもじ 👑</h1>
         <div id="weekendBanner" class="weekend-banner">🎉 土日限定ボーナス発動中！獲得EXP 2倍 ＆ 配合確率 +10%！ 🎉</div>
@@ -1620,10 +1864,14 @@
             </div>
             <div class="guide-step">
                 <b>⑤「📖 図鑑」でヒントを見て1000階制覇を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！未発見のモンスターを集めながら、1000階の制覇を目指しましょう！
+                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！未発見のモンスターを集めながら、1000階・さらにその先の制覇を目指しましょう！
             </div>
             <div class="guide-step">
-                <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
+                <b>⑥「💬 チャット」で他のプレイヤーと交流しよう！</b><br>
+                名前とお気に入りのモンスター（図鑑登録済みから1体）を設定して、最高クリア階と一緒にメッセージを送れます！情報交換や自慢を楽しもう！
+            </div>
+            <div class="guide-step">
+                <b>⑦「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
                 ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
                 「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もこのタブから行えます。
             </div>
@@ -1632,18 +1880,19 @@
                 🎨 絵文字画像：Twemoji (CC-BY 4.0)
             </div>
         </div>
-    </div>
+    </header>
 
-    <div class="tab-nav-wrap" id="mainTabBar">
+    <nav class="tab-nav-wrap" id="mainTabBar" aria-label="メインメニュー">
         <div class="tab-grid">
             <button class="tab-btn active" id="tabBtn_battle" onclick="switchTab('battle')">⚔️ バトル</button>
             <button class="tab-btn" id="tabBtn_box" onclick="switchTab('box')">📦 ボックス</button>
             <button class="tab-btn" id="tabBtn_mix" onclick="switchTab('mix')">🧬 配合</button>
             <button class="tab-btn" id="tabBtn_quest" onclick="switchTab('quest')">🧭 クエスト<span id="questTabDot" class="tab-dot" style="display:none;"></span></button>
             <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
+            <button class="tab-btn" id="tabBtn_chat" onclick="switchTab('chat')">💬 チャット<span id="chatTabDot" class="tab-dot" style="display:none;"></span></button>
             <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
         </div>
-    </div>
+    </nav>
     <div id="panelBattle" class="tab-panel">
         <div class="box" id="battleBox" style="padding-top: 12px;">
             <span class="section-badge" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #b91c1c; border-color: #fca5a5;">⚔️ DUNGEON BATTLE</span>
@@ -1712,7 +1961,7 @@
         <div class="box" style="border: 2px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
             <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
-            <div class="limit-hint">※毎日クエストは毎日0時にリセット！通常クエストは初期5件／王国ギルド含め上限20件</div>
+            <div class="limit-hint">※毎日クエストは毎日0時にリセット！加入+%の上限は20%・配合+%の上限は80%まで</div>
             <div id="missionWrapper" style="display: block; margin-top: 8px;">
                 <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 💎EXP+0%</div>
                 <div id="missionList" class="scroll-box" style="max-height: 290px; border-color: #fde68a; background: #fffbeb;"></div>
@@ -1827,6 +2076,40 @@
         </div>
     </div>
 
+    <div id="panelChat" class="tab-panel tab-hidden">
+        <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
+            <span class="section-badge" style="background: linear-gradient(135deg, #cffafe 0%, #bae6fd 100%); color: #0369a1; border-color: #38bdf8;">💬 GLOBAL CHAT</span>
+            <h3 style="margin: 2px 0 4px; color: #0284c7; font-size: 16px;">💬 みんなの交流チャット</h3>
+            <div class="limit-hint">※名前の横に「🏆最高クリア階」と「お気に入りモンスター（図鑑登録済み限定）」が表示されます</div>
+
+            <div class="chat-profile-card">
+                <div class="chat-profile-row">
+                    <span class="chat-profile-label">👤 名前</span>
+                    <input type="text" id="chatNameInput" class="chat-name-input" maxlength="12" placeholder="プレイヤー名（12文字まで）" oninput="setChatPlayerName(this.value)">
+                </div>
+                <div class="chat-profile-row">
+                    <span class="chat-profile-label">⭐ お気に入り</span>
+                    <select id="chatFavSelect" class="chat-fav-select" onchange="setChatFavMonster(this.value)">
+                        <option value="">（なし / 図鑑登録済みから選択）</option>
+                    </select>
+                </div>
+                <div id="chatProfilePreview" class="chat-preview-pill"></div>
+            </div>
+
+            <div class="chat-status-bar">
+                <span id="chatConnStatus">🔄 チャットサーバー接続中...</span>
+                <button class="btn-tiny" onclick="reconnectChat()" style="padding: 3px 8px; font-size: 10px;">🔄 再接続</button>
+            </div>
+
+            <div id="chatLog" class="chat-log"></div>
+
+            <div class="chat-send-row">
+                <input type="text" id="chatMsgInput" class="chat-msg-input" maxlength="120" placeholder="メッセージを入力（120文字まで）" onkeydown="if(event.key==='Enter' && !event.isComposing){event.preventDefault(); sendChatMessage();}">
+                <button class="chat-send-btn" id="btnChatSend" onclick="sendChatMessage()">📨 送信</button>
+            </div>
+        </div>
+    </div>
+
     <div id="panelSave" class="tab-panel tab-hidden">
         <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
             <span class="section-badge">💾 SAVE & TRANSFER</span>
@@ -1918,154 +2201,24 @@
             </button>
         </div>
     </div>
-    <script>
-        const D = {
-            "プニシズク": { no: 1, a: "💧", hp: 10, at: 5, df: 3, sp: 6, ex: 1 },
-            "カゲコウモリ": { no: 2, a: "🦇", hp: 12, at: 6, df: 4, sp: 10, ex: 1 },
-            "うらめシート": { no: 3, a: "👻", hp: 15, at: 7, df: 5, sp: 5, ex: 1 },
-            "チューマウス": { no: 4, a: "🐁", hp: 14, at: 8, df: 4, sp: 9, ex: 1 },
-            "ソロゾロアント": { no: 5, a: "🐜", hp: 9, at: 5, df: 3, sp: 7, ex: 1 },
-            "ポイズンフロッグ": { no: 6, a: "🐸", hp: 13, at: 6, df: 4, sp: 7, ex: 1 },
-            "キャタピラー": { no: 7, a: "🐛", hp: 11, at: 5, df: 4, sp: 5, ex: 1 },
-            "シェルスネイル": { no: 8, a: "🐌", hp: 16, at: 4, df: 8, sp: 2, ex: 1 },
-            "ピヨチビ": { no: 9, a: "🐥", hp: 12, at: 6, df: 4, sp: 8, ex: 1 },
-            "ロックタートル": { no: 10, a: "🐢", hp: 18, at: 5, df: 8, sp: 3, ex: 1 },
-            "リバーフィッシュ": { no: 11, a: "🐟", hp: 12, at: 6, df: 4, sp: 9, ex: 1 },
-            "コオリガニ": { no: 12, a: "🦀", hp: 16, at: 6, df: 7, sp: 4, ex: 1 },
-            "コロテントウ": { no: 13, a: "🐞", hp: 11, at: 5, df: 6, sp: 7, ex: 1 },
-            "パタバタフライ": { no: 14, a: "🦋", hp: 11, at: 7, df: 4, sp: 11, ex: 1 },
-            "キラービー": { no: 15, a: "🐝", hp: 12, at: 9, df: 3, sp: 13, ex: 1 },
-            "ヴェノムスパイダー": { no: 16, a: "🕷️", hp: 13, at: 8, df: 5, sp: 8, ex: 1 },
-            "ウサピョン": { no: 17, a: "🐇", hp: 15, at: 7, df: 5, sp: 11, ex: 1 },
-            "チップモンク": { no: 18, a: "🐿️", hp: 14, at: 8, df: 5, sp: 10, ex: 1 },
-            "ニードルホッグ": { no: 19, a: "🦔", hp: 18, at: 7, df: 9, sp: 5, ex: 1 },
-            "バイパー": { no: 20, a: "🐍", hp: 15, at: 9, df: 5, sp: 9, ex: 1 },
-            "スノーペンギン": { no: 21, a: "🐧", hp: 16, at: 7, df: 6, sp: 7, ex: 1 },
-            "ゴールデンワン": { no: 22, a: "🐕", hp: 17, at: 8, df: 6, sp: 9, ex: 1 },
-            "シャドウネコ": { no: 23, a: "🐈‍⬛", hp: 15, at: 9, df: 5, sp: 12, ex: 1 },
-            "ウッドビーバー": { no: 24, a: "🦫", hp: 18, at: 8, df: 8, sp: 6, ex: 1 },
-            "ギガジェリー": { no: 25, a: "🪼", hp: 30, at: 15, df: 12, sp: 10, ex: 2 },
-            "シルフィードバード": { no: 26, a: "🕊️", hp: 26, at: 18, df: 10, sp: 16, ex: 2 },
-            "ホークアイ": { no: 27, a: "🦅", hp: 28, at: 20, df: 11, sp: 17, ex: 2 },
-            "ナイトオウル": { no: 28, a: "🦉", hp: 32, at: 19, df: 14, sp: 12, ex: 2 },
-            "ファイアフォックス": { no: 29, a: "🦊", hp: 27, at: 19, df: 11, sp: 15, ex: 2 },
-            "マスクラクーン": { no: 30, a: "🦝", hp: 26, at: 16, df: 12, sp: 13, ex: 2 },
-            "ダークベア": { no: 31, a: "🐻", hp: 34, at: 19, df: 13, sp: 9, ex: 2 },
-            "ブルーイルカ": { no: 32, a: "🐬", hp: 29, at: 17, df: 12, sp: 16, ex: 2 },
-            "ホワイトスワン": { no: 33, a: "🦢", hp: 28, at: 16, df: 12, sp: 16, ex: 2 },
-            "デススコーピオン": { no: 34, a: "🦂", hp: 30, at: 21, df: 13, sp: 13, ex: 2 },
-            "フォレストディア": { no: 35, a: "🦌", hp: 31, at: 18, df: 13, sp: 15, ex: 2 },
-            "バウンスルー": { no: 36, a: "🦘", hp: 30, at: 20, df: 12, sp: 16, ex: 2 },
-            "サイバーロボ": { no: 37, a: "🤖", hp: 33, at: 21, df: 14, sp: 15, ex: 2 },
-            "フロストグリズリー": { no: 38, a: "🐻‍❄️", hp: 38, at: 22, df: 15, sp: 10, ex: 2 },
-            "ゴールデンレオパード": { no: 39, a: "🐆", hp: 31, at: 23, df: 11, sp: 18, ex: 2 },
-            "ボアキング": { no: 40, a: "🐗", hp: 36, at: 22, df: 15, sp: 11, ex: 2 },
-            "ブレイブオックス": { no: 41, a: "🐂", hp: 38, at: 23, df: 16, sp: 10, ex: 2 },
-            "キラータイガー": { no: 42, a: "🐯", hp: 34, at: 25, df: 12, sp: 17, ex: 2 },
-            "ホワイトシール": { no: 43, a: "🦭", hp: 39, at: 20, df: 26, sp: 16, ex: 3 },
-            "シルバーゴリラ": { no: 44, a: "🦍", hp: 50, at: 28, df: 24, sp: 11, ex: 3 },
-            "ハリセンボンバー": { no: 45, a: "🐡", hp: 44, at: 32, df: 18, sp: 19, ex: 3 },
-            "アイアンマンモス": { no: 46, a: "🦣", hp: 56, at: 27, df: 31, sp: 9, ex: 3 },
-            "ギガローチ": { no: 47, a: "🪳", hp: 48, at: 30, df: 22, sp: 14, ex: 3 },
-            "フォレストウータン": { no: 48, a: "🦧", hp: 52, at: 29, df: 22, sp: 12, ex: 3 },
-            "ヴェノムゲッコー": { no: 49, a: "🦎", hp: 48, at: 29, df: 21, sp: 15, ex: 3 },
-            "ブラッドモスキート": { no: 50, a: "🦟", hp: 45, at: 32, df: 19, sp: 21, ex: 3 },
-            "エンペラーエレファント": { no: 51, a: "🐘", hp: 76, at: 44, df: 42, sp: 14, ex: 4 },
-            "スロウロス": { no: 52, a: "🦥", hp: 62, at: 42, df: 32, sp: 24, ex: 4 },
-            "プリズムピーコック": { no: 53, a: "🦚", hp: 65, at: 44, df: 30, sp: 26, ex: 4 },
-            "ブレイブスタリオン": { no: 54, a: "🐎", hp: 74, at: 46, df: 36, sp: 28, ex: 4 },
-            "ヌマクロコダイル": { no: 55, a: "🐊", hp: 78, at: 50, df: 38, sp: 24, ex: 4 },
-            "エメラルドブラキオ": { no: 56, a: "🦕", hp: 85, at: 54, df: 42, sp: 22, ex: 5 },
-            "ギガヒポポ": { no: 57, a: "🦛", hp: 88, at: 58, df: 40, sp: 23, ex: 5 },
-            "フラミンゴクイーン": { no: 58, a: "🦩", hp: 90, at: 56, df: 45, sp: 30, ex: 5 },
-            "シャドウバジャー": { no: 59, a: "🦡", hp: 88, at: 62, df: 44, sp: 28, ex: 5 },
-            "クリムゾンタイガー": { no: 60, a: "🐅", hp: 110, at: 68, df: 52, sp: 30, ex: 6 },
-            "クラーケンロード": { no: 61, a: "🐙", hp: 118, at: 66, df: 55, sp: 26, ex: 6 },
-            "グランドバイソン": { no: 62, a: "🦬", hp: 125, at: 70, df: 58, sp: 22, ex: 6 },
-            "ストライプゼブラ": { no: 63, a: "🦓", hp: 112, at: 72, df: 52, sp: 35, ex: 6 },
-            "マーメイドクイーン": { no: 64, a: "🧜‍♀️", hp: 124, at: 74, df: 58, sp: 30, ex: 7 },
-            "ヘラクレスビートル": { no: 65, a: "🪲", hp: 128, at: 78, df: 56, sp: 30, ex: 7 },
-            "メガホルスタイン": { no: 66, a: "🐄", hp: 135, at: 80, df: 62, sp: 32, ex: 7 },
-            "スカイジラフ": { no: 67, a: "🦒", hp: 148, at: 82, df: 68, sp: 28, ex: 7 },
-            "エルクカイザー": { no: 68, a: "🫎", hp: 148, at: 86, df: 68, sp: 32, ex: 8 },
-            "ホーンラム": { no: 69, a: "🐏", hp: 155, at: 88, df: 72, sp: 36, ex: 8 },
-            "リヴァイアサン": { no: 70, a: "🐳", hp: 168, at: 92, df: 76, sp: 34, ex: 8 },
-            "アルパカマスター": { no: 71, a: "🦙", hp: 162, at: 94, df: 72, sp: 44, ex: 8 },
-            "ガイアパンダ": { no: 72, a: "🐼", hp: 172, at: 96, df: 76, sp: 34, ex: 8 },
-            "ブレイズコック": { no: 73, a: "🐓", hp: 158, at: 100, df: 68, sp: 46, ex: 8 },
-            "カオスピエロ": { no: 74, a: "🤡", hp: 165, at: 102, df: 70, sp: 48, ex: 8 },
-            "ポイズンスカンク": { no: 75, a: "🦨", hp: 176, at: 104, df: 78, sp: 38, ex: 9 },
-            "マウンテンゴート": { no: 76, a: "🐐", hp: 178, at: 106, df: 78, sp: 42, ex: 9 },
-            "アストラルキャット": { no: 77, a: "🐈", hp: 175, at: 108, df: 76, sp: 50, ex: 9 },
-            "ゴールデングース": { no: 78, a: "🪿", hp: 182, at: 102, df: 88, sp: 52, ex: 9 },
-            "ケルベロスプードル": { no: 79, a: "🐩", hp: 190, at: 115, df: 82, sp: 48, ex: 9 },
-            "疾風ホース": { no: 80, a: "🐴", hp: 196, at: 120, df: 84, sp: 56, ex: 9 },
-            "エンシェントドードー": { no: 81, a: "🦤", hp: 198, at: 118, df: 86, sp: 52, ex: 9 },
-            "深海クラーケン": { no: 82, a: "🦑", hp: 208, at: 118, df: 90, sp: 42, ex: 10 },
-            "クロウヴァルキリー": { no: 83, a: "🐦‍⬛", hp: 202, at: 124, df: 86, sp: 52, ex: 10 },
-            "タイタンモンキー": { no: 84, a: "🐒", hp: 230, at: 120, df: 98, sp: 34, ex: 10 },
-            "デザートキャメル": { no: 85, a: "🐫", hp: 225, at: 128, df: 94, sp: 54, ex: 10 },
-            "クリムゾンパロット": { no: 86, a: "🦜", hp: 218, at: 134, df: 90, sp: 58, ex: 10 },
-            "シャドウホッパー": { no: 87, a: "🦗", hp: 210, at: 140, df: 86, sp: 62, ex: 10 },
-            "サンドキャメル": { no: 88, a: "🐪", hp: 242, at: 138, df: 98, sp: 50, ex: 11 },
-            "クリスタルシュリンプ": { no: 89, a: "🦐", hp: 238, at: 144, df: 96, sp: 56, ex: 11 },
-            "アクアフィッシュ": { no: 90, a: "🐠", hp: 265, at: 148, df: 108, sp: 60, ex: 11 },
-            "アクアオッター": { no: 91, a: "🦦", hp: 254, at: 152, df: 104, sp: 68, ex: 11 },
-            "サンダードンキー": { no: 92, a: "🫏", hp: 278, at: 158, df: 112, sp: 64, ex: 12 },
-            "ポセイドンホエール": { no: 93, a: "🐋", hp: 312, at: 156, df: 126, sp: 54, ex: 12 },
-            "ゼウスターキー": { no: 94, a: "🦃", hp: 295, at: 168, df: 118, sp: 74, ex: 12 },
-            "スカイブルーバード": { no: 95, a: "🐦", hp: 322, at: 175, df: 128, sp: 78, ex: 13 },
-            "ウールシープ": { no: 96, a: "🐑", hp: 332, at: 180, df: 132, sp: 80, ex: 13 },
-            "ワイルドピッグ": { no: 97, a: "🐖", hp: 360, at: 195, df: 142, sp: 76, ex: 14 },
-            "トリトンキング": { no: 98, a: "🧜‍♂️", hp: 382, at: 192, df: 150, sp: 82, ex: 14 },
-            "アースワーム": { no: 99, a: "🪱", hp: 412, at: 212, df: 165, sp: 88, ex: 15 },
-            "ドラゴンエンペラー": { no: 100, a: "🐲", hp: 480, at: 245, df: 200, sp: 100, ex: 18 },
-            "アビスシェル": { no: 101, a: "🐚", hp: 500, at: 245, df: 225, sp: 95, ex: 19 },
-            "コーラルゴーレム": { no: 102, a: "🪸", hp: 520, at: 255, df: 220, sp: 98, ex: 19 },
-            "パールエンプレス": { no: 103, a: "🦪", hp: 510, at: 258, df: 215, sp: 110, ex: 20 },
-            "バブルスピリット": { no: 104, a: "🫧", hp: 495, at: 265, df: 205, sp: 124, ex: 20 },
-            "アイアンアンカー": { no: 105, a: "⚓", hp: 560, at: 270, df: 240, sp: 88, ex: 21 },
-            "アビスクリスタル": { no: 106, a: "💎", hp: 535, at: 282, df: 225, sp: 116, ex: 21 },
-            "シンカイモアイ": { no: 107, a: "🗿", hp: 595, at: 278, df: 255, sp: 84, ex: 22 },
-            "エンシェントポット": { no: 108, a: "🏺", hp: 550, at: 288, df: 225, sp: 112, ex: 22 },
-            "ファントムコンパス": { no: 109, a: "🧭", hp: 540, at: 296, df: 218, sp: 130, ex: 23 },
-            "アビスオキュラス": { no: 110, a: "🧿", hp: 610, at: 310, df: 245, sp: 126, ex: 25 },
-            "スカイクラウド": { no: 111, a: "☁️", hp: 620, at: 312, df: 245, sp: 132, ex: 25 },
-            "サンダースパーク": { no: 112, a: "⚡", hp: 605, at: 335, df: 230, sp: 152, ex: 26 },
-            "テンペストウィング": { no: 113, a: "🌪️", hp: 630, at: 330, df: 240, sp: 156, ex: 26 },
-            "プリズムレインボー": { no: 114, a: "🌈", hp: 655, at: 325, df: 255, sp: 142, ex: 27 },
-            "ルナクレセント": { no: 115, a: "🌙", hp: 670, at: 348, df: 252, sp: 150, ex: 27 },
-            "ソラリスフレア": { no: 116, a: "☀️", hp: 695, at: 362, df: 265, sp: 146, ex: 28 },
-            "メテオコメット": { no: 117, a: "☄️", hp: 715, at: 375, df: 260, sp: 162, ex: 29 },
-            "アストラルサターン": { no: 118, a: "🪐", hp: 750, at: 368, df: 292, sp: 140, ex: 30 },
-            "スカイフォートレス": { no: 119, a: "🛸", hp: 785, at: 385, df: 308, sp: 136, ex: 32 },
-            "セレスティアルスター": { no: 120, a: "🌟", hp: 840, at: 410, df: 320, sp: 170, ex: 36 }
-        };
-        const BOSS_D = {
-            "草原の覇王バッファロー": { no: -1, stage: 50, a: "🐃", hp: 280, at: 65, df: 45, sp: 34, ex: 18 },
-            "草原の精霊フェアリー": { no: -2, stage: 100, a: "🧚", hp: 480, at: 108, df: 76, sp: 58, ex: 30 },
-            "密林の暴君ティラノ": { no: -3, stage: 150, a: "🦖", hp: 740, at: 162, df: 112, sp: 78, ex: 45 },
-            "密林の巨人トロール": { no: -4, stage: 200, a: "🧌", hp: 1050, at: 220, df: 158, sp: 104, ex: 62 },
-            "深海の甲殻王ロブスター": { no: -5, stage: 250, a: "🦞", hp: 1380, at: 280, df: 196, sp: 128, ex: 80 },
-            "深海の覇者メガロドン": { no: -6, stage: 300, a: "🦈", hp: 1740, at: 345, df: 238, sp: 155, ex: 100 },
-            "砂漠の呪霊ゾンビロード": { no: -7, stage: 350, a: "🧟", hp: 2120, at: 405, df: 285, sp: 172, ex: 122 },
-            "砂漠の獅子王レオン": { no: -8, stage: 400, a: "🦁", hp: 2520, at: 470, df: 325, sp: 202, ex: 145 },
-            "毒沼の瘴気王ベノム": { no: -9, stage: 450, a: "🤢", hp: 2950, at: 535, df: 368, sp: 228, ex: 170 },
-            "毒沼の大魔王ルシファー": { no: -10, stage: 500, a: "🤵", hp: 3550, at: 620, df: 425, sp: 260, ex: 210 },
-            "鉱山の鋼鉄王ライノス": { no: -11, stage: 550, a: "🦏", hp: 4050, at: 685, df: 485, sp: 275, ex: 235 },
-            "鉱山の鬼神オーガキング": { no: -12, stage: 600, a: "👹", hp: 4580, at: 760, df: 525, sp: 300, ex: 265 },
-            "神殿の聖獣ユニコーン": { no: -13, stage: 650, a: "🦄", hp: 5150, at: 835, df: 570, sp: 330, ex: 295 },
-            "神殿の熾天使セラフィム": { no: -14, stage: 700, a: "👼", hp: 5750, at: 915, df: 620, sp: 355, ex: 330 },
-            "火山の魔神テング": { no: -15, stage: 750, a: "👺", hp: 6380, at: 995, df: 665, sp: 380, ex: 365 },
-            "火山の不死鳥フェニックス": { no: -16, stage: 800, a: "🐦‍🔥", hp: 7020, at: 1080, df: 715, sp: 410, ex: 405 },
-            "氷結の銀狼フェンリル": { no: -17, stage: 850, a: "🐺", hp: 7680, at: 1170, df: 770, sp: 440, ex: 445 },
-            "氷世界の死神スカル": { no: -18, stage: 900, a: "💀", hp: 8380, at: 1265, df: 825, sp: 470, ex: 490 },
-            "魔王城の混沌魔デビル": { no: -19, stage: 950, a: "👿", hp: 9100, at: 1365, df: 885, sp: 505, ex: 540 },
-            "魔王城の真祖ドラキュラ": { no: -20, stage: 1000, a: "🧛", hp: 10200, at: 1520, df: 980, sp: 550, ex: 650 },
-            "海底神殿の海皇ポセイドン": { no: -21, stage: 1050, a: "🥶", hp: 10800, at: 1590, df: 1030, sp: 580, ex: 750 },
-            "天空城の天帝ゼウス": { no: -22, stage: 1100, a: "🌞", hp: 11500, at: 1660, df: 1080, sp: 610, ex: 900 }
-        };
-        const SPECIAL_D = {
+
+    <footer class="seo-footer">
+        <h2>🎮 無料モンスター配合ブラウザRPG『みっくすえもじ』について</h2>
+        『みっくすえもじ』は、登録不要・ダウンロード不要でスマホやPCのブラウザからすぐに遊べる無料のオートバトル＆モンスター育成・配合RPGです。120種類の通常モンスター、22体のエリアボス、超レア色違いや特別遭遇モンスターを集めて図鑑コンプリートを目指しましょう！ダンジョンは1000階、さらに海底神殿・天空城の1100階まで攻略可能。プレイヤー同士で交流できるリアルタイムチャット機能も搭載しています。
+    </footer>
+
+    <div class="admax-footer-wrap" id="admaxFooter">
+        <!-- admax -->
+        <script src="https://adm.shinobi.jp/s/952441acd9b60ce669a33a435fee277d"></script>
+        <!-- admax -->
+    </div>
+
+    <noscript>
+        <div style="background:#fff; padding:16px; border-radius:12px; max-width:430px; margin:12px auto;">
+            『みっくすえもじ』は登録不要・無料で遊べるモンスター配合ブラウザRPGです。JavaScriptを有効にしてお楽しみください。
+        </div>
+    </noscript>
+    const SPECIAL_D = {
             "王国の絵文字勇者": { no: "EX", a: "🤺", hp: 950, at: 360, df: 260, sp: 210, ex: 0, isSpecialHero: true },
             "王国の配合賢者": { no: "EX2", a: "🧝‍♂️", hp: 2100, at: 660, df: 470, sp: 340, ex: 0, isSpecialSage: true },
             "ギルドマスター": { no: "EX3", a: "🧔", hp: 480, at: 200, df: 150, sp: 135, ex: 0, isSpecialGuildMaster: true },
@@ -2294,7 +2447,7 @@
             }
             return SKILLS[mon.skillId - 1];
         }
-        let dialogQueue = [];
+             let dialogQueue = [];
         let isDialogOpen = false;
 
         function escapeHtml(str) {
@@ -2398,6 +2551,7 @@
         });
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
+        const MAX_WILD_JOIN_CAP = 0.20;
         const MAX_LV_CAP_BONUS = 20;
 
         let eg = [];
@@ -2428,6 +2582,13 @@
             dailyQuest: null,
             claimedPresentCodes: []
         };
+        let chatProfile = {
+            name: "冒険者",
+            favMon: ""
+        };
+        let chatMessages = [];
+        let chatUnreadCount = 0;
+
         let currentEvent = null;
         let lastFloorWasEvent = false;
         let currentMerchantItems = [1, 2];
@@ -2569,6 +2730,17 @@
             mixBonus = Math.round((mixBonus + delta) * 10000) / 10000;
             clampMixRate();
             return getRawMixRate() > before;
+        }
+
+        function clampWildJoinBonus() {
+            wildJoinBonus = Math.max(0, Math.min(MAX_WILD_JOIN_CAP, Math.round(wildJoinBonus * 10000) / 10000));
+        }
+
+        function addWildJoinBonusCapped(delta) {
+            const before = wildJoinBonus;
+            wildJoinBonus = Math.round((wildJoinBonus + delta) * 10000) / 10000;
+            clampWildJoinBonus();
+            return wildJoinBonus > before;
         }
 
         function getEffectiveMixRate() {
@@ -2806,8 +2978,7 @@
             { id: "gm_24", title: "🏟️闘技場の常勝王",     condText: "王国の闘技場で3回勝利する",       rewardText: "戦闘EXP+15%",           reward: { exp: 0.15 },            checkType: "arena",      val: 3 },
             { id: "gm_25", title: "📖図鑑コンプへの道",   condText: "通常図鑑を90種埋める",            rewardText: "配合+5% & 上限+10",     reward: { mix: 0.05, box: 10 },   checkType: "zukan",      val: 90 }
         ];
-
-        function migrateLegacyMissions() {
+                    function migrateLegacyMissions() {
             if (!Array.isArray(stats.claimedMissions)) stats.claimedMissions = [];
             if (!Array.isArray(stats.extraMissions)) stats.extraMissions = [];
 
@@ -2989,7 +3160,7 @@
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 const expPct = Math.round(expBonusRate * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% ／ 💎EXP+" + expPct + "%";
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% (上限20%) ／ 💎EXP+" + expPct + "%";
             }
         }
 
@@ -3003,7 +3174,7 @@
                 const item = DAILY_REWARD_POOL.find(x => x.key === k);
                 if (!item) return;
                 if (k === "mix") addMixBonusCapped(item.val);
-                else if (k === "wild") wildJoinBonus = Math.round((wildJoinBonus + item.val) * 10000) / 10000;
+                else if (k === "wild") addWildJoinBonusCapped(item.val);
                 else if (k.indexOf("exp") === 0) expBonusRate = Math.round((expBonusRate + item.val) * 1000) / 1000;
             });
 
@@ -3024,7 +3195,7 @@
             if (m.reward.box) boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + m.reward.box);
             if (m.reward.mix) addMixBonusCapped(m.reward.mix);
             if (m.reward.exp) expBonusRate = Math.round((expBonusRate + m.reward.exp) * 1000) / 1000;
-            if (m.reward.wild) wildJoinBonus = Math.round((wildJoinBonus + m.reward.wild) * 10000) / 10000;
+            if (m.reward.wild) addWildJoinBonusCapped(m.reward.wild);
 
             seStageClear();
             const msg = "🧭 クエスト「" + m.title + "」達成！特典（" + m.rewardText + "）を獲得しました！";
@@ -3110,10 +3281,12 @@
                 wildJoinBonus: wildJoinBonus,
                 dungeonLockUntil: dungeonLockUntil,
                 stats: stats,
+                chatProfile: chatProfile,
                 p: p
             };
             try {
                 localStorage.setItem("mix_emoji_save_v9", JSON.stringify(data));
+                localStorage.setItem("mix_emoji_chat_profile_v1", JSON.stringify(chatProfile));
             } catch (e) {}
         }
 
@@ -3165,6 +3338,8 @@
 
             expBonusRate = (typeof data.expBonusRate === "number") ? data.expBonusRate : 0;
             wildJoinBonus = (typeof data.wildJoinBonus === "number") ? data.wildJoinBonus : 0;
+            clampWildJoinBonus();
+
             dungeonLockUntil = (typeof data.dungeonLockUntil === "number") ? data.dungeonLockUntil : 0;
             if (data.stats && typeof data.stats === "object") {
                 stats = Object.assign({
@@ -3252,6 +3427,16 @@
             });
             zk.forEach(name => markSeen(name));
             partyOrderCounter = maxOrd;
+
+            if (data.chatProfile && typeof data.chatProfile === "object") {
+                const nm = String(data.chatProfile.name || "冒険者").trim().slice(0, 12) || "冒険者";
+                const fv = normalizeMonName(String(data.chatProfile.favMon || ""));
+                chatProfile = {
+                    name: nm,
+                    favMon: (fv && zk.includes(fv)) ? fv : ""
+                };
+            }
+
             lastRenderedZukanSig = "";
             lastRenderedBoxSig = "";
             lastRenderedMyBattleSig = "";
@@ -3275,6 +3460,17 @@
                     }
                 } catch (e) { console.error("ロード失敗", e); }
             }
+            try {
+                const cpRaw = localStorage.getItem("mix_emoji_chat_profile_v1");
+                if (cpRaw) {
+                    const cp = JSON.parse(cpRaw);
+                    if (cp && typeof cp === "object") {
+                        if (cp.name) chatProfile.name = String(cp.name).trim().slice(0, 12) || "冒険者";
+                        const fv = normalizeMonName(String(cp.favMon || ""));
+                        chatProfile.favMon = (fv && zk.includes(fv)) ? fv : "";
+                    }
+                }
+            } catch (e) {}
             ensureDailyQuestCurrent();
             updateTitleBg();
             if (isDungeonLocked()) {
@@ -3285,9 +3481,10 @@
             updateRepeatButtonUI();
             updateSpeedButtonUI();
             updateSortButtonsUI();
+            if (typeof syncChatProfileUI === "function") syncChatProfileUI();
             up(true);
         }
-        function switchTab(tabName) {
+                function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
                 battle: document.getElementById("panelBattle"),
@@ -3295,6 +3492,7 @@
                 mix:    document.getElementById("panelMix"),
                 quest:  document.getElementById("panelQuest"),
                 zukan:  document.getElementById("panelZukan"),
+                chat:   document.getElementById("panelChat"),
                 save:   document.getElementById("panelSave")
             };
             Object.keys(panels).forEach(key => {
@@ -3316,6 +3514,11 @@
                 up(false);
             } else if (tabName === "quest") {
                 renderMissions(false);
+            } else if (tabName === "chat") {
+                chatUnreadCount = 0;
+                if (typeof updateChatUnreadDot === "function") updateChatUnreadDot();
+                if (typeof syncChatProfileUI === "function") syncChatProfileUI();
+                if (typeof renderChatMessages === "function") renderChatMessages(true);
             }
         }
 
@@ -3839,7 +4042,7 @@
             saveGame();
             upBattleUI();
         }
-        let soundEnabled = true;
+                let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
         let audioCtx = null;
@@ -4408,6 +4611,7 @@
         }
 
         function spawnBattleBurstAtMonster(targetMon, isEnemyTarget, color, count) {
+            if (currentTab !== "battle") return;
             const canvas = document.getElementById("battleCanvas");
             const field = document.getElementById("battleField");
             if (!canvas || !field) return;
@@ -4450,6 +4654,7 @@
         }
 
         function spawnBattleBeam(attackerMon, isAttackerEnemy, defenderMon, isDefenderEnemy, color) {
+            if (currentTab !== "battle") return;
             if (battleBeams.length >= 12) return;
             const from = getMonsterCenterInField(attackerMon, isAttackerEnemy);
             const to = getMonsterCenterInField(defenderMon, isDefenderEnemy);
@@ -4466,6 +4671,7 @@
         }
 
         function showDamagePop(targetMon, isEnemyTarget, text, color, isCrit) {
+            if (currentTab !== "battle") return;
             const fxLayer = document.getElementById("fxLayer");
             if (!fxLayer) return;
             while (fxLayer.childElementCount >= 14 && fxLayer.firstChild) {
@@ -4751,7 +4957,7 @@
                 }, 380);
             }
         }
-        function enter(){
+                        function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
             }
@@ -4912,14 +5118,14 @@
                     seSkill();
                     document.getElementById("battleLog").innerText = "📜 王国イベント発生！上の枠から選択してください。";
                     return;
-                } else if (evRoll < (cum += 0.004 + b)) {
+                } else if (evRoll < (cum += 0.004)) {
                     currentEvent = "zombie_hero";
                     lastFloorWasEvent = true;
                     markSeen("廃国のゾンビ絵文字勇者");
                     seSkill();
                     document.getElementById("battleLog").innerText = "🏚️ 禍々しい気配が立ち込めている…上の枠から選択してください。";
                     return;
-                } else if (evRoll < (cum += 0.0001 + b)) {
+                } else if (evRoll < (cum += 0.0001)) {
                     currentEvent = "god_entity";
                     lastFloorWasEvent = true;
                     markSeen("星辰の神龍");
@@ -5182,10 +5388,12 @@
             let msg = "";
             if (choice === 1) {
                 p.forEach(m => { if (m.inParty && m.hp > 0) m.hp = m.m; });
-                const raised = addMixBonusCapped(0.01);
-                wildJoinBonus = Math.round((wildJoinBonus + 0.003) * 10000) / 10000;
+                const mixRaised = addMixBonusCapped(0.01);
+                const wildRaised = addWildJoinBonusCapped(0.003);
                 seStageClear();
-                msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆永続で野生加入率+0.3%" + (raised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限80%に達しています）");
+                const wildPart = wildRaised ? "永続で野生加入率+0.3%" : "野生加入率は上限20%に達しているため変わらず";
+                const mixPart = mixRaised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限80%に達しています）";
+                msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆" + wildPart + mixPart;
             } else {
                 p.forEach(m => {
                     if (m.inParty) {
@@ -5737,9 +5945,12 @@
                     ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】永続で配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 3) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.002) * 10000) / 10000;
+                const raised = addWildJoinBonusCapped(0.002);
+                const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 seStageClear();
-                msg = "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！";
+                msg = raised
+                    ? ("🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された（現在+" + wildPct + "%）。そして出国した！")
+                    : ("🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生加入率は上限20%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 4) {
                 expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
                 seStageClear();
@@ -5783,9 +5994,12 @@
                     ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】永続で配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
                     : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 12) {
-                wildJoinBonus = Math.round((wildJoinBonus + 0.001) * 10000) / 10000;
+                const raised = addWildJoinBonusCapped(0.001);
+                const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 seStageClear();
-                msg = "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された。そして出国した！";
+                msg = raised
+                    ? ("🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された（現在+" + wildPct + "%）。そして出国した！")
+                    : ("🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生加入率は上限20%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 13) {
                 expBonusRate = Math.round((expBonusRate + 0.03) * 1000) / 1000;
                 seStageClear();
@@ -5845,8 +6059,7 @@
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
         }
-
-        function leaveDungeon() {
+                    function leaveDungeon() {
             battleSessionId++;
             clearAllBattleTimers();
             clearBattleVisualEffects();
@@ -5978,7 +6191,7 @@
             showGameAlert("No.B（星辰の神龍）\n\nボス以外の階で0.01%の確率で遭遇！Lv.100の強敵ですが、倒すと確実にLv.100で仲間になります！（配合不可）", "🌌 超特別遭遇情報");
         }
         function upBattleUI() {
-            if (!inDungeon) {
+            if (!inDungeon || currentTab !== "battle") {
                 clearBattleVisualEffects();
             }
             const weekend = isWeekendBonus();
@@ -6528,7 +6741,7 @@
                     const shopDefs = {
                         1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
                         2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップする</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップ(上限20%)</span></button>',
                         4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
                         5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
                         6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員の<br>HP全回復＆EXP+25</span></button>',
@@ -6537,7 +6750,7 @@
                         9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
                         10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
                         11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップする</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップ(上限20%)</span></button>',
                         13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
                         14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
                         15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<span class="item-desc-mini">【効果】上限未満の控え1体を<br>ランダムでレベル+2する</span></button>'
@@ -6611,6 +6824,7 @@
             updateSortButtonsUI();
             upBattleUI();
             renderMissions(forceAll);
+            if (typeof syncChatProfileUI === "function") syncChatProfileUI();
 
             if (forceAll) {
                 if (currentTab !== "box" && currentTab !== "mix") lastRenderedBoxSig = "";
@@ -6848,11 +7062,11 @@
                 }
             }
         }
-        function exportData() {
+                    function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, returnStg, zk, seen, boxLimit, boxLimitCap200: true,
                 baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
-                dungeonLockUntil, stats, p
+                dungeonLockUntil, stats, chatProfile, p
             };
             try {
                 const jsonStr = JSON.stringify(data);
@@ -6914,6 +7128,7 @@
                         updateSpeedButtonUI();
                         updateSortButtonsUI();
                         updateBulkBarUI();
+                        if (typeof syncChatProfileUI === "function") syncChatProfileUI();
                         up(true);
                     } else { showGameAlert("⚠️ 無効なコードです。", "⚠️ エラー"); }
                 } catch(e) { showGameAlert("⚠️ 復元失敗。コードが壊れています。", "⚠️ エラー"); }
@@ -6993,7 +7208,7 @@
                 updateSpeedButtonUI();
                 saveGame();
                 up(true);
-                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント＆🧑‍✈️元船長＆図鑑解放＆全遭遇確率+1%）";
+                const okText = "👑✨ プレゼント受取完了！1000階クリアを達成しました！（1000階解放・最高クリア1000階・⏩戦闘速度3倍解放・🔱海底神殿イベント＆🧑‍✈️元船長＆図鑑解放＆No.A/B除く全遭遇確率+1%）";
                 setPresentMsg(okText, "#059669");
                 showNotice(okText, 6000);
                 showGameAlert(okText, "🎁 プレゼント受取");
@@ -7003,12 +7218,12 @@
             }
         }
         function playSkillEffect(attacker, isPlayerAttack, fxEmojis, delayMs = 0) {
-            if (!attacker || attacker.hp <= 0) return;
+            if (currentTab !== "battle" || !attacker || attacker.hp <= 0) return;
             const spdDiv = battleSpeed;
             const isEnemySide = !isPlayerAttack;
 
             scheduleBattleTimer(() => {
-                if (!attacker || attacker.hp <= 0) return;
+                if (currentTab !== "battle" || !attacker || attacker.hp <= 0) return;
                 const fxLayer = document.getElementById("fxLayer");
                 if (!fxLayer) return;
                 while (fxLayer.childElementCount >= 14 && fxLayer.firstChild) {
@@ -7681,22 +7896,24 @@
                     return;
                 }
 
-                if (isPlayerAttack) {
-                    if (mySideEl) mySideEl.classList.add("atk-forward-my");
-                    spawnBattleBeam(attacker, false, defender, true, "#38bdf8");
-                    scheduleBattleTimer(() => { if (mySideEl) mySideEl.classList.remove("atk-forward-my"); }, Math.floor(220 / spdDiv));
-                    scheduleBattleTimer(() => {
-                        if (eSideEl) eSideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { if (eSideEl) eSideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
-                    }, Math.floor(90 / spdDiv));
-                } else {
-                    if (eSideEl) eSideEl.classList.add("atk-forward-e");
-                    spawnBattleBeam(attacker, true, defender, false, "#f87171");
-                    scheduleBattleTimer(() => { if (eSideEl) eSideEl.classList.remove("atk-forward-e"); }, Math.floor(220 / spdDiv));
-                    scheduleBattleTimer(() => {
-                        if (mySideEl) mySideEl.classList.add("hit-flash");
-                        scheduleBattleTimer(() => { if (mySideEl) mySideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
-                    }, Math.floor(90 / spdDiv));
+                if (currentTab === "battle") {
+                    if (isPlayerAttack) {
+                        if (mySideEl) mySideEl.classList.add("atk-forward-my");
+                        spawnBattleBeam(attacker, false, defender, true, "#38bdf8");
+                        scheduleBattleTimer(() => { if (mySideEl) mySideEl.classList.remove("atk-forward-my"); }, Math.floor(220 / spdDiv));
+                        scheduleBattleTimer(() => {
+                            if (eSideEl && currentTab === "battle") eSideEl.classList.add("hit-flash");
+                            scheduleBattleTimer(() => { if (eSideEl) eSideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
+                        }, Math.floor(90 / spdDiv));
+                    } else {
+                        if (eSideEl) eSideEl.classList.add("atk-forward-e");
+                        spawnBattleBeam(attacker, true, defender, false, "#f87171");
+                        scheduleBattleTimer(() => { if (eSideEl) eSideEl.classList.remove("atk-forward-e"); }, Math.floor(220 / spdDiv));
+                        scheduleBattleTimer(() => {
+                            if (mySideEl && currentTab === "battle") mySideEl.classList.add("hit-flash");
+                            scheduleBattleTimer(() => { if (mySideEl) mySideEl.classList.remove("hit-flash"); }, Math.floor(380 / spdDiv));
+                        }, Math.floor(90 / spdDiv));
+                    }
                 }
 
                 if (defender.nullifyOnce) {
@@ -7722,11 +7939,13 @@
                         turnLog += "💥会心の一撃！ ";
                         playSkillEffect(attacker, isPlayerAttack, "💥⚡", 0);
                         spawnBattleBurstAtMonster(defender, isPlayerAttack, "#facc15", 18);
-                        const bBox = document.getElementById("battleBox");
-                        if (bBox) {
-                            bBox.classList.remove("shake-hit");
-                            void bBox.offsetWidth;
-                            bBox.classList.add("shake-hit");
+                        if (currentTab === "battle") {
+                            const bBox = document.getElementById("battleBox");
+                            if (bBox) {
+                                bBox.classList.remove("shake-hit");
+                                void bBox.offsetWidth;
+                                bBox.classList.add("shake-hit");
+                            }
                         }
                     } else {
                         spawnBattleBurstAtMonster(defender, isPlayerAttack, isPlayerAttack ? "#38bdf8" : "#f87171", 10);
@@ -7960,7 +8179,7 @@
                                         let joinChance = 0;
 
                                         if (targetNo < 0) joinChance = 0.01;
-                                        else if (!synthOnly) joinChance = (targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : 0.01)) + wildJoinBonus;
+                                        else if (!synthOnly) joinChance = Math.min(1, (targetNo <= 10 ? 0.10 : (targetNo <= 20 ? 0.05 : 0.01)) + wildJoinBonus);
 
                                         if (Math.random() < joinChance) {
                                             if (p.length >= boxLimit) {
@@ -8013,8 +8232,8 @@
                                                 needsFullUpdate = true;
                                                 if (!repeatStageMode) {
                                                     seMixSuccess();
-                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
-                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
+                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆No.A/B除く全遭遇+1%！" : ""), 10000);
+                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：No.A/B除くすべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・No.A/B除く全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
                                                 } else {
                                                     seStageClear();
                                                 }
@@ -8172,7 +8391,7 @@
                 recoverFromTurnError(err);
             }
         }
-        function mix() {
+                   function mix() {
             if(inDungeon) return;
 
             if(p.length < 5) {
@@ -8294,6 +8513,446 @@
             if (modal) modal.style.display = "none";
         }
 
+        const CHAT_MSG_TOPIC = "mixemoji/rpg/v1/chat/msg";
+        const CHAT_HIST_TOPIC = "mixemoji/rpg/v1/chat/history";
+        const CHAT_BROKERS = [
+            "wss://broker.emqx.io:8084/mqtt",
+            "wss://broker.hivemq.com:8884/mqtt"
+        ];
+        const chatClientUid = "me_" + Math.random().toString(36).slice(2, 10) + "_" + Date.now().toString(36);
+        const chatSeenIds = new Set();
+        let chatWs = null;
+        let chatMqttConnected = false;
+        let chatBrokerIdx = 0;
+        let chatPingTimer = null;
+        let chatReconnectTimer = null;
+        let chatReconnectDelay = 2000;
+        let chatRxBuf = new Uint8Array(0);
+        let chatBc = null;
+        let chatLastSendAt = 0;
+        let lastChatProfileSig = "";
+
+        function getRegisteredChatMonsters() {
+            const list = [];
+            zk.forEach(name => {
+                const inf = getMonData(name);
+                if (!inf) return;
+                if (D[name] || BOSS_D[name] || (SPECIAL_D[name] && SPECIAL_D[name].recruitable)) {
+                    const no = inf.no;
+                    const sortVal = no === "B" ? 1060 : (no === "A" ? 1050 : ((typeof no === "number" && no < 0) ? (1000 + Math.abs(no)) : (Number(no) || 0)));
+                    list.push({ name: name, no: no, a: inf.a, sortVal: sortVal });
+                }
+            });
+            list.sort((a, b) => a.sortVal - b.sortVal);
+            return list;
+        }
+
+        function syncChatProfileUI() {
+            if (chatProfile.favMon && !zk.includes(chatProfile.favMon)) {
+                chatProfile.favMon = "";
+            }
+            const nameInput = document.getElementById("chatNameInput");
+            if (nameInput && document.activeElement !== nameInput) {
+                const curName = chatProfile.name || "冒険者";
+                if (nameInput.value !== curName) nameInput.value = curName;
+            }
+            const regList = getRegisteredChatMonsters();
+            const sig = maxClearStg + "|" + (chatProfile.name || "") + "|" + (chatProfile.favMon || "") + "|" + regList.map(x => x.name).join(",");
+            if (sig === lastChatProfileSig) return;
+            lastChatProfileSig = sig;
+
+            const sel = document.getElementById("chatFavSelect");
+            if (sel) {
+                let opts = ['<option value="">（なし / 図鑑登録済みから選択）</option>'];
+                regList.forEach(item => {
+                    const selectedAttr = (chatProfile.favMon === item.name) ? " selected" : "";
+                    opts.push('<option value="' + escapeHtml(item.name) + '"' + selectedAttr + '>' + item.a + ' No.' + item.no + ' ' + escapeHtml(item.name) + '</option>');
+                });
+                sel.innerHTML = opts.join("");
+            }
+
+            const prev = document.getElementById("chatProfilePreview");
+            if (prev) {
+                const safeName = escapeHtml((chatProfile.name || "冒険者").trim() || "冒険者");
+                let favHtml = '<span class="chat-badge-fav" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1;">お気に入り未設定</span>';
+                if (chatProfile.favMon && zk.includes(chatProfile.favMon)) {
+                    const inf = getMonData(chatProfile.favMon);
+                    if (inf) {
+                        favHtml = '<span class="chat-badge-fav">' + renderMonEmojiHtml(chatProfile.favMon, "", "font-size:12px;") + ' ' + escapeHtml(chatProfile.favMon) + '</span>';
+                    }
+                }
+                prev.innerHTML = '<span style="font-size:10px; color:#64748b;">表示プレビュー：</span>' +
+                    '<span class="chat-badge-stg">🏆最高' + maxClearStg + '階</span>' +
+                    favHtml +
+                    '<span class="chat-sender-name">' + safeName + '</span>';
+            }
+        }
+
+        function setChatPlayerName(val) {
+            const cleaned = String(val || "").replace(/[\r\n]/g, "").slice(0, 12);
+            chatProfile.name = cleaned || "冒険者";
+            lastChatProfileSig = "";
+            syncChatProfileUI();
+            saveGame();
+        }
+
+        function setChatFavMonster(name) {
+            if (name && !zk.includes(name)) {
+                showGameAlert("⚠️ 図鑑に登録されているモンスターしかお気に入りに設定できません！", "📖 図鑑チェック");
+                chatProfile.favMon = "";
+                lastChatProfileSig = "";
+                syncChatProfileUI();
+                return;
+            }
+            chatProfile.favMon = name || "";
+            lastChatProfileSig = "";
+            syncChatProfileUI();
+            saveGame();
+        }
+
+        function updateChatStatusUI(text, color) {
+            const el = document.getElementById("chatConnStatus");
+            if (!el) return;
+            el.textContent = text;
+            el.style.color = color || "#475569";
+        }
+
+        function updateChatUnreadDot() {
+            const dot = document.getElementById("chatTabDot");
+            if (!dot) return;
+            if (chatUnreadCount > 0 && currentTab !== "chat") {
+                dot.style.display = "inline-block";
+                dot.textContent = chatUnreadCount > 99 ? "99+" : String(chatUnreadCount);
+            } else {
+                dot.style.display = "none";
+            }
+        }
+
+        function encodeMqttVarInt(len) {
+            const out = [];
+            do {
+                let d = len % 128;
+                len = Math.floor(len / 128);
+                if (len > 0) d |= 0x80;
+                out.push(d);
+            } while (len > 0);
+            return out;
+        }
+
+        function encodeMqttStr(str) {
+            const bytes = new TextEncoder().encode(String(str));
+            const out = new Uint8Array(2 + bytes.length);
+            out[0] = (bytes.length >> 8) & 0xff;
+            out[1] = bytes.length & 0xff;
+            out.set(bytes, 2);
+            return out;
+        }
+
+        function concatBytes(parts) {
+            let total = 0;
+            parts.forEach(p => { total += p.length; });
+            const res = new Uint8Array(total);
+            let off = 0;
+            parts.forEach(p => { res.set(p, off); off += p.length; });
+            return res;
+        }
+
+        function buildMqttConnect(clientId) {
+            const vh = new Uint8Array([0x00, 0x04, 0x4d, 0x51, 0x54, 0x54, 0x04, 0x02, 0x00, 0x3c]);
+            const cidBytes = encodeMqttStr(clientId);
+            const rem = encodeMqttVarInt(vh.length + cidBytes.length);
+            return concatBytes([new Uint8Array([0x10].concat(rem)), vh, cidBytes]);
+        }
+
+        function buildMqttSubscribe(packetId, topics) {
+            const parts = [new Uint8Array([(packetId >> 8) & 0xff, packetId & 0xff])];
+            topics.forEach(tp => {
+                parts.push(encodeMqttStr(tp));
+                parts.push(new Uint8Array([0x00]));
+            });
+            const body = concatBytes(parts);
+            const rem = encodeMqttVarInt(body.length);
+            return concatBytes([new Uint8Array([0x82].concat(rem)), body]);
+        }
+
+        function buildMqttPublish(topic, payloadStr, retain) {
+            const tpBytes = encodeMqttStr(topic);
+            const plBytes = new TextEncoder().encode(payloadStr);
+            const rem = encodeMqttVarInt(tpBytes.length + plBytes.length);
+            const hdr = 0x30 | (retain ? 0x01 : 0x00);
+            return concatBytes([new Uint8Array([hdr].concat(rem)), tpBytes, plBytes]);
+        }
+
+        function handleIncomingMqttData(chunk) {
+            chatRxBuf = concatBytes([chatRxBuf, new Uint8Array(chunk)]);
+            while (chatRxBuf.length >= 2) {
+                const pktType = (chatRxBuf[0] >> 4) & 0x0f;
+                const qos = (chatRxBuf[0] >> 1) & 0x03;
+                let mult = 1, remLen = 0, idx = 1, hasMore = true;
+                while (hasMore) {
+                    if (idx >= chatRxBuf.length) return;
+                    const enc = chatRxBuf[idx++];
+                    remLen += (enc & 127) * mult;
+                    mult *= 128;
+                    if (mult > 128 * 128 * 128 * 128) { chatRxBuf = new Uint8Array(0); return; }
+                    hasMore = (enc & 128) !== 0;
+                }
+                if (chatRxBuf.length < idx + remLen) return;
+                const payloadStart = idx;
+                const packetEnd = idx + remLen;
+
+                if (pktType === 2) {
+                    chatMqttConnected = true;
+                    chatReconnectDelay = 2000;
+                    updateChatStatusUI("🟢 オンライン接続中（リアルタイム交流OK）", "#059669");
+                    if (chatWs && chatWs.readyState === 1) {
+                        chatWs.send(buildMqttSubscribe(1, [CHAT_MSG_TOPIC, CHAT_HIST_TOPIC]));
+                    }
+                    if (chatPingTimer) clearInterval(chatPingTimer);
+                    chatPingTimer = setInterval(() => {
+                        if (chatWs && chatWs.readyState === 1) {
+                            chatWs.send(new Uint8Array([0xc0, 0x00]));
+                        }
+                    }, 30000);
+                } else if (pktType === 3) {
+                    let pos = payloadStart;
+                    if (pos + 2 <= packetEnd) {
+                        const tpLen = (chatRxBuf[pos] << 8) | chatRxBuf[pos + 1];
+                        pos += 2;
+                        if (pos + tpLen <= packetEnd) {
+                            const topic = new TextDecoder().decode(chatRxBuf.subarray(pos, pos + tpLen));
+                            pos += tpLen;
+                            if (qos > 0) pos += 2;
+                            if (pos <= packetEnd) {
+                                const msgStr = new TextDecoder().decode(chatRxBuf.subarray(pos, packetEnd));
+                                processMqttPayload(topic, msgStr);
+                            }
+                        }
+                    }
+                }
+                chatRxBuf = chatRxBuf.slice(packetEnd);
+            }
+        }
+
+        function sanitizeChatMessageObj(raw) {
+            if (!raw || typeof raw !== "object") return null;
+            const id = String(raw.id || "").trim().slice(0, 64);
+            const text = String(raw.text || "").replace(/\r\n/g, "\n").trim().slice(0, 120);
+            if (!id || !text) return null;
+            const name = String(raw.name || "冒険者").replace(/[\r\n]/g, "").trim().slice(0, 12) || "冒険者";
+            const clearStg = Math.max(0, Math.min(1100, Math.floor(Number(raw.clearStg) || 0)));
+            let favMon = normalizeMonName(String(raw.favMon || ""));
+            const inf = favMon ? getMonData(favMon) : null;
+            if (!inf || (!D[favMon] && !BOSS_D[favMon] && !(SPECIAL_D[favMon] && SPECIAL_D[favMon].recruitable))) {
+                favMon = "";
+            }
+            const ts = Math.max(0, Number(raw.ts) || Date.now());
+            return { id, ts, name, clearStg, favMon, text, uid: String(raw.uid || "") };
+        }
+
+        function mergeChatMessage(raw, isHistoryLoad = false) {
+            const msg = sanitizeChatMessageObj(raw);
+            if (!msg) return false;
+            if (chatSeenIds.has(msg.id)) return false;
+            chatSeenIds.add(msg.id);
+            chatMessages.push(msg);
+            chatMessages.sort((a, b) => a.ts - b.ts);
+            if (chatMessages.length > 50) {
+                const removed = chatMessages.splice(0, chatMessages.length - 50);
+                removed.forEach(r => chatSeenIds.delete(r.id));
+            }
+            if (!isHistoryLoad && msg.uid !== chatClientUid && currentTab !== "chat") {
+                chatUnreadCount++;
+                updateChatUnreadDot();
+            }
+            try {
+                localStorage.setItem("mix_emoji_chat_cache_v1", JSON.stringify(chatMessages.slice(-30)));
+            } catch (e) {}
+            return true;
+        }
+
+        function processMqttPayload(topic, msgStr) {
+            try {
+                const parsed = JSON.parse(msgStr);
+                if (topic === CHAT_HIST_TOPIC && Array.isArray(parsed)) {
+                    let changed = false;
+                    parsed.forEach(item => {
+                        if (mergeChatMessage(item, true)) changed = true;
+                    });
+                    if (changed && currentTab === "chat") renderChatMessages(true);
+                } else if (topic === CHAT_MSG_TOPIC) {
+                    if (mergeChatMessage(parsed, false)) {
+                        if (currentTab === "chat") renderChatMessages(true);
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function connectChatMqtt() {
+            if (chatReconnectTimer) {
+                clearTimeout(chatReconnectTimer);
+                chatReconnectTimer = null;
+            }
+            if (chatPingTimer) {
+                clearInterval(chatPingTimer);
+                chatPingTimer = null;
+            }
+            if (chatWs) {
+                try { chatWs.onopen = null; chatWs.onmessage = null; chatWs.onerror = null; chatWs.onclose = null; chatWs.close(); } catch (e) {}
+                chatWs = null;
+            }
+            chatMqttConnected = false;
+            chatRxBuf = new Uint8Array(0);
+            const url = CHAT_BROKERS[chatBrokerIdx % CHAT_BROKERS.length];
+            updateChatStatusUI("🔄 チャットサーバー接続中...", "#0284c7");
+
+            try {
+                const ws = new WebSocket(url, ["mqtt"]);
+                ws.binaryType = "arraybuffer";
+                chatWs = ws;
+
+                ws.onopen = function() {
+                    if (chatWs !== ws) return;
+                    ws.send(buildMqttConnect(chatClientUid));
+                };
+                ws.onmessage = function(ev) {
+                    if (chatWs !== ws) return;
+                    if (ev.data instanceof ArrayBuffer) {
+                        handleIncomingMqttData(ev.data);
+                    }
+                };
+                ws.onerror = function() {
+                    if (chatWs !== ws) return;
+                };
+                ws.onclose = function() {
+                    if (chatWs !== ws) return;
+                    chatMqttConnected = false;
+                    if (chatPingTimer) { clearInterval(chatPingTimer); chatPingTimer = null; }
+                    updateChatStatusUI("⚠️ オフライン（再接続待機中…）", "#d97706");
+                    chatBrokerIdx = (chatBrokerIdx + 1) % CHAT_BROKERS.length;
+                    chatReconnectTimer = setTimeout(connectChatMqtt, chatReconnectDelay);
+                    chatReconnectDelay = Math.min(15000, Math.floor(chatReconnectDelay * 1.4));
+                };
+            } catch (e) {
+                updateChatStatusUI("⚠️ チャット接続不可（オフラインモード）", "#dc2626");
+            }
+        }
+
+        function reconnectChat() {
+            chatReconnectDelay = 2000;
+            chatBrokerIdx = (chatBrokerIdx + 1) % CHAT_BROKERS.length;
+            connectChatMqtt();
+        }
+
+        function renderChatMessages(scrollToBottom = false) {
+            if (currentTab !== "chat") return;
+            const logEl = document.getElementById("chatLog");
+            if (!logEl) return;
+
+            if (chatMessages.length === 0) {
+                logEl.innerHTML = "<div style='text-align:center; color:#64748b; font-size:11.5px; padding:24px 8px;'>💬 まだメッセージがありません。<br>最初のあいさつを送ってみよう！</div>";
+                return;
+            }
+
+            const parts = [];
+            chatMessages.forEach(m => {
+                const isMine = (m.uid === chatClientUid);
+                const d = new Date(m.ts);
+                const hh = String(d.getHours()).padStart(2, "0");
+                const mm = String(d.getMinutes()).padStart(2, "0");
+                let favHtml = "";
+                if (m.favMon) {
+                    favHtml = '<span class="chat-badge-fav">' + renderMonEmojiHtml(m.favMon, "", "font-size:12px;") + ' ' + escapeHtml(m.favMon) + '</span>';
+                }
+                parts.push(
+                    '<div class="chat-msg-item' + (isMine ? ' mine' : '') + '">' +
+                        '<div class="chat-msg-head">' +
+                            '<span class="chat-badge-stg">🏆最高' + m.clearStg + '階</span>' +
+                            favHtml +
+                            '<span class="chat-sender-name">' + escapeHtml(m.name) + '</span>' +
+                            '<span class="chat-msg-time">' + hh + ':' + mm + '</span>' +
+                        '</div>' +
+                        '<div class="chat-msg-body">' + escapeHtml(m.text) + '</div>' +
+                    '</div>'
+                );
+            });
+            logEl.innerHTML = parts.join("");
+            if (scrollToBottom) {
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById("chatMsgInput");
+            if (!input) return;
+            const text = input.value.replace(/\r\n/g, "\n").trim().slice(0, 120);
+            if (!text) return;
+
+            const now = Date.now();
+            if (now - chatLastSendAt < 2000) {
+                showGameAlert("⏳ 連続投稿は2秒空けてから送信してください。", "💬 チャット");
+                return;
+            }
+            chatLastSendAt = now;
+
+            const safeName = (chatProfile.name || "冒険者").trim().slice(0, 12) || "冒険者";
+            const safeFav = (chatProfile.favMon && zk.includes(chatProfile.favMon)) ? chatProfile.favMon : "";
+            const msgObj = {
+                id: chatClientUid + "_" + now + "_" + Math.random().toString(36).slice(2, 6),
+                ts: now,
+                uid: chatClientUid,
+                name: safeName,
+                clearStg: maxClearStg,
+                favMon: safeFav,
+                text: text
+            };
+
+            input.value = "";
+            mergeChatMessage(msgObj, true);
+            renderChatMessages(true);
+            seButtonTap();
+
+            if (chatBc) {
+                try { chatBc.postMessage(msgObj); } catch (e) {}
+            }
+            if (chatWs && chatWs.readyState === 1 && chatMqttConnected) {
+                try {
+                    chatWs.send(buildMqttPublish(CHAT_MSG_TOPIC, JSON.stringify(msgObj), false));
+                    const snapshot = chatMessages.slice(-25).map(x => ({
+                        id: x.id, ts: x.ts, uid: x.uid, name: x.name,
+                        clearStg: x.clearStg, favMon: x.favMon, text: x.text
+                    }));
+                    chatWs.send(buildMqttPublish(CHAT_HIST_TOPIC, JSON.stringify(snapshot), true));
+                } catch (e) {}
+            } else {
+                connectChatMqtt();
+            }
+        }
+
+        function initChatSystem() {
+            try {
+                const cached = localStorage.getItem("mix_emoji_chat_cache_v1");
+                if (cached) {
+                    const arr = JSON.parse(cached);
+                    if (Array.isArray(arr)) {
+                        arr.forEach(item => mergeChatMessage(item, true));
+                    }
+                }
+            } catch (e) {}
+            if (typeof BroadcastChannel !== "undefined") {
+                try {
+                    chatBc = new BroadcastChannel("mix_emoji_chat_bc");
+                    chatBc.onmessage = function(ev) {
+                        if (ev && ev.data && mergeChatMessage(ev.data, false)) {
+                            if (currentTab === "chat") renderChatMessages(true);
+                        }
+                    };
+                } catch (e) {}
+            }
+            syncChatProfileUI();
+            connectChatMqtt();
+        }
+
         let emojiObserver = null;
         let isParsingEmoji = false;
         let pendingEmojiTargets = new Set();
@@ -8379,6 +9038,7 @@
             gameInitialized = true;
             try { loadAudioSettings(); } catch (e) {}
             try { loadGame(); } catch (e) { console.error(e); }
+            try { initChatSystem(); } catch (e) { console.error(e); }
             try { initEmojiObserver(); } catch (e) {}
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
@@ -8400,4 +9060,4 @@
         }
     </script>
 </body>
-</html>
+    </html>                                 
