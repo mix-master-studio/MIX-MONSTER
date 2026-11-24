@@ -19,20 +19,11 @@
             } catch (e) {}
             window.__INIT_CLEARED_1000__ = isCleared1000;
             if (isCleared1000) document.documentElement.classList.add("cleared-1000");
-            var targetBg = isCleared1000 ? "1000041649 (1).png" : "1000041415.png";
             var pl = document.createElement("link");
             pl.rel = "preload";
             pl.as = "image";
-            pl.fetchPriority = "high";
-            pl.href = targetBg;
+            pl.href = isCleared1000 ? "1000041649 (1).png" : "1000041415.png";
             (document.head || document.getElementsByTagName("head")[0]).appendChild(pl);
-            try {
-                var preImg = new Image();
-                preImg.decoding = "sync";
-                preImg.fetchPriority = "high";
-                preImg.src = targetBg;
-                window.__TITLE_PRELOAD_IMG__ = preImg;
-            } catch (e) {}
         })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" crossorigin="anonymous" defer onload="if(typeof initEmojiObserver==='function' && !emojiObserver) initEmojiObserver();"></script>
@@ -94,18 +85,12 @@
         .title-bg-blur {
             position: absolute;
             inset: -20px;
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            filter: blur(12px) brightness(0.95) saturate(1.12);
+            background: url('1000041415.png') center center / cover no-repeat;
+            filter: blur(16px) brightness(0.95) saturate(1.15);
             opacity: 0.72;
             z-index: 0;
             pointer-events: none;
-            transform: translateZ(0);
             will-change: transform;
-        }
-        html:not(.cleared-1000) .title-bg-blur {
-            background-image: url('1000041415.png');
         }
         html.cleared-1000 .title-bg-blur {
             background-image: url('1000041649 (1).png');
@@ -118,7 +103,6 @@
             object-fit: contain;
             z-index: 1;
             pointer-events: none;
-            transform: translateZ(0);
         }
         .btn-start {
             position: relative;
@@ -1528,17 +1512,14 @@
         }
     </style>
     </head>
-    <body class="title-locked">
+<body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
         <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="sync" loading="eager" onerror="this.style.display='none'">
         <script>
             (function() {
-                var imgFile = window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png";
-                var blur = document.getElementById("titleBgBlur");
                 var img = document.getElementById("titleFullImg");
-                if (blur) blur.dataset.img = imgFile;
-                if (img) img.src = imgFile;
+                if (img) img.src = window.__INIT_CLEARED_1000__ ? "1000041649 (1).png" : "1000041415.png";
             })();
         </script>
         <button class="btn-start" onclick="startGame()">START</button>
@@ -2267,7 +2248,7 @@
                 mon.skillId = getRandomSkillId();
             }
             return SKILLS[mon.skillId - 1];
-                }
+        }
         let dialogQueue = [];
         let isDialogOpen = false;
 
@@ -2966,7 +2947,6 @@
             showNotice(msg, 4500);
             saveGame();
             up(true);
-                                                   }
         }
 
         function getDungeonLockRemainSec() {
@@ -3012,10 +2992,7 @@
             const imgFile = isCleared ? "1000041649 (1).png" : "1000041415.png";
             const blurEl = document.getElementById("titleBgBlur");
             const imgEl = document.getElementById("titleFullImg");
-            if (blurEl && blurEl.dataset.img !== imgFile) {
-                blurEl.dataset.img = imgFile;
-                blurEl.style.backgroundImage = "url('" + imgFile + "')";
-            }
+            if (blurEl) blurEl.style.backgroundImage = "url('" + imgFile + "')";
             if (imgEl && imgEl.getAttribute("src") !== imgFile) {
                 imgEl.style.display = "";
                 imgEl.src = imgFile;
@@ -3510,6 +3487,7 @@
                 modal.style.display = "flex";
             }
         }
+
         function getSelectedMixIndices() {
             const cbs = document.querySelectorAll(".cb:checked");
             const arr = [];
@@ -3763,7 +3741,7 @@
             stg = nextVal;
             saveGame();
             upBattleUI();
-                    }
+        }
         let soundEnabled = true;
         let bgmVolume = 1.0;
         let seVolume = 1.0;
@@ -4183,7 +4161,8 @@
                 bgmInterval = null;
             }
             currentBgmMode = "";
-                    }
+        }
+
         let bgParticles = [];
         let bgCanvasRaf = null;
         let battleParticles = [];
@@ -4439,7 +4418,8 @@
                 }
                 if (!battleCanvasRaf) startBattleCanvasLoop();
             } catch (e) {}
-                }
+        }
+
         function startBattleCanvasLoop() {
             function loop() {
                 const canvas = document.getElementById("battleCanvas");
@@ -4657,7 +4637,7 @@
                     initBattleCanvas();
                 }, 420);
             }
-        }
+                        }
         function enter(){
             if (isDungeonLocked()) {
                 return showGameAlert("🏰 迷子の国王をお城まで護衛しています… あと " + getDungeonLockRemainSec() + "秒 お待ちください。", "⏳ 入場制限");
@@ -4906,6 +4886,7 @@
                 eg.push(enemyMon);
             }
         }
+
         function advanceStageAfterEvent(shortMsg, noticeAlreadyShown = false) {
             clearAllBattleTimers();
             clearBattleVisualEffects();
@@ -5150,7 +5131,8 @@
             seJoin();
             showNotice("🧑‍✈️ 元船長『201階〜299階（250階除く）の海のエリアで3%の確率で「🔱海底神殿」への入口に出会えるぞ！迷わず目指してみるのじゃ！』", 6500);
             advanceStageAfterEvent("", true);
-                    }
+        }
+
         function playTravelerRPS(playerHand) {
             if (!inDungeon || currentEvent !== "traveler") return;
             const hands = ["✊グー", "✌️チョキ", "✋パー"];
@@ -5485,7 +5467,7 @@
             document.getElementById("battleLog").innerText = "🏡 拠点へ戻りました（⏳国王護衛中）。";
             saveGame();
             up(true);
-        }
+                }
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
@@ -5622,7 +5604,8 @@
             seStageClear();
             showNotice("📜 ギルドでクエスト『" + preset.title + "』を受注した！（合計 " + getAllMissions().length + "/20件）そして出国した！", 5500);
             advanceStageAfterEvent("", true);
-                    }
+        }
+
         function pickKingdomShopItem(choice) {
             if (!inDungeon || !inKingdom || currentEvent !== "kingdom_shop") return;
             let msg = "";
@@ -6038,7 +6021,8 @@
                 });
                 if (partyMembers.length === 0) mHtml.push("<br><span style='color:#94a3b8;font-size:11px;'>メンバー未選択</span>");
                 mS.innerHTML = mHtml.join("");
-                }
+            }
+
             if (eS) {
                 if (inDungeon && currentEvent) {
                     if (currentEvent === "undersea_gate") {
@@ -6131,6 +6115,7 @@
                     eS.innerHTML = eHtml.join("");
                 }
             }
+
             const evPanel = document.getElementById("eventPanel");
             const btnAtk = document.getElementById("btnAtk");
             if (evPanel) {
@@ -6325,7 +6310,7 @@
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="confirmKingSkillChange(false)">🛡️ 変更しない</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
-                    } else if (inDungeon && currentEvent === "kingdom_gate") {
+                } else if (inDungeon && currentEvent === "kingdom_gate") {
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🏰 知らない王国を発見した！</div>' +
@@ -6430,7 +6415,8 @@
             if (btnMix) btnMix.disabled = inDungeon;
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
-                        }
+        }
+
         function up(forceAll = true) {
             p.sort((a, b) => {
                 if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
@@ -6684,7 +6670,7 @@
                     spZkDiv.innerHTML = spHtml;
                 }
             }
-                                               }
+        }
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, returnStg, zk, seen, boxLimit, boxLimitCap200: true,
@@ -6863,7 +6849,8 @@
                     if (fxEl.parentElement) fxEl.remove();
                 }, Math.floor(900 / spdDiv));
             }, Math.floor(delayMs / spdDiv));
-            }
+        }
+
         function triggerPostAttackSkills(attacker, defender, isPlayerAttack) {
             if (attacker.hp <= 0) return "";
             const inf = getMonData(attacker.n);
@@ -7060,8 +7047,8 @@
                     attacker.buffSp = (attacker.buffSp || 0) + Math.max(2, Math.floor(attacker.sp * 0.20));
                     skillLogs += "🤵" + attacker.n + "の魔界の覇気！全能力UP！ ";
                     fxQueue.push("🌟🪄"); buffSelf = true;
-                                           }
-if (no === -11 && Math.random() < 0.50) {
+                }
+                if (no === -11 && Math.random() < 0.50) {
                     attacker.halfDmgOnce = true;
                     skillLogs += "🦏" + attacker.n + "の超硬質装甲！次の被ダメージ半減！ ";
                     fxQueue.push("✴️🔰"); buffSelf = true;
@@ -7274,7 +7261,8 @@ if (no === -11 && Math.random() < 0.50) {
                     fxQueue.push("✨👑"); buffSelf = true;
                 }
             }
-if (sk.id === 1 && Math.random() < 0.10) {
+
+            if (sk.id === 1 && Math.random() < 0.10) {
                 attacker.nullifyOnce = true;
                 skillLogs += "🛡️" + attacker.n + "のイージスバリア！次の攻撃を1回無効化！ ";
                 fxQueue.push("🧿✨"); buffSelf = true;
@@ -7477,7 +7465,7 @@ if (sk.id === 1 && Math.random() < 0.10) {
                 return { needsFullUpdate: true, log: "" };
             }
         }
-function atk(){
+        function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
 
             if (autoAtkTimer) {
@@ -7605,7 +7593,8 @@ function atk(){
                 if (bBoxInit) bBoxInit.classList.remove("shake-hit");
                 if (btnAtk && inDungeon && !currentEvent) btnAtk.disabled = false;
             }
-try {
+
+            try {
                 let allySp = activeAlly.sp + (activeAlly.buffSp || 0);
                 let enemySp = currentEnemy.sp + (currentEnemy.buffSp || 0);
                 let secondActorCanAct = false;
@@ -7769,7 +7758,7 @@ try {
                                         const prog = handleFloorProgressAfterClear(isPartyDeadNow);
                                         if (prog.needsFullUpdate) needsFullUpdate = true;
                                         turnLog += prog.log;
-} else if (currentEnemy.isArenaEnemy) {
+                                    } else if (currentEnemy.isArenaEnemy) {
                                         turnLog += "🏟️闘技場の" + currentEnemy.n + "を倒した！ ";
                                         arenaClearedMonsters.push(currentEnemy);
                                         let gainExp = Math.max(1, Math.floor((currentEnemy.ex || 5) * getExpMultiplier()));
@@ -7835,28 +7824,18 @@ try {
 
                                             if (clearedStg === 500) {
                                                 seStageClear();
-                                                if (!repeatStageMode) {
-                                                    showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
-                                                    setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
-                                                }
+                                                showNotice("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ ⏩ 速度3倍が解放されました！", 8000);
+                                                setTimeout(() => { showGameAlert("🎊 ダンジョン500階大ボス撃破！おめでとうございます！！ 🎊\n折り返し地点を突破しました！" + (wasFirst500Clear ? "\n\n⏩ 特典：「戦闘速度 3倍」が解放されました！（速度ボタンで 1倍→2倍→3倍 と切り替えられます）" : "\n（⏩ 戦闘速度 3倍 解放済み！）"), "🎊 500階クリア！"); }, 150);
                                             } else if (clearedStg === 1000) {
                                                 updateTitleBg();
                                                 needsFullUpdate = true;
-                                                if (!repeatStageMode) {
-                                                    seMixSuccess();
-                                                    showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
-                                                    setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
-                                                } else {
-                                                    seStageClear();
-                                                }
+                                                seMixSuccess();
+                                                showNotice("👑 ダンジョン1000階完全制覇！おめでとうございます！！" + (wasFirst1000Clear ? " 🔱海底神殿・🧑‍✈️元船長・図鑑解放＆全遭遇+1%！" : ""), 10000);
+                                                setTimeout(() => { showGameAlert("👑 ダンジョン1000階完全制覇！おめでとうございます！！ 👑\nあなたは『みっくすえもじ』の1000階を制覇しました！" + (wasFirst1000Clear ? "\n\n🔱 解禁：すべての遭遇イベント確率+1%＆1〜999階に「🧑‍✈️元船長」登場＆201〜299階(250階除く)で「🔱海底神殿」に遭遇可能＆📖図鑑に海底神殿・天空城のページが解放されました！" : "\n（🔱 海底神殿・🧑‍✈️元船長・図鑑・全遭遇+1% 解禁済み！）"), "👑 1000階完全制覇！"); }, 150);
                                             } else if (clearedStg === 1100) {
                                                 needsFullUpdate = true;
-                                                if (!repeatStageMode) {
-                                                    showNotice("👑🌞 天空城1100階 完全制覇！！おめでとうございます！！ 🌞👑", 12000);
-                                                    setTimeout(() => { showCongratsModal(); }, 180);
-                                                } else {
-                                                    seStageClear();
-                                                }
+                                                showNotice("👑🌞 天空城1100階 完全制覇！！おめでとうございます！！ 🌞👑", 12000);
+                                                setTimeout(() => { showCongratsModal(); }, 180);
                                             } else {
                                                 seStageClear();
                                             }
@@ -8003,7 +7982,7 @@ try {
                 recoverFromTurnError(err);
             }
         }
-function mix() {
+        function mix() {
             if(inDungeon) return;
 
             if(p.length < 5) {
@@ -8207,7 +8186,3 @@ function mix() {
     </script>
 </body>
 </html>
-
-
-
-
