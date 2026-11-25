@@ -394,16 +394,22 @@
         .header-btn-row {
             display: flex;
             justify-content: center;
-            gap: 5px;
+            align-items: stretch;
+            gap: 4px;
             margin-top: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: 100%;
         }
         .header-btn-row button {
+            flex: 0 1 auto;
             width: auto !important;
+            min-width: 0 !important;
             margin: 0 !important;
-            padding: 7px 10px !important;
-            font-size: 11px !important;
-            border-radius: 12px !important;
+            padding: 7px clamp(5px, 1.7vw, 9px) !important;
+            font-size: clamp(9px, 2.4vw, 10.5px) !important;
+            letter-spacing: 0 !important;
+            border-radius: 11px !important;
+            white-space: nowrap !important;
         }
         .header-save-btn {
             background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%) !important;
