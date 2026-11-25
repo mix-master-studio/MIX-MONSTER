@@ -394,16 +394,25 @@
         .header-btn-row {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             margin-top: 10px;
             flex-wrap: wrap;
         }
         .header-btn-row button {
             width: auto !important;
             margin: 0 !important;
-            padding: 7px 11px !important;
+            padding: 7px 10px !important;
             font-size: 11px !important;
             border-radius: 12px !important;
+        }
+        .header-save-btn {
+            background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%) !important;
+            border-color: #fdba74 !important;
+            border-bottom: 3px solid #c2410c !important;
+        }
+        .header-save-btn.active {
+            box-shadow: 0 0 0 2.5px #fef08a, 0 5px 14px rgba(234, 88, 12, 0.45) !important;
+            filter: brightness(1.08);
         }
         .sound-panel {
             display: none;
@@ -798,7 +807,6 @@
             margin-left: 3px;
             border: 1px solid #000;
         }
-
         .god-aura-wrap {
             position: relative;
             display: inline-block;
@@ -892,7 +900,6 @@
             font-weight: 900;
             margin-left: 3px;
         }
-
         .mix-modal {
             display: none;
             position: fixed;
@@ -1246,7 +1253,7 @@
             line-height: 1.45;
             border: 1.5px solid #bae6fd;
             box-shadow: inset 0 2px 6px rgba(2, 132, 199, 0.05);
-            }
+        }
         .hp-bg, .exp-bg {
             background: #e2e8f0;
             height: 9px;
@@ -1563,6 +1570,182 @@
         .title-header h1 img.emoji {
             -webkit-text-fill-color: initial;
         }
+        .rk-summary-card {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef9c3 50%, #e0f2fe 100%);
+            border: 1.5px solid #fcd34d;
+            border-radius: 14px;
+            padding: 9px 10px;
+            margin-bottom: 9px;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #334155;
+            line-height: 1.6;
+            box-shadow: inset 0 1px 0 #ffffff;
+        }
+        .rk-form-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1.5px solid #bae6fd;
+            border-radius: 14px;
+            padding: 10px 10px 8px;
+            margin-bottom: 10px;
+        }
+        .rk-form-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+        }
+        .rk-name-input {
+            flex: 1;
+            min-width: 0;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 9px 10px !important;
+            font-family: inherit !important;
+            font-size: 12px !important;
+            font-weight: 800;
+            text-align: left !important;
+            border-radius: 12px !important;
+            border: 1.5px solid #93c5fd !important;
+        }
+        .rk-submit-btn {
+            flex: 0 0 auto;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 9px 13px !important;
+            font-size: 11.5px !important;
+            border-radius: 12px !important;
+            background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%) !important;
+            border-color: #fde68a !important;
+            border-bottom: 3px solid #b45309 !important;
+            white-space: nowrap;
+        }
+        .rk-name-lock-info {
+            font-size: 10px;
+            font-weight: 800;
+            color: #64748b;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        .rk-msg-bar {
+            font-size: 11px;
+            font-weight: 900;
+            margin-top: 5px;
+            min-height: 16px;
+            color: #0369a1;
+        }
+        .rk-subtab-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .rk-subtab-btn {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 6px !important;
+            font-size: 11.5px !important;
+            border-radius: 12px !important;
+            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%) !important;
+            color: #475569 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            border-bottom: 3px solid #94a3b8 !important;
+            text-shadow: none !important;
+        }
+        .rk-subtab-btn.active {
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
+            color: #ffffff !important;
+            border: 1.5px solid #7dd3fc !important;
+            border-bottom: 3px solid #0369a1 !important;
+            text-shadow: 0 1px 2px rgba(15, 23, 42, 0.18) !important;
+        }
+        .rk-list-box {
+            max-height: 290px;
+            overflow-y: auto;
+            padding: 6px;
+            border: 1.5px solid #bae6fd;
+            border-radius: 14px;
+            background: #f8fafc;
+            text-align: left;
+            box-shadow: inset 0 2px 5px rgba(2, 132, 199, 0.05);
+        }
+        .rk-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 7px 10px;
+            margin: 4px 0;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #334155;
+        }
+        .rk-row.top1 { background: linear-gradient(135deg, #fffbeb 0%, #fef08a 100%); border-color: #f59e0b; }
+        .rk-row.top2 { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-color: #94a3b8; }
+        .rk-row.top3 { background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-color: #fb923c; }
+        .rk-row.rk-me { box-shadow: 0 0 0 2px #38bdf8; }
+        .rk-me-badge {
+            display: inline-block;
+            background: #0284c7;
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 1px 5px;
+            border-radius: 5px;
+            margin-left: 4px;
+        }
+        .rk-score-pill {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #7dd3fc;
+            border-radius: 999px;
+            padding: 2px 9px;
+            font-size: 11px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+        .x-banner-card {
+            position: relative;
+            z-index: 1;
+            max-width: 430px;
+            margin: 10px auto 0;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 249, 255, 0.94) 100%);
+            border: 2px solid #bae6fd;
+            border-radius: 18px;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.10), inset 0 2px 0 #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .x-banner-text {
+            font-size: 11.5px;
+            font-weight: 900;
+            color: #334155;
+            text-align: left;
+            line-height: 1.4;
+        }
+        .x-banner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #334155 0%, #0f172a 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            font-size: 11.5px;
+            font-weight: 900;
+            border: 1px solid #64748b;
+            border-bottom: 3px solid #020617;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.22);
+            white-space: nowrap;
+        }
         .seo-footer {
             position: relative;
             z-index: 1;
@@ -1636,6 +1819,9 @@
             <button onclick="let g=document.getElementById('guidePanel'); g.style.display=g.style.display==='block'?'none':'block'" style="background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-color: #c4b5fd; border-bottom: 3px solid #5b21b6;">
                 ❓ 遊び方ガイド
             </button>
+            <button id="tabBtn_save" class="header-save-btn" onclick="switchTab('save')">
+                💾 保存
+            </button>
         </div>
         <div id="soundPanel" class="sound-panel">
             <div style="font-size: 11px; font-weight: 900; color: #0284c7; margin-bottom: 4px;">🎚️ 音量バランス設定（自動保存）</div>
@@ -1669,13 +1855,13 @@
                 ボックスで「🛡️戻す」にして鍵を外した2匹を選んで配合すると、2匹のLvを合計した強いモンスターが生まれます！（※失敗すると選んだ2匹は消えるので注意）迷ったら「✨配合アシスト」を使うと作れる組み合わせがすぐ分かります。
             </div>
             <div class="guide-step">
-                <b>⑤「📖 図鑑」でヒントを見て1000階制覇を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！未発見のモンスターを集めながら、1000階の制覇を目指しましょう！
+                <b>⑤「📖 図鑑」でヒントを見て1000階制覇＆ランキング上位を目指そう！</b><br>
+                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！さらに「🏆 ランキング」タブでは全国のプレイヤーと最高到達階・みつけた図鑑数を競えます！
             </div>
             <div class="guide-step">
-                <b>⑥「💾 保存」タブでデータセーブ・引き継ぎ管理をしよう！</b><br>
+                <b>⑥ タイトル下の「💾 保存」ボタンでデータセーブ・引き継ぎ管理をしよう！</b><br>
                 ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
-                「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もこのタブから行えます。
+                「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もここから行えます。
             </div>
             <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
                 ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日は獲得EXPが2倍＆配合成功率が+10%になります！<br>
@@ -1691,7 +1877,7 @@
             <button class="tab-btn" id="tabBtn_mix" onclick="switchTab('mix')">🧬 配合</button>
             <button class="tab-btn" id="tabBtn_quest" onclick="switchTab('quest')">🧭 クエスト<span id="questTabDot" class="tab-dot" style="display:none;"></span></button>
             <button class="tab-btn" id="tabBtn_zukan" onclick="switchTab('zukan')">📖 図鑑</button>
-            <button class="tab-btn" id="tabBtn_save" onclick="switchTab('save')">💾 保存</button>
+            <button class="tab-btn" id="tabBtn_ranking" onclick="switchTab('ranking')">🏆 ランキング</button>
         </div>
     </div>
     <div id="panelBattle" class="tab-panel">
@@ -1758,13 +1944,14 @@
             </div>
         </div>
     </div>
+
     <div id="panelQuest" class="tab-panel tab-hidden">
         <div class="box" style="border: 2px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
             <h3 style="margin: 2px 0 2px; color: #92400e; font-size: 16px;">🧭 クエスト <span id="missionBadge" style="font-size:12px; color:#d97706;">(0/5達成)</span></h3>
-            <div class="limit-hint">※毎日クエストは毎日0時にリセット！通常クエストは初期5件／王国ギルド含め上限20件（加入+%は上限20%）</div>
+            <div class="limit-hint">※毎日クエストは毎日0時にリセット！通常クエストは初期5件／王国ギルド含め上限20件（加入+%は上限5%）</div>
             <div id="missionWrapper" style="display: block; margin-top: 8px;">
-                <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 🧲加入+0% (上限20%) ／ 💎EXP+0%</div>
+                <div id="missionBonusBar" class="mission-bonus-bar">特典合計：📦上限+0 ／ 🧬配合+0% ／ 🧲加入+0% (上限5%) ／ 💎EXP+0%</div>
                 <div id="missionList" class="scroll-box" style="max-height: 290px; border-color: #fde68a; background: #fffbeb;"></div>
             </div>
         </div>
@@ -1810,6 +1997,7 @@
             <ul id="box" class="toggle-box scroll-box"></ul>
         </div>
     </div>
+
     <div id="panelMix" class="tab-panel tab-hidden">
         <div class="box" id="mixArea" style="border: 2px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
@@ -1839,7 +2027,6 @@
             <table id="rt" class="recipe"></table>
         </div>
     </div>
-
     <div id="panelZukan" class="tab-panel tab-hidden">
         <div class="box">
             <span class="section-badge" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border-color: #a5b4fc;">📖 ENCYCLOPEDIA</span>
@@ -1874,6 +2061,34 @@
                     <div id="specialZk" class="grid"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="panelRanking" class="tab-panel tab-hidden">
+        <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
+            <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #b45309; border-color: #f59e0b;">🏆 ONLINE RANKING</span>
+            <h3 style="margin: 2px 0 6px; color: #0369a1; font-size: 16px;">🏆 全国オンラインランキング</h3>
+
+            <div id="rk-current" class="rk-summary-card">現在のセーブ記録を確認中...</div>
+
+            <div class="rk-form-card">
+                <div class="rk-form-row">
+                    <input type="text" id="rk-name" class="rk-name-input" placeholder="プレイヤー名（10文字まで）" maxlength="10">
+                    <button type="button" id="rk-submit" class="rk-submit-btn" onclick="submitRankData()">📝 登録・更新</button>
+                </div>
+                <div id="rk-name-status" class="rk-name-lock-info">※プレイヤー名の変更は1週間に1回までです（不適切な言葉は使用できません）</div>
+                <div id="rk-msg" class="rk-msg-bar"></div>
+            </div>
+
+            <div class="rk-subtab-row">
+                <button type="button" id="rkTab_floor" class="rk-subtab-btn active" onclick="switchRankTab('floor')">🏰 最高到達階</button>
+                <button type="button" id="rkTab_zukan" class="rk-subtab-btn" onclick="switchRankTab('zukan')">📖 みつけた図鑑</button>
+            </div>
+
+            <div id="rk-list" class="rk-list-box">読み込み中...</div>
+            <button type="button" onclick="loadRanking(true)" style="margin-top:8px; padding:7px 12px; font-size:11px; width:auto; border-radius:11px; background:linear-gradient(180deg,#ffffff 0%,#e2e8f0 100%); color:#334155; text-shadow:none; border:1px solid #cbd5e1; border-bottom:2.5px solid #94a3b8;">
+                🔄 ランキングを更新
+            </button>
         </div>
     </div>
 
@@ -1967,6 +2182,16 @@
                 🎉 栄光を胸に冒険を続ける！（閉じる）
             </button>
         </div>
+    </div>
+
+    <div class="x-banner-card">
+        <div class="x-banner-text">
+            📢 <b>最新情報・感想はこちら！</b><br>
+            <span style="font-size:10px; color:#64748b;">アップデート情報や攻略の交流にどうぞ</span>
+        </div>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="x-banner-btn">
+            𝕏 公式X（@mixemojigame）
+        </a>
     </div>
 
     <footer class="seo-footer">
@@ -2354,9 +2579,10 @@
                 mon.skillId = getRandomSkillId();
             }
             return SKILLS[mon.skillId - 1];
-        }
+                        }
         let dialogQueue = [];
         let isDialogOpen = false;
+        let pendingAutoAtkAfterDialog = false;
 
         function escapeHtml(str) {
             return String(str == null ? "" : str)
@@ -2382,6 +2608,13 @@
             if (!modal || !titleEl || !msgEl || !btnsEl) return;
 
             isDialogOpen = true;
+            if (typeof autoAtkTimer !== "undefined" && autoAtkTimer) {
+                clearTimeout(autoAtkTimer);
+                autoAtkTimer = null;
+                if (typeof inDungeon !== "undefined" && inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
+                    pendingAutoAtkAfterDialog = true;
+                }
+            }
             titleEl.innerText = item.title || "📢 お知らせ";
             msgEl.innerText = item.message || "";
             btnsEl.innerHTML = "";
@@ -2418,6 +2651,13 @@
                 try { callback(result); } catch (e) { console.error(e); }
             }
             openNextDialog();
+            if (!isDialogOpen && pendingAutoAtkAfterDialog) {
+                pendingAutoAtkAfterDialog = false;
+                if (typeof inDungeon !== "undefined" && inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled && !isTurnRunning) {
+                    const spdDiv = battleSpeed || 1;
+                    autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(350 / spdDiv));
+                }
+            }
         }
 
         function showGameAlert(message, title = "📢 お知らせ", callback = null) {
@@ -2459,14 +2699,13 @@
         });
         const MAX_BOX_LIMIT = 200;
         const MAX_MIX_CAP = 0.80;
-        const MAX_WILD_JOIN_CAP = 0.20;
+        const MAX_WILD_JOIN_CAP = 0.05;
         const MAX_LV_CAP_BONUS = 20;
 
         let eg = [];
         let stg = 1;
         let maxStg = 1;
         let maxClearStg = 0;
-        let returnStg = 1;
         let zk = ["プニシズク"];
         let seen = ["プニシズク"];
         let boxLimit = 50;
@@ -2582,6 +2821,7 @@
                 clearTimeout(autoAtkTimer);
                 autoAtkTimer = null;
             }
+            pendingAutoAtkAfterDialog = false;
             for (let i = 0; i < battleTimers.length; i++) {
                 clearTimeout(battleTimers[i]);
             }
@@ -2842,7 +3082,6 @@
                 toast.style.display = "none";
             }, 4000);
         }
-
         const MISSIONS = [
             { id: "m_stg10",   title: "草原の冒険者",       condText: "10階をクリアする",             rewardText: "ボックス上限+5",        reward: { box: 5 },    checkType: "stg",   val: 10 },
             { id: "m_mix1",    title: "はじめての配合",     condText: "配合に1回成功する",            rewardText: "配合成功率+2%",         reward: { mix: 0.02 }, checkType: "mix",   val: 1 },
@@ -2948,7 +3187,7 @@
             if (m.checkType === "zukan") return Object.keys(D).filter(k => zk.includes(k)).length >= m.val;
             if (m.checkType === "rps") return (stats.rpsWinCount || 0) >= m.val;
             if (m.checkType === "chest") return (stats.chestOpenCount || 0) >= m.val;
-            if (m.checkType === "rare") return (stats.rareGetCount || 0) >= m.val || p.some(x => x.isRare);
+            if (m.checkType === "rare") return Math.max(stats.rareGetCount || 0, p.filter(x => x.isRare).length) >= m.val;
             if (m.checkType === "hero") return (stats.heroWinCount || 0) >= m.val;
             if (m.checkType === "kingdom") return (stats.kingdomVisitCount || 0) >= m.val;
             if (m.checkType === "sage") return (stats.sageWinCount || 0) >= m.val;
@@ -3061,7 +3300,7 @@
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 const expPct = Math.round(expBonusRate * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% (上限20%) ／ 💎EXP+" + expPct + "%";
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% (上限5%) ／ 💎EXP+" + expPct + "%";
             }
         }
 
@@ -3104,7 +3343,8 @@
             showNotice(msg, 4500);
             saveGame();
             up(true);
-                }
+        }
+
         function getDungeonLockRemainSec() {
             if (!dungeonLockUntil) return 0;
             const diff = Math.ceil((dungeonLockUntil - Date.now()) / 1000);
@@ -3171,7 +3411,6 @@
                 stg: stg,
                 maxStg: maxStg,
                 maxClearStg: maxClearStg,
-                returnStg: returnStg,
                 zk: zk,
                 seen: seen,
                 boxLimit: boxLimit,
@@ -3199,9 +3438,6 @@
                 loadedMaxStg = Math.max(loadedMaxStg, unlockTarget);
             }
             maxStg = Math.min(1100, loadedMaxStg);
-            returnStg = (typeof data.returnStg === "number" && data.returnStg >= 1 && data.returnStg <= 1000)
-                ? data.returnStg
-                : Math.min(1000, Math.max(1, data.stg || 1));
             stg = Math.min(1100, Math.max(1, data.stg || 1));
             if (stg > maxStg) stg = maxStg;
             zk = data.zk || ["プニシズク"];
@@ -3359,16 +3595,17 @@
             updateSpeedButtonUI();
             updateSortButtonsUI();
             up(true);
-        }
+             }
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
-                battle: document.getElementById("panelBattle"),
-                box:    document.getElementById("panelBox"),
-                mix:    document.getElementById("panelMix"),
-                quest:  document.getElementById("panelQuest"),
-                zukan:  document.getElementById("panelZukan"),
-                save:   document.getElementById("panelSave")
+                battle:  document.getElementById("panelBattle"),
+                box:     document.getElementById("panelBox"),
+                mix:     document.getElementById("panelMix"),
+                quest:   document.getElementById("panelQuest"),
+                zukan:   document.getElementById("panelZukan"),
+                ranking: document.getElementById("panelRanking"),
+                save:    document.getElementById("panelSave")
             };
             Object.keys(panels).forEach(key => {
                 const pEl = panels[key];
@@ -3389,6 +3626,9 @@
                 up(false);
             } else if (tabName === "quest") {
                 renderMissions(false);
+            } else if (tabName === "ranking") {
+                if (typeof updateCurrentDisplay === "function") updateCurrentDisplay();
+                if (typeof loadRanking === "function") loadRanking();
             }
         }
 
@@ -3428,9 +3668,10 @@
             if (!autoBattleEnabled && autoAtkTimer) {
                 clearTimeout(autoAtkTimer);
                 autoAtkTimer = null;
+                pendingAutoAtkAfterDialog = false;
                 const btnAtk = document.getElementById("btnAtk");
                 if (btnAtk && inDungeon && !currentEvent && !isTurnRunning) btnAtk.disabled = false;
-            } else if (autoBattleEnabled && inDungeon && !currentEvent && eg.length > 0 && !isTurnRunning) {
+            } else if (autoBattleEnabled && inDungeon && !currentEvent && eg.length > 0 && !isTurnRunning && !isDialogOpen) {
                 if (autoAtkTimer) {
                     clearTimeout(autoAtkTimer);
                     autoAtkTimer = null;
@@ -4639,7 +4880,7 @@
                                 const pt = battleParticles[i];
                                 pt.phase += 0.04 * pStep;
                                 pt.x += (theme.vx + Math.sin(pt.phase) * 0.25) * pStep;
-                                pt.y += theme.vy * pStep;
+                                pt.y += pt.vy * pStep;
                                 if (pt.x > canvas.width + 6) pt.x = -6;
                                 if (pt.x < -6) pt.x = canvas.width + 6;
                                 if (pt.y > canvas.height + 6) pt.y = -6;
@@ -4836,8 +5077,6 @@
             clearAllBattleTimers();
             clearBattleVisualEffects();
 
-            if (stg <= 1000) returnStg = stg;
-
             inDungeon = true;
             inKingdom = false;
             kingdomScene = "";
@@ -4864,7 +5103,8 @@
 
             const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(550 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(550 / spdDiv));
             }
         }
 
@@ -5139,7 +5379,8 @@
 
             const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
             }
         }
 
@@ -5150,7 +5391,6 @@
                 advanceStageAfterEvent("", true);
                 return;
             }
-            returnStg = (stg >= 1 && stg <= 1000) ? stg : 1;
             clearAllBattleTimers();
             clearBattleVisualEffects();
             isTurnRunning = false;
@@ -5169,7 +5409,8 @@
 
             const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
             }
         }
 
@@ -5246,7 +5487,8 @@
 
             const spdDiv = battleSpeed;
             if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
             }
         }
 
@@ -5259,7 +5501,7 @@
                 const wildRaised = addWildJoinBonusCapped(0.003);
                 seStageClear();
                 msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆永続で" +
-                    (wildRaised ? "野生加入率+0.3%" : "野生加入率は上限20%到達済み") +
+                    (wildRaised ? "野生加入率+0.3%" : "野生加入率は上限5%到達済み") +
                     (raised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限80%に達しています）");
             } else {
                 p.forEach(m => {
@@ -5418,7 +5660,6 @@
             showNotice(msg, 5500);
             advanceStageAfterEvent("", true);
         }
-
         function chooseHeroAction(fight) {
             if (!inDungeon || currentEvent !== "hero") return;
 
@@ -5441,7 +5682,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5467,7 +5709,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5493,7 +5736,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5522,7 +5766,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5551,7 +5796,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5656,6 +5902,7 @@
             saveGame();
             up(true);
         }
+
         function chooseKingdomEntry(enterK) {
             if (!inDungeon || currentEvent !== "kingdom_gate") return;
             if (!enterK) {
@@ -5772,7 +6019,8 @@
 
             const spdDiv = battleSpeed;
             if (autoBattleEnabled) {
-                autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
+                if (isDialogOpen) pendingAutoAtkAfterDialog = true;
+                else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(700 / spdDiv));
             }
         }
 
@@ -5816,7 +6064,7 @@
                 seStageClear();
                 msg = raised
                     ? "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】永続で野生モンスターの加入率が+0.2%された。そして出国した！"
-                    : "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生モンスターの加入率は上限20%に達しているため上がらなかった。そして出国した！";
+                    : "🏪 商店で『🍪魅惑のおやつ』を受け取った！【効果】野生モンスターの加入率は上限5%に達しているため上がらなかった。そして出国した！";
             } else if (choice === 4) {
                 expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
                 seStageClear();
@@ -5864,7 +6112,7 @@
                 seStageClear();
                 msg = raised
                     ? "🏪 商店で『🍯甘いミツ』を受け取った！【効果】永続で野生モンスターの加入率が+0.1%された。そして出国した！"
-                    : "🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生モンスターの加入率は上限20%に達しているため上がらなかった。そして出国した！";
+                    : "🏪 商店で『🍯甘いミツ』を受け取った！【効果】野生モンスターの加入率は上限5%に達しているため上がらなかった。そして出国した！";
             } else if (choice === 13) {
                 expBonusRate = Math.round((expBonusRate + 0.03) * 1000) / 1000;
                 seStageClear();
@@ -6607,7 +6855,7 @@
                     const shopDefs = {
                         1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
                         2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
-                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップ(上限20%)</span></button>',
+                        3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップ(上限5%)</span></button>',
                         4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
                         5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
                         6:  '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickKingdomShopItem(6)">🍞 焼きたてパン<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員の<br>HP全回復＆EXP+25</span></button>',
@@ -6616,7 +6864,7 @@
                         9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
                         10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
                         11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
-                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップ(上限20%)</span></button>',
+                        12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップ(上限5%)</span></button>',
                         13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
                         14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
                         15: '<button class="btn-event" style="background:linear-gradient(180deg,#818cf8,#4f46e5);border-bottom:3px solid #3730a3;" onclick="pickKingdomShopItem(15)">🎲 運命のサイコロ<span class="item-desc-mini">【効果】上限未満の控え1体を<br>ランダムでレベル+2する</span></button>'
@@ -6671,7 +6919,6 @@
             if (btnBulk) btnBulk.disabled = inDungeon;
             updateBulkBarUI();
         }
-
         function up(forceAll = true) {
             p.sort((a, b) => {
                 if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
@@ -6690,6 +6937,7 @@
             updateSortButtonsUI();
             upBattleUI();
             renderMissions(forceAll);
+            if (currentTab === "ranking" && typeof updateCurrentDisplay === "function") updateCurrentDisplay();
 
             if (forceAll) {
                 if (currentTab !== "box" && currentTab !== "mix") lastRenderedBoxSig = "";
@@ -6927,9 +7175,10 @@
                 }
             }
         }
+
         function exportData() {
             const data = {
-                stg, maxStg, maxClearStg, returnStg, zk, seen, boxLimit, boxLimitCap200: true,
+                stg, maxStg, maxClearStg, zk, seen, boxLimit, boxLimitCap200: true,
                 baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
                 dungeonLockUntil, stats, p
             };
@@ -7724,8 +7973,13 @@
                 return { needsFullUpdate: true, log: "" };
             }
         }
+
         function atk(){
             if(!inDungeon || currentEvent || p.length === 0 || eg.length === 0 || isTurnRunning) return;
+            if (isDialogOpen) {
+                pendingAutoAtkAfterDialog = true;
+                return;
+            }
 
             if (autoAtkTimer) {
                 clearTimeout(autoAtkTimer);
@@ -8235,7 +8489,11 @@
                                 else up(false);
 
                                 if (inDungeon && !currentEvent && eg.length > 0 && autoBattleEnabled) {
-                                    autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(600 / spdDiv));
+                                    if (isDialogOpen) {
+                                        pendingAutoAtkAfterDialog = true;
+                                    } else {
+                                        autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(600 / spdDiv));
+                                    }
                                 } else if (btnAtk && inDungeon && !currentEvent) {
                                     btnAtk.disabled = false;
                                 }
@@ -8251,6 +8509,7 @@
                 recoverFromTurnError(err);
             }
         }
+
         function mix() {
             if(inDungeon) return;
 
@@ -8372,7 +8631,6 @@
             if (confettiEl) confettiEl.innerHTML = "";
             if (modal) modal.style.display = "none";
         }
-
         let emojiObserver = null;
         let isParsingEmoji = false;
         let pendingEmojiTargets = new Set();
@@ -8461,6 +8719,8 @@
             try { initEmojiObserver(); } catch (e) {}
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
+            try { updateCurrentDisplay(); } catch (e) {}
+            try { loadRanking(false); } catch (e) {}
             if (window.__START_REQUESTED__) {
                 startGame();
             }
@@ -8478,131 +8738,359 @@
             initGame();
         }
     </script>
-        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-      <p>
-        最新情報・感想はこちら：<a href="https://x.com" target="_blank" rel="noopener noreferrer">公式X（@mixemojigame）</a>
-      </p>
-    </div>
-    <div style="text-align: center; margin: 20px auto; max-width: 480px; padding: 15px; background: #1e293b; color: #f8fafc; border-radius: 12px; border: 2px solid #38bdf8; font-family: sans-serif;">
-  <h3 style="margin: 0 0 8px 0; color: #38bdf8; font-size: 18px;">🏆 全国オンラインランキング（最高到達階層）</h3>
-  <p id="rk-current" style="font-size: 13px; color: #cbd5e1; margin: 0 0 12px 0;">現在のセーブ記録を確認中...</p>
-  
-  <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
-    <input type="text" id="rk-name" placeholder="プレイヤー名（10文字まで）" maxlength="10" style="padding: 8px; border-radius: 6px; border: 1px solid #64748b; background: #0f172a; color: #fff; width: 170px;">
-    <button type="button" id="rk-submit" onclick="submitRankData()" style="padding: 8px 16px; border-radius: 6px; border: none; background: #0284c7; color: #fff; font-weight: bold; cursor: pointer;">現在の記録を登録</button>
-  </div>
-  <p id="rk-msg" style="font-size: 12px; color: #fde047; margin: 4px 0 12px 0; min-height: 16px;"></p>
 
-  <div id="rk-list" style="text-align: left; background: #0f172a; padding: 10px; border-radius: 8px; max-height: 260px; overflow-y: auto; font-size: 14px;">
-    読み込み中...
-  </div>
-</div>
+    <script>
+        const RK_HOST = "firestore.googleapis.com";
+        const RK_DOCS_BASE = "https://" + RK_HOST + "/v1/projects/mix-emoji-game/databases/(default)/documents";
+        const RK_KEY = "AIzaSyB4kHHSqbPGCFL_yjEbQQ2D0uydxZTzgh0";
+        const RK_ENDPOINT = RK_DOCS_BASE + "/rankings?key=" + RK_KEY;
+        const RK_QUERY_ENDPOINT = RK_DOCS_BASE + ":runQuery?key=" + RK_KEY;
+        const RK_NAME_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 
-<script>
-  const RK_HOST = "firestore.googleapis.com";
-  const RK_PATH = "/v1/projects/mix-emoji-game/databases/(default)/documents/rankings";
-  const RK_KEY = "AIzaSyB4kHHSqbPGCFL_yjEbQQ2D0uydxZTzgh0";
-  const RK_ENDPOINT = "https://" + RK_HOST + RK_PATH + "?key=" + RK_KEY;
+        let currentRankTab = "floor";
+        let rankingCache = { floor: null, zukan: null };
 
-  function getSavedFloor() {
-    try {
-      const raw = localStorage.getItem("mix_emoji_save_v9");
-      if (raw) {
-        const d = JSON.parse(raw);
-        if (typeof d.maxClearStg === "number" && d.maxClearStg > 0) {
-          return Math.floor(d.maxClearStg);
+        function getRankUid() {
+            try {
+                let uid = localStorage.getItem("mix_emoji_rk_uid");
+                if (!uid) {
+                    uid = "u_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
+                    localStorage.setItem("mix_emoji_rk_uid", uid);
+                }
+                return uid;
+            } catch (e) {
+                return "u_anon";
+            }
         }
-      }
-    } catch (e) {}
-    return 0;
-  }
 
-  function updateCurrentDisplay() {
-    const floor = getSavedFloor();
-    const el = document.getElementById("rk-current");
-    if (floor > 0) {
-      el.innerHTML = "あなたの最高到達記録：<b style='color:#38bdf8; font-size:15px;'>" + floor + " 階</b>";
-    } else {
-      el.textContent = "※ 1階以上クリアするとランキングに登録できます";
-    }
-    const savedName = localStorage.getItem("mix_emoji_rk_name");
-    if (savedName) document.getElementById("rk-name").value = savedName;
-  }
+        function getSavedFloor() {
+            if (typeof maxClearStg === "number" && maxClearStg > 0) {
+                return Math.floor(maxClearStg);
+            }
+            try {
+                const raw = localStorage.getItem("mix_emoji_save_v9");
+                if (raw) {
+                    const d = JSON.parse(raw);
+                    if (typeof d.maxClearStg === "number" && d.maxClearStg > 0) {
+                        return Math.floor(d.maxClearStg);
+                    }
+                }
+            } catch (e) {}
+            return 0;
+        }
 
-  async function loadRanking() {
-    const listEl = document.getElementById("rk-list");
-    try {
-      const res = await fetch(RK_ENDPOINT + "&pageSize=100");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
-      if (!data.documents || data.documents.length === 0) {
-        listEl.innerHTML = "<p style='text-align:center; color:#94a3b8; margin:10px 0;'>まだ記録がありません。最初の登録者になろう！</p>";
-        return;
-      }
-      const list = data.documents.map(doc => {
-        const f = doc.fields || {};
-        return {
-          name: (f.name && f.name.stringValue) ? f.name.stringValue : "名無し",
-          score: (f.score && f.score.integerValue) ? Number(f.score.integerValue) : 0
-        };
-      }).sort((a, b) => b.score - a.score).slice(0, 20);
+        function getSavedZukanCount() {
+            if (Array.isArray(zk) && zk.length > 0) {
+                return zk.length;
+            }
+            try {
+                const raw = localStorage.getItem("mix_emoji_save_v9");
+                if (raw) {
+                    const d = JSON.parse(raw);
+                    if (Array.isArray(d.zk)) return d.zk.length;
+                }
+            } catch (e) {}
+            return 1;
+        }
 
-      let html = "";
-      list.forEach((d, i) => {
-        const rank = i + 1;
-        const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `${rank}位`;
-        const safeName = String(d.name).replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        html += `<div style="display:flex; justify-content:space-between; padding:6px 4px; border-bottom:1px solid #1e293b;">
-          <span><b>${medal}</b> ${safeName}</span>
-          <span style="color:#38bdf8; font-weight:bold;">${d.score} 階</span>
-        </div>`;
-      });
-      listEl.innerHTML = html;
-    } catch (e) {
-      listEl.innerHTML = "<p style='color:#f87171; text-align:center;'>読み込みエラー: " + e.message + "</p>";
-    }
-  }
+        function getRankNameMeta() {
+            let name = "";
+            let changedAt = 0;
+            try {
+                name = localStorage.getItem("mix_emoji_rk_name") || "";
+                changedAt = Number(localStorage.getItem("mix_emoji_rk_name_ts") || "0") || 0;
+            } catch (e) {}
+            if (!name && typeof stats === "object" && stats && stats.rkName) {
+                name = String(stats.rkName);
+                changedAt = Number(stats.rkNameTs || 0) || 0;
+            }
+            return { name: name, changedAt: changedAt };
+        }
 
-  async function submitRankData() {
-    const nameInput = document.getElementById("rk-name");
-    const msgEl = document.getElementById("rk-msg");
-    const btn = document.getElementById("rk-submit");
+        function saveRankNameMeta(name, ts) {
+            try {
+                localStorage.setItem("mix_emoji_rk_name", name);
+                localStorage.setItem("mix_emoji_rk_name_ts", String(ts));
+            } catch (e) {}
+            if (typeof stats === "object" && stats) {
+                stats.rkName = name;
+                stats.rkNameTs = ts;
+                if (typeof saveGame === "function") saveGame();
+            }
+        }
 
-    const score = getSavedFloor();
-    if (!score || score < 1) {
-      msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアしてください）";
-      return;
-    }
+        function formatCooldownRemain(ms) {
+            const totalHours = Math.max(1, Math.ceil(ms / (60 * 60 * 1000)));
+            const days = Math.floor(totalHours / 24);
+            const hours = totalHours % 24;
+            if (days > 0 && hours > 0) return days + "日" + hours + "時間";
+            if (days > 0) return days + "日";
+            return hours + "時間";
+        }
 
-    const name = (nameInput.value.trim() || "名無し").slice(0, 10);
-    localStorage.setItem("mix_emoji_rk_name", name);
+        function containsSensitiveWord(rawName) {
+            if (!rawName) return false;
+            const nfkc = rawName.normalize("NFKC").toLowerCase();
+            const hira = nfkc.replace(/[\u30a1-\u30f6]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+            const stripped = hira.replace(/[\s\u3000・_\-\.\,\*\+\~\!\?\/\\@#\$%\^&\(\)\[\]\{\}○●◎△▲□■×]/g, "");
 
-    btn.disabled = true;
-    msgEl.textContent = "送信中...";
-    try {
-      const res = await fetch(RK_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fields: {
-            name: { stringValue: name },
-            score: { integerValue: String(score) }
-          }
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
-      msgEl.textContent = "🎉 " + score + "階 の記録をランキングに登録しました！";
-      await loadRanking();
-    } catch (e) {
-      msgEl.textContent = "※ 送信エラー: " + e.message;
-    }
-    btn.disabled = false;
-  }
+            const ngWords = [
+                "しね", "死ね", "しねよ", "死ねよ", "ころす", "殺す", "ころせ", "殺せ", "くたばれ", "しんで", "死んで",
+                "きえろ", "消えろ", "自殺", "じさつ", "殺害", "さつがい", "爆破", "ばくは", "テロ", "てろ",
+                "ちんこ", "ちんちん", "ちんぽ", "ちんぼ", "まんこ", "おまんこ", "まんげ", "陰部", "ペニス", "ぺにす",
+                "ぱいずり", "ふぇら", "おなにー", "せくす", "せっくす", "あなる", "れいぷ", "強姦", "ごうかん",
+                "ちかん", "痴漢", "とうさつ", "盗撮", "ろりこん", "しょたこん", "やりまん", "やりちん", "びっち",
+                "ふうぞく", "風俗", "売春", "ばいしゅん", "援助交際", "えんこう", "援交", "射精", "しゃせい", "精液", "せいえき",
+                "がいじ", "池沼", "ちしょう", "きちがい", "きがい", "きしょい", "きもい", "障害者", "しょうがいしゃ",
+                "どじん", "土人", "くそ", "かす", "ぶす", "ごみ", "あほ", "ばか", "ざこ", "無能", "むのう",
+                "覚醒剤", "かくせいざい", "麻薬", "まやく", "大麻", "たいま", "薬物",
+                "fuck", "shit", "bitch", "dick", "cock", "pussy", "penis", "vagina", "porn", "hentai",
+                "nigger", "nigga", "faggot", "retard", "whore", "slut", "rape", "cunt", "asshole", "kys"
+            ];
 
-  updateCurrentDisplay();
-  loadRanking();
-  setInterval(updateCurrentDisplay, 5000);
-</script>
+            for (let i = 0; i < ngWords.length; i++) {
+                const w = ngWords[i].normalize("NFKC").toLowerCase().replace(/[\u30a1-\u30f6]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+                if (w === "しね" || w === "くそ" || w === "かす" || w === "ぶす" || w === "ごみ" || w === "あほ" || w === "ばか" || w === "ざこ") {
+                    if (stripped === w || hira === w) return true;
+                } else {
+                    if (hira.includes(w) || stripped.includes(w)) return true;
+                }
+            }
+            return false;
+        }
+
+        function updateCurrentDisplay() {
+            const floor = getSavedFloor();
+            const zCount = getSavedZukanCount();
+            const el = document.getElementById("rk-current");
+            if (el) {
+                if (floor > 0) {
+                    el.innerHTML =
+                        "🏰 最高到達記録：<b style='color:#0284c7; font-size:13.5px;'>" + floor + " 階</b>" +
+                        " ／ 📖 みつけた図鑑：<b style='color:#4f46e5; font-size:13.5px;'>" + zCount + " 種</b>";
+                } else {
+                    el.innerHTML =
+                        "📖 みつけた図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b><br>" +
+                        "<span style='color:#d97706; font-size:10.5px;'>※ 1階以上クリアするとランキングに登録できます</span>";
+                }
+            }
+
+            const meta = getRankNameMeta();
+            const nameInput = document.getElementById("rk-name");
+            const statusEl = document.getElementById("rk-name-status");
+            if (nameInput && meta.name && !nameInput.dataset.initFilled) {
+                nameInput.value = meta.name;
+                nameInput.dataset.initFilled = "1";
+            }
+            if (statusEl) {
+                if (!meta.name) {
+                    statusEl.innerText = "※プレイヤー名の変更は登録後1週間に1回までです（センシティブな言葉は使用禁止）";
+                    statusEl.style.color = "#64748b";
+                } else {
+                    const remain = RK_NAME_COOLDOWN_MS - (Date.now() - meta.changedAt);
+                    if (meta.changedAt > 0 && remain > 0) {
+                        statusEl.innerText = "🔒 現在の登録名：「" + meta.name + "」（名前変更はあと " + formatCooldownRemain(remain) + " 後に可能／記録更新はいつでも可）";
+                        statusEl.style.color = "#b45309";
+                    } else {
+                        statusEl.innerText = "✅ 現在の登録名：「" + meta.name + "」（現在、名前を変更できます）";
+                        statusEl.style.color = "#059669";
+                    }
+                }
+            }
+        }
+
+        function switchRankTab(tab) {
+            currentRankTab = (tab === "zukan") ? "zukan" : "floor";
+            const bFloor = document.getElementById("rkTab_floor");
+            const bZukan = document.getElementById("rkTab_zukan");
+            if (bFloor) bFloor.classList.toggle("active", currentRankTab === "floor");
+            if (bZukan) bZukan.classList.toggle("active", currentRankTab === "zukan");
+            loadRanking(false);
+        }
+
+        function renderRankingList(docs) {
+            const listEl = document.getElementById("rk-list");
+            if (!listEl) return;
+            const myUid = getRankUid();
+            const isZukan = (currentRankTab === "zukan");
+
+            const parsed = (docs || []).map(doc => {
+                const f = doc.fields || {};
+                const docName = doc.name || "";
+                const docId = docName ? docName.split("/").pop() : "";
+                const fUid = (f.uid && f.uid.stringValue) ? f.uid.stringValue : docId;
+                return {
+                    uid: fUid,
+                    name: (f.name && f.name.stringValue) ? f.name.stringValue : "名無し",
+                    score: (f.score && f.score.integerValue) ? Number(f.score.integerValue) : 0,
+                    zukanScore: (f.zukanScore && f.zukanScore.integerValue) ? Number(f.zukanScore.integerValue) : 0
+                };
+            }).filter(item => isZukan ? item.zukanScore > 0 : item.score > 0);
+
+            parsed.sort((a, b) => isZukan ? (b.zukanScore - a.zukanScore || b.score - a.score) : (b.score - a.score || b.zukanScore - a.zukanScore));
+            const top20 = parsed.slice(0, 20);
+
+            if (top20.length === 0) {
+                listEl.innerHTML = "<p style='text-align:center; color:#64748b; font-size:11.5px; margin:14px 0; font-weight:800;'>まだ記録がありません。最初の登録者になろう！</p>";
+                return;
+            }
+
+            let html = "";
+            top20.forEach((d, i) => {
+                const rank = i + 1;
+                const medal = rank === 1 ? "🥇 1位" : (rank === 2 ? "🥈 2位" : (rank === 3 ? "🥉 3位" : (rank + "位")));
+                const topCls = rank === 1 ? " top1" : (rank === 2 ? " top2" : (rank === 3 ? " top3" : ""));
+                const isMe = (d.uid && d.uid === myUid);
+                const meCls = isMe ? " rk-me" : "";
+                const meBadge = isMe ? "<span class='rk-me-badge'>あなた</span>" : "";
+                const safeName = String(d.name).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                const valText = isZukan ? (d.zukanScore + " 種") : (d.score + " 階");
+                html += '<div class="rk-row' + topCls + meCls + '">' +
+                    '<span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><b>' + medal + '</b> ' + safeName + meBadge + '</span>' +
+                    '<span class="rk-score-pill">' + valText + '</span>' +
+                    '</div>';
+            });
+            listEl.innerHTML = html;
+        }
+
+        async function loadRanking(force = false) {
+            const listEl = document.getElementById("rk-list");
+            if (!listEl) return;
+            const tabKey = currentRankTab;
+            if (!force && Array.isArray(rankingCache[tabKey])) {
+                renderRankingList(rankingCache[tabKey]);
+                return;
+            }
+            listEl.innerHTML = "<p style='text-align:center; color:#64748b; font-size:11.5px; margin:14px 0; font-weight:800;'>⏳ ランキングを読み込み中...</p>";
+
+            const orderField = (tabKey === "zukan") ? "zukanScore" : "score";
+            try {
+                const qRes = await fetch(RK_QUERY_ENDPOINT, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        structuredQuery: {
+                            from: [{ collectionId: "rankings" }],
+                            orderBy: [{ field: { fieldPath: orderField }, direction: "DESCENDING" }],
+                            limit: 20
+                        }
+                    })
+                });
+                if (qRes.ok) {
+                    const rows = await qRes.json();
+                    const docs = Array.isArray(rows) ? rows.filter(r => r && r.document).map(r => r.document) : [];
+                    rankingCache[tabKey] = docs;
+                    if (currentRankTab === tabKey) renderRankingList(docs);
+                    return;
+                }
+            } catch (e) {}
+
+            try {
+                const res = await fetch(RK_ENDPOINT + "&pageSize=100");
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
+                const docs = Array.isArray(data.documents) ? data.documents : [];
+                rankingCache[tabKey] = docs;
+                if (currentRankTab === tabKey) renderRankingList(docs);
+            } catch (e) {
+                listEl.innerHTML = "<p style='color:#dc2626; text-align:center; font-size:11.5px; font-weight:800;'>⚠️ 読み込みエラー: " + e.message + "</p>";
+            }
+        }
+
+        async function submitRankData() {
+            const nameInput = document.getElementById("rk-name");
+            const msgEl = document.getElementById("rk-msg");
+            const btn = document.getElementById("rk-submit");
+            if (!nameInput || !msgEl || !btn) return;
+
+            const floor = getSavedFloor();
+            const zukanCount = getSavedZukanCount();
+            if (!floor || floor < 1) {
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアしてください）";
+                return;
+            }
+
+            const rawInput = nameInput.value.trim();
+            const newName = (rawInput || "名無し").slice(0, 10);
+
+            if (containsSensitiveWord(newName)) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ 不適切・センシティブな言葉が含まれているため使用できません。";
+                return;
+            }
+
+            const meta = getRankNameMeta();
+            const now = Date.now();
+            let isNameChanged = false;
+            if (meta.name && newName !== meta.name) {
+                const remain = RK_NAME_COOLDOWN_MS - (now - meta.changedAt);
+                if (meta.changedAt > 0 && remain > 0) {
+                    if (typeof seFail === "function") seFail();
+                    nameInput.value = meta.name;
+                    msgEl.style.color = "#dc2626";
+                    msgEl.textContent = "⏳ プレイヤー名の変更は1週間に1回までです（あと " + formatCooldownRemain(remain) + " 後に変更可能）";
+                    return;
+                }
+                isNameChanged = true;
+            } else if (!meta.name) {
+                isNameChanged = true;
+            }
+
+            const uid = getRankUid();
+            const payload = {
+                fields: {
+                    uid: { stringValue: uid },
+                    name: { stringValue: newName },
+                    score: { integerValue: String(floor) },
+                    zukanScore: { integerValue: String(zukanCount) },
+                    updatedAt: { integerValue: String(now) }
+                }
+            };
+
+            btn.disabled = true;
+            msgEl.style.color = "#0369a1";
+            msgEl.textContent = "⏳ 送信中...";
+
+            try {
+                const patchUrl = RK_DOCS_BASE + "/rankings/" + encodeURIComponent(uid) + "?key=" + RK_KEY;
+                let res = await fetch(patchUrl, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok && res.status === 403) {
+                    res = await fetch(RK_ENDPOINT, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                }
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
+
+                if (isNameChanged) {
+                    saveRankNameMeta(newName, now);
+                } else {
+                    saveRankNameMeta(newName, meta.changedAt || now);
+                }
+                rankingCache.floor = null;
+                rankingCache.zukan = null;
+                if (typeof seStageClear === "function") seStageClear();
+                msgEl.style.color = "#059669";
+                msgEl.textContent = "🎉 最高到達 " + floor + "階 ／ 図鑑 " + zukanCount + "種 を登録しました！";
+                updateCurrentDisplay();
+                await loadRanking(true);
+            } catch (e) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ 送信エラー: " + e.message;
+            }
+            btn.disabled = false;
+        }
+
+        setInterval(updateCurrentDisplay, 5000);
+    </script>
 </body>
 </html>
