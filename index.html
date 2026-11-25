@@ -8484,12 +8484,12 @@
       </p>
     </div>
     <div style="text-align: center; margin: 20px auto; max-width: 480px; padding: 15px; background: #1e293b; color: #f8fafc; border-radius: 12px; border: 2px solid #38bdf8; font-family: sans-serif;">
-  <h3 style="margin: 0 0 12px 0; color: #38bdf8; font-size: 18px;">🏆 全国オンラインランキング（最高到達階層）</h3>
+  <h3 style="margin: 0 0 8px 0; color: #38bdf8; font-size: 18px;">🏆 全国オンラインランキング（最高到達階層）</h3>
+  <p id="rk-current" style="font-size: 13px; color: #cbd5e1; margin: 0 0 12px 0;">現在のセーブ記録を確認中...</p>
   
   <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
-    <input type="text" id="rk-name" placeholder="プレイヤー名（10文字まで）" maxlength="10" style="padding: 8px; border-radius: 6px; border: 1px solid #64748b; background: #0f172a; color: #fff; width: 160px;">
-    <input type="number" id="rk-score" placeholder="到達階層 (例: 150)" min="1" max="99999" style="padding: 8px; border-radius: 6px; border: 1px solid #64748b; background: #0f172a; color: #fff; width: 120px;">
-    <button type="button" id="rk-submit" onclick="submitRankData()" style="padding: 8px 16px; border-radius: 6px; border: none; background: #0284c7; color: #fff; font-weight: bold; cursor: pointer;">記録を登録</button>
+    <input type="text" id="rk-name" placeholder="プレイヤー名（10文字まで）" maxlength="10" style="padding: 8px; border-radius: 6px; border: 1px solid #64748b; background: #0f172a; color: #fff; width: 170px;">
+    <button type="button" id="rk-submit" onclick="submitRankData()" style="padding: 8px 16px; border-radius: 6px; border: none; background: #0284c7; color: #fff; font-weight: bold; cursor: pointer;">現在の記録を登録</button>
   </div>
   <p id="rk-msg" style="font-size: 12px; color: #fde047; margin: 4px 0 12px 0; min-height: 16px;"></p>
 
@@ -8499,13 +8499,40 @@
 </div>
 
 <script>
-  const RK_BASE = "https://googleapis.com";
+  const RK_HOST = "firestore.googleapis.com";
+  const RK_PATH = "/v1/projects/mix-emoji-game/databases/(default)/documents/rankings";
   const RK_KEY = "AIzaSyB4kHHSqbPGCFL_yjEbQQ2D0uydxZTzgh0";
+  const RK_ENDPOINT = "https://" + RK_HOST + RK_PATH + "?key=" + RK_KEY;
+
+  function getSavedFloor() {
+    try {
+      const raw = localStorage.getItem("mix_emoji_save_v9");
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (typeof d.maxClearStg === "number" && d.maxClearStg > 0) {
+          return Math.floor(d.maxClearStg);
+        }
+      }
+    } catch (e) {}
+    return 0;
+  }
+
+  function updateCurrentDisplay() {
+    const floor = getSavedFloor();
+    const el = document.getElementById("rk-current");
+    if (floor > 0) {
+      el.innerHTML = "あなたの最高到達記録：<b style='color:#38bdf8; font-size:15px;'>" + floor + " 階</b>";
+    } else {
+      el.textContent = "※ 1階以上クリアするとランキングに登録できます";
+    }
+    const savedName = localStorage.getItem("mix_emoji_rk_name");
+    if (savedName) document.getElementById("rk-name").value = savedName;
+  }
 
   async function loadRanking() {
     const listEl = document.getElementById("rk-list");
     try {
-      const res = await fetch(`${RK_BASE}?key=${RK_KEY}&pageSize=100`);
+      const res = await fetch(RK_ENDPOINT + "&pageSize=100");
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
       if (!data.documents || data.documents.length === 0) {
@@ -8538,22 +8565,22 @@
 
   async function submitRankData() {
     const nameInput = document.getElementById("rk-name");
-    const scoreInput = document.getElementById("rk-score");
     const msgEl = document.getElementById("rk-msg");
     const btn = document.getElementById("rk-submit");
 
-    const name = (nameInput.value.trim() || "名無し").slice(0, 10);
-    const score = Math.floor(Number(scoreInput.value));
-
-    if (!score || score < 1 || score > 99999) {
-      msgEl.textContent = "※ 1〜99999の正しい数字を入力してください";
+    const score = getSavedFloor();
+    if (!score || score < 1) {
+      msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアしてください）";
       return;
     }
+
+    const name = (nameInput.value.trim() || "名無し").slice(0, 10);
+    localStorage.setItem("mix_emoji_rk_name", name);
 
     btn.disabled = true;
     msgEl.textContent = "送信中...";
     try {
-      const res = await fetch(`${RK_BASE}?key=${RK_KEY}`, {
+      const res = await fetch(RK_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -8565,8 +8592,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
-      msgEl.textContent = "🎉 ランキングに登録しました！";
-      scoreInput.value = "";
+      msgEl.textContent = "🎉 " + score + "階 の記録をランキングに登録しました！";
       await loadRanking();
     } catch (e) {
       msgEl.textContent = "※ 送信エラー: " + e.message;
@@ -8574,7 +8600,9 @@
     btn.disabled = false;
   }
 
+  updateCurrentDisplay();
   loadRanking();
+  setInterval(updateCurrentDisplay, 5000);
 </script>
 </body>
 </html>
