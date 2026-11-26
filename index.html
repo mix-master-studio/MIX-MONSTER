@@ -424,15 +424,33 @@
             box-shadow: 0 0 0 2.5px #fef08a, 0 5px 14px rgba(234, 88, 12, 0.45) !important;
             filter: brightness(1.08);
         }
+        .header-volume-btn {
+            background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
+            border-color: #6ee7b7 !important;
+            border-bottom: 3px solid #047857 !important;
+        }
+        .header-volume-btn.active {
+            box-shadow: 0 0 0 2.5px #fef08a, 0 5px 14px rgba(5, 150, 105, 0.45) !important;
+            filter: brightness(1.08);
+        }
+        .header-guide-btn {
+            background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%) !important;
+            border-color: #c4b5fd !important;
+            border-bottom: 3px solid #5b21b6 !important;
+        }
+        .header-guide-btn.active {
+            box-shadow: 0 0 0 2.5px #fef08a, 0 5px 14px rgba(124, 58, 237, 0.45) !important;
+            filter: brightness(1.08);
+        }
         .sound-panel {
-            display: none;
-            margin-top: 10px;
-            padding: 10px 12px;
+            display: block;
+            margin-top: 6px;
+            padding: 12px 14px;
             text-align: left;
-            background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
-            border: 1.5px solid #bae6fd;
+            background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%);
+            border: 1.5px solid #a7f3d0;
             border-radius: 14px;
-            box-shadow: inset 0 1px 0 #ffffff, 0 4px 12px rgba(2, 132, 199, 0.08);
+            box-shadow: inset 0 1px 0 #ffffff, 0 4px 12px rgba(5, 150, 105, 0.08);
         }
         .sound-row {
             display: flex;
@@ -461,12 +479,12 @@
             color: #1e293b;
         }
         .guide-panel {
-            display: none;
-            margin-top: 10px;
+            display: block;
+            margin-top: 6px;
             padding: 10px 12px;
             text-align: left;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-            border: 1.5px solid #bae6fd;
+            border: 1.5px solid #ddd6fe;
             border-radius: 14px;
             font-size: 11.5px;
             line-height: 1.55;
@@ -1018,7 +1036,7 @@
             font-size: 9.5px;
             font-weight: 900;
             box-shadow: 0 2px 5px rgba(245, 158, 11, 0.16);
-        }
+                                                                                                                       }
         .atk-forward-my {
             transform: translate(18px, -4px) scale(1.04) !important;
             box-shadow: 0 12px 24px rgba(2, 132, 199, 0.28) !important;
@@ -1781,7 +1799,7 @@
             min-height: 50px;
         }
     </style>
-</head>
+    </head>
 <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
@@ -1823,60 +1841,15 @@
             <button id="btnSoundToggle" onclick="toggleSound()" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); border-color: #7dd3fc; border-bottom: 3px solid #0369a1;">
                 🔊 サウンド: ON
             </button>
-            <button id="btnVolumeToggle" onclick="toggleSoundPanel()" style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-color: #6ee7b7; border-bottom: 3px solid #047857;">
+            <button id="tabBtn_volume" class="header-volume-btn" onclick="switchTab('volume')">
                 🎚️ 音量調整
             </button>
-            <button onclick="let g=document.getElementById('guidePanel'); g.style.display=g.style.display==='block'?'none':'block'" style="background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); border-color: #c4b5fd; border-bottom: 3px solid #5b21b6;">
+            <button id="tabBtn_guide" class="header-guide-btn" onclick="switchTab('guide')">
                 ❓ 遊び方ガイド
             </button>
             <button id="tabBtn_save" class="header-save-btn" onclick="switchTab('save')">
                 💾 保存
             </button>
-        </div>
-        <div id="soundPanel" class="sound-panel">
-            <div style="font-size: 11px; font-weight: 900; color: #0284c7; margin-bottom: 4px;">🎚️ 音量バランス設定（自動保存）</div>
-            <div class="sound-row">
-                <span class="sound-row-label">🎵 BGM音量</span>
-                <input type="range" id="bgmVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setBgmVolume(this.value)">
-                <span class="sound-val" id="bgmVolumeVal">100%</span>
-            </div>
-            <div class="sound-row">
-                <span class="sound-row-label">🔔 SE音量</span>
-                <input type="range" id="seVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setSeVolume(this.value)" onchange="playSeTestSample()">
-                <span class="sound-val" id="seVolumeVal">100%</span>
-            </div>
-        </div>
-        <div id="guidePanel" class="guide-panel">
-            <b>🔰 はじめての遊び方・順番ガイド</b>
-            <div class="guide-step">
-                <b>①「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
-                毎日0時に更新される「☀️毎日ログインクエスト」は、開いて「🎁受取」を押すだけで特典がもらえます。まずはここを受け取ってから冒険を始めましょう！
-            </div>
-            <div class="guide-step">
-                <b>②「📦 ボックス」タブでパーティを確認・編成しよう！</b><br>
-                最初は「プニシズク」3体が戦闘メンバーに参加中です。強い仲間が増えたら「🛡️戻す」で控えに戻し、「⚔️戦闘に出す」で最大3体まで入れ替えられます（選んだ順に1〜3番手として戦います）。
-            </div>
-            <div class="guide-step">
-                <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
-                「オート戦闘」がONなので、突入するだけで自動で戦います！経験値がたまってLvが上がり、倒した敵が確率で仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめです。
-            </div>
-            <div class="guide-step">
-                <b>④ 仲間が5体以上増えたら「🧬 配合」を試そう！</b><br>
-                ボックスで「🛡️戻す」にして鍵を外した2匹を選んで配合すると、2匹のLvを合計した強いモンスターが生まれます！（※失敗すると選んだ2匹は消えるので注意）迷ったら「✨配合アシスト」を使うと作れる組み合わせがすぐ分かります。
-            </div>
-            <div class="guide-step">
-                <b>⑤「📖 図鑑」でヒントを見て1000階制覇＆ランキング上位を目指そう！</b><br>
-                図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！さらに「🏆 ランキング」タブでは全国のプレイヤーと最高到達階・みつけた図鑑数を競えます！
-            </div>
-            <div class="guide-step">
-                <b>⑥ タイトル下の「💾 保存」ボタンでデータセーブ・引き継ぎ管理をしよう！</b><br>
-                ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
-                「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もここから行えます。
-            </div>
-            <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
-                ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日は獲得EXPが2倍＆配合成功率が+10%になります！<br>
-                🎨 絵文字画像：Twemoji (CC-BY 4.0)
-            </div>
         </div>
     </div>
 
@@ -1954,7 +1927,6 @@
             </div>
         </div>
     </div>
-
     <div id="panelQuest" class="tab-panel tab-hidden">
         <div class="box" style="border: 2px solid #fde68a; background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #92400e; border-color: #f59e0b;">🧭 QUESTS</span>
@@ -2102,6 +2074,63 @@
         </div>
     </div>
 
+    <div id="panelVolume" class="tab-panel tab-hidden">
+        <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%); border: 2px solid #6ee7b7;">
+            <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">🎚️ SOUND SETTINGS</span>
+            <h3 style="margin: 2px 0 6px; color: #059669; font-size: 15px;">🎚️ 音量バランス設定（自動保存）</h3>
+            <div id="soundPanel" class="sound-panel">
+                <div class="sound-row">
+                    <span class="sound-row-label">🎵 BGM音量</span>
+                    <input type="range" id="bgmVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setBgmVolume(this.value)">
+                    <span class="sound-val" id="bgmVolumeVal">100%</span>
+                </div>
+                <div class="sound-row">
+                    <span class="sound-row-label">🔔 SE音量</span>
+                    <input type="range" id="seVolumeSlider" class="sound-slider" min="0" max="100" value="100" oninput="setSeVolume(this.value)" onchange="playSeTestSample()">
+                    <span class="sound-val" id="seVolumeVal">100%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="panelGuide" class="tab-panel tab-hidden">
+        <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%); border: 2px solid #c4b5fd;">
+            <span class="section-badge" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); color: #5b21b6; border-color: #c4b5fd;">❓ HOW TO PLAY</span>
+            <h3 style="margin: 2px 0 6px; color: #6d28d9; font-size: 15px;">🔰 はじめての遊び方・順番ガイド</h3>
+            <div id="guidePanel" class="guide-panel">
+                <div class="guide-step">
+                    <b>①「🧭 クエスト」タブで毎日報酬を受け取ろう！</b><br>
+                    毎日0時に更新される「☀️毎日ログインクエスト」は、開いて「🎁受取」を押すだけで特典がもらえます。まずはここを受け取ってから冒険を始めましょう！
+                </div>
+                <div class="guide-step">
+                    <b>②「📦 ボックス」タブでパーティを確認・編成しよう！</b><br>
+                    最初は「プニシズク」3体が戦闘メンバーに参加中です。強い仲間が増えたら「🛡️戻す」で控えに戻し、「⚔️戦闘に出す」で最大3体まで入れ替えられます（選んだ順に1〜3番手として戦います）。
+                </div>
+                <div class="guide-step">
+                    <b>③「⚔️ バトル」タブで「🏰 ダンジョン突入」を押そう！</b><br>
+                    「オート戦闘」がONなので、突入するだけで自動で戦います！経験値がたまってLvが上がり、倒した敵が確率で仲間になります。勝てなくなったら「🔁同じ階周回」でレベル上げがおすすめです。
+                </div>
+                <div class="guide-step">
+                    <b>④ 仲間が5体以上増えたら「🧬 配合」を試そう！</b><br>
+                    ボックスで「🛡️戻す」にして鍵を外した2匹を選んで配合すると、2匹のLvを合計した強いモンスターが生まれます！（※失敗すると選んだ2匹は消えるので注意）迷ったら「✨配合アシスト」を使うと作れる組み合わせがすぐ分かります。
+                </div>
+                <div class="guide-step">
+                    <b>⑤「📖 図鑑」でヒントを見て1000階制覇＆ランキング上位を目指そう！</b><br>
+                    図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！さらに「🏆 ランキング」タブでは全国のプレイヤーと最高到達階・みつけた図鑑数を競えます！
+                </div>
+                <div class="guide-step">
+                    <b>⑥ タイトル下の「💾 保存」ボタンでデータセーブ・引き継ぎ管理をしよう！</b><br>
+                    ゲームデータは自動保存されますが、機種変更やブラウザのデータ消去に備えてバックアップが大切です。<br>
+                    「🔑引き継ぎコードを発行する」を押して出たコードをメモ帳などに保存しておけば、いつでも「📥データをインポートして復元」に貼り付けてデータを復元できます！プレゼントコードの入力もここから行えます。
+                </div>
+                <div style="font-size:10.5px; color:#64748b; margin-top:4px;">
+                    ⚠️ 「🔁同じ階周回」ON中は遭遇イベントは発生しません（通常時も2回連続では発生しません）。土日は獲得EXPが2倍＆配合成功率が+10%になります！<br>
+                    🎨 絵文字画像：Twemoji (CC-BY 4.0)
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="panelSave" class="tab-panel tab-hidden">
         <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
             <span class="section-badge">💾 SAVE & TRANSFER</span>
@@ -2134,7 +2163,6 @@
             </div>
         </div>
     </div>
-
     <div id="mixModal" class="mix-modal">
         <canvas id="mixMagicCanvas"></canvas>
         <div class="card-3d-scene">
@@ -2589,7 +2617,7 @@
                 mon.skillId = getRandomSkillId();
             }
             return SKILLS[mon.skillId - 1];
-                        }
+        }
         let dialogQueue = [];
         let isDialogOpen = false;
         let pendingAutoAtkAfterDialog = false;
@@ -3023,8 +3051,7 @@
             }
             const pct = Math.round(chance * 100);
             return "【効果】今回は光が届かず上限Lvは上がらなかった…（" + pct + "%抽選外れ）";
-        }
-
+                }
         const DAILY_REWARD_POOL = [
             { key: "mix",    label: "🧬配合+0.1%", val: 0.001 },
             { key: "wild",   label: "🧲加入+0.1%", val: 0.001 },
@@ -3605,7 +3632,7 @@
             updateSpeedButtonUI();
             updateSortButtonsUI();
             up(true);
-             }
+        }
         function switchTab(tabName) {
             currentTab = tabName;
             const panels = {
@@ -3615,6 +3642,8 @@
                 quest:   document.getElementById("panelQuest"),
                 zukan:   document.getElementById("panelZukan"),
                 ranking: document.getElementById("panelRanking"),
+                volume:  document.getElementById("panelVolume"),
+                guide:   document.getElementById("panelGuide"),
                 save:    document.getElementById("panelSave")
             };
             Object.keys(panels).forEach(key => {
@@ -4218,9 +4247,7 @@
         }
 
         function toggleSoundPanel() {
-            const panel = document.getElementById("soundPanel");
-            if (!panel) return;
-            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+            switchTab("volume");
         }
 
         function setBgmVolume(val) {
@@ -7573,7 +7600,7 @@
                 }
                 if (no === -12 && Math.random() < 0.40) {
                     attacker.nextAtk15 = true;
-                    skillLogs += "👹" + attacker.n + "の神鍛の鉄槌！次の攻撃が1.5倍になる！ ";
+                    skillLogs += "👹" + attacker.n + "の神鍛の鉄槌！次の攻撃が1回だけ1.5倍になる！ ";
                     fxQueue.push("🔥💥"); buffSelf = true;
                 }
                 if (no === -13 && Math.random() < 0.60) {
@@ -8519,7 +8546,6 @@
                 recoverFromTurnError(err);
             }
         }
-
         function mix() {
             if(inDungeon) return;
 
