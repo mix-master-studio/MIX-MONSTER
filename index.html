@@ -5649,7 +5649,7 @@
                     seStageClear();
                     msg = "🌟 星に祈ったがボックスが満杯だったため、代わりにボックス上限が+" + (boxLimit - before) + "体増えた！（現在 " + boxLimit + "/200体）";
                 } else {
-                    const isRareNew = Math.random() < 0.10;
+                    const isRareNew = Math.random() < 0.01;
                     const st10 = calcStatsByLevel(b, 10, isRareNew);
                     let newAlly = {
                         n: giftName, lv: 10, lvCapBonus: 0, m: st10.m, hp: st10.m, at: st10.at, df: st10.df, sp: st10.sp,
