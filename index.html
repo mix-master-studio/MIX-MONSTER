@@ -5235,7 +5235,7 @@
                 let isRare = Math.random() < 0.03;
                 let mult = isRare ? 1.25 : 1;
                 let bossLv = getDungeonEnemyLv(stg);
-                let bossScale = 1 + (bossLv / 80);
+                let bossScale = 1 + (bossLv / 50);
                 let bossEx = Math.max(b.ex, Math.floor(b.ex * (0.4 + Math.pow(bossLv, 1.15) * 0.18)));
                 let bossMon = {
                     n: bossName,
