@@ -1617,6 +1617,16 @@
             padding: 10px 10px 8px;
             margin-bottom: 10px;
         }
+        .rk-score-btn {
+            width: 100% !important;
+            margin: 0 0 8px !important;
+            padding: 11px 12px !important;
+            font-size: 13px !important;
+            border-radius: 13px !important;
+            background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
+            border-color: #6ee7b7 !important;
+            border-bottom: 3.5px solid #047857 !important;
+        }
         .rk-form-row {
             display: flex;
             gap: 6px;
@@ -1687,8 +1697,15 @@
             border-bottom: 3px solid #0369a1 !important;
             text-shadow: 0 1px 2px rgba(15, 23, 42, 0.18) !important;
         }
+        .rk-list-meta {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #475569;
+            margin-bottom: 5px;
+            text-align: center;
+        }
         .rk-list-box {
-            max-height: 290px;
+            max-height: 340px;
             overflow-y: auto;
             padding: 6px;
             border: 1.5px solid #bae6fd;
@@ -1800,7 +1817,7 @@
         }
     </style>
     </head>
-<body class="title-locked">
+    <body class="title-locked">
     <div id="titleScreen">
         <div class="title-bg-blur" id="titleBgBlur"></div>
         <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
@@ -1938,7 +1955,6 @@
             </div>
         </div>
     </div>
-
     <div id="panelBox" class="tab-panel tab-hidden">
         <div class="box">
             <span class="section-badge" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-color: #6ee7b7;">📦 MONSTER BOX</span>
@@ -2049,27 +2065,32 @@
     <div id="panelRanking" class="tab-panel tab-hidden">
         <div class="box" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 2px solid #7dd3fc;">
             <span class="section-badge" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #b45309; border-color: #f59e0b;">🏆 ONLINE RANKING</span>
-            <h3 style="margin: 2px 0 6px; color: #0369a1; font-size: 16px;">🏆 全国オンラインランキング</h3>
+            <h3 style="margin: 2px 0 6px; color: #0369a1; font-size: 16px;">🏆 全国オンラインランキング（TOP100）</h3>
 
             <div id="rk-current" class="rk-summary-card">現在のセーブ記録を確認中...</div>
 
             <div class="rk-form-card">
+                <button type="button" id="rk-score-btn" class="rk-score-btn" onclick="submitRankScore()">
+                    🚀 最新スコアでランキングを更新（回数制限なし）
+                </button>
+                <div style="border-top: 1.5px dashed #bae6fd; margin: 4px 0 8px;"></div>
                 <div class="rk-form-row">
                     <input type="text" id="rk-name" class="rk-name-input" placeholder="プレイヤー名（10文字まで）" maxlength="10">
-                    <button type="button" id="rk-submit" class="rk-submit-btn" onclick="submitRankData()">📝 登録・更新</button>
+                    <button type="button" id="rk-name-btn" class="rk-submit-btn" onclick="submitRankName()">✏️ 名前登録・変更</button>
                 </div>
                 <div id="rk-name-status" class="rk-name-lock-info">※プレイヤー名の変更は1週間に1回までです（不適切な言葉は使用できません）</div>
                 <div id="rk-msg" class="rk-msg-bar"></div>
             </div>
 
             <div class="rk-subtab-row">
-                <button type="button" id="rkTab_floor" class="rk-subtab-btn active" onclick="switchRankTab('floor')">🏰 最高到達階</button>
+                <button type="button" id="rkTab_floor" class="rk-subtab-btn active" onclick="switchRankTab('floor')">🏰 最高クリア・到達階</button>
                 <button type="button" id="rkTab_zukan" class="rk-subtab-btn" onclick="switchRankTab('zukan')">📖 みつけた図鑑</button>
             </div>
 
+            <div id="rk-list-meta" class="rk-list-meta"></div>
             <div id="rk-list" class="rk-list-box">読み込み中...</div>
             <button type="button" onclick="loadRanking(true)" style="margin-top:8px; padding:7px 12px; font-size:11px; width:auto; border-radius:11px; background:linear-gradient(180deg,#ffffff 0%,#e2e8f0 100%); color:#334155; text-shadow:none; border:1px solid #cbd5e1; border-bottom:2.5px solid #94a3b8;">
-                🔄 ランキングを更新
+                🔄 ランキング一覧を再読み込み
             </button>
         </div>
     </div>
@@ -8782,6 +8803,7 @@
         const RK_ENDPOINT = RK_DOCS_BASE + "/rankings?key=" + RK_KEY;
         const RK_QUERY_ENDPOINT = RK_DOCS_BASE + ":runQuery?key=" + RK_KEY;
         const RK_NAME_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+        const RK_MAX_RANK = 100;
 
         let currentRankTab = "floor";
         let rankingCache = { floor: null, zukan: null };
@@ -8799,7 +8821,7 @@
             }
         }
 
-        function getSavedFloor() {
+        function getSavedMaxClearStg() {
             if (typeof maxClearStg === "number" && maxClearStg > 0) {
                 return Math.floor(maxClearStg);
             }
@@ -8813,6 +8835,22 @@
                 }
             } catch (e) {}
             return 0;
+        }
+
+        function getSavedMaxStg() {
+            if (typeof maxStg === "number" && maxStg > 0) {
+                return Math.floor(maxStg);
+            }
+            try {
+                const raw = localStorage.getItem("mix_emoji_save_v9");
+                if (raw) {
+                    const d = JSON.parse(raw);
+                    if (typeof d.maxStg === "number" && d.maxStg > 0) {
+                        return Math.floor(d.maxStg);
+                    }
+                }
+            } catch (e) {}
+            return 1;
         }
 
         function getSavedZukanCount() {
@@ -8896,22 +8934,27 @@
         }
 
         function updateCurrentDisplay() {
-            const floor = getSavedFloor();
+            const clearFloor = getSavedMaxClearStg();
+            const reachedFloor = getSavedMaxStg();
             const zCount = getSavedZukanCount();
+            const meta = getRankNameMeta();
+            const dispName = meta.name ? meta.name : "未設定（初期名：名無し）";
             const el = document.getElementById("rk-current");
             if (el) {
-                if (floor > 0) {
+                const safeDispName = String(dispName).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                if (clearFloor > 0) {
                     el.innerHTML =
-                        "🏰 最高到達記録：<b style='color:#0284c7; font-size:13.5px;'>" + floor + " 階</b>" +
-                        " ／ 📖 みつけた図鑑：<b style='color:#4f46e5; font-size:13.5px;'>" + zCount + " 種</b>";
+                        "👤 登録名：<b>" + safeDispName + "</b><br>" +
+                        "🏰 最高到達：<b style='color:#0284c7;'>" + reachedFloor + " 階</b>" +
+                        " ／ 🏆 最高クリア：<b style='color:#d97706;'>" + clearFloor + " 階</b>" +
+                        " ／ 📖 図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b>";
                 } else {
                     el.innerHTML =
-                        "📖 みつけた図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b><br>" +
-                        "<span style='color:#d97706; font-size:10.5px;'>※ 1階以上クリアするとランキングに登録できます</span>";
+                        "👤 登録名：<b>" + safeDispName + "</b> ／ 📖 図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b><br>" +
+                        "<span style='color:#d97706; font-size:10.5px;'>※ 1階以上クリアするとランキングにスコア登録できます</span>";
                 }
             }
 
-            const meta = getRankNameMeta();
             const nameInput = document.getElementById("rk-name");
             const statusEl = document.getElementById("rk-name-status");
             if (nameInput && meta.name && !nameInput.dataset.initFilled) {
@@ -8920,15 +8963,15 @@
             }
             if (statusEl) {
                 if (!meta.name) {
-                    statusEl.innerText = "※プレイヤー名の変更は登録後1週間に1回までです（センシティブな言葉は使用禁止）";
+                    statusEl.innerText = "※プレイヤー名の変更は登録後1週間に1回まで（スコア更新は1日何回でもOK！）";
                     statusEl.style.color = "#64748b";
                 } else {
                     const remain = RK_NAME_COOLDOWN_MS - (Date.now() - meta.changedAt);
                     if (meta.changedAt > 0 && remain > 0) {
-                        statusEl.innerText = "🔒 現在の登録名：「" + meta.name + "」（名前変更はあと " + formatCooldownRemain(remain) + " 後に可能／記録更新はいつでも可）";
+                        statusEl.innerText = "🔒 名前変更：あと " + formatCooldownRemain(remain) + " 後に可能（※上の「最新スコアでランキングを更新」はいつでも何回でも押せます！）";
                         statusEl.style.color = "#b45309";
                     } else {
-                        statusEl.innerText = "✅ 現在の登録名：「" + meta.name + "」（現在、名前を変更できます）";
+                        statusEl.innerText = "✅ 現在の登録名：「" + meta.name + "」（現在、名前を変更できます／スコア更新はいつでもOK！）";
                         statusEl.style.color = "#059669";
                     }
                 }
@@ -8944,8 +8987,42 @@
             loadRanking(false);
         }
 
+        function buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now) {
+            return {
+                fields: {
+                    uid: { stringValue: uid },
+                    name: { stringValue: playerName },
+                    score: { integerValue: String(clearFloor) },
+                    maxClearStg: { integerValue: String(clearFloor) },
+                    maxStg: { integerValue: String(reachedFloor) },
+                    zukanScore: { integerValue: String(zukanCount) },
+                    updatedAt: { integerValue: String(now) }
+                }
+            };
+        }
+
+        async function upsertRankingDoc(uid, payload) {
+            const patchUrl = RK_DOCS_BASE + "/rankings/" + encodeURIComponent(uid) + "?key=" + RK_KEY;
+            let res = await fetch(patchUrl, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok && res.status === 403) {
+                res = await fetch(RK_ENDPOINT, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            }
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
+            return data;
+        }
+
         function renderRankingList(docs) {
             const listEl = document.getElementById("rk-list");
+            const metaEl = document.getElementById("rk-list-meta");
             if (!listEl) return;
             const myUid = getRankUid();
             const isZukan = (currentRankTab === "zukan");
@@ -8955,24 +9032,61 @@
                 const docName = doc.name || "";
                 const docId = docName ? docName.split("/").pop() : "";
                 const fUid = (f.uid && f.uid.stringValue) ? f.uid.stringValue : docId;
+                const scoreVal = (f.score && f.score.integerValue) ? Number(f.score.integerValue) : 0;
+                const maxClearVal = (f.maxClearStg && f.maxClearStg.integerValue) ? Number(f.maxClearStg.integerValue) : scoreVal;
+                const maxStgVal = (f.maxStg && f.maxStg.integerValue) ? Number(f.maxStg.integerValue) : maxClearVal;
                 return {
                     uid: fUid,
                     name: (f.name && f.name.stringValue) ? f.name.stringValue : "名無し",
-                    score: (f.score && f.score.integerValue) ? Number(f.score.integerValue) : 0,
-                    zukanScore: (f.zukanScore && f.zukanScore.integerValue) ? Number(f.zukanScore.integerValue) : 0
+                    score: Math.max(scoreVal, maxClearVal),
+                    maxClearStg: maxClearVal,
+                    maxStg: maxStgVal,
+                    zukanScore: (f.zukanScore && f.zukanScore.integerValue) ? Number(f.zukanScore.integerValue) : 0,
+                    updatedAt: (f.updatedAt && f.updatedAt.integerValue) ? Number(f.updatedAt.integerValue) : 0
                 };
             }).filter(item => isZukan ? item.zukanScore > 0 : item.score > 0);
 
-            parsed.sort((a, b) => isZukan ? (b.zukanScore - a.zukanScore || b.score - a.score) : (b.score - a.score || b.zukanScore - a.zukanScore));
-            const top20 = parsed.slice(0, 20);
+            const byUid = new Map();
+            parsed.forEach(item => {
+                const key = item.uid || ("_anon_" + Math.random());
+                const prev = byUid.get(key);
+                if (!prev) {
+                    byUid.set(key, item);
+                } else if (
+                    item.updatedAt > prev.updatedAt ||
+                    (item.updatedAt === prev.updatedAt && (item.score > prev.score || item.zukanScore > prev.zukanScore))
+                ) {
+                    byUid.set(key, item);
+                }
+            });
 
-            if (top20.length === 0) {
+            const uniqueList = Array.from(byUid.values());
+            uniqueList.sort((a, b) =>
+                isZukan
+                    ? (b.zukanScore - a.zukanScore || b.score - a.score || b.maxStg - a.maxStg)
+                    : (b.score - a.score || b.maxStg - a.maxStg || b.zukanScore - a.zukanScore)
+            );
+
+            const top100 = uniqueList.slice(0, RK_MAX_RANK);
+            const myIndex = top100.findIndex(d => d.uid && d.uid === myUid);
+
+            if (metaEl) {
+                if (top100.length === 0) {
+                    metaEl.innerText = "";
+                } else if (myIndex >= 0) {
+                    metaEl.innerText = "📊 1位〜" + top100.length + "位を表示中（あなたの現在順位：" + (myIndex + 1) + "位）";
+                } else {
+                    metaEl.innerText = "📊 1位〜" + top100.length + "位を表示中（あなたは100位圏外または未登録）";
+                }
+            }
+
+            if (top100.length === 0) {
                 listEl.innerHTML = "<p style='text-align:center; color:#64748b; font-size:11.5px; margin:14px 0; font-weight:800;'>まだ記録がありません。最初の登録者になろう！</p>";
                 return;
             }
 
             let html = "";
-            top20.forEach((d, i) => {
+            top100.forEach((d, i) => {
                 const rank = i + 1;
                 const medal = rank === 1 ? "🥇 1位" : (rank === 2 ? "🥈 2位" : (rank === 3 ? "🥉 3位" : (rank + "位")));
                 const topCls = rank === 1 ? " top1" : (rank === 2 ? " top2" : (rank === 3 ? " top3" : ""));
@@ -8980,7 +9094,14 @@
                 const meCls = isMe ? " rk-me" : "";
                 const meBadge = isMe ? "<span class='rk-me-badge'>あなた</span>" : "";
                 const safeName = String(d.name).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                const valText = isZukan ? (d.zukanScore + " 種") : (d.score + " 階");
+                let valText = "";
+                if (isZukan) {
+                    valText = d.zukanScore + " 種";
+                } else {
+                    valText = (d.maxStg > d.score)
+                        ? ("クリア" + d.score + " / 到達" + d.maxStg + "階")
+                        : (d.score + " 階");
+                }
                 html += '<div class="rk-row' + topCls + meCls + '">' +
                     '<span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><b>' + medal + '</b> ' + safeName + meBadge + '</span>' +
                     '<span class="rk-score-pill">' + valText + '</span>' +
@@ -8991,12 +9112,14 @@
 
         async function loadRanking(force = false) {
             const listEl = document.getElementById("rk-list");
+            const metaEl = document.getElementById("rk-list-meta");
             if (!listEl) return;
             const tabKey = currentRankTab;
             if (!force && Array.isArray(rankingCache[tabKey])) {
                 renderRankingList(rankingCache[tabKey]);
                 return;
             }
+            if (metaEl) metaEl.innerText = "";
             listEl.innerHTML = "<p style='text-align:center; color:#64748b; font-size:11.5px; margin:14px 0; font-weight:800;'>⏳ ランキングを読み込み中...</p>";
 
             const orderField = (tabKey === "zukan") ? "zukanScore" : "score";
@@ -9008,7 +9131,7 @@
                         structuredQuery: {
                             from: [{ collectionId: "rankings" }],
                             orderBy: [{ field: { fieldPath: orderField }, direction: "DESCENDING" }],
-                            limit: 20
+                            limit: 150
                         }
                     })
                 });
@@ -9022,7 +9145,7 @@
             } catch (e) {}
 
             try {
-                const res = await fetch(RK_ENDPOINT + "&pageSize=100");
+                const res = await fetch(RK_ENDPOINT + "&pageSize=300");
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
                 const docs = Array.isArray(data.documents) ? data.documents : [];
@@ -9033,23 +9156,62 @@
             }
         }
 
-        async function submitRankData() {
-            const nameInput = document.getElementById("rk-name");
+        async function submitRankScore() {
             const msgEl = document.getElementById("rk-msg");
-            const btn = document.getElementById("rk-submit");
-            if (!nameInput || !msgEl || !btn) return;
+            const btn = document.getElementById("rk-score-btn");
+            if (!msgEl || !btn) return;
 
-            const floor = getSavedFloor();
+            const clearFloor = getSavedMaxClearStg();
+            const reachedFloor = getSavedMaxStg();
             const zukanCount = getSavedZukanCount();
-            if (!floor || floor < 1) {
+            if (!clearFloor || clearFloor < 1) {
                 msgEl.style.color = "#dc2626";
                 msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアしてください）";
                 return;
             }
 
-            const rawInput = nameInput.value.trim();
-            const newName = (rawInput || "名無し").slice(0, 10);
+            const meta = getRankNameMeta();
+            const playerName = (meta.name || "名無し").slice(0, 10);
+            const uid = getRankUid();
+            const now = Date.now();
+            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now);
 
+            btn.disabled = true;
+            msgEl.style.color = "#0369a1";
+            msgEl.textContent = "⏳ 最新スコアで順位を更新中...";
+
+            try {
+                await upsertRankingDoc(uid, payload);
+                rankingCache.floor = null;
+                rankingCache.zukan = null;
+                if (typeof seStageClear === "function") seStageClear();
+                msgEl.style.color = "#059669";
+                msgEl.textContent = "🎉 「" + playerName + "」の最新記録（到達" + reachedFloor + "階 / クリア" + clearFloor + "階 / 図鑑" + zukanCount + "種）で更新しました！";
+                updateCurrentDisplay();
+                await loadRanking(true);
+            } catch (e) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ 送信エラー: " + e.message;
+            }
+            btn.disabled = false;
+        }
+
+        async function submitRankName() {
+            const nameInput = document.getElementById("rk-name");
+            const msgEl = document.getElementById("rk-msg");
+            const btn = document.getElementById("rk-name-btn");
+            if (!nameInput || !msgEl || !btn) return;
+
+            const rawInput = nameInput.value.trim();
+            if (!rawInput) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ プレイヤー名を入力してください（10文字まで）。";
+                return;
+            }
+
+            const newName = rawInput.slice(0, 10);
             if (containsSensitiveWord(newName)) {
                 if (typeof seFail === "function") seFail();
                 msgEl.style.color = "#dc2626";
@@ -9059,7 +9221,13 @@
 
             const meta = getRankNameMeta();
             const now = Date.now();
-            let isNameChanged = false;
+
+            if (meta.name && newName === meta.name && meta.changedAt > 0) {
+                msgEl.style.color = "#0369a1";
+                msgEl.textContent = "ℹ️ すでに「" + newName + "」で登録されています。スコア更新は上の緑ボタンを押してください！";
+                return;
+            }
+
             if (meta.name && newName !== meta.name) {
                 const remain = RK_NAME_COOLDOWN_MS - (now - meta.changedAt);
                 if (meta.changedAt > 0 && remain > 0) {
@@ -9069,59 +9237,42 @@
                     msgEl.textContent = "⏳ プレイヤー名の変更は1週間に1回までです（あと " + formatCooldownRemain(remain) + " 後に変更可能）";
                     return;
                 }
-                isNameChanged = true;
-            } else if (!meta.name) {
-                isNameChanged = true;
+            }
+
+            const clearFloor = getSavedMaxClearStg();
+            const reachedFloor = getSavedMaxStg();
+            const zukanCount = getSavedZukanCount();
+
+            if (clearFloor < 1) {
+                saveRankNameMeta(newName, now);
+                if (typeof seStageClear === "function") seStageClear();
+                msgEl.style.color = "#059669";
+                msgEl.textContent = "✅ プレイヤー名を「" + newName + "」に登録しました！（1階以上クリア後にランキング更新できます）";
+                updateCurrentDisplay();
+                return;
             }
 
             const uid = getRankUid();
-            const payload = {
-                fields: {
-                    uid: { stringValue: uid },
-                    name: { stringValue: newName },
-                    score: { integerValue: String(floor) },
-                    zukanScore: { integerValue: String(zukanCount) },
-                    updatedAt: { integerValue: String(now) }
-                }
-            };
+            const payload = buildRankingPayload(uid, newName, clearFloor, reachedFloor, zukanCount, now);
 
             btn.disabled = true;
             msgEl.style.color = "#0369a1";
-            msgEl.textContent = "⏳ 送信中...";
+            msgEl.textContent = "⏳ プレイヤー名を反映中...";
 
             try {
-                const patchUrl = RK_DOCS_BASE + "/rankings/" + encodeURIComponent(uid) + "?key=" + RK_KEY;
-                let res = await fetch(patchUrl, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-                if (!res.ok && res.status === 403) {
-                    res = await fetch(RK_ENDPOINT, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload)
-                    });
-                }
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.error ? data.error.message : res.status);
-
-                if (isNameChanged) {
-                    saveRankNameMeta(newName, now);
-                } else {
-                    saveRankNameMeta(newName, meta.changedAt || now);
-                }
+                await upsertRankingDoc(uid, payload);
+                saveRankNameMeta(newName, now);
                 rankingCache.floor = null;
                 rankingCache.zukan = null;
                 if (typeof seStageClear === "function") seStageClear();
                 msgEl.style.color = "#059669";
-                msgEl.textContent = "🎉 最高到達 " + floor + "階 ／ 図鑑 " + zukanCount + "種 を登録しました！";
+                msgEl.textContent = "✅ プレイヤー名を「" + newName + "」に登録・変更しました！";
                 updateCurrentDisplay();
                 await loadRanking(true);
             } catch (e) {
                 if (typeof seFail === "function") seFail();
                 msgEl.style.color = "#dc2626";
-                msgEl.textContent = "⚠️ 送信エラー: " + e.message;
+                msgEl.textContent = "⚠️ 名前変更エラー: " + e.message;
             }
             btn.disabled = false;
         }
