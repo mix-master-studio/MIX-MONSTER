@@ -1629,8 +1629,68 @@
             border: 1px solid #e2e8f0;
         }
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .recipe { width: 100%; table-layout: fixed; word-break: break-word; font-size: 10px; border-collapse: collapse; display: none; margin-top: 8px; color: #334155; }
-        .recipe td { border: 1px solid #cbd5e1; padding: 7px 5px; background: #ffffff; border-radius: 4px; vertical-align: middle; line-height: 1.4; }
+        .zukan-subtab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin: 8px 0 6px;
+        }
+        .zukan-subtab-btn {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 7px 4px !important;
+            font-size: 10.5px !important;
+            border-radius: 10px !important;
+            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%) !important;
+            color: #475569 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            border-bottom: 3px solid #94a3b8 !important;
+            text-shadow: none !important;
+            white-space: nowrap;
+        }
+        .zukan-subtab-btn.active {
+            background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%) !important;
+            color: #ffffff !important;
+            border: 1.5px solid #a5b4fc !important;
+            border-bottom: 3px solid #3730a3 !important;
+            text-shadow: 0 1px 2px rgba(15, 23, 42, 0.18) !important;
+        }
+        .zukan-range-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            margin: 6px 0 8px;
+        }
+        .zukan-range-btn {
+            width: auto !important;
+            margin: 0 !important;
+            padding: 4px 9px !important;
+            font-size: 10px !important;
+            border-radius: 999px !important;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-bottom: 2px solid #94a3b8 !important;
+            text-shadow: none !important;
+        }
+        .zukan-range-btn.active {
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
+            color: #ffffff !important;
+            border: 1px solid #7dd3fc !important;
+            border-bottom: 2px solid #0369a1 !important;
+        }
+        .zukan-tab-panel.zukan-hidden {
+            display: none !important;
+        }
+        .zukan-scroll-grid {
+            max-height: 410px;
+            overflow-y: auto;
+            padding: 4px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            background: #f8fafc;
+        }
         .zukan-item {
             background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
             border: 1.5px solid #bae6fd;
@@ -2123,7 +2183,6 @@
             <ul id="box" class="toggle-box scroll-box"></ul>
         </div>
     </div>
-
     <div id="panelMix" class="tab-panel tab-hidden">
         <div class="box" id="mixArea" style="border: 2px solid #a7f3d0; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);">
             <span class="section-badge" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #166534; border-color: #86efac;">🧬 SYNTHESIS LAB</span>
@@ -2131,9 +2190,9 @@
             <p style="font-size: 11px; color: #475569; margin: 0 0 4px; font-weight: bold;">
                 ※下の配合用ボックスから2匹選んでね。（レベルは2匹の合計＆配合ボーナス1.2倍！）
             </p>
-            <div class="limit-hint">※配合成功率：初期25% ／ イベント・アイテムでの上昇上限80%まで</div>
+            <div class="limit-hint">※配合成功率：初期25% ／ イベント・アイテムでの上昇上限75%まで（図鑑No.が高いほど難化します）</div>
             <div style="background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; font-size: 11px; font-weight: 900; padding: 6px 8px; border-radius: 12px; margin-bottom: 6px;">
-                ⚠️ 配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.A/Bは保護）
+                ⚠️ 基礎配合成功率：<span id="dispMixRate">25</span>%<span id="dispWeekendMixTag" style="color:#d97706;"></span> ／ 失敗すると選んだ2匹は消滅します！（参加中・鍵付き・ボス/No.A/Bは保護）
             </div>
             <button style="background: linear-gradient(180deg, #34d399 0%, #059669 100%); border-color: #6ee7b7; border-bottom: 4px solid #047857;" id="btnMix" onclick="mix()">
                 🧬 配合実行！（成功率<span id="btnMixRateText">25</span>%）
@@ -2143,14 +2202,6 @@
             </button>
             <div id="mixAssistPanel" class="assist-panel"></div>
             <ul id="mixBoxList" class="toggle-box scroll-box-mix" style="margin-top:8px;"></ul>
-        </div>
-
-        <div class="box">
-            <span class="section-badge">📜 SYNTHESIS GUIDE</span><br>
-            <button onclick="let t=document.getElementById('rt'); t.style.display==='table'?t.style.display='none':t.style.display='table'">
-                📜 配合レシピ表の表示切替
-            </button>
-            <table id="rt" class="recipe"></table>
         </div>
     </div>
     <div id="panelZukan" class="tab-panel tab-hidden">
@@ -2165,49 +2216,65 @@
                 <span id="specialZukanCountBadge" style="font-size:11px; color:#15803d; font-weight:900;"> / 💀特別(0/2種)</span>
             </h3>
             <div id="zukanWrapper" style="display: block;">
+                <div class="zukan-subtab-grid">
+                    <button type="button" class="zukan-subtab-btn active" id="zkTab_normal" onclick="switchZukanTab('normal')">📖 通常</button>
+                    <button type="button" class="zukan-subtab-btn" id="zkTab_rare" onclick="switchZukanTab('rare')">✨ 色違い</button>
+                    <button type="button" class="zukan-subtab-btn" id="zkTab_boss" onclick="switchZukanTab('boss')">👑 ボス</button>
+                    <button type="button" class="zukan-subtab-btn" id="zkTab_bossRare" onclick="switchZukanTab('bossRare')">👑✨ ボス色違</button>
+                    <button type="button" class="zukan-subtab-btn" id="zkTab_special" onclick="switchZukanTab('special')">💀 特別</button>
+                </div>
                 <div style="font-size: 11px; color: #475569; margin-bottom: 6px; font-weight: bold;">
                     💡 未発見（❓）は出会うとシルエットに！タップすると出現場所や配合ヒントが見られます！
                 </div>
-                <div id="zk" class="grid"></div>
+                <div id="zukanRangeRow" class="zukan-range-row">
+                    <button type="button" class="zukan-range-btn active" id="zkRange_all" onclick="setZukanRange('all')">すべて</button>
+                    <button type="button" class="zukan-range-btn" id="zkRange_1_40" onclick="setZukanRange('1_40')">No.1〜40</button>
+                    <button type="button" class="zukan-range-btn" id="zkRange_41_80" onclick="setZukanRange('41_80')">No.41〜80</button>
+                    <button type="button" class="zukan-range-btn" id="zkRange_81_120" onclick="setZukanRange('81_120')">No.81〜120</button>
+                </div>
 
-                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fcd34d;">
-                    <h4 style="margin: 0 0 6px; color: #b45309; font-size: 14px;">
+                <div id="zkSec_normal" class="zukan-tab-panel">
+                    <div id="zk" class="grid zukan-scroll-grid"></div>
+                </div>
+
+                <div id="zkSec_rare" class="zukan-tab-panel zukan-hidden">
+                    <h4 style="margin: 0 0 6px; color: #b45309; font-size: 13.5px;">
                         ✨ 色違い専用図鑑 <span id="rareZukanSubBadge" style="font-size:12px;">(0/100種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #92400e; margin: 0 0 8px; font-weight: bold;">
                         ※野生・配合・イベント等で低確率出現する「✨色違い」の図鑑です！通常種とは別カウントで図鑑数が増えます！
                     </p>
-                    <div id="rareZk" class="grid"></div>
+                    <div id="rareZk" class="grid zukan-scroll-grid"></div>
                 </div>
 
-                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #fca5a5;">
-                    <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 14px;">
+                <div id="zkSec_boss" class="zukan-tab-panel zukan-hidden">
+                    <h4 style="margin: 0 0 6px; color: #b91c1c; font-size: 13.5px;">
                         👑 ボス専用図鑑 <span id="bossZukanSubBadge" style="font-size:12px;">(0/20種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #7f1d1d; margin: 0 0 8px; font-weight: bold;">
                         ※50階ごとのボス戦にのみ出現！配合不可・野生加入（1%）限定モンスター（仲間になるとステータスは1/4(切り上げ)になります）
                     </p>
-                    <div id="bossZk" class="grid"></div>
+                    <div id="bossZk" class="grid zukan-scroll-grid"></div>
                 </div>
 
-                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #f472b6;">
-                    <h4 style="margin: 0 0 6px; color: #be185d; font-size: 14px;">
+                <div id="zkSec_bossRare" class="zukan-tab-panel zukan-hidden">
+                    <h4 style="margin: 0 0 6px; color: #be185d; font-size: 13.5px;">
                         👑✨ ボス色違い専用図鑑 <span id="bossRareZukanSubBadge" style="font-size:12px;">(0/20種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #9d174d; margin: 0 0 8px; font-weight: bold;">
                         ※50階ごとのボス戦に低確率(3%)で出現する「✨色違いボス」の図鑑です！通常ボスとは別カウントで図鑑数が増えます！
                     </p>
-                    <div id="bossRareZk" class="grid"></div>
+                    <div id="bossRareZk" class="grid zukan-scroll-grid"></div>
                 </div>
 
-                <div style="margin-top: 14px; padding-top: 12px; border-top: 2px dashed #86efac;">
-                    <h4 style="margin: 0 0 6px; color: #14532d; font-size: 14px;">
+                <div id="zkSec_special" class="zukan-tab-panel zukan-hidden">
+                    <h4 style="margin: 0 0 6px; color: #14532d; font-size: 13.5px;">
                         💀 特別遭遇図鑑 <span id="specialZukanSubBadge" style="font-size:12px;">(0/2種)</span>
                     </h4>
                     <p style="font-size: 10.5px; color: #166534; margin: 0 0 8px; font-weight: bold;">
                         ※ボス以外の階で超低確率出現（No.A: 0.4%・撃破時0.1%加入 / No.B: 0.01%・撃破時100%加入）！配合不可
                     </p>
-                    <div id="specialZk" class="grid"></div>
+                    <div id="specialZk" class="grid zukan-scroll-grid"></div>
                 </div>
             </div>
         </div>
@@ -2627,13 +2694,22 @@
             "ソロゾロアント+ポイズンフロッグ": "マスクラクーン", "ピヨチビ+ロックタートル": "ダークベア", "リバーフィッシュ+コオリガニ": "ブルーイルカ",
             "コロテントウ+パタバタフライ": "ホワイトスワン", "キラービー+ヴェノムスパイダー": "デススコーピオン", "ウサピョン+チップモンク": "フォレストディア",
             "ニードルホッグ+バウンスルー": "アイアンマンモス", "バイパー+サイバーロボ": "ギガローチ",
+            "ボアキング+ブレイブオックス": "キラータイガー", "フォレストウータン+ヴェノムゲッコー": "ブラッドモスキート",
             "マスクラクーン+ファイアフォックス": "シルバーゴリラ", "キラータイガー+ホワイトシール": "シルバーゴリラ", "ポイズンフロッグ+チューマウス": "ハリセンボンバー",
             "ギガジェリー+ナイトオウル": "スロウロス", "ホークアイ+シルフィードバード": "プリズムピーコック", "シルバーゴリラ+ハリセンボンバー": "エンペラーエレファント",
+            "スロウロス+ブレイブスタリオン": "フラミンゴクイーン", "キラータイガー+シャドウバジャー": "クリムゾンタイガー",
+            "ブルーイルカ+ホワイトスワン": "マーメイドクイーン",
             "ブレイブスタリオン+ヌマクロコダイル": "メガホルスタイン", "エメラルドブラキオ+ギガヒポポ": "スカイジラフ", "フラミンゴクイーン+シャドウバジャー": "ホーンラム",
             "クリムゾンタイガー+クラーケンロード": "リヴァイアサン", "グランドバイソン+ストライプゼブラ": "アルパカマスター", "マーメイドクイーン+ヘラクレスビートル": "アルパカマスター",
             "メガホルスタイン+スカイジラフ": "エルクカイザー", "ホーンラム+クリムゾンタイガー": "アルパカマスター", "スロウロス+プリズムピーコック": "メガホルスタイン",
-            "アルパカマスター+エルクカイザー": "ポイズンスカンク", "リヴァイアサン+スカイジラフ": "疾風ホース", "ポイズンスカンク+疾風ホース": "デザートキャメル",
-            "デザートキャメル+ホーンラム": "アクアフィッシュ", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー"
+            "ガイアパンダ+ブレイズコック": "カオスピエロ", "アルパカマスター+エルクカイザー": "ポイズンスカンク",
+            "マウンテンゴート+アストラルキャット": "ケルベロスプードル", "リヴァイアサン+スカイジラフ": "疾風ホース",
+            "エンシェントドードー+深海クラーケン": "クロウヴァルキリー", "ポイズンスカンク+疾風ホース": "デザートキャメル",
+            "サンドキャメル+アクアフィッシュ": "クリスタルシュリンプ", "デザートキャメル+ホーンラム": "アクアフィッシュ",
+            "サンダードンキー+ポセイドンホエール": "ゼウスターキー", "アクアフィッシュ+ブレイブスタリオン": "スカイブルーバード",
+            "マーメイドクイーン+リヴァイアサン": "トリトンキング", "スカイブルーバード+デザートキャメル": "ドラゴンエンペラー",
+            "アビスシェル+パールエンプレス": "アビスクリスタル", "アビスクリスタル+ファントムコンパス": "アビスオキュラス",
+            "プリズムレインボー+ルナクレセント": "ソラリスフレア", "ドラゴンエンペラー+ソラリスフレア": "セレスティアルスター"
         };
         const INNATE_SKILLS = {
             quick:     { name: "⚡クイックステップ", desc: "攻撃後に25%の確率で素早さ（小）上昇（+15%）。次のダンジョンへ進むと上昇効果は消える。" },
@@ -2915,7 +2991,7 @@
             showSkillInfo(sName, sDesc);
         });
         const MAX_BOX_LIMIT = 200;
-        const MAX_MIX_CAP = 0.80;
+        const MAX_MIX_CAP = 0.75;
         const MAX_WILD_JOIN_CAP = 0.05;
         const MAX_LV_CAP_BONUS = 20;
 
@@ -2981,6 +3057,8 @@
         let partyOrderCounter = 3;
         let gameInitialized = false;
         let pendingReleaseList = [];
+        let zukanSubTab = "normal";
+        let zukanRange = "all";
         let lastRenderedZukanSig = "";
         let lastRenderedMissionSig = "";
         let lastRenderedBoxSig = "";
@@ -3036,6 +3114,40 @@
 
         function getTotalZukanCount() {
             return zk.length + rareZk.length;
+        }
+
+        function switchZukanTab(tab) {
+            const validTabs = ["normal", "rare", "boss", "bossRare", "special"];
+            zukanSubTab = validTabs.includes(tab) ? tab : "normal";
+            validTabs.forEach(t => {
+                const btn = document.getElementById("zkTab_" + t);
+                const sec = document.getElementById("zkSec_" + t);
+                if (btn) btn.classList.toggle("active", t === zukanSubTab);
+                if (sec) sec.classList.toggle("zukan-hidden", t !== zukanSubTab);
+            });
+            const rangeRow = document.getElementById("zukanRangeRow");
+            if (rangeRow) {
+                rangeRow.style.display = (zukanSubTab === "normal" || zukanSubTab === "rare") ? "flex" : "none";
+            }
+            up(true);
+        }
+
+        function setZukanRange(range) {
+            const validRanges = ["all", "1_40", "41_80", "81_120"];
+            zukanRange = validRanges.includes(range) ? range : "all";
+            validRanges.forEach(r => {
+                const btn = document.getElementById("zkRange_" + r);
+                if (btn) btn.classList.toggle("active", r === zukanRange);
+            });
+            up(true);
+        }
+
+        function matchesZukanRange(no) {
+            if (typeof no !== "number") return true;
+            if (zukanRange === "1_40") return no >= 1 && no <= 40;
+            if (zukanRange === "41_80") return no >= 41 && no <= 80;
+            if (zukanRange === "81_120") return no >= 81 && no <= 120;
+            return true;
         }
 
         function scheduleBattleTimer(fn, delayMs) {
@@ -3117,7 +3229,20 @@
         }
 
         function getEffectiveMixRate() {
-            return Math.min(1.00, getRawMixRate() + (isWeekendBonus() ? 0.10 : 0));
+            return Math.min(MAX_MIX_CAP, getRawMixRate() + (isWeekendBonus() ? 0.10 : 0));
+        }
+
+        function getMixNoPenalty(no) {
+            if (typeof no !== "number" || no <= 20) return 0;
+            return Math.floor((no - 20) / 4) * 0.01;
+        }
+
+        function getMixRateForTarget(resultName) {
+            const inf = D[resultName];
+            const no = (inf && typeof inf.no === "number") ? inf.no : 1;
+            const penalty = getMixNoPenalty(no);
+            const rawPlusWeekend = getRawMixRate() + (isWeekendBonus() ? 0.10 : 0);
+            return Math.max(0.05, Math.min(MAX_MIX_CAP, Math.round((rawPlusWeekend - penalty) * 1000) / 1000));
         }
 
         function getMixPctText() {
@@ -3576,7 +3701,7 @@
                 const mixPct = Math.round(mixBonus * 1000) / 10;
                 const wildPct = Math.round(wildJoinBonus * 1000) / 10;
                 const expPct = Math.round(expBonusRate * 1000) / 10;
-                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限80%) ／ 🧲加入+" + wildPct + "% (上限5%) ／ 💎EXP+" + expPct + "% ／ 🏷️称号:" + titleCount + "個";
+                bonusBar.innerText = "特典合計：📦上限+" + boxBonusTotal + " (最大200) ／ 🧬配合+" + mixPct + "% (上限75%) ／ 🧲加入+" + wildPct + "% (上限5%) ／ 💎EXP+" + expPct + "% ／ 🏷️称号:" + titleCount + "個";
             }
         }
 
@@ -4228,6 +4353,26 @@
             return arr;
         }
 
+        function updateMixButtonPreview() {
+            const btnMix = document.getElementById("btnMix");
+            if (!btnMix) return;
+            const selectedIndices = getSelectedMixIndices();
+            if (selectedIndices.length === 2) {
+                const m1 = p[selectedIndices[0]];
+                const m2 = p[selectedIndices[1]];
+                if (m1 && m2) {
+                    const resName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
+                    if (resName) {
+                        const ratePct = Math.round(getMixRateForTarget(resName) * 1000) / 10;
+                        const disp = zk.includes(resName) ? resName : "？？？";
+                        btnMix.innerHTML = '🧬 配合実行！（成功率<span id="btnMixRateText">' + ratePct + '</span>% → ' + escapeHtml(disp) + '）';
+                        return;
+                    }
+                }
+            }
+            btnMix.innerHTML = '🧬 配合実行！（基礎成功率<span id="btnMixRateText">' + getMixPctText() + '</span>%）';
+        }
+
         function toggleMixAssist() {
             showMixAssist = !showMixAssist;
             const panel = document.getElementById("mixAssistPanel");
@@ -4301,9 +4446,10 @@
                 const estCapBonus = Math.min(MAX_LV_CAP_BONUS, (item.m1.lvCapBonus || 0) + (item.m2.lvCapBonus || 0));
                 const estLv = Math.min(100 + estCapBonus, item.sumLv);
                 const estCapTag = estCapBonus > 0 ? (" (+" + estCapBonus + ")") : "";
+                const targetRatePct = Math.round(getMixRateForTarget(item.resName) * 1000) / 10;
                 html += '<div class="' + rowClass + '">' +
                     '<div>' + newTag + i1.a + item.m1.n + '(Lv.' + item.m1.lv + ') ＋ ' + i2.a + item.m2.n + '(Lv.' + item.m2.lv + ')<br>' +
-                    '➡️ <b>' + resDisp + '</b> <span style="color:#0284c7;">(予想Lv.' + estLv + estCapTag + ')</span></div>' +
+                    '➡️ <b>' + resDisp + '</b> <span style="color:#0284c7;">(予想Lv.' + estLv + estCapTag + ')</span> <span style="color:#d97706; font-weight:900;">[成功率' + targetRatePct + '%]</span></div>' +
                     '<button class="' + btnClass + '" onclick="applyMixAssist(' + item.idx1 + ',' + item.idx2 + ')">' + btnText + '</button>' +
                     '</div>';
             });
@@ -4319,6 +4465,7 @@
                 const v = parseInt(cb.value, 10);
                 cb.checked = (!cb.disabled && (v === idx1 || v === idx2));
             });
+            updateMixButtonPreview();
             if (showMixAssist) renderMixAssist();
             const m1 = p[idx1];
             const m2 = p[idx2];
@@ -4333,6 +4480,7 @@
                 cb.checked = false;
                 showNotice("⚠️ 配合に選べるのは2匹までです！", 2200);
             }
+            updateMixButtonPreview();
             if (showMixAssist) renderMixAssist();
         }
 
@@ -5817,7 +5965,7 @@
                 seStageClear();
                 msg = "🪽 天使の祝福を受けた！戦闘メンバー全員HP全回復＆永続で" +
                     (wildRaised ? "野生加入率+0.3%" : "野生加入率は上限5%到達済み") +
-                    (raised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限80%に達しています）");
+                    (raised ? ("・配合成功率+1%（現在" + getMixPctText() + "%）！") : "！（配合成功率は上限75%に達しています）");
             } else {
                 p.forEach(m => {
                     if (m.inParty) {
@@ -5839,7 +5987,7 @@
             if (!inDungeon || currentEvent !== "sky_summon") return;
             let msg = "";
             if (choice === 1) {
-                const skyPool = Object.keys(D).filter(k => D[k].no >= 111 && D[k].no <= 120);
+                const skyPool = Object.keys(D).filter(k => D[k].no >= 111 && D[k].no <= 120 && !isSynthOnly(k));
                 const giftName = skyPool[Math.floor(Math.random() * skyPool.length)];
                 const b = D[giftName];
                 if (p.length >= boxLimit) {
@@ -5968,7 +6116,7 @@
                 expBonusRate = Math.round((expBonusRate + 0.05) * 1000) / 1000;
                 const raised = addMixBonusCapped(0.003);
                 seStageClear();
-                msg = "👳 旅商人から『🪙古びた金貨』を受け取った！【効果】永続で獲得EXP+5%" + (raised ? ("・配合確率+0.3%された（現在" + getMixPctText() + "%）。") : "された（配合確率は上限80%に達しています）。");
+                msg = "👳 旅商人から『🪙古びた金貨』を受け取った！【効果】永続で獲得EXP+5%" + (raised ? ("・配合確率+0.3%された（現在" + getMixPctText() + "%）。") : "された（配合確率は上限75%に達しています）。");
             }
 
             showNotice(msg, 5500);
@@ -6303,18 +6451,27 @@
 
             const isLarge = (grade === "large");
             const pool = Object.keys(D).filter(k => isLarge ? (D[k].no >= 51 && D[k].no <= 100) : (D[k].no >= 1 && D[k].no <= 50));
-            const gradeLabel = isLarge ? "🏆大文字級" : "🥉小文字級";
+            const gradeLabel = isLarge ? "🏆大文字級(強)" : "🥉小文字級(普)";
+            const statMult = isLarge ? 1.35 : 0.90;
 
             eg = [];
             for (let i = 0; i < 3; i++) {
                 const name = pool[Math.floor(Math.random() * pool.length)];
                 const b = D[name];
-                const targetLv = isLarge ? maxPartyLv : (Math.floor(Math.random() * 50) + 1);
+                const targetLv = isLarge
+                    ? Math.min(115, Math.max(35, maxPartyLv + 8 + Math.floor(Math.random() * 5)))
+                    : Math.min(50, Math.max(5, Math.round(maxPartyLv * 0.85) + Math.floor(Math.random() * 5) - 2));
                 const isRare = Math.random() < 0.03;
                 const st = calcStatsByLevel(b, targetLv, isRare);
+                const hpVal = Math.ceil(st.m * statMult);
                 const mon = {
-                    n: name, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
-                    ex: Math.max(1, Math.floor(((b.ex || 1) * 0.5 + 0.5) * Math.pow(targetLv, 1.35))),
+                    n: name,
+                    m: hpVal,
+                    hp: hpVal,
+                    at: Math.ceil(st.at * statMult),
+                    df: Math.ceil(st.df * statMult),
+                    sp: Math.ceil(st.sp * statMult),
+                    ex: Math.max(1, Math.floor(((b.ex || 1) * 0.5 + 0.5) * Math.pow(targetLv, 1.35) * (isLarge ? 1.3 : 1.0))),
                     isRare: isRare,
                     rareSkillId: isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId(),
@@ -6372,7 +6529,7 @@
                 seStageClear();
                 msg = raised
                     ? ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】永続で配合成功率が+0.5%された（現在" + getMixPctText() + "%）。そして出国した！")
-                    : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
+                    : ("🏪 商店で『⚗️賢者の小瓶』を受け取った！【効果】配合確率は上限75%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 3) {
                 const raised = addWildJoinBonusCapped(0.002);
                 seStageClear();
@@ -6420,7 +6577,7 @@
                 seStageClear();
                 msg = raised
                     ? ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】永続で配合成功率が+0.2%された（現在" + getMixPctText() + "%）。そして出国した！")
-                    : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限80%に達しているため上がらなかった。そして出国した！");
+                    : ("🏪 商店で『🕯️小さなろうそく』を受け取った！【効果】配合確率は上限75%に達しているため上がらなかった。そして出国した！");
             } else if (choice === 12) {
                 const raised = addWildJoinBonusCapped(0.001);
                 seStageClear();
@@ -6466,7 +6623,7 @@
                 msg = "🏟️ 「" + chosen.n + "」を選んだが、ボックスが満杯(" + boxLimit + "体)のため受け取れなかった… 王国を出国した！";
             } else {
                 const b = D[chosen.n];
-                const lv = chosen.fixedLv || 1;
+                const lv = Math.min(100, chosen.fixedLv || 1);
                 const st = calcStatsByLevel(b, lv, chosen.isRare);
                 const newAlly = {
                     n: chosen.n, lv: lv, lvCapBonus: 0, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
@@ -6705,9 +6862,8 @@
 
             const mixPctStr = getMixPctText();
             const dispMixRateEl = document.getElementById("dispMixRate");
-            const btnMixRateEl = document.getElementById("btnMixRateText");
             if (dispMixRateEl) dispMixRateEl.textContent = mixPctStr;
-            if (btnMixRateEl) btnMixRateEl.textContent = mixPctStr;
+            updateMixButtonPreview();
 
             updateDungeonLockBanner();
             updateRepeatButtonUI();
@@ -7039,7 +7195,7 @@
                         4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員に<br>EXP+40を与える</span></button>',
                         5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+4・防御+2</span></button>',
                         6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さ+2・攻撃+1</span></button>',
-                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合成功率+0.3%(上限80%)</span></button>'
+                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合成功率+0.3%(上限75%)</span></button>'
                     };
                     let mBtns = (currentMerchantItems || [1, 2]).map(id => merchantDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -7052,7 +7208,7 @@
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🤺 王国の絵文字勇者(Lv.50)が現れた！</div>' +
-                        '<div class="event-sub">特別スキル「⚔️王国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>（上限80%）＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
+                        '<div class="event-sub">特別スキル「⚔️王国の剣技・閃光」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>基礎配合確率50%</b>（上限75%）＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="chooseHeroAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="chooseHeroAction(false)">💨 逃げる</button>' +
@@ -7102,7 +7258,7 @@
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🧝‍♂️ 王国の配合賢者(Lv.75)が現れた！</div>' +
-                        '<div class="event-sub">特別スキル「🔮賢者の秘術・真理錬成」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>配合確率+1%</b>（上限80%）＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
+                        '<div class="event-sub">特別スキル「🔮賢者の秘術・真理錬成」を持つ強敵！（仲間・配合・図鑑対象外）<br>勝利で<b>配合確率+1%</b>（上限75%）＆<b>戦闘メンバー全員Lv+5</b>！負けてもペナルティなし！</div>' +
                         '<div class="event-btn-row">' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #047857;" onclick="chooseSageAction(true)">⚔️ 戦う！</button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="chooseSageAction(false)">💨 逃げる</button>' +
@@ -7164,24 +7320,27 @@
                     const partyMembers = p.filter(m => m.inParty);
                     let maxPartyLv = 1;
                     partyMembers.forEach(m => { if (m.lv > maxPartyLv) maxPartyLv = m.lv; });
+                    const smallLvEst = Math.min(50, Math.max(5, Math.round(maxPartyLv * 0.85)));
+                    const largeLvMin = Math.min(115, Math.max(35, maxPartyLv + 8));
+                    const largeLvMax = Math.min(115, Math.max(35, maxPartyLv + 12));
                     evPanel.style.display = "block";
                     evPanel.innerHTML =
                         '<div class="event-title">🏟️ 王国の闘技場：階級を選んで挑戦しよう！</div>' +
                         '<div class="event-sub" style="text-align:left; background:rgba(255,255,255,0.85); padding:7px 9px; border-radius:9px; border:1px solid #fed7aa;">' +
-                            '🥉 <b>小文字級</b>：図鑑<b>No.1〜No.50</b>からランダム3体（各<b>Lv.1〜50ランダム</b>）と対戦！<br>' +
-                            '🏆 <b>大文字級</b>：図鑑<b>No.51〜No.100</b>からランダム3体（全員 戦闘中の最高<b>Lv.' + maxPartyLv + '</b>と同じ）と対戦！<br>' +
+                            '🥉 <b>小文字級【普通】</b>：図鑑<b>No.1〜No.50</b>からランダム3体（戦力に応じた<b>Lv.' + smallLvEst + '前後</b>）と対戦！<br>' +
+                            '🏆 <b>大文字級【強い】</b>：図鑑<b>No.51〜No.100</b>からランダム3体（能力1.35倍の強敵 <b>Lv.' + largeLvMin + '〜' + largeLvMax + '</b>）と対戦！<br>' +
                             '<span style="color:#c2410c;">※3体すべて倒すと、倒した3体の中から好きな1体を仲間にできます！負けてもペナルティなし！</span>' +
                         '</div>' +
                         '<div class="event-btn-row">' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級<span class="item-desc-mini">(No.1〜50 / Lv.1〜50)</span></button>' +
-                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級<span class="item-desc-mini">(No.51〜100 / Lv.' + maxPartyLv + ')</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="startArenaBattle(\'small\')">🥉 小文字級【普通】<span class="item-desc-mini">(No.1〜50 / Lv.' + smallLvEst + '前後)</span></button>' +
+                            '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="startArenaBattle(\'large\')">🏆 大文字級【強い】<span class="item-desc-mini">(No.51〜100 / Lv.' + largeLvMin + '〜' + largeLvMax + '・強化)</span></button>' +
                             '<button class="btn-event" style="background:linear-gradient(180deg,#94a3b8,#64748b);border-bottom:3px solid #475569;" onclick="startArenaBattle(\'back\')">🔙 戻る</button>' +
                         '</div>';
                     if (btnAtk) btnAtk.disabled = true;
                 } else if (inDungeon && currentEvent === "kingdom_shop") {
                     const shopDefs = {
                         1:  '<button class="btn-event" style="background:linear-gradient(180deg,#38bdf8,#0284c7);border-bottom:3px solid #0369a1;" onclick="pickKingdomShopItem(1)">👝 拡張ミニポーチ<span class="item-desc-mini">【効果】ボックス上限を+1体増やす<br>(現在 ' + boxLimit + '/200体)</span></button>',
-                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限80%)</span></button>',
+                        2:  '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickKingdomShopItem(2)">⚗️ 賢者の小瓶<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.5%アップ(上限75%)</span></button>',
                         3:  '<button class="btn-event" style="background:linear-gradient(180deg,#f472b6,#db2777);border-bottom:3px solid #9d174d;" onclick="pickKingdomShopItem(3)">🍪 魅惑のおやつ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.2%アップ(上限5%)</span></button>',
                         4:  '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(4)">🔖 祝福のしおり<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+10%アップする</span></button>',
                         5:  '<button class="btn-event" style="background:linear-gradient(180deg,#c084fc,#9333ea);border-bottom:3px solid #6b21a8;" onclick="pickKingdomShopItem(5)">🔮 ダンジョンの水晶<span class="item-desc-mini">【効果】戦闘中・死亡中の味方が<br>各30%でLv上限+1(最大+20)</span></button>',
@@ -7190,7 +7349,7 @@
                         8:  '<button class="btn-event" style="background:linear-gradient(180deg,#64748b,#475569);border-bottom:3px solid #334155;" onclick="pickKingdomShopItem(8)">🛡️ 木の小盾<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>防御力を+1する</span></button>',
                         9:  '<button class="btn-event" style="background:linear-gradient(180deg,#22d3ee,#0891b2);border-bottom:3px solid #155e75;" onclick="pickKingdomShopItem(9)">🪶 軽やかな羽根<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さを+1する</span></button>',
                         10: '<button class="btn-event" style="background:linear-gradient(180deg,#4ade80,#16a34a);border-bottom:3px solid #166534;" onclick="pickKingdomShopItem(10)">🌱 若葉の苗<span class="item-desc-mini">【効果】控え全員(' + reserveCount + '体)に<br>EXP+15を与える</span></button>',
-                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限80%)</span></button>',
+                        11: '<button class="btn-event" style="background:linear-gradient(180deg,#facc15,#ca8a04);border-bottom:3px solid #854d0e;" onclick="pickKingdomShopItem(11)">🕯️ 小さなろうそく<span class="item-desc-mini">【効果】永続で配合成功率を<br>+0.2%アップ(上限75%)</span></button>',
                         12: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#f59e0b);border-bottom:3px solid #b45309;" onclick="pickKingdomShopItem(12)">🍯 甘いミツ<span class="item-desc-mini">【効果】永続で野生加入率を<br>+0.1%アップ(上限5%)</span></button>',
                         13: '<button class="btn-event" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);border-bottom:3px solid #5b21b6;" onclick="pickKingdomShopItem(13)">📜 古びた羊皮紙<span class="item-desc-mini">【効果】永続で獲得EXPを<br>+3%アップする</span></button>',
                         14: '<button class="btn-event" style="background:linear-gradient(180deg,#10b981,#059669);border-bottom:3px solid #065f46;" onclick="pickKingdomShopItem(14)">🍀 四つ葉のしおり<span class="item-desc-mini">【効果】戦闘1番手(先頭)の<br>レベルを+1する</span></button>',
@@ -7225,7 +7384,8 @@
                     let rewardBtns = "";
                     arenaClearedMonsters.forEach((m, idx) => {
                         const inf = D[m.n];
-                        rewardBtns += '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickArenaReward(' + idx + ')">' + inf.a + ' ' + m.n + (m.isRare ? "✨" : "") + '<span class="item-desc-mini">(No.' + inf.no + ' Lv.' + m.fixedLv + ')</span></button>';
+                        const joinLv = Math.min(100, m.fixedLv || 1);
+                        rewardBtns += '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickArenaReward(' + idx + ')">' + inf.a + ' ' + m.n + (m.isRare ? "✨" : "") + '<span class="item-desc-mini">(No.' + inf.no + ' Lv.' + joinLv + ')</span></button>';
                     });
                     evPanel.innerHTML =
                         '<div class="event-title">🏆 闘技場（' + (currentArenaGrade === "large" ? "大文字級" : "小文字級") + '）優勝おめでとう！</div>' +
@@ -7396,44 +7556,26 @@
                         mixParts.push('<li class="' + liClass + '"><label><input type="checkbox" class="cb" value="' + i + '" onchange="onMixCbChange(this)" ' + disAttr + '> <span>' + emojiHtml + ' <b>No.' + inf.no + ' ' + n.n + rareStar + '</b> (Lv.' + n.lv + ')' + synthTag + godTag + zmbTag + rareTag + tags + '</span></label></li>');
                     }
                     mixList.innerHTML = mixParts.join("");
+                    updateMixButtonPreview();
                 }
 
                 if (showMixAssist) renderMixAssist();
             }
 
             const postGameUnlocked = (maxClearStg >= 1000);
-            const zukanSig = (postGameUnlocked ? "1" : "0") + "|" + zk.slice().sort().join(",") + "|" + seen.slice().sort().join(",") + "|" + rareZk.slice().sort().join(",") + "|" + rareSeen.slice().sort().join(",");
-            const rtTable = document.getElementById("rt");
-            if (rtTable && currentTab === "mix" && rtTable.dataset.sig !== zukanSig) {
-                rtTable.dataset.sig = zukanSig;
-                const recipeEntries = Object.entries(R);
-                let rowsParts = [];
-                for (let i = 0; i < recipeEntries.length; i += 2) {
-                    rowsParts.push("<tr>");
-                    for (let j = 0; j < 2; j++) {
-                        if (i + j < recipeEntries.length) {
-                            const [pair, resName] = recipeEntries[i + j];
-                            const [m1Name, m2Name] = pair.split("+");
-                            const m1 = D[m1Name];
-                            const m2 = D[m2Name];
-                            const res = D[resName];
-                            const isDiscovered = zk.includes(resName);
-                            const isSeenRes = seen.includes(resName);
-                            const resEmoji = isDiscovered ? res.a : (isSeenRes ? '<span class="silhouette">' + res.a + '</span>' : '❓');
-                            const resLabel = isDiscovered ? resName : "？？？";
-                            const noJoinTag = isSynthOnly(resName) ? ' <span style="color:red;font-weight:bold;">(⚠️配合限定)</span>' : "";
-                            rowsParts.push('<td>' + m1.a + 'No.' + m1.no + ' ' + m1Name + ' ＋ ' + m2.a + 'No.' + m2.no + ' ' + m2Name + ' ＝ ' + resEmoji + 'No.' + res.no + ' ' + resLabel + noJoinTag + '</td>');
-                        } else {
-                            rowsParts.push("<td></td>");
-                        }
-                    }
-                    rowsParts.push("</tr>");
-                }
-                rtTable.innerHTML = rowsParts.join("");
-            }
+            const zukanSig = (postGameUnlocked ? "1" : "0") + "|" + zukanSubTab + "|" + zukanRange + "|" + zk.slice().sort().join(",") + "|" + seen.slice().sort().join(",") + "|" + rareZk.slice().sort().join(",") + "|" + rareSeen.slice().sort().join(",");
 
             if (currentTab === "zukan" && (forceAll || zukanSig !== lastRenderedZukanSig)) {
                 lastRenderedZukanSig = zukanSig;
+
+                const rangeRow = document.getElementById("zukanRangeRow");
+                if (rangeRow) {
+                    rangeRow.style.display = (zukanSubTab === "normal" || zukanSubTab === "rare") ? "flex" : "none";
+                }
+                const rangeEndBtn = document.getElementById("zkRange_81_120");
+                if (rangeEndBtn) {
+                    rangeEndBtn.textContent = postGameUnlocked ? "No.81〜120" : "No.81〜100";
+                }
 
                 const normalKeys = Object.keys(D).filter(k => postGameUnlocked || D[k].no <= 100);
                 const normalFoundCount = normalKeys.filter(k => zk.includes(k)).length;
@@ -7454,39 +7596,6 @@
                 if (rareZukanBadge1) rareZukanBadge1.innerText = " / ✨色違い(" + rareFoundCount + "/" + normalKeys.length + "種)";
                 if (rareZukanBadge2) rareZukanBadge2.innerText = "(" + rareFoundCount + "/" + normalKeys.length + "種)";
 
-                const synthResults = new Set(Object.values(R));
-                const zkDiv = document.getElementById("zk");
-                if (zkDiv) {
-                    let zkParts = [];
-                    normalKeys.forEach((k) => {
-                        if (zk.includes(k)) {
-                            zkParts.push('<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>');
-                        } else {
-                            const isSynth = synthResults.has(k);
-                            const clickFn = isSynth ? ('showRecipeHint(\'' + k + '\')') : ('showWildHint(\'' + k + '\')');
-                            const borderCol = isSynth ? '#93c5fd' : '#cbd5e1';
-                            const hintText = isSynth ? '💡配合ヒント' : '📍出現ヒント';
-                            const iconHtml = seen.includes(k) ? ('<span class="silhouette">' + D[k].a + '</span>') : '❓';
-                            zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:' + borderCol + ';" onclick="' + clickFn + '">' + iconHtml + '<br>No.' + D[k].no + '<br>' + hintText + '</div>');
-                        }
-                    });
-                    zkDiv.innerHTML = zkParts.join("");
-                }
-
-                const rareZkDiv = document.getElementById("rareZk");
-                if (rareZkDiv) {
-                    let rParts = [];
-                    normalKeys.forEach((k) => {
-                        if (rareZk.includes(k)) {
-                            rParts.push('<div class="zukan-item rare-card"><span class="rare-shiny-zukan">' + D[k].a + '</span><br><span style="color:#d97706;">No.' + D[k].no + '</span><br>' + k + '✨</div>');
-                        } else {
-                            const iconHtml = rareSeen.includes(k) ? ('<span class="silhouette">' + D[k].a + '</span>') : '❓';
-                            rParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showRareHint(\'' + k + '\')">' + iconHtml + '<br>No.' + D[k].no + '<br>✨色違いヒント</div>');
-                        }
-                    });
-                    rareZkDiv.innerHTML = rParts.join("");
-                }
-
                 const bBadge1 = document.getElementById("bossZukanCountBadge");
                 const bBadge2 = document.getElementById("bossZukanSubBadge");
                 const brBadge1 = document.getElementById("bossRareZukanCountBadge");
@@ -7496,59 +7605,96 @@
                 if (brBadge1) brBadge1.innerText = " / 👑✨ボス色違い(" + bossRareFoundCount + "/" + bossKeys.length + "種)";
                 if (brBadge2) brBadge2.innerText = "(" + bossRareFoundCount + "/" + bossKeys.length + "種)";
 
-                const bossZkDiv = document.getElementById("bossZk");
-                if (bossZkDiv) {
-                    let bParts = [];
-                    bossKeys.forEach((k) => {
-                        const bInf = BOSS_D[k];
-                        if (zk.includes(k)) {
-                            bParts.push('<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>');
-                        } else {
-                            const bossIconHtml = seen.includes(k) ? ('<span class="silhouette">' + bInf.a + '</span>') : '❓';
-                            bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')">' + bossIconHtml + '<br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
-                        }
-                    });
-                    bossZkDiv.innerHTML = bParts.join("");
-                }
-
-                const bossRareZkDiv = document.getElementById("bossRareZk");
-                if (bossRareZkDiv) {
-                    let brParts = [];
-                    bossKeys.forEach((k) => {
-                        const bInf = BOSS_D[k];
-                        if (rareZk.includes(k)) {
-                            brParts.push('<div class="zukan-item rare-card"><span class="rare-shiny-zukan">' + bInf.a + '</span><br><span style="color:#db2777;">No.' + bInf.no + '</span><br>' + k + '✨</div>');
-                        } else {
-                            const bossRareIconHtml = rareSeen.includes(k) ? ('<span class="silhouette">' + bInf.a + '</span>') : '❓';
-                            brParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#f9a8d4;" onclick="showBossRareHint(\'' + k + '\')">' + bossRareIconHtml + '<br>No.' + bInf.no + '<br>✨' + bInf.stage + '階ボス</div>');
-                        }
-                    });
-                    bossRareZkDiv.innerHTML = brParts.join("");
-                }
-
                 const spBadge1 = document.getElementById("specialZukanCountBadge");
                 const spBadge2 = document.getElementById("specialZukanSubBadge");
                 if (spBadge1) spBadge1.innerText = " / 💀特別(" + spFound + "/2種)";
                 if (spBadge2) spBadge2.innerText = "(" + spFound + "/2種)";
 
-                const spZkDiv = document.getElementById("specialZk");
-                if (spZkDiv) {
-                    const zh = SPECIAL_D[spA];
-                    const gd = SPECIAL_D[spB];
-                    let spHtml = "";
-                    if (zk.includes(spA)) {
-                        spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
-                    } else {
-                        const zhIconHtml = seen.includes(spA) ? ('<span class="silhouette">' + zh.a + '</span>') : '❓';
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()">' + zhIconHtml + '<br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
+                const synthResults = new Set(Object.values(R));
+                const filteredNormalKeys = normalKeys.filter(k => matchesZukanRange(D[k].no));
+
+                if (zukanSubTab === "normal") {
+                    const zkDiv = document.getElementById("zk");
+                    if (zkDiv) {
+                        let zkParts = [];
+                        filteredNormalKeys.forEach((k) => {
+                            if (zk.includes(k)) {
+                                zkParts.push('<div class="zukan-item">' + D[k].a + '<br>No.' + D[k].no + '<br>' + k + '</div>');
+                            } else {
+                                const isSynth = synthResults.has(k);
+                                const clickFn = isSynth ? ('showRecipeHint(\'' + k + '\')') : ('showWildHint(\'' + k + '\')');
+                                const borderCol = isSynth ? '#93c5fd' : '#cbd5e1';
+                                const hintText = isSynth ? '💡配合ヒント' : '📍出現ヒント';
+                                const iconHtml = seen.includes(k) ? ('<span class="silhouette">' + D[k].a + '</span>') : '❓';
+                                zkParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:' + borderCol + ';" onclick="' + clickFn + '">' + iconHtml + '<br>No.' + D[k].no + '<br>' + hintText + '</div>');
+                            }
+                        });
+                        zkDiv.innerHTML = zkParts.join("");
                     }
-                    if (zk.includes(spB)) {
-                        spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
-                    } else {
-                        const gdIconHtml = seen.includes(spB) ? ('<span class="silhouette">' + gd.a + '</span>') : '❓';
-                        spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()">' + gdIconHtml + '<br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
+                } else if (zukanSubTab === "rare") {
+                    const rareZkDiv = document.getElementById("rareZk");
+                    if (rareZkDiv) {
+                        let rParts = [];
+                        filteredNormalKeys.forEach((k) => {
+                            if (rareZk.includes(k)) {
+                                rParts.push('<div class="zukan-item rare-card"><span class="rare-shiny-zukan">' + D[k].a + '</span><br><span style="color:#d97706;">No.' + D[k].no + '</span><br>' + k + '✨</div>');
+                            } else {
+                                const iconHtml = rareSeen.includes(k) ? ('<span class="silhouette">' + D[k].a + '</span>') : '❓';
+                                rParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showRareHint(\'' + k + '\')">' + iconHtml + '<br>No.' + D[k].no + '<br>✨色違いヒント</div>');
+                            }
+                        });
+                        rareZkDiv.innerHTML = rParts.join("");
                     }
-                    spZkDiv.innerHTML = spHtml;
+                } else if (zukanSubTab === "boss") {
+                    const bossZkDiv = document.getElementById("bossZk");
+                    if (bossZkDiv) {
+                        let bParts = [];
+                        bossKeys.forEach((k) => {
+                            const bInf = BOSS_D[k];
+                            if (zk.includes(k)) {
+                                bParts.push('<div class="zukan-item" style="border-color:#fca5a5; background:linear-gradient(180deg,#ffffff 0%,#fef2f2 100%);">' + bInf.a + '<br><span style="color:#dc2626;">No.' + bInf.no + '</span><br>' + k + '</div>');
+                            } else {
+                                const bossIconHtml = seen.includes(k) ? ('<span class="silhouette">' + bInf.a + '</span>') : '❓';
+                                bParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#fecaca;" onclick="showBossHint(\'' + k + '\')">' + bossIconHtml + '<br>No.' + bInf.no + '<br>' + bInf.stage + '階ボス</div>');
+                            }
+                        });
+                        bossZkDiv.innerHTML = bParts.join("");
+                    }
+                } else if (zukanSubTab === "bossRare") {
+                    const bossRareZkDiv = document.getElementById("bossRareZk");
+                    if (bossRareZkDiv) {
+                        let brParts = [];
+                        bossKeys.forEach((k) => {
+                            const bInf = BOSS_D[k];
+                            if (rareZk.includes(k)) {
+                                brParts.push('<div class="zukan-item rare-card"><span class="rare-shiny-zukan">' + bInf.a + '</span><br><span style="color:#db2777;">No.' + bInf.no + '</span><br>' + k + '✨</div>');
+                            } else {
+                                const bossRareIconHtml = rareSeen.includes(k) ? ('<span class="silhouette">' + bInf.a + '</span>') : '❓';
+                                brParts.push('<div class="zukan-unknown" style="cursor:pointer; border-color:#f9a8d4;" onclick="showBossRareHint(\'' + k + '\')">' + bossRareIconHtml + '<br>No.' + bInf.no + '<br>✨' + bInf.stage + '階ボス</div>');
+                            }
+                        });
+                        bossRareZkDiv.innerHTML = brParts.join("");
+                    }
+                } else if (zukanSubTab === "special") {
+                    const spZkDiv = document.getElementById("specialZk");
+                    if (spZkDiv) {
+                        const zh = SPECIAL_D[spA];
+                        const gd = SPECIAL_D[spB];
+                        let spHtml = "";
+                        if (zk.includes(spA)) {
+                            spHtml += '<div class="zukan-item zombie-card">' + renderMonEmojiHtml(spA, "", "font-size:20px;") + '<br><span style="color:#14532d;">No.' + zh.no + '</span><br>' + spA + '</div>';
+                        } else {
+                            const zhIconHtml = seen.includes(spA) ? ('<span class="silhouette">' + zh.a + '</span>') : '❓';
+                            spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#86efac;" onclick="showZombieHeroHint()">' + zhIconHtml + '<br>No.' + zh.no + '<br>💀遭遇ヒント</div>';
+                        }
+                        if (zk.includes(spB)) {
+                            spHtml += '<div class="zukan-item god-card">' + renderMonEmojiHtml(spB, "", "font-size:20px;") + '<br><span style="color:#b45309;">No.' + gd.no + '</span><br>' + spB + '</div>';
+                        } else {
+                            const gdIconHtml = seen.includes(spB) ? ('<span class="silhouette">' + gd.a + '</span>') : '❓';
+                            spHtml += '<div class="zukan-unknown" style="cursor:pointer; border-color:#fcd34d;" onclick="showGodEntityHint()">' + gdIconHtml + '<br>No.' + gd.no + '<br>🌌遭遇ヒント</div>';
+                        }
+                        spZkDiv.innerHTML = spHtml;
+                    }
                 }
             }
         }
@@ -7631,6 +7777,7 @@
             const msgEl = document.getElementById("presentCodeMsg");
             if (!field) return;
             const code = field.value.trim();
+            const upperCode = code.toUpperCase();
 
             function setPresentMsg(text, color) {
                 if (msgEl) {
@@ -7647,8 +7794,18 @@
 
             if (!Array.isArray(stats.claimedPresentCodes)) stats.claimedPresentCodes = [];
 
-            if (code === "01234567890" || code === "01234567891") {
-                if (stats.claimedPresentCodes.includes(code)) {
+            const beginnerMonsterGifts = {
+                "WELCOME2026": { monName: "プニシズク", lv: 5, isRare: true, extraReserveLv: 0, label: "🎁 初心者歓迎プレゼント！色違いの「プニシズク✨」(Lv.5) がボックスに入りました！" },
+                "SHINYSLIME":  { monName: "ポイズンフロッグ", lv: 5, isRare: true, extraReserveLv: 0, label: "🌈 色違いプレゼント！色違いの「ポイズンフロッグ✨」(Lv.5) がボックスに入りました！" },
+                "CUTECHICK":   { monName: "ピヨチビ", lv: 5, isRare: true, extraReserveLv: 1, label: "🐥 旅立ちの相棒プレゼント！色違いの「ピヨチビ✨」(Lv.5) ＆ 控えモンスター全員のLvが+1されました！" }
+            };
+
+            const isKnownCode = (code === "01234567890" || code === "01234567891" ||
+                Boolean(beginnerMonsterGifts[upperCode]) || upperCode === "MIXSTART" || upperCode === "EXPBOOST");
+
+            if (isKnownCode) {
+                const checkKey = (code === "01234567890" || code === "01234567891") ? code : upperCode;
+                if (stats.claimedPresentCodes.includes(checkKey)) {
                     seFail();
                     const errText = "⚠️ このプレゼントコードはすでに受け取り済みです！（1データにつき1回限り）";
                     setPresentMsg(errText, "#dc2626");
@@ -7657,7 +7814,70 @@
                 }
             }
 
-            if (code === "01234567890") {
+            if (beginnerMonsterGifts[upperCode]) {
+                const gift = beginnerMonsterGifts[upperCode];
+                if (p.length + 1 > boxLimit) {
+                    seFail();
+                    const errText = "⚠️ ボックスに空きがありません！（現在 " + p.length + "/" + boxLimit + "体／1体以上空けてください）";
+                    setPresentMsg(errText, "#dc2626");
+                    showGameAlert(errText, "🎁 プレゼントコード");
+                    return;
+                }
+                const b = D[gift.monName];
+                const st = calcStatsByLevel(b, gift.lv, gift.isRare, false);
+                if (gift.extraReserveLv > 0) {
+                    p.forEach(m => { if (!m.inParty) levelUpMonster(m, gift.extraReserveLv); });
+                }
+                const newAlly = {
+                    n: gift.monName, lv: gift.lv, lvCapBonus: 0, m: st.m, hp: st.m,
+                    at: st.at, df: st.df, sp: st.sp,
+                    ex: 0, nx: st.nx, inParty: false, partyOrder: 0, locked: false,
+                    isRare: gift.isRare, isSynthBorn: false,
+                    rareSkillId: gift.isRare ? getRandomRareSkillId() : 0,
+                    skillId: getRandomSkillId()
+                };
+                initBattleState(newAlly);
+                p.push(newAlly);
+                if (gift.isRare) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
+                stats.claimedPresentCodes.push(upperCode);
+                markZkAndSeen(gift.monName, gift.isRare);
+                field.value = "";
+                seJoin();
+                saveGame();
+                up(true);
+                setPresentMsg(gift.label, "#059669");
+                showNotice(gift.label, 6000);
+                showGameAlert(gift.label, "🎁 プレゼント受取");
+            } else if (upperCode === "MIXSTART") {
+                const beforeBox = boxLimit;
+                boxLimit = Math.min(MAX_BOX_LIMIT, boxLimit + 5);
+                const boxAdded = boxLimit - beforeBox;
+                const mixRaised = addMixBonusCapped(0.01);
+                stats.claimedPresentCodes.push(upperCode);
+                field.value = "";
+                seStageClear();
+                saveGame();
+                up(true);
+                const okText = "🧬 配合応援セットを受け取りました！" +
+                    (boxAdded > 0 ? ("ボックス上限+" + boxAdded + "体（現在" + boxLimit + "/200体）") : "ボックス上限は最大(200体)") +
+                    " ＆ " +
+                    (mixRaised ? ("永続配合成功率+1%（現在" + getMixPctText() + "%）！") : "配合成功率は上限(75%)！");
+                setPresentMsg(okText, "#059669");
+                showNotice(okText, 6000);
+                showGameAlert(okText, "🎁 プレゼント受取");
+            } else if (upperCode === "EXPBOOST") {
+                expBonusRate = Math.round((expBonusRate + 0.10) * 1000) / 1000;
+                const lvLogs = grantExpToParty(50);
+                stats.claimedPresentCodes.push(upperCode);
+                field.value = "";
+                seLvUp();
+                saveGame();
+                up(true);
+                const okText = "💎 育成応援ギフトを受け取りました！永続で獲得EXP+10% ＆ 戦闘メンバー全員がEXP+50を獲得！" + (lvLogs ? (" " + lvLogs) : "");
+                setPresentMsg(okText, "#059669");
+                showNotice(okText, 6000);
+                showGameAlert(okText, "🎁 プレゼント受取");
+            } else if (code === "01234567890") {
                 if (p.length + 3 > boxLimit) {
                     seFail();
                     const needSpace = (p.length + 3) - boxLimit;
@@ -8533,7 +8753,7 @@
                                         stats.heroWinCount = (stats.heroWinCount || 0) + 1;
                                         p.forEach(ally => { if (ally.inParty && ally.hp > 0) levelUpMonster(ally, 5); });
                                         seMixSuccess();
-                                        showNotice("🏆 王国の絵文字勇者に勝利！基礎配合確率が50%（上限80%／現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！", 6500);
+                                        showNotice("🏆 王国の絵文字勇者に勝利！基礎配合確率が50%（上限75%／現在合計" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！", 6500);
                                         eg.shift();
                                         stageJustCleared = true;
                                         if (stg > maxClearStg) maxClearStg = stg;
@@ -8551,7 +8771,7 @@
                                         showNotice(
                                             raised
                                                 ? ("🏆 王国の配合賢者に勝利！配合確率+1%（現在" + effPct + "%）になり、戦闘メンバー全員がLv+5された！！")
-                                                : ("🏆 王国の配合賢者に勝利！（配合確率は強化上限80%に達しています／現在" + effPct + "%）戦闘メンバー全員がLv+5された！！"),
+                                                : ("🏆 王国の配合賢者に勝利！（配合確率は強化上限75%に達しています／現在" + effPct + "%）戦闘メンバー全員がLv+5された！！"),
                                             6500
                                         );
                                         eg.shift();
@@ -8916,8 +9136,8 @@
             }
 
             let resultName = R[m1.n + "+" + m2.n] || R[m2.n + "+" + m1.n];
-            let effectiveRate = getEffectiveMixRate();
-            let mixPctStr = getMixPctText();
+            let effectiveRate = resultName ? getMixRateForTarget(resultName) : getEffectiveMixRate();
+            let mixPctStr = String(Math.round(effectiveRate * 1000) / 10);
             stats.mixAttemptCount = (stats.mixAttemptCount || 0) + 1;
 
             if(!resultName || Math.random() >= effectiveRate) {
@@ -9377,7 +9597,6 @@
             }
             updateTitleSelectUI();
         }
-
         function switchRankTab(tab) {
             currentRankTab = (tab === "zukan") ? "zukan" : "floor";
             const bFloor = document.getElementById("rkTab_floor");
