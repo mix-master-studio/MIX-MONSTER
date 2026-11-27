@@ -354,6 +354,70 @@
             font-size: 9.5px;
             font-weight: 900;
         }
+        .rk-title-badge.rk-title-epic,
+        .title-reward-badge.rk-title-epic {
+            background: linear-gradient(135deg, #38bdf8 0%, #6366f1 55%, #ec4899 100%);
+            color: #ffffff;
+            border: 1px solid #a5b4fc;
+            text-shadow: 0 1px 2px rgba(30, 27, 75, 0.65);
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        }
+        .rk-title-badge.rk-title-legend,
+        .title-reward-badge.rk-title-legend {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, #f43f5e, #f59e0b, #10b981, #38bdf8, #a855f7, #f43f5e);
+            background-size: 260% 260%;
+            color: #ffffff;
+            border: 1.5px solid #fde047;
+            text-shadow: 0 1px 3px rgba(15, 23, 42, 0.75);
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.72), 0 0 16px rgba(236, 72, 153, 0.45);
+            animation: titleRainbowShift 3.2s linear infinite, titleGlowPulse 1.6s ease-in-out infinite alternate;
+        }
+        .rk-title-badge.rk-title-mythic,
+        .title-reward-badge.rk-title-mythic {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, #b45309, #facc15, #f472b6, #8b5cf6, #06b6d4, #fde047, #b45309);
+            background-size: 320% 320%;
+            color: #ffffff;
+            border: 1.5px solid #fef08a;
+            text-shadow: 0 1px 3px rgba(88, 28, 135, 0.90), 0 0 6px rgba(255, 255, 255, 0.65);
+            box-shadow: 0 0 14px rgba(250, 204, 21, 0.92), 0 0 22px rgba(168, 85, 247, 0.68), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            animation: titleRainbowShift 2.2s linear infinite, titleMythicGlow 1.3s ease-in-out infinite alternate;
+        }
+        .rk-title-badge.rk-title-legend::after,
+        .title-reward-badge.rk-title-legend::after,
+        .rk-title-badge.rk-title-mythic::after,
+        .title-reward-badge.rk-title-mythic::after {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -60%;
+            width: 45%;
+            height: 140%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+            transform: skewX(-22deg);
+            animation: titleShineSweep 2.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes titleRainbowShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes titleGlowPulse {
+            0% { box-shadow: 0 0 7px rgba(250, 204, 21, 0.55), 0 0 12px rgba(236, 72, 153, 0.35); }
+            100% { box-shadow: 0 0 13px rgba(250, 204, 21, 0.90), 0 0 20px rgba(56, 189, 248, 0.65); }
+        }
+        @keyframes titleMythicGlow {
+            0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.75), 0 0 18px rgba(168, 85, 247, 0.55); transform: scale(1); }
+            100% { box-shadow: 0 0 18px rgba(250, 204, 21, 1), 0 0 28px rgba(236, 72, 153, 0.85); transform: scale(1.03); }
+        }
+        @keyframes titleShineSweep {
+            0% { left: -70%; }
+            45%, 100% { left: 140%; }
+        }
         .synth-badge {
             display: inline-block;
             background: linear-gradient(90deg, #10b981, #0284c7);
@@ -1809,6 +1873,33 @@
             font-size: 11.5px;
             font-weight: 800;
         }
+        .rk-title-select option {
+            background: #ffffff;
+            color: #1e293b;
+            font-weight: 800;
+        }
+        .rk-title-select.rk-title-epic {
+            background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 55%, #fce7f3 100%);
+            border-color: #818cf8;
+            color: #3730a3;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.35);
+        }
+        .rk-title-select.rk-title-legend {
+            background: linear-gradient(120deg, #ffe4e6, #fef3c7, #d1fae5, #e0f2fe, #f3e8ff);
+            background-size: 240% 240%;
+            border-color: #f59e0b;
+            color: #7c2d12;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
+            animation: titleRainbowShift 3.5s linear infinite;
+        }
+        .rk-title-select.rk-title-mythic {
+            background: linear-gradient(120deg, #fef08a, #fbcfe8, #ddd6fe, #bae6fd, #fef08a);
+            background-size: 280% 280%;
+            border-color: #eab308;
+            color: #581c87;
+            box-shadow: 0 0 16px rgba(250, 204, 21, 0.85), 0 0 22px rgba(168, 85, 247, 0.45);
+            animation: titleRainbowShift 2.5s linear infinite;
+        }
         .rk-title-btn {
             flex: 0 0 auto;
             width: auto !important;
@@ -2298,7 +2389,7 @@
                 <div id="rk-name-status" class="rk-name-lock-info">※プレイヤー名の変更は1週間に1回までです（不適切な言葉は使用できません）</div>
                 <div style="border-top: 1.5px dashed #bae6fd; margin: 8px 0 6px;"></div>
                 <div class="rk-title-row">
-                    <select id="rk-title-select" class="rk-title-select">
+                    <select id="rk-title-select" class="rk-title-select" onchange="onRankTitleSelectChange()">
                         <option value="">🏷️ 称号なし（表示しない）</option>
                     </select>
                     <button type="button" id="rk-title-btn" class="rk-title-btn" onclick="submitRankTitle()">🏷️ 称号を設定</button>
@@ -2757,7 +2848,6 @@
             { id: 2, name: "✨オーラリカバー", desc: "【色違い限定】攻撃後に40%の確率で最大HPの12%を回復し、さらに20%の確率で攻撃1回無効バリアを張る。" },
             { id: 3, name: "💎スターライトステップ", desc: "【色違い限定】攻撃後に35%の確率で素早さ25%UP＆攻撃20%UPし、さらに15%の確率で次の攻撃が1.5倍になる。" }
         ];
-
         function getRandomRareSkillId() {
             return Math.floor(Math.random() * RARE_INNATE_SKILLS.length) + 1;
         }
@@ -2884,6 +2974,20 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#39;");
+        }
+
+        function getTitleRarityClass(titleStr) {
+            if (!titleStr) return "";
+            if (titleStr === "🌞天空の覇者" || titleStr === "🌌神話の超越者") {
+                return "rk-title-mythic";
+            }
+            if (titleStr === "👑魔王討伐者" || titleStr === "📚えもじ博士" || titleStr === "🌈虹色の探究者") {
+                return "rk-title-legend";
+            }
+            if (titleStr === "🦈深海の覇者" || titleStr === "🏟️闘技場の英雄" || titleStr === "🧬配合マスター" || titleStr === "⚔️王国最強のライバル") {
+                return "rk-title-epic";
+            }
+            return "";
         }
 
         function renderSkillBadge(extraClass, prefix, skillName, skillDesc) {
@@ -3675,8 +3779,10 @@
                 }
 
                 const isGuildTag = (m.id && m.id.indexOf("gm_") === 0) ? "<span style='background:#ede9fe; color:#6d28d9; border-radius:4px; padding:0 4px; font-size:9px; margin-right:3px;'>ギルド</span>" : "";
+                const titleTierCls = (m.reward && m.reward.title) ? getTitleRarityClass(m.reward.title) : "";
+                const titleBadgeCls = titleTierCls ? ("title-reward-badge " + titleTierCls) : "title-reward-badge";
                 const rewardHtml = (m.reward && m.reward.title)
-                    ? ('<span class="title-reward-badge">🏷️ ' + escapeHtml(m.rewardText) + '</span>')
+                    ? ('<span class="' + titleBadgeCls + '">🏷️ ' + escapeHtml(m.rewardText) + '</span>')
                     : ('<span style="color:#d97706; font-weight:800; font-size:10px;">🎁 ' + escapeHtml(m.rewardText) + '</span>');
 
                 parts.push('<div class="mission-row' + (isClaimed ? ' done' : '') + '">' +
@@ -4030,7 +4136,7 @@
             updateRepeatButtonUI();
             updateSpeedButtonUI();
             updateSortButtonsUI();
-            if (typeof updateTitleSelectUI === "function") updateTitleSelectUI();
+            if (typeof updateTitleSelectUI === "function") updateTitleSelectUI(true);
             up(true);
         }
         function switchTab(tabName) {
@@ -5846,7 +5952,6 @@
                 else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(800 / spdDiv));
             }
         }
-
         function chooseUnderseaEntry(go) {
             if (!inDungeon || currentEvent !== "undersea_gate") return;
             if (!go) {
@@ -6611,7 +6716,6 @@
             showNotice(msg, 6000);
             advanceStageAfterEvent("", true);
         }
-
         function pickArenaReward(idx) {
             if (!inDungeon || !inKingdom || currentEvent !== "arena_reward") return;
             const chosen = arenaClearedMonsters[idx];
@@ -7365,8 +7469,10 @@
                 } else if (inDungeon && currentEvent === "kingdom_guild") {
                     let gRows = "";
                     (currentGuildChoices || []).forEach(gm => {
+                        const gmTierCls = (gm.reward && gm.reward.title) ? getTitleRarityClass(gm.reward.title) : "";
+                        const gmBadgeCls = gmTierCls ? ("title-reward-badge " + gmTierCls) : "title-reward-badge";
                         const gmRewardHtml = (gm.reward && gm.reward.title)
-                            ? ('<span class="title-reward-badge">🏷️ ' + escapeHtml(gm.rewardText) + '</span>')
+                            ? ('<span class="' + gmBadgeCls + '">🏷️ ' + escapeHtml(gm.rewardText) + '</span>')
                             : ('<span style="color:#d97706; font-weight:800;">🎁 ' + escapeHtml(gm.rewardText) + '</span>');
                         gRows += '<div class="guild-pick-row">' +
                             '<div><b>' + escapeHtml(gm.title) + '</b><br><span style="color:#475569;">' + escapeHtml(gm.condText) + '</span><br>' + gmRewardHtml + '</div>' +
@@ -7698,7 +7804,6 @@
                 }
             }
         }
-
         function exportData() {
             const data = {
                 stg, maxStg, maxClearStg, zk, seen, rareZk, rareSeen, boxLimit, boxLimitCap200: true,
@@ -7765,7 +7870,7 @@
                         updateSpeedButtonUI();
                         updateSortButtonsUI();
                         updateBulkBarUI();
-                        if (typeof updateTitleSelectUI === "function") updateTitleSelectUI();
+                        if (typeof updateTitleSelectUI === "function") updateTitleSelectUI(true);
                         up(true);
                     } else { showGameAlert("⚠️ 無効なコードです。", "⚠️ エラー"); }
                 } catch(e) { showGameAlert("⚠️ 復元失敗。コードが壊れています。", "⚠️ エラー"); }
@@ -8702,8 +8807,7 @@
                 if (eSideEl) eSideEl.classList.remove("atk-forward-my", "atk-forward-e", "hit-flash");
                 if (bBoxInit) bBoxInit.classList.remove("shake-hit");
                 if (btnAtk && inDungeon && !currentEvent) btnAtk.disabled = false;
-            }
-
+        }
             try {
                 let allySp = activeAlly.sp + (activeAlly.buffSp || 0);
                 let enemySp = currentEnemy.sp + (currentEnemy.buffSp || 0);
@@ -9317,7 +9421,7 @@
             try { initEmojiObserver(); } catch (e) {}
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
-            try { updateTitleSelectUI(); } catch (e) {}
+            try { updateTitleSelectUI(true); } catch (e) {}
             try { updateCurrentDisplay(); } catch (e) {}
             try { loadRanking(false); } catch (e) {}
             try { loadTop1Champions(false); } catch (e) {}
@@ -9472,29 +9576,68 @@
             }
         }
 
-        function updateTitleSelectUI() {
+        function applyTitleSelectRarityClass(sel, titleVal) {
+            if (!sel) return;
+            sel.classList.remove("rk-title-epic", "rk-title-legend", "rk-title-mythic");
+            const tier = (typeof getTitleRarityClass === "function") ? getTitleRarityClass(titleVal) : "";
+            if (tier) sel.classList.add(tier);
+        }
+
+        function onRankTitleSelectChange() {
+            const sel = document.getElementById("rk-title-select");
+            if (!sel) return;
+            sel.dataset.dirty = "1";
+            applyTitleSelectRarityClass(sel, sel.value);
+            const statusEl = document.getElementById("rk-title-status");
+            if (statusEl) {
+                const chosenLabel = sel.value ? ("「" + sel.value + "」") : "「称号なし（表示しない）」";
+                statusEl.innerText = "🔔 " + chosenLabel + " を選択中（「称号を設定」ボタンを押すと確定します）";
+                statusEl.style.color = "#d97706";
+            }
+        }
+
+        function updateTitleSelectUI(forceSync = false) {
             const sel = document.getElementById("rk-title-select");
             const statusEl = document.getElementById("rk-title-status");
             const unlocked = getUnlockedTitles();
             const equipped = getEquippedTitle();
 
+            let isDirty = false;
             if (sel) {
-                const sig = unlocked.join("|") + "::" + equipped;
-                if (sel.dataset.sig !== sig) {
-                    sel.dataset.sig = sig;
+                const isInteracting = (sel.dataset.dirty === "1") || (document.activeElement === sel);
+                isDirty = !forceSync && isInteracting;
+                const listSig = unlocked.join("|");
+                if (sel.dataset.listSig !== listSig) {
+                    const prevVal = sel.value;
+                    sel.dataset.listSig = listSig;
                     let opts = '<option value="">🏷️ 称号なし（表示しない）</option>';
                     unlocked.forEach(t => {
                         const esc = escapeHtml(t);
                         opts += '<option value="' + esc + '">' + esc + '</option>';
                     });
                     sel.innerHTML = opts;
+                    if (isDirty && (prevVal === "" || unlocked.includes(prevVal))) {
+                        sel.value = prevVal;
+                    } else {
+                        sel.value = equipped;
+                        sel.dataset.dirty = "0";
+                        isDirty = false;
+                    }
+                } else if (forceSync) {
                     sel.value = equipped;
-                } else if (sel.value !== equipped) {
+                    sel.dataset.dirty = "0";
+                    isDirty = false;
+                } else if (!isDirty && sel.value !== equipped) {
                     sel.value = equipped;
                 }
+                applyTitleSelectRarityClass(sel, sel.value);
             }
             if (statusEl) {
-                if (unlocked.length === 0) {
+                if (isDirty && sel) {
+                    const chosenLabel = sel.value ? ("「" + sel.value + "」") : "「称号なし（表示しない）」";
+                    statusEl.innerText = "🔔 " + chosenLabel + " を選択中（「称号を設定」ボタンを押すと確定します）";
+                    statusEl.style.color = "#d97706";
+                } else if (unlocked.length === 0) {
                     statusEl.innerText = "※クエストで獲得した称号をいつでも設定・変更できます（現在 0個 獲得）";
                     statusEl.style.color = "#64748b";
                 } else if (equipped) {
@@ -9509,7 +9652,9 @@
 
         function renderTitleBadgeHtml(titleStr) {
             if (!titleStr) return "";
-            return '<span class="rk-title-badge">' + escapeHtml(titleStr) + '</span>';
+            const tierCls = (typeof getTitleRarityClass === "function") ? getTitleRarityClass(titleStr) : "";
+            const cls = tierCls ? ("rk-title-badge " + tierCls) : "rk-title-badge";
+            return '<span class="' + cls + '">' + escapeHtml(titleStr) + '</span>';
         }
 
         function formatCooldownRemain(ms) {
@@ -9982,6 +10127,7 @@
             }
 
             saveRankTitleMeta(chosen);
+            sel.dataset.dirty = "0";
             const clearFloor = getSavedMaxClearStg();
             const reachedFloor = getSavedMaxStg();
             const zukanCount = getSavedZukanCount();
@@ -9995,6 +10141,7 @@
                     ? ("🏷️ 称号を「" + chosen + "」に設定しました！（1階以上クリア後にランキングへ反映されます）")
                     : "🏷️ 称号を「なし」に変更しました！";
                 updateCurrentDisplay();
+                updateTitleSelectUI(true);
                 return;
             }
 
@@ -10016,6 +10163,7 @@
                     ? ("🏷️ 称号を「" + chosen + "」に変更し、ランキングへ反映しました！")
                     : "🏷️ 称号を「なし」に変更し、ランキングへ反映しました！";
                 updateCurrentDisplay();
+                updateTitleSelectUI(true);
                 await loadRanking(true);
                 await loadTop1Champions(true);
             } catch (e) {
@@ -10026,7 +10174,7 @@
             btn.disabled = false;
         }
 
-        updateTitleSelectUI();
+        updateTitleSelectUI(true);
         updateCurrentDisplay();
         setInterval(() => {
             if (typeof currentTab === "undefined" || currentTab === "ranking") {
