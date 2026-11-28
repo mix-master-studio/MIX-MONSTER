@@ -1520,8 +1520,8 @@
             border: 1px solid rgba(15, 23, 42, 0.06);
         }
         .exp-bg { height: 5px; margin-top: 3px; }
-        .hp { background: linear-gradient(90deg, #10b981, #34d399); height: 100%; width: 100%; transition: width 0.3s ease; }
-        .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
+        .hp-bg .hp { background: linear-gradient(90deg, #10b981, #34d399); height: 100%; width: 100%; transition: width 0.3s ease; }
+        .hp-bg .hp-dead { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
         .exp-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.3s ease; }
         .sub-label { font-size: 9.5px; color: #64748b; font-weight: 800; margin-top: 2px; display: block; text-transform: uppercase; }
         .toggle-box { display: block; }
@@ -1947,59 +1947,32 @@
             border-bottom: 3px solid #b45309 !important;
             white-space: nowrap;
         }
-        .rk-title-row {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
+        .rk-title-box {
             margin-top: 8px;
-        }
-        .rk-title-select {
-            flex: 1;
-            min-width: 0;
-            padding: 8px 8px;
+            padding: 8px 9px;
+            background: linear-gradient(135deg, #f5f3ff 0%, #fffbeb 100%);
+            border: 1.5px solid #c4b5fd;
             border-radius: 12px;
-            border: 1.5px solid #fcd34d;
-            background: #fffbeb;
-            color: #78350f;
-            font-family: inherit;
+            text-align: left;
+        }
+        .rk-title-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
             font-size: 11.5px;
-            font-weight: 800;
-        }
-        .rk-title-select option {
-            background: #ffffff;
-            color: #1e293b;
-            font-weight: 800;
-        }
-        .rk-title-select.rk-title-epic {
-            background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 55%, #fce7f3 100%);
-            border-color: #818cf8;
-            color: #3730a3;
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.35);
-        }
-        .rk-title-select.rk-title-legend {
-            background: linear-gradient(120deg, #ffe4e6, #fef3c7, #d1fae5, #e0f2fe, #f3e8ff);
-            background-size: 240% 240%;
-            border-color: #f59e0b;
-            color: #7c2d12;
-            box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
-            animation: titleRainbowShift 3.5s linear infinite;
-        }
-        .rk-title-select.rk-title-mythic {
-            background: linear-gradient(120deg, #fef08a, #fbcfe8, #ddd6fe, #bae6fd, #fef08a);
-            background-size: 280% 280%;
-            border-color: #eab308;
-            color: #581c87;
-            box-shadow: 0 0 16px rgba(250, 204, 21, 0.85), 0 0 22px rgba(168, 85, 247, 0.45);
-            animation: titleRainbowShift 2.5s linear infinite;
+            font-weight: 900;
+            color: #5b21b6;
+            flex-wrap: wrap;
         }
         .rk-title-btn {
             flex: 0 0 auto;
-            width: auto !important;
+            width: 100% !important;
             margin: 0 !important;
             padding: 8px 12px !important;
             font-size: 11.5px !important;
-            border-radius: 12px !important;
+            border-radius: 11px !important;
             background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%) !important;
             border-color: #c4b5fd !important;
             border-bottom: 3px solid #5b21b6 !important;
@@ -2035,17 +2008,83 @@
             border-bottom: 2px solid #b45309 !important;
             white-space: nowrap;
         }
-        .rk-hp-select {
-            width: 100%;
-            padding: 8px 8px;
-            border-radius: 10px;
-            border: 1.5px solid #fdba74;
-            background: #ffffff;
-            color: #1e293b;
-            font-family: inherit;
-            font-size: 11.5px;
-            font-weight: 800;
+        .rk-scroll-list {
+            max-height: 205px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 4px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            background: #f8fafc;
+            box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04);
             margin-bottom: 6px;
+        }
+        .rk-title-scroll {
+            max-height: 165px;
+            border-color: #ddd6fe;
+            background: #faf5ff;
+        }
+        .rk-hp-scroll {
+            max-height: 215px;
+            border-color: #fed7aa;
+            background: #fffaf5;
+        }
+        .rk-picker-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 7px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border: 1.5px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 7px 8px;
+            margin: 4px 0;
+            font-size: 11px;
+            color: #334155;
+            line-height: 1.38;
+            box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+        }
+        .rk-picker-card.selected {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+            border: 2px solid #f59e0b !important;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.24) !important;
+        }
+        .rk-picker-card.equipped-now {
+            border-color: #7dd3fc;
+        }
+        .rk-picker-info {
+            flex: 1 1 auto;
+            min-width: 0;
+            word-break: break-word;
+        }
+        .rk-picker-status-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #7dd3fc;
+            border-radius: 5px;
+            padding: 0 5px;
+            font-size: 9px;
+            font-weight: 900;
+            margin-left: 3px;
+            vertical-align: middle;
+        }
+        .rk-picker-btn {
+            flex: 0 0 auto;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 6px 10px !important;
+            font-size: 10.5px !important;
+            border-radius: 9px !important;
+            white-space: nowrap;
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
+            border-color: #7dd3fc !important;
+            border-bottom: 2.5px solid #0369a1 !important;
+        }
+        .rk-picker-btn.selected {
+            background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%) !important;
+            border-color: #fde68a !important;
+            border-bottom: 2.5px solid #b45309 !important;
         }
         .rk-hp-set-btn {
             width: 100% !important;
@@ -2118,7 +2157,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: #ffffff;
             border: 1.5px solid #e2e8f0;
             border-radius: 11px;
@@ -2132,9 +2171,18 @@
             flex: 1 1 auto;
             min-width: 0;
             display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+        .rk-left-main {
+            display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 3px 5px;
+            width: 100%;
+            min-width: 0;
+            line-height: 1.4;
         }
         .rk-rank-label {
             flex-shrink: 0;
@@ -2143,21 +2191,23 @@
         }
         .rk-name-text {
             font-weight: 900;
-            word-break: break-all;
+            word-break: break-word;
             max-width: 100%;
         }
         .rk-hp-mon-tag {
             display: inline-flex;
             align-items: center;
-            gap: 2px;
+            flex-wrap: wrap;
+            gap: 3px;
             background: #fff7ed;
             color: #9a3412;
             border: 1px solid #fdba74;
             border-radius: 7px;
-            padding: 1px 6px;
-            font-size: 10px;
+            padding: 2px 7px;
+            font-size: 10.5px;
             font-weight: 900;
             max-width: 100%;
+            line-height: 1.35;
         }
         .rk-row.top1 { background: linear-gradient(135deg, #fffbeb 0%, #fef08a 100%); border-color: #f59e0b; }
         .rk-row.top2 { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-color: #94a3b8; }
@@ -2176,16 +2226,20 @@
         }
         .rk-score-pill {
             flex: 0 0 auto;
+            width: auto;
+            height: auto;
             background: #e0f2fe;
             color: #0369a1;
             border: 1px solid #7dd3fc;
             border-radius: 999px;
-            padding: 2px 9px;
+            padding: 3px 9px;
             font-size: 11px;
             font-weight: 900;
             white-space: nowrap;
         }
         .rk-score-pill.hp {
+            width: auto !important;
+            height: auto !important;
             background: #fee2e2;
             color: #b91c1c;
             border-color: #fca5a5;
@@ -2568,21 +2622,23 @@
                     <button type="button" id="rk-name-btn" class="rk-submit-btn" onclick="submitRankName()">✏️ 名前登録・変更</button>
                 </div>
                 <div id="rk-name-status" class="rk-name-lock-info">※プレイヤー名の変更は1週間に1回までです（不適切な言葉は使用できません）</div>
-                <div style="border-top: 1.5px dashed #bae6fd; margin: 8px 0 6px;"></div>
-                <div class="rk-title-row">
-                    <select id="rk-title-select" class="rk-title-select" onchange="onRankTitleSelectChange()">
-                        <option value="">🏷️ 称号なし（表示しない）</option>
-                    </select>
-                    <button type="button" id="rk-title-btn" class="rk-title-btn" onclick="submitRankTitle()">🏷️ 称号を設定</button>
+
+                <div class="rk-title-box">
+                    <div class="rk-title-head">
+                        <span>🏷️ 称号一覧 <span id="rk-title-count" style="color:#6d28d9;">(獲得: 0個)</span></span>
+                    </div>
+                    <div id="rk-title-list" class="rk-scroll-list rk-title-scroll"></div>
+                    <button type="button" id="rk-title-btn" class="rk-title-btn" onclick="submitRankTitle()">🏷️ 選択中の称号を設定</button>
+                    <div id="rk-title-status" class="rk-name-lock-info">※クエストで獲得した称号をいつでも設定・変更できます</div>
                 </div>
-                <div id="rk-title-status" class="rk-name-lock-info">※クエストで獲得した称号をいつでも設定・変更できます</div>
+
                 <div class="rk-hp-box">
                     <div class="rk-hp-head">
-                        <span>❤️ 最大HPランキング（所持モンスターから1体選択）</span>
+                        <span>❤️ 最大HPモンスター一覧 <span id="rk-hp-count" style="color:#c2410c;">(全0体)</span></span>
                         <button type="button" class="rk-hp-pick-btn" onclick="pickHighestHpMonster()">👑 最高HPを選択</button>
                     </div>
-                    <select id="rk-hp-select" class="rk-hp-select" onchange="onRankHpSelectChange()"></select>
-                    <button type="button" id="rk-hp-set-btn" class="rk-hp-set-btn" onclick="submitRankHpMonster()">❤️ このモンスターで最大HPランキングを更新</button>
+                    <div id="rk-hp-list" class="rk-scroll-list rk-hp-scroll"></div>
+                    <button type="button" id="rk-hp-set-btn" class="rk-hp-set-btn" onclick="submitRankHpMonster()">❤️ 選択中のモンスターで最大HPランキングを更新</button>
                     <div id="rk-hp-status" class="rk-name-lock-info" style="margin-top:5px;">※最大HPが高い順に表示されます。設定は何回でも変更でき、配合・お別れ後も更新するまで記録が残ります。</div>
                 </div>
                 <div id="rk-msg" class="rk-msg-bar"></div>
@@ -3798,7 +3854,6 @@
             { id: "gm_34", title: "📚究極の博物学者",     condText: "図鑑(色違い含む)を合計150種埋める",      rewardText: "称号「📚えもじ博士」",        reward: { title: "📚えもじ博士" },        checkType: "totalZukan",   val: 150 },
             { id: "gm_35", title: "🌌星辰と廃国の奇跡",   condText: "特別遭遇図鑑(No.A・No.B)を両方埋める",   rewardText: "称号「🌌神話の超越者」",      reward: { title: "🌌神話の超越者" },      checkType: "specialZukan", val: 2 }
         ];
-
         function migrateLegacyMissions() {
             if (!Array.isArray(stats.claimedMissions)) stats.claimedMissions = [];
             if (!Array.isArray(stats.extraMissions)) stats.extraMissions = [];
@@ -5908,7 +5963,6 @@
                 else autoAtkTimer = scheduleBattleTimer(() => { atk(); }, Math.floor(550 / spdDiv));
             }
         }
-
         function generateEnemies() {
             eg = [];
             currentEvent = null;
@@ -7530,7 +7584,7 @@
                         4: '<button class="btn-event" style="background:linear-gradient(180deg,#fb923c,#ea580c);border-bottom:3px solid #9a3412;" onclick="pickMerchantItem(4)">🍙 おにぎりセット<span class="item-desc-mini">【効果】戦闘中(生存)の味方全員に<br>EXP+40を与える</span></button>',
                         5: '<button class="btn-event" style="background:linear-gradient(180deg,#f87171,#dc2626);border-bottom:3px solid #991b1b;" onclick="pickMerchantItem(5)">🧣 旅人のマント<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>最大HP+4・防御+2</span></button>',
                         6: '<button class="btn-event" style="background:linear-gradient(180deg,#34d399,#059669);border-bottom:3px solid #047857;" onclick="pickMerchantItem(6)">🥾 俊足のブーツ<span class="item-desc-mini">【効果】戦闘中の味方全員の<br>素早さ+2・攻撃+1</span></button>',
-                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合成功率+0.3%(上限75%)</span></button>'
+                        7: '<button class="btn-event" style="background:linear-gradient(180deg,#fbbf24,#d97706);border-bottom:3px solid #b45309;" onclick="pickMerchantItem(7)">🪙 古びた金貨<span class="item-desc-mini">【効果】永続で獲得EXP+5%・<br>配合確率+0.3%(上限75%)</span></button>'
                     };
                     let mBtns = (currentMerchantItems || [1, 2]).map(id => merchantDefs[id] || "").join("");
                     evPanel.style.display = "block";
@@ -8863,7 +8917,6 @@
             });
             return logs;
         }
-
         function handleFloorProgressAfterClear(isMutualKO = false) {
             if (repeatStageMode) {
                 repeatCount++;
@@ -9701,6 +9754,10 @@
         let rankingCache = { hp: null, floor: null, zukan: null };
         let topHpCache = null;
         let top1Cache = { floor: null, zukan: null };
+        let selectedRankTitle = null;
+        let titleSelectionDirty = false;
+        let selectedHpMonKey = "";
+        let hpSelectionDirty = false;
 
         function getRankUid() {
             try {
@@ -9822,7 +9879,6 @@
                 if (typeof saveGame === "function") saveGame();
             }
         }
-
         function normalizeHpMonSnap(raw) {
             if (!raw || typeof raw !== "object" || !raw.n) return null;
             const rawName = (typeof normalizeMonName === "function") ? normalizeMonName(String(raw.n)) : String(raw.n);
@@ -9894,66 +9950,92 @@
             return "❓";
         }
 
+        function getHpMonKey(m) {
+            if (!m) return "";
+            return String(m.gotSeq || 0) + "|" + m.n + "|" + (m.m || 0) + "|" + (m.lv || 1) + "|" + (m.isRare ? 1 : 0) + "|" + (m.isSynthBorn ? 1 : 0);
+        }
+
         function updateHpSelectUI(forceSync = false) {
-            const sel = document.getElementById("rk-hp-select");
+            const listEl = document.getElementById("rk-hp-list");
+            const countEl = document.getElementById("rk-hp-count");
             const statusEl = document.getElementById("rk-hp-status");
             const list = getOwnedMonstersSortedByHp();
             const savedSnap = getSavedHpRankMon();
 
-            let isDirty = false;
-            if (sel) {
-                const isInteracting = (sel.dataset.dirty === "1") || (document.activeElement === sel);
-                isDirty = !forceSync && isInteracting;
-                const listSig = list.map(m => m.n + ":" + m.m + ":" + m.lv + ":" + (m.isRare ? 1 : 0) + ":" + (m.isSynthBorn ? 1 : 0)).join("|");
-                if (sel.dataset.listSig !== listSig) {
-                    const prevVal = sel.value;
-                    sel.dataset.listSig = listSig;
+            if (countEl) {
+                countEl.textContent = "(全" + list.length + "体)";
+            }
+
+            if (forceSync || !hpSelectionDirty || !selectedHpMonKey || !list.some(m => getHpMonKey(m) === selectedHpMonKey)) {
+                let target = null;
+                if (savedSnap) {
+                    target = list.find(m => m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare)) || null;
+                }
+                if (!target && list.length > 0) target = list[0];
+                selectedHpMonKey = target ? getHpMonKey(target) : "";
+                hpSelectionDirty = false;
+            }
+
+            if (listEl) {
+                const listSig = list.map(m => getHpMonKey(m) + ":" + (m.at || 0) + ":" + (m.df || 0) + ":" + (m.sp || 0) + ":" + (m.lvCapBonus || 0) + ":" + (m.inParty ? 1 : 0)).join(";");
+                const savedSig = savedSnap ? (savedSnap.n + "|" + savedSnap.m + "|" + savedSnap.lv + "|" + (savedSnap.isRare ? 1 : 0)) : "";
+                const renderSig = listSig + "##" + selectedHpMonKey + "##" + savedSig;
+
+                if (listEl.dataset.renderSig !== renderSig) {
+                    const prevScroll = listEl.scrollTop;
+                    listEl.dataset.renderSig = renderSig;
                     if (list.length === 0) {
-                        sel.innerHTML = '<option value="">所持モンスターがいません</option>';
+                        listEl.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:11px; padding:12px;">所持モンスターがいません</div>';
                     } else {
-                        let opts = "";
+                        let htmlParts = [];
                         list.forEach((m, idx) => {
                             const inf = (typeof getMonData === "function") ? getMonData(m.n) : null;
-                            const emoji = inf ? inf.a : "❓";
                             const noStr = inf ? ("No." + inf.no + " ") : "";
+                            const isZmb = (typeof isZombieMon === "function") && isZombieMon(m);
+                            const isGod = (typeof isGodMon === "function") && isGodMon(m);
+                            const emojiHtml = (isZmb || isGod)
+                                ? renderMonEmojiHtml(m, "", "font-size:15px;")
+                                : (m.isRare ? ('<span class="rare-shiny-inline">' + (inf ? inf.a : "❓") + '</span>') : (inf ? inf.a : "❓"));
                             const rareStar = m.isRare ? "✨" : "";
-                            const synthTag = m.isSynthBorn ? "[配合]" : "";
-                            const capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? ("(+" + m.lvCapBonus + ")") : "";
-                            const topTag = idx === 0 ? "👑最高HP! " : ("[" + (idx + 1) + "番目] ");
-                            const label = topTag + emoji + " " + noStr + m.n + rareStar + synthTag + " Lv." + m.lv + capTag + " ／ 最大HP: " + Number(m.m || 0).toLocaleString();
-                            opts += '<option value="' + idx + '">' + escapeHtml(label) + '</option>';
+                            const synthTag = m.isSynthBorn ? '<span class="synth-badge">🧬配合1.2倍</span>' : '';
+                            const godTag = isGod ? '<span class="god-badge">🌌星辰</span>' : '';
+                            const zmbTag = isZmb ? '<span class="zombie-badge">💀廃国</span>' : '';
+                            const rareTag = m.isRare ? '<span class="rare-badge">✨色違い</span>' : '';
+                            const topTag = idx === 0 ? '<span class="rk-picker-status-tag" style="background:#fef3c7; color:#b45309; border-color:#f59e0b;">👑最高HP</span>' : '';
+                            const isSavedReg = Boolean(savedSnap && m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare));
+                            const regTag = isSavedReg ? '<span class="rk-picker-status-tag">📌登録中</span>' : '';
+                            const partyTag = m.inParty ? '<span style="color:#059669; font-weight:900; font-size:9.5px; margin-left:3px;">[参加中]</span>' : '';
+                            const capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? (' <span style="color:#7c3aed; font-weight:900;">(+' + m.lvCapBonus + ')</span>') : '';
+                            const isSel = (getHpMonKey(m) === selectedHpMonKey);
+                            const cardCls = "rk-picker-card" + (isSel ? " selected" : "") + (isGod ? " god-card" : (isZmb ? " zombie-card" : (m.isRare ? " rare-card" : "")));
+                            const btnCls = "rk-picker-btn" + (isSel ? " selected" : "");
+                            const btnLabel = isSel ? "✅ 選択中" : "🎯 選択";
+
+                            htmlParts.push(
+                                '<div class="' + cardCls + '">' +
+                                    '<div class="rk-picker-info">' +
+                                        '<div>' + emojiHtml + ' <b>' + escapeHtml(noStr + m.n + rareStar) + '</b>' + synthTag + godTag + zmbTag + rareTag + topTag + regTag + partyTag + '</div>' +
+                                        '<div style="font-size:10px; color:#475569; margin-top:2px; font-weight:800;">' +
+                                            '<span style="color:#b91c1c; font-weight:900;">❤️ 最大HP: ' + Number(m.m || 0).toLocaleString() + '</span>' +
+                                            ' ／ <span style="color:#0284c7;">Lv.' + m.lv + capTag + '</span>' +
+                                            ' <span style="font-family:monospace; color:#64748b;">(攻:' + m.at + ' 防:' + m.df + ' 素:' + m.sp + ')</span>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<button type="button" class="' + btnCls + '" onclick="selectRankHpMonster(' + idx + ')">' + btnLabel + '</button>' +
+                                '</div>'
+                            );
                         });
-                        sel.innerHTML = opts;
+                        listEl.innerHTML = htmlParts.join("");
                     }
-                    if (isDirty && prevVal !== "" && Number(prevVal) >= 0 && Number(prevVal) < list.length) {
-                        sel.value = prevVal;
-                    } else {
-                        let defaultIdx = 0;
-                        if (savedSnap) {
-                            const matchIdx = list.findIndex(m => m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare));
-                            if (matchIdx >= 0) defaultIdx = matchIdx;
-                        }
-                        sel.value = list.length > 0 ? String(defaultIdx) : "";
-                        sel.dataset.dirty = "0";
-                        isDirty = false;
-                    }
-                } else if (forceSync && list.length > 0) {
-                    let defaultIdx = 0;
-                    if (savedSnap) {
-                        const matchIdx = list.findIndex(m => m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare));
-                        if (matchIdx >= 0) defaultIdx = matchIdx;
-                    }
-                    sel.value = String(defaultIdx);
-                    sel.dataset.dirty = "0";
-                    isDirty = false;
+                    if (!forceSync) listEl.scrollTop = prevScroll;
                 }
             }
 
             if (statusEl) {
-                if (isDirty && sel && sel.value !== "" && list[Number(sel.value)]) {
-                    const picked = list[Number(sel.value)];
+                const picked = list.find(m => getHpMonKey(m) === selectedHpMonKey) || list[0] || null;
+                if (hpSelectionDirty && picked) {
                     const em = getMonEmojiByName(picked.n);
-                    statusEl.innerText = "🔔 " + em + picked.n + (picked.isRare ? "✨" : "") + " (Lv." + picked.lv + " / 最大HP:" + Number(picked.m).toLocaleString() + ") を選択中（「このモンスターで最大HPランキングを更新」を押すと確定します）";
+                    statusEl.innerText = "🔔 " + em + picked.n + (picked.isRare ? "✨" : "") + " (Lv." + picked.lv + " / 最大HP:" + Number(picked.m).toLocaleString() + ") を選択中（「選択中のモンスターで最大HPランキングを更新」を押すと確定します）";
                     statusEl.style.color = "#d97706";
                 } else if (savedSnap) {
                     const em = getMonEmojiByName(savedSnap.n);
@@ -9966,23 +10048,23 @@
             }
         }
 
-        function onRankHpSelectChange() {
-            const sel = document.getElementById("rk-hp-select");
-            if (!sel) return;
-            sel.dataset.dirty = "1";
+        function selectRankHpMonster(idx) {
+            const list = getOwnedMonstersSortedByHp();
+            const m = list[idx];
+            if (!m) return;
+            selectedHpMonKey = getHpMonKey(m);
+            hpSelectionDirty = true;
             updateHpSelectUI(false);
         }
 
         function pickHighestHpMonster() {
-            const sel = document.getElementById("rk-hp-select");
-            if (!sel) return;
-            if (typeof initAudio === "function") initAudio();
-            if (typeof soundEnabled !== "undefined" && soundEnabled && typeof seButtonTap === "function") seButtonTap();
-            updateHpSelectUI(true);
+            const listEl = document.getElementById("rk-hp-list");
             const list = getOwnedMonstersSortedByHp();
             if (list.length === 0) return;
-            sel.value = "0";
-            sel.dataset.dirty = "1";
+            selectedHpMonKey = getHpMonKey(list[0]);
+            hpSelectionDirty = true;
+            updateHpSelectUI(false);
+            if (listEl) listEl.scrollTop = 0;
             const top = list[0];
             const statusEl = document.getElementById("rk-hp-status");
             if (statusEl) {
@@ -9992,66 +10074,78 @@
             }
         }
 
-        function applyTitleSelectRarityClass(sel, titleVal) {
-            if (!sel) return;
-            sel.classList.remove("rk-title-epic", "rk-title-legend", "rk-title-mythic");
-            const tier = (typeof getTitleRarityClass === "function") ? getTitleRarityClass(titleVal) : "";
-            if (tier) sel.classList.add(tier);
-        }
-
-        function onRankTitleSelectChange() {
-            const sel = document.getElementById("rk-title-select");
-            if (!sel) return;
-            sel.dataset.dirty = "1";
-            applyTitleSelectRarityClass(sel, sel.value);
-            const statusEl = document.getElementById("rk-title-status");
-            if (statusEl) {
-                const chosenLabel = sel.value ? ("「" + sel.value + "」") : "「称号なし（表示しない）」";
-                statusEl.innerText = "🔔 " + chosenLabel + " を選択中（「称号を設定」ボタンを押すと確定します）";
-                statusEl.style.color = "#d97706";
-            }
+        function selectRankTitleByIdx(idx) {
+            const unlocked = getUnlockedTitles();
+            selectedRankTitle = (idx >= 0 && unlocked[idx]) ? unlocked[idx] : "";
+            titleSelectionDirty = true;
+            updateTitleSelectUI(false);
         }
 
         function updateTitleSelectUI(forceSync = false) {
-            const sel = document.getElementById("rk-title-select");
+            const listEl = document.getElementById("rk-title-list");
+            const countEl = document.getElementById("rk-title-count");
             const statusEl = document.getElementById("rk-title-status");
             const unlocked = getUnlockedTitles();
             const equipped = getEquippedTitle();
 
-            let isDirty = false;
-            if (sel) {
-                const isInteracting = (sel.dataset.dirty === "1") || (document.activeElement === sel);
-                isDirty = !forceSync && isInteracting;
-                const listSig = unlocked.join("|");
-                if (sel.dataset.listSig !== listSig) {
-                    const prevVal = sel.value;
-                    sel.dataset.listSig = listSig;
-                    let opts = '<option value="">🏷️ 称号なし（表示しない）</option>';
-                    unlocked.forEach(t => {
-                        const esc = escapeHtml(t);
-                        opts += '<option value="' + esc + '">' + esc + '</option>';
-                    });
-                    sel.innerHTML = opts;
-                    if (isDirty && (prevVal === "" || unlocked.includes(prevVal))) {
-                        sel.value = prevVal;
-                    } else {
-                        sel.value = equipped;
-                        sel.dataset.dirty = "0";
-                        isDirty = false;
-                    }
-                } else if (forceSync) {
-                    sel.value = equipped;
-                    sel.dataset.dirty = "0";
-                    isDirty = false;
-                } else if (!isDirty && sel.value !== equipped) {
-                    sel.value = equipped;
-                }
-                applyTitleSelectRarityClass(sel, sel.value);
+            if (countEl) {
+                countEl.textContent = "(獲得: " + unlocked.length + "個)";
             }
+
+            if (forceSync || !titleSelectionDirty || selectedRankTitle === null) {
+                selectedRankTitle = equipped;
+                titleSelectionDirty = false;
+            } else if (selectedRankTitle !== "" && !unlocked.includes(selectedRankTitle)) {
+                selectedRankTitle = equipped;
+                titleSelectionDirty = false;
+            }
+
+            if (listEl) {
+                const renderSig = unlocked.join("|") + "##" + selectedRankTitle + "##" + equipped;
+                if (listEl.dataset.renderSig !== renderSig) {
+                    const prevScroll = listEl.scrollTop;
+                    listEl.dataset.renderSig = renderSig;
+                    let htmlParts = [];
+
+                    const noneSelected = (selectedRankTitle === "");
+                    const noneEquipped = (equipped === "");
+                    htmlParts.push(
+                        '<div class="rk-picker-card' + (noneSelected ? ' selected' : '') + (noneEquipped ? ' equipped-now' : '') + '">' +
+                            '<div class="rk-picker-info">' +
+                                '<b style="color:#475569;">🏷️ 称号なし（表示しない）</b>' +
+                                (noneEquipped ? '<span class="rk-picker-status-tag">現在設定中</span>' : '') +
+                            '</div>' +
+                            '<button type="button" class="rk-picker-btn' + (noneSelected ? ' selected' : '') + '" onclick="selectRankTitleByIdx(-1)">' + (noneSelected ? '✅ 選択中' : '🎯 選択') + '</button>' +
+                        '</div>'
+                    );
+
+                    unlocked.forEach((t, idx) => {
+                        const isSel = (selectedRankTitle === t);
+                        const isEq = (equipped === t);
+                        htmlParts.push(
+                            '<div class="rk-picker-card' + (isSel ? ' selected' : '') + (isEq ? ' equipped-now' : '') + '">' +
+                                '<div class="rk-picker-info">' +
+                                    renderTitleBadgeHtml(t) +
+                                    (isEq ? '<span class="rk-picker-status-tag">現在設定中</span>' : '') +
+                                '</div>' +
+                                '<button type="button" class="rk-picker-btn' + (isSel ? ' selected' : '') + '" onclick="selectRankTitleByIdx(' + idx + ')">' + (isSel ? '✅ 選択中' : '🎯 選択') + '</button>' +
+                            '</div>'
+                        );
+                    });
+
+                    if (unlocked.length === 0) {
+                        htmlParts.push('<div style="font-size:10px; color:#64748b; text-align:center; padding:6px 4px; font-weight:700;">※「🧭 クエスト」を達成して称号を獲得するとここに並びます</div>');
+                    }
+
+                    listEl.innerHTML = htmlParts.join("");
+                    if (!forceSync) listEl.scrollTop = prevScroll;
+                }
+            }
+
             if (statusEl) {
-                if (isDirty && sel) {
-                    const chosenLabel = sel.value ? ("「" + sel.value + "」") : "「称号なし（表示しない）」";
-                    statusEl.innerText = "🔔 " + chosenLabel + " を選択中（「称号を設定」ボタンを押すと確定します）";
+                if (titleSelectionDirty) {
+                    const chosenLabel = selectedRankTitle ? ("「" + selectedRankTitle + "」") : "「称号なし（表示しない）」";
+                    statusEl.innerText = "🔔 " + chosenLabel + " を選択中（「選択中の称号を設定」ボタンを押すと確定します）";
                     statusEl.style.color = "#d97706";
                 } else if (unlocked.length === 0) {
                     statusEl.innerText = "※クエストで獲得した称号をいつでも設定・変更できます（現在 0個 獲得）";
@@ -10060,7 +10154,7 @@
                     statusEl.innerText = "🏷️ 現在の称号：「" + equipped + "」（獲得済み " + unlocked.length + "個／いつでも変更可能）";
                     statusEl.style.color = "#6d28d9";
                 } else {
-                    statusEl.innerText = "※獲得済み称号：" + unlocked.length + "個（選んで「称号を設定」を押すといつでも変更可能）";
+                    statusEl.innerText = "※獲得済み称号：" + unlocked.length + "個（一覧から選んで「選択中の称号を設定」を押すといつでも変更可能）";
                     statusEl.style.color = "#059669";
                 }
             }
@@ -10464,9 +10558,12 @@
 
                 html += '<div class="rk-row' + topCls + meCls + '">' +
                     '<div class="rk-left">' +
-                        '<span class="rk-rank-label">' + medal + '</span>' +
-                        '<span class="rk-name-text">' + safeName + '</span>' +
-                        titleBadge + meBadge + extraTag +
+                        '<div class="rk-left-main">' +
+                            '<span class="rk-rank-label">' + medal + '</span>' +
+                            '<span class="rk-name-text">' + safeName + '</span>' +
+                            titleBadge + meBadge +
+                        '</div>' +
+                        (extraTag ? ('<div>' + extraTag + '</div>') : '') +
                     '</div>' +
                     '<span class="' + pillCls + '">' + valText + '</span>' +
                     '</div>';
@@ -10498,14 +10595,12 @@
         }
 
         async function submitRankHpMonster() {
-            const sel = document.getElementById("rk-hp-select");
             const msgEl = document.getElementById("rk-msg");
             const btn = document.getElementById("rk-hp-set-btn");
-            if (!sel || !msgEl || !btn) return;
+            if (!msgEl || !btn) return;
 
             const list = getOwnedMonstersSortedByHp();
-            const idx = parseInt(sel.value, 10);
-            const chosen = (!isNaN(idx) && list[idx]) ? list[idx] : list[0];
+            const chosen = list.find(m => getHpMonKey(m) === selectedHpMonKey) || list[0];
             if (!chosen) {
                 if (typeof seFail === "function") seFail();
                 msgEl.style.color = "#dc2626";
@@ -10517,7 +10612,7 @@
             if (!snap) return;
 
             saveHpRankMonMeta(snap);
-            sel.dataset.dirty = "0";
+            hpSelectionDirty = false;
 
             const clearFloor = getSavedMaxClearStg();
             const reachedFloor = getSavedMaxStg();
@@ -10684,12 +10779,11 @@
         }
 
         async function submitRankTitle() {
-            const sel = document.getElementById("rk-title-select");
             const msgEl = document.getElementById("rk-msg");
             const btn = document.getElementById("rk-title-btn");
-            if (!sel || !msgEl || !btn) return;
+            if (!msgEl || !btn) return;
 
-            const chosen = sel.value || "";
+            const chosen = (selectedRankTitle !== null) ? selectedRankTitle : getEquippedTitle();
             const unlocked = getUnlockedTitles();
             if (chosen && !unlocked.includes(chosen)) {
                 if (typeof seFail === "function") seFail();
@@ -10699,7 +10793,8 @@
             }
 
             saveRankTitleMeta(chosen);
-            sel.dataset.dirty = "0";
+            selectedRankTitle = chosen;
+            titleSelectionDirty = false;
             const clearFloor = getSavedMaxClearStg();
             const reachedFloor = getSavedMaxStg();
             const zukanCount = getSavedZukanCount();
