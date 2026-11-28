@@ -123,6 +123,7 @@
             justify-content: flex-end;
             padding: 20px 20px clamp(185px, 28vh, 240px);
             overflow: hidden;
+            cursor: pointer;
             touch-action: manipulation;
             overscroll-behavior: none;
             transition: opacity 0.35s ease;
@@ -155,33 +156,30 @@
             z-index: 1;
             pointer-events: none !important;
         }
-        .btn-start {
-            position: absolute !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 43% !important;
-            margin: 0 auto !important;
+        .tap-to-start-text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 43%;
+            margin: 0 auto;
             z-index: 30;
-            pointer-events: auto !important;
-            touch-action: manipulation !important;
-            cursor: pointer;
-            width: 78% !important;
-            max-width: 265px;
-            padding: 15px 22px !important;
-            font-size: 20px !important;
-            letter-spacing: 5px;
-            border-radius: 20px !important;
-            background: linear-gradient(180deg, rgba(52, 211, 153, 0.22) 0%, rgba(5, 150, 105, 0.30) 100%) !important;
-            border: 2px solid rgba(167, 243, 208, 0.75) !important;
-            border-bottom: 5px solid rgba(4, 120, 87, 0.65) !important;
-            color: #ffffff !important;
-            text-shadow: 0 2px 6px rgba(4, 120, 87, 0.95);
-            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.25), inset 0 2px 0 rgba(255, 255, 255, 0.55) !important;
+            pointer-events: none !important;
+            user-select: none;
+            -webkit-user-select: none;
+            width: 82%;
+            max-width: 280px;
+            padding: 15px 10px;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(4, 120, 87, 0.95), 0 0 18px rgba(16, 185, 129, 0.90), 0 1px 3px rgba(15, 23, 42, 0.85);
             animation: startPulse 1.8s infinite ease-in-out;
         }
         @keyframes startPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04); }
+            0%, 100% { transform: scale(1); opacity: 0.92; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
         .confirm-modal {
             display: none;
@@ -298,17 +296,112 @@
         }
         .rk-top1-bar {
             max-width: 430px;
-            margin: 0 auto 8px;
-            padding: 6px 8px;
-            background: linear-gradient(135deg, rgba(255, 251, 235, 0.94) 0%, rgba(240, 249, 255, 0.94) 100%);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1.5px solid #fcd34d;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12), inset 0 1px 0 #ffffff;
+            margin: 0 auto 10px;
+            padding: 9px 9px 8px;
+            background: linear-gradient(135deg, rgba(255, 251, 235, 0.97) 0%, rgba(254, 243, 199, 0.94) 45%, rgba(224, 242, 254, 0.96) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid #f59e0b;
+            border-radius: 18px;
+            box-shadow: 0 8px 22px rgba(245, 158, 11, 0.24), 0 0 16px rgba(250, 204, 21, 0.28), inset 0 2px 0 #ffffff;
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            gap: 6px;
+            overflow: hidden;
+        }
+        .rk-top1-bar::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -65%;
+            width: 40%;
+            height: 140%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.60), transparent);
+            transform: skewX(-20deg);
+            animation: titleShineSweep 4.6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .rk-top-crown-banner {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            align-self: center;
+            background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #0284c7);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            padding: 2px 12px;
+            border-radius: 999px;
+            box-shadow: 0 3px 8px rgba(245, 158, 11, 0.30);
+        }
+        .rk-top-hp-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 247, 237, 0.95) 50%, rgba(254, 249, 195, 0.96) 100%);
+            border: 1.5px solid #fb923c;
+            border-radius: 14px;
+            padding: 7px 8px;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.14), inset 0 1px 0 #ffffff;
+        }
+        .rk-top-hp-header {
+            font-size: 12.5px;
+            font-weight: 900;
+            color: #b45309;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-shadow: 0 1px 0 #ffffff;
+        }
+        .rk-top-hp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .rk-top-hp-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3px 5px;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 4.5px 8px;
+            font-size: 11.5px;
+            font-weight: 900;
+            color: #1e293b;
+            line-height: 1.38;
+        }
+        .rk-top-hp-row.r1 {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef08a 52%, #fffbeb 100%);
+            border: 1.5px solid #f59e0b;
+            font-size: 12.2px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.22);
+        }
+        .rk-top-hp-row.r2 {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 52%, #f8fafc 100%);
+            border: 1px solid #94a3b8;
+        }
+        .rk-top-hp-row.r3 {
+            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 52%, #fff7ed 100%);
+            border: 1px solid #fb923c;
+        }
+        .rk-top-hp-score {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            border-radius: 999px;
+            padding: 1px 7px;
+            font-size: 10.5px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+        .rk-top-sub-row {
+            display: flex;
+            flex-direction: column;
             gap: 4px;
         }
         .rk-top1-pill {
@@ -317,16 +410,16 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 3px 5px;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.90);
             border: 1px solid #bae6fd;
             border-radius: 10px;
-            padding: 4px 8px;
-            font-size: 10.5px;
-            font-weight: 900;
+            padding: 3.5px 8px;
+            font-size: 10px;
+            font-weight: 800;
             color: #334155;
             width: 100%;
             min-width: 0;
-            line-height: 1.35;
+            line-height: 1.3;
             box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
         .rk-title-badge {
@@ -1912,6 +2005,58 @@
             border-bottom: 3px solid #5b21b6 !important;
             white-space: nowrap;
         }
+        .rk-hp-box {
+            margin-top: 8px;
+            padding: 8px 9px;
+            background: linear-gradient(135deg, #fff7ed 0%, #fffbeb 100%);
+            border: 1.5px solid #fb923c;
+            border-radius: 12px;
+            text-align: left;
+        }
+        .rk-hp-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+            font-size: 11.5px;
+            font-weight: 900;
+            color: #b45309;
+            flex-wrap: wrap;
+        }
+        .rk-hp-pick-btn {
+            width: auto !important;
+            margin: 0 !important;
+            padding: 4px 8px !important;
+            font-size: 10px !important;
+            border-radius: 8px !important;
+            background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%) !important;
+            border-color: #fde68a !important;
+            border-bottom: 2px solid #b45309 !important;
+            white-space: nowrap;
+        }
+        .rk-hp-select {
+            width: 100%;
+            padding: 8px 8px;
+            border-radius: 10px;
+            border: 1.5px solid #fdba74;
+            background: #ffffff;
+            color: #1e293b;
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .rk-hp-set-btn {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 9px 10px !important;
+            font-size: 12px !important;
+            border-radius: 11px !important;
+            background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%) !important;
+            border-color: #fda4af !important;
+            border-bottom: 3px solid #be123c !important;
+        }
         .rk-name-lock-info {
             font-size: 10px;
             font-weight: 800;
@@ -1928,21 +2073,22 @@
         }
         .rk-subtab-row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
             margin-bottom: 8px;
         }
         .rk-subtab-btn {
             width: 100% !important;
             margin: 0 !important;
-            padding: 8px 6px !important;
-            font-size: 11.5px !important;
+            padding: 8px 4px !important;
+            font-size: 11px !important;
             border-radius: 12px !important;
             background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%) !important;
             color: #475569 !important;
             border: 1.5px solid #cbd5e1 !important;
             border-bottom: 3px solid #94a3b8 !important;
             text-shadow: none !important;
+            white-space: nowrap;
         }
         .rk-subtab-btn.active {
             background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
@@ -2000,6 +2146,19 @@
             word-break: break-all;
             max-width: 100%;
         }
+        .rk-hp-mon-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #fff7ed;
+            color: #9a3412;
+            border: 1px solid #fdba74;
+            border-radius: 7px;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: 900;
+            max-width: 100%;
+        }
         .rk-row.top1 { background: linear-gradient(135deg, #fffbeb 0%, #fef08a 100%); border-color: #f59e0b; }
         .rk-row.top2 { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-color: #94a3b8; }
         .rk-row.top3 { background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-color: #fb923c; }
@@ -2025,6 +2184,11 @@
             font-size: 11px;
             font-weight: 900;
             white-space: nowrap;
+        }
+        .rk-score-pill.hp {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-color: #fca5a5;
         }
         .x-banner-card {
             position: relative;
@@ -2092,7 +2256,7 @@
     </style>
     </head>
     <body class="title-locked">
-    <div id="titleScreen">
+    <div id="titleScreen" onclick="startGame()">
         <div class="title-bg-blur" id="titleBgBlur"></div>
         <img id="titleFullImg" alt="タイトル画面" class="title-full-img" fetchpriority="high" decoding="async" loading="eager">
         <script>
@@ -2119,7 +2283,7 @@
                 }
             })();
         </script>
-        <button type="button" class="btn-start" onclick="startGame()">START</button>
+        <div class="tap-to-start-text">Tap to start</div>
     </div>
 
     <canvas id="bgCanvas"></canvas>
@@ -2145,8 +2309,19 @@
     </div>
 
     <div id="top1ChampionBar" class="rk-top1-bar">
-        <div class="rk-top1-pill">🏆 クリア1位: <span id="top1FloorName" style="display:inline-flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:3px;"><b>取得中...</b></span></div>
-        <div class="rk-top1-pill">📖 図鑑1位: <span id="top1ZukanName" style="display:inline-flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:3px;"><b>取得中...</b></span></div>
+        <div class="rk-top-crown-banner">✨ 全国オンラインランキング速報 ✨</div>
+        <div class="rk-top-hp-card">
+            <div class="rk-top-hp-header">❤️ 最大HPランキング（TOP3）</div>
+            <div id="topHpRankList" class="rk-top-hp-list">
+                <div class="rk-top-hp-row r1">🥇 1位: <b>取得中...</b></div>
+                <div class="rk-top-hp-row r2">🥈 2位: <b>取得中...</b></div>
+                <div class="rk-top-hp-row r3">🥉 3位: <b>取得中...</b></div>
+            </div>
+        </div>
+        <div class="rk-top-sub-row">
+            <div class="rk-top1-pill">🏆 クリア1位: <span id="top1FloorName" style="display:inline-flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:3px;"><b>取得中...</b></span></div>
+            <div class="rk-top1-pill">📖 図鑑1位: <span id="top1ZukanName" style="display:inline-flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:3px;"><b>取得中...</b></span></div>
+        </div>
     </div>
 
     <div class="tab-nav-wrap" id="mainTabBar">
@@ -2248,7 +2423,13 @@
                     🔢 図鑑No.小→大 (選択中)
                 </button>
                 <button id="btnSortLv" onclick="sortBoxByLv()" style="background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%); border-color: #e2e8f0; border-bottom: 3.5px solid #64748b;">
-                    ⭐ レベル順
+                    ⭐ レベル高→低
+                </button>
+                <button id="btnSortHp" onclick="sortBoxByHp()" style="background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%); border-color: #e2e8f0; border-bottom: 3.5px solid #64748b;">
+                    ❤️ 最大HP高い順
+                </button>
+                <button id="btnSortGot" onclick="sortBoxByGot()" style="background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%); border-color: #e2e8f0; border-bottom: 3.5px solid #64748b;">
+                    🆕 入手順(新→古)
                 </button>
             </div>
             <div class="filter-row" id="boxFilterRow">
@@ -2395,11 +2576,21 @@
                     <button type="button" id="rk-title-btn" class="rk-title-btn" onclick="submitRankTitle()">🏷️ 称号を設定</button>
                 </div>
                 <div id="rk-title-status" class="rk-name-lock-info">※クエストで獲得した称号をいつでも設定・変更できます</div>
+                <div class="rk-hp-box">
+                    <div class="rk-hp-head">
+                        <span>❤️ 最大HPランキング（所持モンスターから1体選択）</span>
+                        <button type="button" class="rk-hp-pick-btn" onclick="pickHighestHpMonster()">👑 最高HPを選択</button>
+                    </div>
+                    <select id="rk-hp-select" class="rk-hp-select" onchange="onRankHpSelectChange()"></select>
+                    <button type="button" id="rk-hp-set-btn" class="rk-hp-set-btn" onclick="submitRankHpMonster()">❤️ このモンスターで最大HPランキングを更新</button>
+                    <div id="rk-hp-status" class="rk-name-lock-info" style="margin-top:5px;">※最大HPが高い順に表示されます。設定は何回でも変更でき、配合・お別れ後も更新するまで記録が残ります。</div>
+                </div>
                 <div id="rk-msg" class="rk-msg-bar"></div>
             </div>
 
             <div class="rk-subtab-row">
-                <button type="button" id="rkTab_floor" class="rk-subtab-btn active" onclick="switchRankTab('floor')">🏰 最高クリア階</button>
+                <button type="button" id="rkTab_hp" class="rk-subtab-btn active" onclick="switchRankTab('hp')">❤️ 最大HP</button>
+                <button type="button" id="rkTab_floor" class="rk-subtab-btn" onclick="switchRankTab('floor')">🏰 最高クリア階</button>
                 <button type="button" id="rkTab_zukan" class="rk-subtab-btn" onclick="switchRankTab('zukan')">📖 みつけた図鑑</button>
             </div>
 
@@ -2453,7 +2644,7 @@
                 </div>
                 <div class="guide-step">
                     <b>⑤「📖 図鑑」でヒントを見て1000階制覇＆ランキング上位を目指そう！</b><br>
-                    図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！さらに「🏆 ランキング」タブでは全国のプレイヤーと最高クリア階・みつけた図鑑数を競えます！
+                    図鑑の「❓・シルエット」をタップすると、出現階層や配合のヒントが見られます！さらに「🏆 ランキング」タブでは全国のプレイヤーと最大HPランキング・最高クリア階・みつけた図鑑数を競えます！
                 </div>
                 <div class="guide-step">
                     <b>⑥ タイトル下の「💾 保存」ボタンでデータセーブ・引き継ぎ管理をしよう！</b><br>
@@ -3128,7 +3319,8 @@
             dailyQuest: null,
             claimedPresentCodes: [],
             unlockedTitles: [],
-            equippedTitle: ""
+            equippedTitle: "",
+            hpRankMon: null
         };
         let currentEvent = null;
         let lastFloorWasEvent = false;
@@ -3153,6 +3345,9 @@
         let kingCandidateSkillId = 0;
         let boxSortMode = "no";
         let boxNoDesc = false;
+        let boxLvDesc = true;
+        let boxGotDesc = true;
+        let nextGotSeq = 4;
         let boxFilterMode = "all";
         let bulkReleaseMode = false;
         let bulkSelectedMons = new Set();
@@ -3171,6 +3366,16 @@
         let currentTab = "battle";
         let boxToastTimer = null;
         let questToastTimer = null;
+
+        function assignGotSeq(mon) {
+            if (!mon) return mon;
+            if (typeof mon.gotSeq !== "number" || mon.gotSeq <= 0) {
+                mon.gotSeq = nextGotSeq++;
+            } else if (mon.gotSeq >= nextGotSeq) {
+                nextGotSeq = mon.gotSeq + 1;
+            }
+            return mon;
+        }
 
         const RENAME_MAP = {
             "モグラッパー": "ウッドビーバー",
@@ -3553,7 +3758,7 @@
             { id: "m_title_2", title: "🧪小さな錬金術",     condText: "配合を合計3回実行する",               rewardText: "称号「🧪見習い配合師」", reward: { title: "🧪見習い配合師" }, checkType: "mixAttempt", val: 3 },
             { id: "m_title_3", title: "📖絵文字コレクター", condText: "図鑑(色違い含む)を合計30種埋める",    rewardText: "称号「📖図鑑の旅人」",  reward: { title: "📖図鑑の旅人" },    checkType: "totalZukan", val: 30 },
             { id: "m_title_4", title: "🦈深海の制覇者",     condText: "300階ボスをクリアする",               rewardText: "称号「🦈深海の覇者」",  reward: { title: "🦈深海の覇者" },    checkType: "stg",        val: 300 },
-            { id: "m_title_5", title: "🌞天空の伝説",       condText: "1100階ボス(天空城)をクリアする",      rewardText: "称号「🌞天空の覇者」",  reward: { title: "🌞天空の覇者" },    checkType: "stg",        val: 1100 }
+            { id: "m_title_5", title: "天空の伝説",         condText: "1100階ボス(天空城)をクリアする",      rewardText: "称号「🌞天空の覇者」",  reward: { title: "🌞天空の覇者" },    checkType: "stg",        val: 1100 }
         ];
 
         const GUILD_EXTRA_MISSIONS = [
@@ -3779,6 +3984,9 @@
                 }
 
                 const isGuildTag = (m.id && m.id.indexOf("gm_") === 0) ? "<span style='background:#ede9fe; color:#6d28d9; border-radius:4px; padding:0 4px; font-size:9px; margin-right:3px;'>ギルド</span>" : "";
+                const isSkyLegendHidden = (m.id === "m_title_5" && maxClearStg < 1050);
+                const dispTitle = isSkyLegendHidden ? "？？？" : m.title;
+                const dispCondText = isSkyLegendHidden ? "？？？" : m.condText;
                 const titleTierCls = (m.reward && m.reward.title) ? getTitleRarityClass(m.reward.title) : "";
                 const titleBadgeCls = titleTierCls ? ("title-reward-badge " + titleTierCls) : "title-reward-badge";
                 const rewardHtml = (m.reward && m.reward.title)
@@ -3786,7 +3994,7 @@
                     : ('<span style="color:#d97706; font-weight:800; font-size:10px;">🎁 ' + escapeHtml(m.rewardText) + '</span>');
 
                 parts.push('<div class="mission-row' + (isClaimed ? ' done' : '') + '">' +
-                    '<div>' + isGuildTag + '<b>📜 ' + escapeHtml(m.title) + '</b><br><span style="color:#475569; font-size:10px;">' + escapeHtml(m.condText) + '</span><br>' + rewardHtml + '</div>' +
+                    '<div>' + isGuildTag + '<b>📜 ' + escapeHtml(dispTitle) + '</b><br><span style="color:#475569; font-size:10px;">' + escapeHtml(dispCondText) + '</span><br>' + rewardHtml + '</div>' +
                     '<div>' + rightHtml + '</div></div>');
             });
 
@@ -3937,6 +4145,7 @@
                 expBonusRate: expBonusRate,
                 wildJoinBonus: wildJoinBonus,
                 dungeonLockUntil: dungeonLockUntil,
+                nextGotSeq: nextGotSeq,
                 stats: stats,
                 p: p
             };
@@ -4016,9 +4225,15 @@
                     dailyQuest: null,
                     claimedPresentCodes: [],
                     unlockedTitles: [],
-                    equippedTitle: ""
+                    equippedTitle: "",
+                    hpRankMon: null
                 }, data.stats);
                 if (!Array.isArray(stats.claimedPresentCodes)) stats.claimedPresentCodes = [];
+                if (stats.hpRankMon && typeof stats.hpRankMon === "object" && stats.hpRankMon.n) {
+                    stats.hpRankMon.n = normalizeMonName(stats.hpRankMon.n);
+                } else {
+                    stats.hpRankMon = null;
+                }
                 migrateLegacyMissions();
             }
             ensureDailyQuestCurrent();
@@ -4032,8 +4247,15 @@
                 p = [];
             }
             if (p.length === 0) {
-                p = [{ n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, isSynthBorn: false, skillId: getRandomSkillId() }];
+                p = [{ n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, isSynthBorn: false, gotSeq: 1, skillId: getRandomSkillId() }];
             }
+            let maxGotSeq = (typeof data.nextGotSeq === "number" && data.nextGotSeq > 1) ? (data.nextGotSeq - 1) : 0;
+            p.forEach(m => {
+                if (typeof m.gotSeq === "number" && m.gotSeq > maxGotSeq) {
+                    maxGotSeq = m.gotSeq;
+                }
+            });
+            nextGotSeq = Math.max(1, maxGotSeq + 1);
             let maxOrd = 0;
             p.forEach(m => {
                 m.locked = Boolean(m.locked);
@@ -4042,6 +4264,7 @@
                 m.isZombieHero = isZombieMon(m.n);
                 m.isGodEntity = isGodMon(m.n);
                 m.lvCapBonus = (typeof m.lvCapBonus === "number") ? Math.min(MAX_LV_CAP_BONUS, Math.max(0, Math.floor(m.lvCapBonus))) : 0;
+                assignGotSeq(m);
                 if (m.isRare) getRareSkillObj(m);
                 getSkillObj(m);
 
@@ -4137,6 +4360,7 @@
             updateSpeedButtonUI();
             updateSortButtonsUI();
             if (typeof updateTitleSelectUI === "function") updateTitleSelectUI(true);
+            if (typeof updateHpSelectUI === "function") updateHpSelectUI(true);
             up(true);
         }
         function switchTab(tabName) {
@@ -4177,6 +4401,7 @@
                 renderMissions(false);
             } else if (tabName === "ranking") {
                 if (typeof updateTitleSelectUI === "function") updateTitleSelectUI();
+                if (typeof updateHpSelectUI === "function") updateHpSelectUI();
                 if (typeof updateCurrentDisplay === "function") updateCurrentDisplay();
                 if (typeof loadRanking === "function") loadRanking();
             }
@@ -4263,36 +4488,25 @@
             updateSpeedButtonUI();
         }
 
+        function setSortBtnStyle(btn, text, active) {
+            if (!btn) return;
+            btn.innerText = text + (active ? " (選択中)" : "");
+            if (active) {
+                btn.style.background = "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
+                btn.style.borderColor = "#7dd3fc";
+                btn.style.borderBottom = "3.5px solid #0369a1";
+            } else {
+                btn.style.background = "linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%)";
+                btn.style.borderColor = "#e2e8f0";
+                btn.style.borderBottom = "3.5px solid #64748b";
+            }
+        }
+
         function updateSortButtonsUI() {
-            const btnNo = document.getElementById("btnSortNo");
-            const btnLv = document.getElementById("btnSortLv");
-            if (btnNo) {
-                const label = boxNoDesc ? "🔢 図鑑No.大→小" : "🔢 図鑑No.小→大";
-                if (boxSortMode === "no") {
-                    btnNo.innerText = label + " (選択中)";
-                    btnNo.style.background = "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
-                    btnNo.style.borderColor = "#7dd3fc";
-                    btnNo.style.borderBottom = "3.5px solid #0369a1";
-                } else {
-                    btnNo.innerText = label;
-                    btnNo.style.background = "linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%)";
-                    btnNo.style.borderColor = "#e2e8f0";
-                    btnNo.style.borderBottom = "3.5px solid #64748b";
-                }
-            }
-            if (btnLv) {
-                if (boxSortMode === "lv") {
-                    btnLv.innerText = "⭐ レベル順 (選択中)";
-                    btnLv.style.background = "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
-                    btnLv.style.borderColor = "#7dd3fc";
-                    btnLv.style.borderBottom = "3.5px solid #0369a1";
-                } else {
-                    btnLv.innerText = "⭐ レベル順";
-                    btnLv.style.background = "linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%)";
-                    btnLv.style.borderColor = "#e2e8f0";
-                    btnLv.style.borderBottom = "3.5px solid #64748b";
-                }
-            }
+            setSortBtnStyle(document.getElementById("btnSortNo"), boxNoDesc ? "🔢 図鑑No.大→小" : "🔢 図鑑No.小→大", boxSortMode === "no");
+            setSortBtnStyle(document.getElementById("btnSortLv"), boxLvDesc ? "⭐ レベル高→低" : "⭐ レベル低→高", boxSortMode === "lv");
+            setSortBtnStyle(document.getElementById("btnSortHp"), "❤️ 最大HP高い順", boxSortMode === "hp");
+            setSortBtnStyle(document.getElementById("btnSortGot"), boxGotDesc ? "🆕 入手順(新→古)" : "🆕 入手順(古→新)", boxSortMode === "got");
         }
 
         function sortBoxByNo() {
@@ -4306,11 +4520,30 @@
         }
 
         function sortBoxByLv() {
-            boxSortMode = "lv";
+            if (boxSortMode === "lv") {
+                boxLvDesc = !boxLvDesc;
+            } else {
+                boxSortMode = "lv";
+            }
             updateSortButtonsUI();
             up(true);
         }
 
+        function sortBoxByHp() {
+            boxSortMode = "hp";
+            updateSortButtonsUI();
+            up(true);
+        }
+
+        function sortBoxByGot() {
+            if (boxSortMode === "got") {
+                boxGotDesc = !boxGotDesc;
+            } else {
+                boxSortMode = "got";
+            }
+            updateSortButtonsUI();
+            up(true);
+        }
         function toggleBoxSkills() {
             showBoxSkills = !showBoxSkills;
             const btn = document.getElementById("btnSkillVisToggle");
@@ -4655,9 +4888,9 @@
         }
 
         let p = [
-            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, isSynthBorn: false, skillId: getRandomSkillId() },
-            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, locked: false, isRare: false, isSynthBorn: false, skillId: getRandomSkillId() },
-            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, locked: false, isRare: false, isSynthBorn: false, skillId: getRandomSkillId() }
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 1, locked: false, isRare: false, isSynthBorn: false, gotSeq: 1, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 2, locked: false, isRare: false, isSynthBorn: false, gotSeq: 2, skillId: getRandomSkillId() },
+            { n: "プニシズク", lv: 10, lvCapBonus: 0, m: 37, hp: 37, at: 23, df: 12, sp: 15, ex: 0, nx: 50, inParty: true, partyOrder: 3, locked: false, isRare: false, isSynthBorn: false, gotSeq: 3, skillId: getRandomSkillId() }
         ];
         p.forEach(m => initBattleState(m));
         function resetStageBuffs() {
@@ -5540,7 +5773,6 @@
             }
             battleCanvasRaf = requestAnimationFrame(loop);
         }
-
         function showMixResult3D(resultType, htmlContent) {
             const modal = document.getElementById("mixModal");
             const card = document.getElementById("mixCard3d");
@@ -6103,11 +6335,11 @@
                 } else {
                     const isRareNew = Math.random() < 0.01;
                     const st10 = calcStatsByLevel(b, 10, isRareNew);
-                    let newAlly = {
+                    let newAlly = assignGotSeq({
                         n: giftName, lv: 10, lvCapBonus: 0, m: st10.m, hp: st10.m, at: st10.at, df: st10.df, sp: st10.sp,
                         ex: 0, nx: st10.nx, inParty: false, partyOrder: 0, locked: false,
                         isRare: isRareNew, rareSkillId: isRareNew ? getRandomRareSkillId() : 0, skillId: getRandomSkillId()
-                    };
+                    });
                     initBattleState(newAlly);
                     p.push(newAlly);
                     if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
@@ -6156,11 +6388,11 @@
                 } else {
                     const isRareNew = Math.random() < 0.03;
                     const st1 = calcStatsByLevel(b, 1, isRareNew);
-                    let newAlly = {
+                    let newAlly = assignGotSeq({
                         n: giftName, lv: 1, lvCapBonus: 0, m: st1.m, hp: st1.m, at: st1.at, df: st1.df, sp: st1.sp,
                         ex: 0, nx: 5, inParty: false, partyOrder: 0, locked: false,
                         isRare: isRareNew, rareSkillId: isRareNew ? getRandomRareSkillId() : 0, skillId: getRandomSkillId()
-                    };
+                    });
                     initBattleState(newAlly);
                     p.push(newAlly);
                     if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
@@ -6617,7 +6849,6 @@
             showNotice("📜 ギルドでクエスト『" + preset.title + "』を受注した！（合計 " + getAllMissions().length + "/" + (MISSIONS.length + GUILD_EXTRA_MISSIONS.length) + "件）そして出国した！", 5500);
             advanceStageAfterEvent("", true);
         }
-
         function pickKingdomShopItem(choice) {
             if (!inDungeon || !inKingdom || currentEvent !== "kingdom_shop") return;
             let msg = "";
@@ -6729,13 +6960,13 @@
                 const b = D[chosen.n];
                 const lv = Math.min(100, chosen.fixedLv || 1);
                 const st = calcStatsByLevel(b, lv, chosen.isRare);
-                const newAlly = {
+                const newAlly = assignGotSeq({
                     n: chosen.n, lv: lv, lvCapBonus: 0, m: st.m, hp: st.m, at: st.at, df: st.df, sp: st.sp,
                     ex: 0, nx: st.nx, inParty: false, partyOrder: 0, locked: false,
                     isRare: Boolean(chosen.isRare),
                     rareSkillId: chosen.isRare ? (chosen.rareSkillId || getRandomRareSkillId()) : 0,
                     skillId: chosen.skillId || getRandomSkillId()
-                };
+                });
                 initBattleState(newAlly);
                 p.push(newAlly);
                 if (newAlly.isRare) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
@@ -7519,7 +7750,17 @@
             p.sort((a, b) => {
                 if (a.inParty && b.inParty) return (a.partyOrder || 0) - (b.partyOrder || 0);
                 if (a.inParty !== b.inParty) return b.inParty ? 1 : -1;
-                if (boxSortMode === "lv" && b.lv !== a.lv) return b.lv - a.lv;
+                if (boxSortMode === "lv" && b.lv !== a.lv) {
+                    return boxLvDesc ? (b.lv - a.lv) : (a.lv - b.lv);
+                }
+                if (boxSortMode === "hp" && b.m !== a.m) {
+                    return b.m - a.m;
+                }
+                if (boxSortMode === "got") {
+                    const ga = a.gotSeq || 0;
+                    const gb = b.gotSeq || 0;
+                    if (gb !== ga) return boxGotDesc ? (gb - ga) : (ga - gb);
+                }
                 const infA = getMonData(a.n) || { no: 0 };
                 const infB = getMonData(b.n) || { no: 0 };
                 const noA = infA.no;
@@ -7535,6 +7776,7 @@
             renderMissions(forceAll);
             if (currentTab === "ranking") {
                 if (typeof updateTitleSelectUI === "function") updateTitleSelectUI();
+                if (typeof updateHpSelectUI === "function") updateHpSelectUI();
                 if (typeof updateCurrentDisplay === "function") updateCurrentDisplay();
             }
 
@@ -7544,8 +7786,9 @@
             }
 
             const capSum = p.reduce((acc, m) => acc + (m.lvCapBonus || 0), 0);
-            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.skillId || 0) + ":" + (m.locked ? 1 : 0) + ":" + (m.isSynthBorn ? 1 : 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
-            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, statSig].join("_");
+            const hpSum = p.reduce((acc, m) => acc + (m.m || 0), 0);
+            const statSig = p.reduce((acc, m) => acc + m.lv + ":" + m.hp + ":" + m.ex + ":" + (m.skillId || 0) + ":" + (m.locked ? 1 : 0) + ":" + (m.isSynthBorn ? 1 : 0) + ":" + (m.gotSeq || 0) + ":" + (m.inParty ? (m.partyOrder || 1) : 0) + "|", "");
+            const boxSig = [p.length, inDungeon ? 1 : 0, boxSortMode, boxNoDesc ? 1 : 0, boxLvDesc ? 1 : 0, boxGotDesc ? 1 : 0, boxFilterMode, bulkReleaseMode ? 1 : 0, bulkSelectedMons.size, showBoxSkills ? 1 : 0, p.filter(m => m.inParty).length, capSum, hpSum, statSig].join("_");
             if ((currentTab === "box" || currentTab === "mix") && (forceAll || boxSig !== lastRenderedBoxSig)) {
                 lastRenderedBoxSig = boxSig;
 
@@ -7808,7 +8051,7 @@
             const data = {
                 stg, maxStg, maxClearStg, zk, seen, rareZk, rareSeen, boxLimit, boxLimitCap200: true,
                 baseMixRate, mixBonus, expBonusRate, wildJoinBonus,
-                dungeonLockUntil, stats, p
+                dungeonLockUntil, nextGotSeq, stats, p
             };
             try {
                 const jsonStr = JSON.stringify(data);
@@ -7871,6 +8114,7 @@
                         updateSortButtonsUI();
                         updateBulkBarUI();
                         if (typeof updateTitleSelectUI === "function") updateTitleSelectUI(true);
+                        if (typeof updateHpSelectUI === "function") updateHpSelectUI(true);
                         up(true);
                     } else { showGameAlert("⚠️ 無効なコードです。", "⚠️ エラー"); }
                 } catch(e) { showGameAlert("⚠️ 復元失敗。コードが壊れています。", "⚠️ エラー"); }
@@ -7933,14 +8177,14 @@
                 if (gift.extraReserveLv > 0) {
                     p.forEach(m => { if (!m.inParty) levelUpMonster(m, gift.extraReserveLv); });
                 }
-                const newAlly = {
+                const newAlly = assignGotSeq({
                     n: gift.monName, lv: gift.lv, lvCapBonus: 0, m: st.m, hp: st.m,
                     at: st.at, df: st.df, sp: st.sp,
                     ex: 0, nx: st.nx, inParty: false, partyOrder: 0, locked: false,
                     isRare: gift.isRare, isSynthBorn: false,
                     rareSkillId: gift.isRare ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
-                };
+                });
                 initBattleState(newAlly);
                 p.push(newAlly);
                 if (gift.isRare) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
@@ -7994,12 +8238,12 @@
                 const gd = SPECIAL_D["星辰の神龍"];
                 const st100 = calcStatsByLevel(gd, 100, false);
                 for (let i = 0; i < 3; i++) {
-                    const newAlly = {
+                    const newAlly = assignGotSeq({
                         n: "星辰の神龍", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m,
                         at: st100.at, df: st100.df, sp: st100.sp,
                         ex: 0, nx: st100.nx, inParty: false, partyOrder: 0, locked: false,
                         isRare: false, isGodEntity: true, skillId: getRandomSkillId()
-                    };
+                    });
                     initBattleState(newAlly);
                     p.push(newAlly);
                 }
@@ -8807,7 +9051,8 @@
                 if (eSideEl) eSideEl.classList.remove("atk-forward-my", "atk-forward-e", "hit-flash");
                 if (bBoxInit) bBoxInit.classList.remove("shake-hit");
                 if (btnAtk && inDungeon && !currentEvent) btnAtk.disabled = false;
-        }
+            }
+
             try {
                 let allySp = activeAlly.sp + (activeAlly.buffSp || 0);
                 let enemySp = currentEnemy.sp + (currentEnemy.buffSp || 0);
@@ -8917,11 +9162,11 @@
                                                 const zh = getAllyBaseStats("廃国のゾンビ絵文字勇者");
                                                 const joinLv = currentEnemy.fixedLv || 50;
                                                 const stJoin = calcStatsByLevel(zh, joinLv, false);
-                                                let newAlly = {
+                                                let newAlly = assignGotSeq({
                                                     n: "廃国のゾンビ絵文字勇者", lv: joinLv, lvCapBonus: 0, m: stJoin.m, hp: stJoin.m, at: stJoin.at, df: stJoin.df, sp: stJoin.sp,
                                                     ex: 0, nx: stJoin.nx, inParty: false, partyOrder: 0, locked: false,
                                                     isRare: false, isSynthBorn: false, isZombieHero: true, skillId: getRandomSkillId()
-                                                };
+                                                });
                                                 initBattleState(newAlly);
                                                 p.push(newAlly);
                                                 markZkAndSeen("廃国のゾンビ絵文字勇者", false);
@@ -8952,11 +9197,11 @@
                                         } else {
                                             const gd = getAllyBaseStats("星辰の神龍");
                                             const st100 = calcStatsByLevel(gd, 100, false);
-                                            let newAlly = {
+                                            let newAlly = assignGotSeq({
                                                 n: "星辰の神龍", lv: 100, lvCapBonus: 0, m: st100.m, hp: st100.m, at: st100.at, df: st100.df, sp: st100.sp,
                                                 ex: 0, nx: st100.nx, inParty: false, partyOrder: 0, locked: false,
                                                 isRare: false, isSynthBorn: false, isGodEntity: true, skillId: getRandomSkillId()
-                                            };
+                                            });
                                             initBattleState(newAlly);
                                             p.push(newAlly);
                                             markZkAndSeen("星辰の神龍", false);
@@ -9005,13 +9250,13 @@
                                                 const isRareNew = Boolean(currentEnemy.isRare);
                                                 const joinLv = Math.min(100, currentEnemy.fixedLv ? currentEnemy.fixedLv : getDungeonEnemyLv(stg));
                                                 const stJoin = calcStatsByLevel(b, joinLv, isRareNew);
-                                                let newAlly = {
+                                                let newAlly = assignGotSeq({
                                                     n: currentEnemy.n, lv: joinLv, lvCapBonus: 0, m: stJoin.m, hp: stJoin.m, at: stJoin.at, df: stJoin.df, sp: stJoin.sp,
                                                     ex: 0, nx: stJoin.nx, inParty: false, partyOrder: 0, locked: false,
                                                     bossFourthApplied: isBossUnit,
                                                     isRare: isRareNew, isSynthBorn: false, rareSkillId: isRareNew ? (currentEnemy.rareSkillId || getRandomRareSkillId()) : 0,
                                                     skillId: getRandomSkillId()
-                                                };
+                                                });
                                                 initBattleState(newAlly);
                                                 p.push(newAlly);
                                                 if (isRareNew) stats.rareGetCount = (stats.rareGetCount || 0) + 1;
@@ -9262,13 +9507,13 @@
                 let sumLv = Math.min(maxResultLv, m1.lv + m2.lv);
                 let isRareNew = Math.random() < 0.03;
                 let statsData = calcStatsByLevel(b, sumLv, isRareNew, true);
-                let newMon = {
+                let newMon = assignGotSeq({
                     n: resultName, lv: sumLv, lvCapBonus: sumCapBonus, m: statsData.m, hp: statsData.m,
                     at: statsData.at, df: statsData.df, sp: statsData.sp,
                     ex: 0, nx: statsData.nx, inParty: false, partyOrder: 0, locked: false,
                     isRare: isRareNew, isSynthBorn: true, rareSkillId: isRareNew ? getRandomRareSkillId() : 0,
                     skillId: getRandomSkillId()
-                };
+                });
                 initBattleState(newMon);
 
                 p = p.filter(m => m !== m1 && m !== m2);
@@ -9422,6 +9667,7 @@
             try { initBgCanvas(); } catch (e) {}
             try { initBattleCanvas(); } catch (e) {}
             try { updateTitleSelectUI(true); } catch (e) {}
+            try { updateHpSelectUI(true); } catch (e) {}
             try { updateCurrentDisplay(); } catch (e) {}
             try { loadRanking(false); } catch (e) {}
             try { loadTop1Champions(false); } catch (e) {}
@@ -9451,8 +9697,9 @@
         const RK_NAME_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
         const RK_MAX_RANK = 100;
 
-        let currentRankTab = "floor";
-        let rankingCache = { floor: null, zukan: null };
+        let currentRankTab = "hp";
+        let rankingCache = { hp: null, floor: null, zukan: null };
+        let topHpCache = null;
         let top1Cache = { floor: null, zukan: null };
 
         function getRankUid() {
@@ -9573,6 +9820,175 @@
             if (typeof stats === "object" && stats) {
                 stats.equippedTitle = clean;
                 if (typeof saveGame === "function") saveGame();
+            }
+        }
+
+        function normalizeHpMonSnap(raw) {
+            if (!raw || typeof raw !== "object" || !raw.n) return null;
+            const rawName = (typeof normalizeMonName === "function") ? normalizeMonName(String(raw.n)) : String(raw.n);
+            const mVal = Math.floor(Number(raw.m) || 0);
+            if (mVal <= 0) return null;
+            return {
+                n: rawName,
+                lv: Math.max(1, Math.floor(Number(raw.lv) || 1)),
+                m: mVal,
+                isRare: Boolean(raw.isRare),
+                isSynthBorn: Boolean(raw.isSynthBorn),
+                lvCapBonus: Math.max(0, Math.floor(Number(raw.lvCapBonus) || 0))
+            };
+        }
+
+        function getSavedHpRankMon() {
+            if (typeof stats === "object" && stats && stats.hpRankMon) {
+                const snap = normalizeHpMonSnap(stats.hpRankMon);
+                if (snap) return snap;
+            }
+            try {
+                const raw = localStorage.getItem("mix_emoji_rk_hp_mon");
+                if (raw) {
+                    const snap = normalizeHpMonSnap(JSON.parse(raw));
+                    if (snap) return snap;
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function saveHpRankMonMeta(snap) {
+            const clean = normalizeHpMonSnap(snap);
+            if (!clean) return;
+            try {
+                localStorage.setItem("mix_emoji_rk_hp_mon", JSON.stringify(clean));
+            } catch (e) {}
+            if (typeof stats === "object" && stats) {
+                stats.hpRankMon = clean;
+                if (typeof saveGame === "function") saveGame();
+            }
+        }
+
+        function makeHpMonSnapshot(mon) {
+            if (!mon) return null;
+            return normalizeHpMonSnap({
+                n: mon.n,
+                lv: mon.lv,
+                m: mon.m,
+                isRare: mon.isRare,
+                isSynthBorn: mon.isSynthBorn,
+                lvCapBonus: mon.lvCapBonus || 0
+            });
+        }
+
+        function getOwnedMonstersSortedByHp() {
+            if (typeof p === "undefined" || !Array.isArray(p)) return [];
+            return p.slice().sort((a, b) => {
+                const hm = (b.m || 0) - (a.m || 0);
+                if (hm !== 0) return hm;
+                return (b.lv || 0) - (a.lv || 0);
+            });
+        }
+
+        function getMonEmojiByName(name) {
+            if (typeof getMonData === "function") {
+                const inf = getMonData(name);
+                if (inf && inf.a) return inf.a;
+            }
+            return "❓";
+        }
+
+        function updateHpSelectUI(forceSync = false) {
+            const sel = document.getElementById("rk-hp-select");
+            const statusEl = document.getElementById("rk-hp-status");
+            const list = getOwnedMonstersSortedByHp();
+            const savedSnap = getSavedHpRankMon();
+
+            let isDirty = false;
+            if (sel) {
+                const isInteracting = (sel.dataset.dirty === "1") || (document.activeElement === sel);
+                isDirty = !forceSync && isInteracting;
+                const listSig = list.map(m => m.n + ":" + m.m + ":" + m.lv + ":" + (m.isRare ? 1 : 0) + ":" + (m.isSynthBorn ? 1 : 0)).join("|");
+                if (sel.dataset.listSig !== listSig) {
+                    const prevVal = sel.value;
+                    sel.dataset.listSig = listSig;
+                    if (list.length === 0) {
+                        sel.innerHTML = '<option value="">所持モンスターがいません</option>';
+                    } else {
+                        let opts = "";
+                        list.forEach((m, idx) => {
+                            const inf = (typeof getMonData === "function") ? getMonData(m.n) : null;
+                            const emoji = inf ? inf.a : "❓";
+                            const noStr = inf ? ("No." + inf.no + " ") : "";
+                            const rareStar = m.isRare ? "✨" : "";
+                            const synthTag = m.isSynthBorn ? "[配合]" : "";
+                            const capTag = (m.lvCapBonus && m.lvCapBonus > 0) ? ("(+" + m.lvCapBonus + ")") : "";
+                            const topTag = idx === 0 ? "👑最高HP! " : ("[" + (idx + 1) + "番目] ");
+                            const label = topTag + emoji + " " + noStr + m.n + rareStar + synthTag + " Lv." + m.lv + capTag + " ／ 最大HP: " + Number(m.m || 0).toLocaleString();
+                            opts += '<option value="' + idx + '">' + escapeHtml(label) + '</option>';
+                        });
+                        sel.innerHTML = opts;
+                    }
+                    if (isDirty && prevVal !== "" && Number(prevVal) >= 0 && Number(prevVal) < list.length) {
+                        sel.value = prevVal;
+                    } else {
+                        let defaultIdx = 0;
+                        if (savedSnap) {
+                            const matchIdx = list.findIndex(m => m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare));
+                            if (matchIdx >= 0) defaultIdx = matchIdx;
+                        }
+                        sel.value = list.length > 0 ? String(defaultIdx) : "";
+                        sel.dataset.dirty = "0";
+                        isDirty = false;
+                    }
+                } else if (forceSync && list.length > 0) {
+                    let defaultIdx = 0;
+                    if (savedSnap) {
+                        const matchIdx = list.findIndex(m => m.n === savedSnap.n && m.m === savedSnap.m && m.lv === savedSnap.lv && Boolean(m.isRare) === Boolean(savedSnap.isRare));
+                        if (matchIdx >= 0) defaultIdx = matchIdx;
+                    }
+                    sel.value = String(defaultIdx);
+                    sel.dataset.dirty = "0";
+                    isDirty = false;
+                }
+            }
+
+            if (statusEl) {
+                if (isDirty && sel && sel.value !== "" && list[Number(sel.value)]) {
+                    const picked = list[Number(sel.value)];
+                    const em = getMonEmojiByName(picked.n);
+                    statusEl.innerText = "🔔 " + em + picked.n + (picked.isRare ? "✨" : "") + " (Lv." + picked.lv + " / 最大HP:" + Number(picked.m).toLocaleString() + ") を選択中（「このモンスターで最大HPランキングを更新」を押すと確定します）";
+                    statusEl.style.color = "#d97706";
+                } else if (savedSnap) {
+                    const em = getMonEmojiByName(savedSnap.n);
+                    statusEl.innerText = "❤️ 登録中：" + em + savedSnap.n + (savedSnap.isRare ? "✨" : "") + " (Lv." + savedSnap.lv + " / 最大HP:" + Number(savedSnap.m).toLocaleString() + ") ※お別れ・配合後も再更新するまでランキングに表示されます";
+                    statusEl.style.color = "#be123c";
+                } else {
+                    statusEl.innerText = "※最大HPが高い順に表示されます。設定は何回でも変更でき、配合・お別れ後も更新するまで記録が残ります。";
+                    statusEl.style.color = "#64748b";
+                }
+            }
+        }
+
+        function onRankHpSelectChange() {
+            const sel = document.getElementById("rk-hp-select");
+            if (!sel) return;
+            sel.dataset.dirty = "1";
+            updateHpSelectUI(false);
+        }
+
+        function pickHighestHpMonster() {
+            const sel = document.getElementById("rk-hp-select");
+            if (!sel) return;
+            if (typeof initAudio === "function") initAudio();
+            if (typeof soundEnabled !== "undefined" && soundEnabled && typeof seButtonTap === "function") seButtonTap();
+            updateHpSelectUI(true);
+            const list = getOwnedMonstersSortedByHp();
+            if (list.length === 0) return;
+            sel.value = "0";
+            sel.dataset.dirty = "1";
+            const top = list[0];
+            const statusEl = document.getElementById("rk-hp-status");
+            if (statusEl) {
+                const em = getMonEmojiByName(top.n);
+                statusEl.innerText = "👑 最高HPの " + em + top.n + (top.isRare ? "✨" : "") + " (Lv." + top.lv + " / 最大HP:" + Number(top.m).toLocaleString() + ") を選択しました！（下の赤いボタンでランキングに反映されます）";
+                statusEl.style.color = "#d97706";
             }
         }
 
@@ -9702,20 +10118,28 @@
             const zCount = getSavedZukanCount();
             const meta = getRankNameMeta();
             const equippedTitle = getEquippedTitle();
+            const hpSnap = getSavedHpRankMon();
             const dispName = meta.name ? meta.name : "未設定（初期名：名無し）";
             const el = document.getElementById("rk-current");
             if (el) {
                 const safeDispName = escapeHtml(dispName);
                 const titleHtml = equippedTitle ? (" " + renderTitleBadgeHtml(equippedTitle)) : "";
+                let hpLine = "❤️ 最大HP登録：<span style='color:#94a3b8;'>未設定（下から1体選んで設定できます）</span>";
+                if (hpSnap) {
+                    const em = getMonEmojiByName(hpSnap.n);
+                    hpLine = "❤️ 最大HP登録：<b style='color:#be123c;'>" + em + escapeHtml(hpSnap.n) + (hpSnap.isRare ? "✨" : "") + " (Lv." + hpSnap.lv + " / HP " + Number(hpSnap.m).toLocaleString() + ")</b>";
+                }
                 if (clearFloor > 0) {
                     el.innerHTML =
                         "👤 登録名：<b>" + safeDispName + "</b>" + titleHtml + "<br>" +
+                        hpLine + "<br>" +
                         "🏆 最高クリア：<b style='color:#d97706;'>" + clearFloor + " 階</b>" +
                         " ／ 📖 図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b>";
                 } else {
                     el.innerHTML =
                         "👤 登録名：<b>" + safeDispName + "</b>" + titleHtml + " ／ 📖 図鑑：<b style='color:#4f46e5;'>" + zCount + " 種</b><br>" +
-                        "<span style='color:#d97706; font-size:10.5px;'>※ 1階以上クリアするとランキングにスコア登録できます</span>";
+                        hpLine + "<br>" +
+                        "<span style='color:#d97706; font-size:10.5px;'>※ 最大HPランキングは今から登録可能！クリア階・図鑑は1階以上クリアで登録できます</span>";
                 }
             }
 
@@ -9741,17 +10165,21 @@
                 }
             }
             updateTitleSelectUI();
+            updateHpSelectUI();
         }
         function switchRankTab(tab) {
-            currentRankTab = (tab === "zukan") ? "zukan" : "floor";
+            currentRankTab = (tab === "zukan" || tab === "floor" || tab === "hp") ? tab : "hp";
+            const bHp = document.getElementById("rkTab_hp");
             const bFloor = document.getElementById("rkTab_floor");
             const bZukan = document.getElementById("rkTab_zukan");
+            if (bHp) bHp.classList.toggle("active", currentRankTab === "hp");
             if (bFloor) bFloor.classList.toggle("active", currentRankTab === "floor");
             if (bZukan) bZukan.classList.toggle("active", currentRankTab === "zukan");
             loadRanking(false);
         }
 
-        function buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, playerTitle = "") {
+        function buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, playerTitle = "", hpSnap = null) {
+            const hpScoreVal = (hpSnap && Number(hpSnap.m) > 0) ? Math.floor(Number(hpSnap.m)) : 0;
             return {
                 fields: {
                     uid: { stringValue: uid },
@@ -9761,6 +10189,11 @@
                     maxClearStg: { integerValue: String(clearFloor) },
                     maxStg: { integerValue: String(reachedFloor) },
                     zukanScore: { integerValue: String(zukanCount) },
+                    hpScore: { integerValue: String(hpScoreVal) },
+                    hpMonName: { stringValue: (hpSnap && hpSnap.n) ? String(hpSnap.n) : "" },
+                    hpMonLv: { integerValue: String((hpSnap && hpSnap.lv) ? Math.floor(Number(hpSnap.lv)) : 0) },
+                    hpMonRare: { booleanValue: Boolean(hpSnap && hpSnap.isRare) },
+                    hpMonSynth: { booleanValue: Boolean(hpSnap && hpSnap.isSynthBorn) },
                     updatedAt: { integerValue: String(now) }
                 }
             };
@@ -9785,7 +10218,8 @@
             return data;
         }
 
-        function parseAndSortRanking(docs, isZukan) {
+        function parseAndSortRanking(docs, tabKey) {
+            const mode = (tabKey === "hp" || tabKey === "zukan" || tabKey === "floor") ? tabKey : "floor";
             const parsed = (docs || []).map(doc => {
                 const f = doc.fields || {};
                 const docName = doc.name || "";
@@ -9793,6 +10227,8 @@
                 const fUid = (f.uid && f.uid.stringValue) ? f.uid.stringValue : docId;
                 const scoreVal = (f.score && f.score.integerValue) ? Number(f.score.integerValue) : 0;
                 const maxClearVal = (f.maxClearStg && f.maxClearStg.integerValue) ? Number(f.maxClearStg.integerValue) : scoreVal;
+                const hpScoreVal = (f.hpScore && f.hpScore.integerValue) ? Number(f.hpScore.integerValue) : 0;
+                const hpMonNameVal = (f.hpMonName && f.hpMonName.stringValue) ? f.hpMonName.stringValue : "";
                 return {
                     uid: fUid,
                     name: (f.name && f.name.stringValue) ? f.name.stringValue : "名無し",
@@ -9800,9 +10236,18 @@
                     score: Math.max(scoreVal, maxClearVal),
                     maxClearStg: maxClearVal,
                     zukanScore: (f.zukanScore && f.zukanScore.integerValue) ? Number(f.zukanScore.integerValue) : 0,
+                    hpScore: hpScoreVal,
+                    hpMonName: hpMonNameVal,
+                    hpMonLv: (f.hpMonLv && f.hpMonLv.integerValue) ? Number(f.hpMonLv.integerValue) : 1,
+                    hpMonRare: Boolean(f.hpMonRare && f.hpMonRare.booleanValue),
+                    hpMonSynth: Boolean(f.hpMonSynth && f.hpMonSynth.booleanValue),
                     updatedAt: (f.updatedAt && f.updatedAt.integerValue) ? Number(f.updatedAt.integerValue) : 0
                 };
-            }).filter(item => isZukan ? item.zukanScore > 0 : item.score > 0);
+            }).filter(item => {
+                if (mode === "hp") return item.hpScore > 0 && item.hpMonName !== "";
+                if (mode === "zukan") return item.zukanScore > 0;
+                return item.score > 0;
+            });
 
             const byUid = new Map();
             parsed.forEach(item => {
@@ -9812,18 +10257,22 @@
                     byUid.set(key, item);
                 } else if (
                     item.updatedAt > prev.updatedAt ||
-                    (item.updatedAt === prev.updatedAt && (item.score > prev.score || item.zukanScore > prev.zukanScore))
+                    (item.updatedAt === prev.updatedAt && (item.hpScore > prev.hpScore || item.score > prev.score || item.zukanScore > prev.zukanScore))
                 ) {
                     byUid.set(key, item);
                 }
             });
 
             const uniqueList = Array.from(byUid.values());
-            uniqueList.sort((a, b) =>
-                isZukan
-                    ? (b.zukanScore - a.zukanScore || b.score - a.score)
-                    : (b.score - a.score || b.zukanScore - a.zukanScore)
-            );
+            uniqueList.sort((a, b) => {
+                if (mode === "hp") {
+                    return (b.hpScore - a.hpScore) || (b.score - a.score);
+                }
+                if (mode === "zukan") {
+                    return (b.zukanScore - a.zukanScore) || (b.score - a.score);
+                }
+                return (b.score - a.score) || (b.zukanScore - a.zukanScore);
+            });
             return uniqueList;
         }
 
@@ -9835,26 +10284,60 @@
                 '<span style="white-space:nowrap;">(' + escapeHtml(entry.scoreText) + ')</span>';
         }
 
+        function renderTopHpRowsHtml(list) {
+            const medals = ["🥇 1位", "🥈 2位", "🥉 3位"];
+            const rowClasses = ["r1", "r2", "r3"];
+            if (list === null) {
+                return [0, 1, 2].map(idx =>
+                    '<div class="rk-top-hp-row ' + rowClasses[idx] + '">' + medals[idx] + ': <b>取得中...</b></div>'
+                ).join("");
+            }
+            let html = "";
+            for (let idx = 0; idx < 3; idx++) {
+                const d = list[idx];
+                if (!d) {
+                    html += '<div class="rk-top-hp-row ' + rowClasses[idx] + '">' + medals[idx] + ': <span style="color:#94a3b8;">未登録</span></div>';
+                } else {
+                    const em = getMonEmojiByName(d.hpMonName);
+                    const rareStar = d.hpMonRare ? "✨" : "";
+                    html += '<div class="rk-top-hp-row ' + rowClasses[idx] + '">' +
+                        '<span style="color:#b45309;">' + medals[idx] + '</span>' +
+                        '<b style="word-break:break-all;">' + escapeHtml(d.name) + '</b>' +
+                        renderTitleBadgeHtml(d.title) +
+                        '<span class="rk-hp-mon-tag">' + em + ' ' + escapeHtml(d.hpMonName) + rareStar + ' Lv.' + d.hpMonLv + '</span>' +
+                        '<span class="rk-top-hp-score">HP ' + Number(d.hpScore).toLocaleString() + '</span>' +
+                        '</div>';
+                }
+            }
+            return html;
+        }
+
         function updateTop1ChampionBarUI() {
+            const hpListEl = document.getElementById("topHpRankList");
             const floorEl = document.getElementById("top1FloorName");
             const zukanEl = document.getElementById("top1ZukanName");
+            if (hpListEl) hpListEl.innerHTML = renderTopHpRowsHtml(topHpCache);
             if (floorEl) floorEl.innerHTML = renderTop1Html(top1Cache.floor);
             if (zukanEl) zukanEl.innerHTML = renderTop1Html(top1Cache.zukan);
         }
 
         function syncTop1FromDocs(tabKey, docs) {
-            const isZukan = (tabKey === "zukan");
-            const sorted = parseAndSortRanking(docs, isZukan);
-            if (sorted.length > 0) {
-                const top = sorted[0];
-                top1Cache[tabKey] = {
-                    empty: false,
-                    name: top.name,
-                    title: top.title || "",
-                    scoreText: isZukan ? (top.zukanScore + "種") : (top.score + "階")
-                };
+            const sorted = parseAndSortRanking(docs, tabKey);
+            if (tabKey === "hp") {
+                topHpCache = sorted.slice(0, 3);
             } else {
-                top1Cache[tabKey] = { empty: true };
+                const isZukan = (tabKey === "zukan");
+                if (sorted.length > 0) {
+                    const top = sorted[0];
+                    top1Cache[tabKey] = {
+                        empty: false,
+                        name: top.name,
+                        title: top.title || "",
+                        scoreText: isZukan ? (top.zukanScore + "種") : (top.score + "階")
+                    };
+                } else {
+                    top1Cache[tabKey] = { empty: true };
+                }
             }
             updateTop1ChampionBarUI();
         }
@@ -9886,6 +10369,9 @@
 
         async function loadTop1Champions(force = false) {
             try {
+                if (!force && Array.isArray(rankingCache.hp)) {
+                    syncTop1FromDocs("hp", rankingCache.hp);
+                }
                 if (!force && Array.isArray(rankingCache.floor)) {
                     syncTop1FromDocs("floor", rankingCache.floor);
                 }
@@ -9894,6 +10380,13 @@
                 }
 
                 const tasks = [];
+                if (force || !Array.isArray(rankingCache.hp)) {
+                    tasks.push(
+                        fetchRankingDocsByField("hpScore", 30)
+                            .then(docs => syncTop1FromDocs("hp", docs))
+                            .catch(() => {})
+                    );
+                }
                 if (force || !Array.isArray(rankingCache.floor)) {
                     tasks.push(
                         fetchRankingDocsByField("score", 30)
@@ -9917,10 +10410,12 @@
             const metaEl = document.getElementById("rk-list-meta");
             if (!listEl) return;
             const myUid = getRankUid();
-            const isZukan = (currentRankTab === "zukan");
+            const tabKey = currentRankTab;
+            const isHp = (tabKey === "hp");
+            const isZukan = (tabKey === "zukan");
 
-            const uniqueList = parseAndSortRanking(docs, isZukan);
-            syncTop1FromDocs(currentRankTab, docs);
+            const uniqueList = parseAndSortRanking(docs, tabKey);
+            syncTop1FromDocs(tabKey, docs);
 
             const top100 = uniqueList.slice(0, RK_MAX_RANK);
             const myIndex = top100.findIndex(d => d.uid && d.uid === myUid);
@@ -9950,14 +10445,30 @@
                 const meBadge = isMe ? "<span class='rk-me-badge'>あなた</span>" : "";
                 const safeName = escapeHtml(d.name);
                 const titleBadge = renderTitleBadgeHtml(d.title);
-                const valText = isZukan ? (d.zukanScore + " 種") : (d.score + " 階");
+
+                let extraTag = "";
+                let pillCls = "rk-score-pill";
+                let valText = "";
+                if (isHp) {
+                    const em = getMonEmojiByName(d.hpMonName);
+                    const rareStar = d.hpMonRare ? "✨" : "";
+                    const synthMark = d.hpMonSynth ? "🧬" : "";
+                    extraTag = '<span class="rk-hp-mon-tag">' + em + ' ' + escapeHtml(d.hpMonName) + rareStar + synthMark + ' (Lv.' + d.hpMonLv + ')</span>';
+                    pillCls += " hp";
+                    valText = "HP " + Number(d.hpScore).toLocaleString();
+                } else if (isZukan) {
+                    valText = d.zukanScore + " 種";
+                } else {
+                    valText = d.score + " 階";
+                }
+
                 html += '<div class="rk-row' + topCls + meCls + '">' +
                     '<div class="rk-left">' +
                         '<span class="rk-rank-label">' + medal + '</span>' +
                         '<span class="rk-name-text">' + safeName + '</span>' +
-                        titleBadge + meBadge +
+                        titleBadge + meBadge + extraTag +
                     '</div>' +
-                    '<span class="rk-score-pill">' + valText + '</span>' +
+                    '<span class="' + pillCls + '">' + valText + '</span>' +
                     '</div>';
             });
             listEl.innerHTML = html;
@@ -9975,7 +10486,7 @@
             if (metaEl) metaEl.innerText = "";
             listEl.innerHTML = "<p style='text-align:center; color:#64748b; font-size:11.5px; margin:14px 0; font-weight:800;'>⏳ ランキングを読み込み中...</p>";
 
-            const orderField = (tabKey === "zukan") ? "zukanScore" : "score";
+            const orderField = (tabKey === "hp") ? "hpScore" : ((tabKey === "zukan") ? "zukanScore" : "score");
             try {
                 const docs = await fetchRankingDocsByField(orderField, 150);
                 rankingCache[tabKey] = docs;
@@ -9986,6 +10497,63 @@
             }
         }
 
+        async function submitRankHpMonster() {
+            const sel = document.getElementById("rk-hp-select");
+            const msgEl = document.getElementById("rk-msg");
+            const btn = document.getElementById("rk-hp-set-btn");
+            if (!sel || !msgEl || !btn) return;
+
+            const list = getOwnedMonstersSortedByHp();
+            const idx = parseInt(sel.value, 10);
+            const chosen = (!isNaN(idx) && list[idx]) ? list[idx] : list[0];
+            if (!chosen) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ 設定できるモンスターがいません。";
+                return;
+            }
+
+            const snap = makeHpMonSnapshot(chosen);
+            if (!snap) return;
+
+            saveHpRankMonMeta(snap);
+            sel.dataset.dirty = "0";
+
+            const clearFloor = getSavedMaxClearStg();
+            const reachedFloor = getSavedMaxStg();
+            const zukanCount = getSavedZukanCount();
+            const meta = getRankNameMeta();
+            const playerName = (meta.name || "名無し").slice(0, 10);
+            const playerTitle = getEquippedTitle();
+            const uid = getRankUid();
+            const now = Date.now();
+            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, playerTitle, snap);
+
+            btn.disabled = true;
+            msgEl.style.color = "#0369a1";
+            msgEl.textContent = "⏳ 最大HPランキングを更新中...";
+
+            try {
+                await upsertRankingDoc(uid, payload);
+                rankingCache.hp = null;
+                rankingCache.floor = null;
+                rankingCache.zukan = null;
+                if (typeof seStageClear === "function") seStageClear();
+                const em = getMonEmojiByName(snap.n);
+                msgEl.style.color = "#059669";
+                msgEl.textContent = "❤️ 「" + em + snap.n + (snap.isRare ? "✨" : "") + " (Lv." + snap.lv + " / 最大HP:" + Number(snap.m).toLocaleString() + ")」を最大HPランキングに設定・更新しました！";
+                updateCurrentDisplay();
+                updateHpSelectUI(true);
+                await loadRanking(true);
+                await loadTop1Champions(true);
+            } catch (e) {
+                if (typeof seFail === "function") seFail();
+                msgEl.style.color = "#dc2626";
+                msgEl.textContent = "⚠️ 最大HPランキング更新エラー: " + e.message;
+            }
+            btn.disabled = false;
+        }
+
         async function submitRankScore() {
             const msgEl = document.getElementById("rk-msg");
             const btn = document.getElementById("rk-score-btn");
@@ -9994,9 +10562,10 @@
             const clearFloor = getSavedMaxClearStg();
             const reachedFloor = getSavedMaxStg();
             const zukanCount = getSavedZukanCount();
-            if (!clearFloor || clearFloor < 1) {
+            const hpSnap = getSavedHpRankMon();
+            if ((!clearFloor || clearFloor < 1) && (!hpSnap || hpSnap.m <= 0)) {
                 msgEl.style.color = "#dc2626";
-                msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアしてください）";
+                msgEl.textContent = "※ まだクリア記録がありません（1階以上クリアするか、最大HPモンスターを設定してください）";
                 return;
             }
 
@@ -10005,7 +10574,7 @@
             const playerTitle = getEquippedTitle();
             const uid = getRankUid();
             const now = Date.now();
-            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, playerTitle);
+            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, playerTitle, hpSnap);
 
             btn.disabled = true;
             msgEl.style.color = "#0369a1";
@@ -10013,11 +10582,12 @@
 
             try {
                 await upsertRankingDoc(uid, payload);
+                rankingCache.hp = null;
                 rankingCache.floor = null;
                 rankingCache.zukan = null;
                 if (typeof seStageClear === "function") seStageClear();
                 msgEl.style.color = "#059669";
-                msgEl.textContent = "🎉 「" + playerName + "」の最新記録（最高クリア" + clearFloor + "階 / 図鑑" + zukanCount + "種）で更新しました！";
+                msgEl.textContent = "🎉 「" + playerName + "」の最新記録（最高クリア" + clearFloor + "階 / 図鑑" + zukanCount + "種" + (hpSnap ? (" / 最大HP " + Number(hpSnap.m).toLocaleString()) : "") + "）で更新しました！";
                 updateCurrentDisplay();
                 await loadRanking(true);
                 await loadTop1Champions(true);
@@ -10075,18 +10645,19 @@
             const reachedFloor = getSavedMaxStg();
             const zukanCount = getSavedZukanCount();
             const playerTitle = getEquippedTitle();
+            const hpSnap = getSavedHpRankMon();
 
-            if (clearFloor < 1) {
+            if (clearFloor < 1 && (!hpSnap || hpSnap.m <= 0)) {
                 saveRankNameMeta(newName, now);
                 if (typeof seStageClear === "function") seStageClear();
                 msgEl.style.color = "#059669";
-                msgEl.textContent = "✅ プレイヤー名を「" + newName + "」に登録しました！（1階以上クリア後にランキング更新できます）";
+                msgEl.textContent = "✅ プレイヤー名を「" + newName + "」に登録しました！（1階以上クリアまたは最大HP設定後にランキング更新できます）";
                 updateCurrentDisplay();
                 return;
             }
 
             const uid = getRankUid();
-            const payload = buildRankingPayload(uid, newName, clearFloor, reachedFloor, zukanCount, now, playerTitle);
+            const payload = buildRankingPayload(uid, newName, clearFloor, reachedFloor, zukanCount, now, playerTitle, hpSnap);
 
             btn.disabled = true;
             msgEl.style.color = "#0369a1";
@@ -10095,6 +10666,7 @@
             try {
                 await upsertRankingDoc(uid, payload);
                 saveRankNameMeta(newName, now);
+                rankingCache.hp = null;
                 rankingCache.floor = null;
                 rankingCache.zukan = null;
                 if (typeof seStageClear === "function") seStageClear();
@@ -10133,12 +10705,13 @@
             const zukanCount = getSavedZukanCount();
             const meta = getRankNameMeta();
             const playerName = (meta.name || "名無し").slice(0, 10);
+            const hpSnap = getSavedHpRankMon();
 
-            if (clearFloor < 1) {
+            if (clearFloor < 1 && (!hpSnap || hpSnap.m <= 0)) {
                 if (typeof seStageClear === "function") seStageClear();
                 msgEl.style.color = "#059669";
                 msgEl.textContent = chosen
-                    ? ("🏷️ 称号を「" + chosen + "」に設定しました！（1階以上クリア後にランキングへ反映されます）")
+                    ? ("🏷️ 称号を「" + chosen + "」に設定しました！（1階以上クリアまたは最大HP設定後にランキングへ反映されます）")
                     : "🏷️ 称号を「なし」に変更しました！";
                 updateCurrentDisplay();
                 updateTitleSelectUI(true);
@@ -10147,7 +10720,7 @@
 
             const uid = getRankUid();
             const now = Date.now();
-            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, chosen);
+            const payload = buildRankingPayload(uid, playerName, clearFloor, reachedFloor, zukanCount, now, chosen, hpSnap);
 
             btn.disabled = true;
             msgEl.style.color = "#0369a1";
@@ -10155,6 +10728,7 @@
 
             try {
                 await upsertRankingDoc(uid, payload);
+                rankingCache.hp = null;
                 rankingCache.floor = null;
                 rankingCache.zukan = null;
                 if (typeof seStageClear === "function") seStageClear();
@@ -10175,6 +10749,7 @@
         }
 
         updateTitleSelectUI(true);
+        updateHpSelectUI(true);
         updateCurrentDisplay();
         setInterval(() => {
             if (typeof currentTab === "undefined" || currentTab === "ranking") {
